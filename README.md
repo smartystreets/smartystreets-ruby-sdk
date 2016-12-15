@@ -1,8 +1,10 @@
-# SmartystreetsRubySdk
+# SmartyStreets Ruby SDK
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/smartystreets_ruby_sdk`. To experiment with that code, run `bin/console` for an interactive prompt.
+The official client libraries for accessing SmartyStreets APIs from Python 2.7 and 3.5
 
-TODO: Delete this and the text above, and describe your gem
+You may have noticed this page is curiously sparse. Don't panic, there's [documentation](https://smartystreets.com/docs/sdk/ruby) and [examples](examples).
+
+[Apache 2.0 License](LICENSE.txt)
 
 ## Installation
 
