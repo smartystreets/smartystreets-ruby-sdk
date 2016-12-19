@@ -1,4 +1,6 @@
 class Request
+  attr_accessor :parameters, :payload, :url_prefix, :referer
+
   def initialize
     @parameters = {}
     @payload = nil
