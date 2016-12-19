@@ -6,7 +6,6 @@ class Batch
   def initialize
     @named_lookups = {}
     @all_lookups = []
-    @current_index = 0
   end
 
   def add(lookup)
