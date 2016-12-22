@@ -1,4 +1,4 @@
-require './lib/smartystreets_ruby_sdk/json_able'
+require_relative '../json_able'
 
 class Lookup < JSONAble
   attr_accessor :input_id, :street, :street2, :secondary, :city, :state, :zipcode, :lastline, :addressee, :urbanization,
