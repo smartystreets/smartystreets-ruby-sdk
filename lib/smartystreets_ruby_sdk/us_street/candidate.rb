@@ -14,8 +14,8 @@ class Candidate
     @delivery_line_2 = obj['delivery_line_2']
     @last_line = obj['last_line']
     @delivery_point_barcode = obj['delivery_point_barcode']
-    @components = Components.new(obj['components'])
-    @metadata = Metadata.new(obj['metadata'])
-    @analysis = Analysis.new(obj['analysis'])
+    @components = Components.new(obj.fetch('components', {}))
+    @metadata = Metadata.new(obj.fetch('metadata', {}))
+    @analysis = Analysis.new(obj.fetch('analysis', {}))
   end
 end
