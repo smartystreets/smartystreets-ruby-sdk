@@ -1,4 +1,3 @@
-
 class Metadata
   attr_reader :elot_sort, :longitude, :elot_sequence, :county_fips, :building_default_indicator, :rdi,
               :congressional_district, :latitude, :precision, :time_zone, :zip_type, :county_name, :utc_offset,
