@@ -35,7 +35,7 @@ class CoreClientBuilder
   def build_sender
     return @http_sender if @http_sender != nil
 
-    sender = RequestsSender.new(@max_timeout)
+    sender = HTTPSender.new(@max_timeout)
 
     sender = StatusCodeSender.new(sender)
 
