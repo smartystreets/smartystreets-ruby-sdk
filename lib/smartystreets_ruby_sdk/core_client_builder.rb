@@ -1,3 +1,10 @@
+require_relative 'standard_serializer'
+require_relative 'http_sender'
+require_relative 'status_code_sender'
+require_relative 'signing_sender'
+require_relative 'retry_sender'
+require_relative 'url_prefix_sender'
+
 class CoreClientBuilder
   def initialize(signer)
     @signer = signer
@@ -29,7 +36,7 @@ class CoreClientBuilder
   end
 
   def build
-    Client.new(build_sender, @serializer)
+    # Implemented in child classes
   end
 
   def build_sender

@@ -1,5 +1,6 @@
 require 'net/http'
 require_relative 'version'
+require_relative 'response'
 
 class HTTPSender
   def initialize(max_timeout=10000)
@@ -11,7 +12,8 @@ class HTTPSender
     uri = request.uri
 
     begin
-      http = Net::HTTP.new(uri.hostname, uri.port, :use_ssl => uri.scheme == 'https')
+      http = Net::HTTP.new(uri.hostname)
+      http.use_ssl = uri.scheme == 'https'
       response = http.request(request)
       http.finish if http.started?
     rescue Exception => err

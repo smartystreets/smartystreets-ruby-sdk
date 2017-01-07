@@ -1,3 +1,6 @@
+require_relative '../batch'
+require_relative '../request'
+
 class Client
   def initialize(sender, serializer)
     @sender = sender
@@ -11,14 +14,14 @@ class Client
   end
 
   def send_batch(batch)
-    smartyrequest = Request.new
+    smarty_request = Request.new
 
     return if batch.size == 0
 
     converted_lookups = remap_keys(batch.all_lookups)
-    smartyrequest.payload = @serializer.serialize(converted_lookups)
+    smarty_request.payload = @serializer.serialize(converted_lookups)
 
-    response = @sender.send(smartyrequest)
+    response = @sender.send(smarty_request)
 
     raise response.error if response.error
 
