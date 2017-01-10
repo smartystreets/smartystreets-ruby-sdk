@@ -4,38 +4,38 @@ require 'smartystreets_ruby_sdk/us_street/lookup'
 
 class USStreetSingleAddressExample
   def run
-  auth_id = ENV['SMARTY_AUTH_ID']  # We recommend storing your keys in environment variables
-  auth_token = ENV['SMARTY_AUTH_TOKEN']
-  credentials = StaticCredentials.new(auth_id, auth_token)
+    auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
+    auth_token = ENV['SMARTY_AUTH_TOKEN']
+    credentials = StaticCredentials.new(auth_id, auth_token)
 
-  client = ClientBuilder.new(credentials).build
+    client = ClientBuilder.new(credentials).build
 
-  lookup = Lookup.new
-  lookup.street = "1600 Amphitheatre Pkwy"
-  lookup.city = "Mountain View"
-  lookup.state = "CA"
+    lookup = Lookup.new
+    lookup.street = '1600 Amphitheatre Pkwy'
+    lookup.city = 'Mountain View'
+    lookup.state = 'CA'
 
-  begin
+    begin
       client.send_lookup(lookup)
-  rescue SmartyException => err
-    print(err)
-    return
-  end
+    rescue SmartyException => err
+      puts err
+      return
+    end
 
-  result = lookup.result
+    result = lookup.result
 
-  if not result
-      print("No candidates. This means the address is not valid.")
-  return
-  end
+    if result == nil
+      puts 'No candidates. This means the address is not valid.'
+      return
+    end
 
-  first_candidate = result[0]
+    first_candidate = result[0]
 
-  print("Address is valid. (There is at least one candidate)\n")
-  print("ZIP Code: " + first_candidate.components.zipcode)
-  print("County: " + first_candidate.metadata.county_name)
-  print("Latitude: {}".format(first_candidate.metadata.latitude))
-  print("Longitude: {}".format(first_candidate.metadata.longitude))
+    puts "Address is valid. (There is at least one candidate)\n"
+    puts "ZIP Code: #{first_candidate.components.zipcode}"
+    puts "County: #{first_candidate.metadata.county_name}"
+    puts "Latitude: #{first_candidate.metadata.latitude}"
+    puts "Longitude: #{first_candidate.metadata.longitude}"
   end
 end
 

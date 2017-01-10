@@ -1,6 +1,6 @@
 class RetrySender
   MAX_BACKOFF_DURATION = 10
-  STATUS_OK = 200
+  STATUS_OK = '200'
 
   attr_reader :sleep_durations
 

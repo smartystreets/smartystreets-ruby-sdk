@@ -16,19 +16,19 @@ class StatusCodeSender
 
   def assign_exception(response)
     response.error = case response.status_code
-                       when 401
+                       when '401'
                          BadCredentialsError.new(BAD_CREDENTIALS)
-                       when 402
+                       when '402'
                          PaymentRequiredError.new(PAYMENT_REQUIRED)
-                       when 413
+                       when '413'
                          RequestEntityTooLargeError.new(REQUEST_ENTITY_TOO_LARGE)
-                       when 400
+                       when '400'
                          BadRequestError.new(BAD_REQUEST)
-                       when 429
+                       when '429'
                          TooManyRequestsError.new(TOO_MANY_REQUESTS)
-                       when 500
+                       when '500'
                          InternalServerError.new(INTERNAL_SERVER_ERROR)
-                       when 503
+                       when '503'
                          ServiceUnavailableError.new(SERVICE_UNAVAILABLE)
                        else
                          nil

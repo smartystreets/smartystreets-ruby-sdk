@@ -17,10 +17,10 @@ class TestHTTPSender < Minitest::Test
     end
 
     def request(request)
-      if request.uri == URI('http://localhost/error')
-        mock_response = MockResponse.new('Error test', 400)
+      if request.uri == URI.parse('http://localhost/error?')
+        mock_response = MockResponse.new('Error test', '400')
       else
-        mock_response = MockResponse.new('This is the test payload.', 200)
+        mock_response = MockResponse.new('This is the test payload.', '200')
       end
 
       mock_response
@@ -65,7 +65,7 @@ class TestHTTPSender < Minitest::Test
 
     response = sender.send(smarty_request)
 
-    assert_equal(200, response.status_code)
+    assert_equal('200', response.status_code)
   end
 
   def test_smartyresponse_contains_status_code_400_when_server_gives_a_400
@@ -75,6 +75,6 @@ class TestHTTPSender < Minitest::Test
 
     response = sender.send(smarty_request)
 
-    assert_equal(400, response.status_code)
+    assert_equal('400', response.status_code)
   end
 end

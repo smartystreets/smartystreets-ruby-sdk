@@ -16,7 +16,7 @@ class TestRetrySender < Minitest::Test
   end
 
   def test_success_does_not_retry
-    inner = FailingSender.new([200])
+    inner = FailingSender.new(['200'])
 
     send_with_retry(5, inner)
 
@@ -24,7 +24,7 @@ class TestRetrySender < Minitest::Test
   end
 
   def test_retry_until_success
-    inner = FailingSender.new([401, 402, 400, 200, 500])
+    inner = FailingSender.new(['401', '402', '400', '200', '500'])
 
     send_with_retry(10, inner)
 
@@ -32,18 +32,18 @@ class TestRetrySender < Minitest::Test
   end
 
   def test_return_response_if_retry_limit_exceeded
-    inner = FailingSender.new([500, 500, 500, 500, 500, 500])
+    inner = FailingSender.new(['500', '500', '500', '500', '500', '500'])
 
     response, retry_sender = send_with_retry(4, inner)
 
     assert(response)
     assert_equal(5, inner.current_status_code_index)
     assert_equal([0,1,2,3], retry_sender.sleep_durations)
-    assert_equal(500, response.status_code)
+    assert_equal('500', response.status_code)
   end
 
   def test_backoff_does_not_exceed_max
-    inner = FailingSender.new([401, 402, 400, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 200])
+    inner = FailingSender.new(['401', '402', '400', '500', '500', '500', '500', '500', '500', '500', '500', '500', '500', '200'])
 
     _, retry_sender = send_with_retry(20, inner)
 

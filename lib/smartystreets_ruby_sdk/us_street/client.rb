@@ -1,5 +1,6 @@
 require_relative '../batch'
 require_relative '../request'
+require_relative 'candidate'
 
 class Client
   def initialize(sender, serializer)
