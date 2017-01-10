@@ -1,9 +1,9 @@
-require './lib/smartystreets_ruby_sdk/standard_serializer'
+require './lib/smartystreets_ruby_sdk/native_serializer'
 require './lib/smartystreets_ruby_sdk/us_street/lookup'
 
 class TestStandardSerializer < Minitest::Test
   def test_serialize
-    serializer = StandardSerializer.new
+    serializer = NativeSerializer.new
 
     result = serializer.serialize([Lookup.new('123 fake street')])
 
@@ -19,7 +19,7 @@ class TestStandardSerializer < Minitest::Test
       \"default_city\":true,\"mailable_city\":true}],\"zipcodes\":[{\"zipcode\":\"84606\",\"zipcode_type\":\"S\",\
       \"county_fips\":\"11501\",\"county_name\":\"Utah\",\"latitude\":38.89769,\"longitude\":-77.03869}]},\
             {\"input_index\":2,\"status\":\"invalid_zipcode\",\"reason\":\"Invalid ZIP Code.\"}]"
-    serializer = StandardSerializer.new
+    serializer = NativeSerializer.new
 
     results = serializer.deserialize(expected_json_output)
 

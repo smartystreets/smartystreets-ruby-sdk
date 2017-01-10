@@ -2,7 +2,7 @@ require 'net/http'
 require_relative 'version'
 require_relative 'response'
 
-class HTTPSender
+class NativeSender
   def initialize(max_timeout=10000)
     @max_timeout = max_timeout
   end
@@ -38,8 +38,8 @@ class HTTPSender
     request
   end
 
-  def build_smarty_response(http_response)
-    Response.new(http_response.body, http_response.code)
+  def build_smarty_response(native_response)
+    Response.new(native_response.body, native_response.code)
   end
 
   def self.create_query(smarty_request)

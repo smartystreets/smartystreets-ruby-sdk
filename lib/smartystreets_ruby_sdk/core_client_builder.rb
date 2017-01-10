@@ -1,5 +1,5 @@
-require_relative 'standard_serializer'
-require_relative 'http_sender'
+require_relative 'native_serializer'
+require_relative 'native_sender'
 require_relative 'status_code_sender'
 require_relative 'signing_sender'
 require_relative 'retry_sender'
@@ -8,7 +8,7 @@ require_relative 'url_prefix_sender'
 class CoreClientBuilder
   def initialize(signer)
     @signer = signer
-    @serializer = StandardSerializer.new
+    @serializer = NativeSerializer.new
     @http_sender = nil
     @max_retries = 5
     @max_timeout = 10000
@@ -42,7 +42,7 @@ class CoreClientBuilder
   def build_sender
     return @http_sender if @http_sender != nil
 
-    sender = HTTPSender.new(@max_timeout)
+    sender = NativeSender.new(@max_timeout)
 
     sender = StatusCodeSender.new(sender)
 

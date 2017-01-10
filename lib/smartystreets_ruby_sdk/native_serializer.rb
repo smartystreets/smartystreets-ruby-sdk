@@ -1,6 +1,6 @@
 require 'json'
 
-class StandardSerializer
+class NativeSerializer
   def serialize(obj)
     obj.to_json
   end

@@ -1,4 +1,4 @@
-require_relative '../../lib/smartystreets_ruby_sdk/http_sender'
+require_relative '../../lib/smartystreets_ruby_sdk/native_sender'
 require 'net/http'
 
 class TestHTTPSender < Minitest::Test
@@ -32,7 +32,7 @@ class TestHTTPSender < Minitest::Test
     smarty_request.url_prefix = 'http://localhost'
 
     smarty_request.payload = 'Test Payload'
-    request = HTTPSender.build_request(smarty_request)
+    request = NativeSender.build_request(smarty_request)
 
     assert_equal('POST', request.method)
   end
@@ -42,13 +42,13 @@ class TestHTTPSender < Minitest::Test
     smarty_request.url_prefix = 'http://localhost'
     smarty_request.payload = 'This is the test content.'
 
-    request = HTTPSender.build_request(smarty_request)
+    request = NativeSender.build_request(smarty_request)
 
     assert_equal('This is the test content.', request.body)
   end
 
   def test_smarty_response_contains_correct_payload
-    sender = HTTPSender.new
+    sender = NativeSender.new
     smarty_request = Request.new
     smarty_request.url_prefix = 'http://localhost'
     smarty_request.payload = 'This is the test content.'
@@ -59,7 +59,7 @@ class TestHTTPSender < Minitest::Test
   end
 
   def test_smartyresponse_contains_status_code_200_on_success
-    sender = HTTPSender.new
+    sender = NativeSender.new
     smarty_request = Request.new
     smarty_request.url_prefix = 'http://localhost'
 
@@ -69,7 +69,7 @@ class TestHTTPSender < Minitest::Test
   end
 
   def test_smartyresponse_contains_status_code_400_when_server_gives_a_400
-    sender = HTTPSender.new
+    sender = NativeSender.new
     smarty_request = Request.new
     smarty_request.url_prefix = 'http://localhost/error'
 
