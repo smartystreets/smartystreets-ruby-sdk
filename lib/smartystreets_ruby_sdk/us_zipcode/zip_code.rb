@@ -1,4 +1,6 @@
 class ZipCode
+  attr_reader :longitude, :county_name, :zipcode, :zipcode_type, :county_fips, :latitude, :precision, :default_city
+
   def initialize(obj)
     @zipcode = obj['zipcode']
     @zipcode_type = obj['zipcode_type']
