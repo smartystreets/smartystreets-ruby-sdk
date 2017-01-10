@@ -77,4 +77,15 @@ class TestNativeSender < Minitest::Test
 
     assert_equal('400', response.status_code)
   end
+
+  def test_request_has_all_added_custom_headers
+    smarty_request = Request.new
+    smarty_request.url_prefix = 'http://localhost'
+    smarty_request.headers = {'User-Agent' => ['Some plugin', 'Some other plugin'], 'X-Something' => ['X value']}
+
+    native_request = NativeSender.build_request(smarty_request)
+
+    assert_equal('smartystreets (sdk:ruby@0.0.0), Some plugin, Some other plugin', native_request['User-Agent'])
+    assert_equal('X value', native_request['X-Something'])
+  end
 end

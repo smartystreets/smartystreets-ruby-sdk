@@ -31,9 +31,10 @@ class NativeSender
     query = create_query(smarty_request)
     request = Net::HTTP::Post.new(URI.parse("#{smarty_request.url_prefix}?#{query}"))
     request.content_type = 'application/json'
+    request.body = smarty_request.payload
     request['User-Agent'] = "smartystreets (sdk:ruby@#{SmartystreetsRubySdk::VERSION})"
     request['Referer'] = smarty_request.referer if smarty_request.referer != nil
-    request.body = smarty_request.payload
+    set_custom_headers(smarty_request.headers, request)
     request
   end
 
@@ -50,5 +51,13 @@ class NativeSender
 
     query_string[0] = ''
     query_string
+  end
+
+  def self.set_custom_headers(smarty_headers, request)
+    smarty_headers.each do |key, values|
+      values.each do |value|
+        request.add_field(key, value)
+      end
+    end
   end
 end
