@@ -34,7 +34,6 @@ class NativeSender
     request['User-Agent'] = "smartystreets (sdk:ruby@#{SmartystreetsRubySdk::VERSION})"
     request['Referer'] = smarty_request.referer if smarty_request.referer != nil
     request.body = smarty_request.payload
-    request.uri.query = create_query(smarty_request)
     request
   end
 
