@@ -1,4 +1,5 @@
 class Batch
+  include Enumerable
   MAX_BATCH_SIZE = 100
 
   attr_reader :all_lookups, :named_lookups
@@ -37,6 +38,14 @@ class Batch
   end
 
   def get_by_index(index)
+    @all_lookups[index]
+  end
+
+  def each(&block)
+    @all_lookups.each(&block)
+  end
+
+  def [](index)
     @all_lookups[index]
   end
 
