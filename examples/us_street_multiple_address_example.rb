@@ -32,13 +32,11 @@ class USStreetMultipleAddressExample
       return
     end
 
-    i = 0
-    batch.each do |lookup|
+    batch.each_with_index do |lookup, i|
       candidates = lookup.result
 
       if candidates.length == 0
         puts "Address #{i} is invalid.\n\n"
-        i += 1
         next
       end
 
@@ -57,7 +55,6 @@ class USStreetMultipleAddressExample
         puts "Longitude:       #{metadata.longitude}"
         puts
       end
-      i += 1
     end
   end
 end

@@ -2,7 +2,7 @@ require 'smartystreets_ruby_sdk/static_credentials'
 require 'smartystreets_ruby_sdk/us_zipcode/client_builder'
 require 'smartystreets_ruby_sdk/us_zipcode/lookup'
 
-class USZipcodeSingleAddressExample
+class UsZipcodeSingleLookupExample
   def run
     auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
     auth_token = ENV['SMARTY_AUTH_TOKEN']
@@ -39,5 +39,5 @@ class USZipcodeSingleAddressExample
   end
 end
 
-example = USZipcodeSingleAddressExample.new
+example = UsZipcodeSingleLookupExample.new
 example.run
