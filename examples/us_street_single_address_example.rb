@@ -8,9 +8,9 @@ class USStreetSingleAddressExample
     auth_token = ENV['SMARTY_AUTH_TOKEN']
     credentials = StaticCredentials.new(auth_id, auth_token)
 
-    client = ClientBuilder.new(credentials).build
+    client = USStreet::ClientBuilder.new(credentials).build
 
-    lookup = Lookup.new
+    lookup = USStreet::Lookup.new
     lookup.street = '1600 Amphitheatre Pkwy'
     lookup.city = 'Mountain View'
     lookup.state = 'CA'
