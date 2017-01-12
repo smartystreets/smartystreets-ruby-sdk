@@ -5,7 +5,7 @@ class TestStandardSerializer < Minitest::Test
   def test_serialize
     serializer = NativeSerializer.new
 
-    result = serializer.serialize([Lookup.new('123 fake street')])
+    result = serializer.serialize([USStreet::Lookup.new('123 fake street')])
 
     assert(result.include?('"street":"123 fake street"'), "Result is: #{result}")
   end

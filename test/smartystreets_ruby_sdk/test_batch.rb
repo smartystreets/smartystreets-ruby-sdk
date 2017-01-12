@@ -3,6 +3,7 @@ require './lib/smartystreets_ruby_sdk/batch'
 require './lib/smartystreets_ruby_sdk/us_street/lookup'
 
 class TestBatch < Minitest::Test
+  Lookup = USStreet::Lookup
   def setup
     @batch = Batch.new
   end

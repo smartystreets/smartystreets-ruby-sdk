@@ -8,6 +8,10 @@ require './lib/smartystreets_ruby_sdk/us_street/client'
 require './lib/smartystreets_ruby_sdk/us_street/candidate'
 
 class TestClient < Minitest::Test
+  Lookup = USStreet::Lookup
+  Candidate = USStreet::Candidate
+  Client = USStreet::Client
+
   def test_freeform_assigned_to_street_field
     lookup = Lookup.new('freeform address')
 
