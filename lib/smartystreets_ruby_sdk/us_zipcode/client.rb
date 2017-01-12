@@ -1,4 +1,6 @@
 require_relative 'result'
+require_relative '../batch'
+require_relative '../request'
 
 module USZipcode
   class Client
