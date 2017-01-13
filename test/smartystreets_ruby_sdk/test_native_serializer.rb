@@ -1,7 +1,7 @@
 require './lib/smartystreets_ruby_sdk/native_serializer'
 require './lib/smartystreets_ruby_sdk/us_street/lookup'
 
-class TestStandardSerializer < Minitest::Test
+class TestNativeSerializer < Minitest::Test
   def test_serialize
     serializer = NativeSerializer.new
 
