@@ -19,6 +19,8 @@ class TestNativeSender < Minitest::Test
     def request(request)
       if request.uri == URI.parse('http://localhost/error?')
         mock_response = MockResponse.new('Error test', '400')
+      elsif request.uri == URI.parse('http://localhost/exception?')
+        raise SmartyException
       else
         mock_response = MockResponse.new('This is the test payload.', '200')
       end
@@ -27,14 +29,25 @@ class TestNativeSender < Minitest::Test
     end
   end
 
-  def test_http_request_contains_post
+  def test_native_request_contains_post
     smarty_request = Request.new
     smarty_request.url_prefix = 'http://localhost'
-
     smarty_request.payload = 'Test Payload'
+
     request = NativeSender.build_request(smarty_request)
 
     assert_equal('POST', request.method)
+  end
+
+  def test_query_contains_correct_parameters
+    smarty_request = Request.new
+    smarty_request.url_prefix = 'http://localhost'
+    smarty_request.payload = 'Test Payload'
+    smarty_request.parameters = {'auth-id' => 'testID', 'auth-token' => 'testToken'}
+
+    query = NativeSender.create_query(smarty_request)
+
+    assert_equal('auth-id=testID&auth-token=testToken', query)
   end
 
   def test_request_contains_correct_content
@@ -76,6 +89,16 @@ class TestNativeSender < Minitest::Test
     response = sender.send(smarty_request)
 
     assert_equal('400', response.status_code)
+  end
+
+  def test_properly_handles_exceptions
+    sender = NativeSender.new
+    smarty_request = Request.new
+    smarty_request.url_prefix = 'http://localhost/exception'
+
+    response = sender.send(smarty_request)
+
+    assert_instance_of(SmartyException, response.error)
   end
 
   def test_request_has_all_added_custom_headers

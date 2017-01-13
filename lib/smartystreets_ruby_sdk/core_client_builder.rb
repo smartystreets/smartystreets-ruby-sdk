@@ -48,7 +48,7 @@ class CoreClientBuilder
 
     sender = SigningSender.new(@signer, sender) if @signer != nil
 
-    sender = RetrySender.new(@max_retries, sender) if @max_retries > 0
+    sender = RetrySender.new(@max_retries, sender, Sleeper.new) if @max_retries > 0
 
     URLPrefixSender.new(@url_prefix, sender)
   end

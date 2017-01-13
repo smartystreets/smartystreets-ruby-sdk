@@ -2,7 +2,7 @@ require './lib/smartystreets_ruby_sdk/us_zipcode/client'
 require './lib/smartystreets_ruby_sdk/us_zipcode/lookup'
 
 
-class TestClient < Minitest::Test
+class TestZipcodeClient < Minitest::Test
 
   def test_empty_batch_not_sent
     sender = RequestCapturingSender.new
@@ -60,7 +60,7 @@ class TestClient < Minitest::Test
     client = USZipcode::Client.new(MockExceptionSender.new(exception), FakeSerializer.new(nil))
 
     assert_raises exception do
-      client.send_lookup(Lookup.new)
+      client.send_lookup(USZipcode::Lookup.new)
     end
   end
 end
