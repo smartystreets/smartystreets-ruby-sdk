@@ -1,5 +1,7 @@
 require './lib/smartystreets_ruby_sdk/us_street/candidate'
 require './lib/smartystreets_ruby_sdk/us_street/components'
+require './lib/smartystreets_ruby_sdk/us_street/metadata'
+require './lib/smartystreets_ruby_sdk/us_street/analysis'
 
 class TestCandidate < Minitest::Test
   def test_all_fields_filled_correctly

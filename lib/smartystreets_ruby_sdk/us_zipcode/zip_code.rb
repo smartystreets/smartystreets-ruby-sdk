@@ -1,5 +1,5 @@
 class ZipCode
-  attr_reader :longitude, :county_name, :zipcode, :zipcode_type, :county_fips, :latitude, :precision, :default_city
+  attr_reader :longitude, :county_name, :zipcode, :zipcode_type, :county_fips, :latitude, :precision, :default_city, :alternate_counties
 
   def initialize(obj)
     @zipcode = obj['zipcode']
@@ -10,5 +10,6 @@ class ZipCode
     @latitude = obj['latitude']
     @longitude = obj['longitude']
     @precision = obj['precision']
+    @alternate_counties = obj.fetch('alternate_counties', [])
   end
 end

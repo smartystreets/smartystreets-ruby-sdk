@@ -4,6 +4,7 @@ require_relative 'status_code_sender'
 require_relative 'signing_sender'
 require_relative 'retry_sender'
 require_relative 'url_prefix_sender'
+require_relative 'sleeper'
 
 class CoreClientBuilder
   def initialize(signer)

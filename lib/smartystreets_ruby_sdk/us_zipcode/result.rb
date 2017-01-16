@@ -16,7 +16,7 @@ module USZipcode
       @zipcodes = convert_zipcodes
     end
 
-    def is_valid
+    def is_valid?
       @status == nil and @reason == nil
     end
 
