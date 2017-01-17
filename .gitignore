@@ -2,3 +2,4 @@
 .idea
 coverage
 *.gem
+.vagrant/machines/default/virtualbox
