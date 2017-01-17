@@ -1,5 +1,5 @@
 class Sleeper
   def sleep(seconds)
-    sleep(seconds)
+    Kernel::sleep(seconds)
   end
 end

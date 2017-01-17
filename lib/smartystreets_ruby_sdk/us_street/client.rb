@@ -58,7 +58,7 @@ module USStreet
     def assign_candidates_to_lookups(batch, candidates)
       candidates.each { |raw_candidate|
         candidate = Candidate.new(raw_candidate)
-        batch.get_by_index(candidate.input_index).result.push(candidate)
+        batch[candidate.input_index].result.push(candidate)
       }
     end
   end
