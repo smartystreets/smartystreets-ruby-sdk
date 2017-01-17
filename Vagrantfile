@@ -15,6 +15,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 end
 
 $provision = <<-EOF
-  
+  apt-get install -y ruby
 
 EOF
