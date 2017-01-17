@@ -1,3 +1,4 @@
 *.lock
 .idea
 coverage
+*.gem
