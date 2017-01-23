@@ -16,5 +16,4 @@ end
 
 $provision = <<-EOF
   apt-get install -y ruby
-
 EOF
