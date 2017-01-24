@@ -1,3 +1,4 @@
+require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/us_zipcode/result'
 
 class TestResult < Minitest::Test

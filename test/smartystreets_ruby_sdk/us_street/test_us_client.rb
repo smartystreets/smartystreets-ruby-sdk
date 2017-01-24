@@ -1,3 +1,4 @@
+require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/exceptions'
 require './test/mocks/request_capturing_sender'
 require './test/mocks/fake_serializer'

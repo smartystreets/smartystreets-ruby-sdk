@@ -1,3 +1,4 @@
+require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/native_serializer'
 require './lib/smartystreets_ruby_sdk/us_street/lookup'
 

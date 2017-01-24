@@ -1,4 +1,6 @@
+require 'minitest/autorun'
 require_relative '../../lib/smartystreets_ruby_sdk/custom_header_sender'
+require_relative '../../lib/smartystreets_ruby_sdk/response.rb'
 
 class TestCustomHeaderSender < Minitest::Test
   def test_all_custom_headers_are_added_to_the_request

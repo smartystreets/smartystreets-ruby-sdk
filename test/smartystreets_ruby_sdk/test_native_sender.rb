@@ -1,5 +1,6 @@
-require_relative '../../lib/smartystreets_ruby_sdk/native_sender'
+require 'minitest/autorun'
 require 'net/http'
+require_relative '../../lib/smartystreets_ruby_sdk/native_sender'
 
 class TestNativeSender < Minitest::Test
   Net::HTTP.class_eval do

@@ -1,3 +1,4 @@
+require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/exceptions'
 require './lib/smartystreets_ruby_sdk/errors'
 require './lib/smartystreets_ruby_sdk/status_code_sender'

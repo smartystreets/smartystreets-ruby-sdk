@@ -1,3 +1,4 @@
+require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/static_credentials'
 require './lib/smartystreets_ruby_sdk/shared_credentials'
 require './lib/smartystreets_ruby_sdk/signing_sender'

@@ -1,3 +1,4 @@
+require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/url_prefix_sender'
 
 class TestURLPrefixSender < Minitest::Test

@@ -1,3 +1,4 @@
+require 'minitest/autorun'
 require './test/mocks/failing_sender'
 require './test/mocks/fake_sleeper'
 require './lib/smartystreets_ruby_sdk/request'

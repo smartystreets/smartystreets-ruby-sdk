@@ -2,6 +2,9 @@
 
 SOURCE_VERSION := 1.0
 
+tests:
+	ruby -Ilib -e 'ARGV.each { |f| require f }' ./test/smartystreets_ruby_sdk/test*.rb
+
 publish: version
 	git push origin --tags
 	gem build smartystreets_ruby_sdk.gemspec
