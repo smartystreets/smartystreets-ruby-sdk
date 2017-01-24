@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-SOURCE_VERSION := 1.0
+SOURCE_VERSION := 2.0
 
 tests:
 	ruby -Ilib -e 'ARGV.each { |f| require f }' ./test/smartystreets_ruby_sdk/test*.rb ./test/smartystreets_ruby_sdk/us_street/test*.rb ./test/smartystreets_ruby_sdk/us_zipcode/test*.rb
