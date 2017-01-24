@@ -1,6 +1,6 @@
-require_relative 'Components'
-require_relative 'Metadata'
-require_relative 'Analysis'
+require_relative 'components'
+require_relative 'metadata'
+require_relative 'analysis'
 
 module USStreet
   class Candidate
