@@ -5,6 +5,7 @@ require_relative 'signing_sender'
 require_relative 'retry_sender'
 require_relative 'url_prefix_sender'
 require_relative 'sleeper'
+require_relative 'logger'
 
 class CoreClientBuilder
   def initialize(signer)
@@ -49,7 +50,7 @@ class CoreClientBuilder
 
     sender = SigningSender.new(@signer, sender) if @signer != nil
 
-    sender = RetrySender.new(@max_retries, sender, Sleeper.new) if @max_retries > 0
+    sender = RetrySender.new(@max_retries, sender, Sleeper.new, Logger.new) if @max_retries > 0
 
     URLPrefixSender.new(@url_prefix, sender)
   end

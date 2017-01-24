@@ -1,23 +1,11 @@
 require 'minitest/autorun'
 require './test/mocks/failing_sender'
 require './test/mocks/fake_sleeper'
+require './test/mocks/fake_logger'
 require './lib/smartystreets_ruby_sdk/request'
 require './lib/smartystreets_ruby_sdk/retry_sender'
 
 class TestRetrySender < Minitest::Test
-
-  # RetrySender.class_eval do
-  #   def backoff(attempt)
-  #     @sleep_durations.push([attempt, 10].min)
-  #   end
-  # end
-
-  # Kernel.class_eval do
-  #   def sleep(seconds)
-  #     @sleep_durations.push(seconds)
-  #   end
-  # end
-
 
   def test_success_does_not_retry
     inner = FailingSender.new(['200'])
@@ -28,7 +16,7 @@ class TestRetrySender < Minitest::Test
   end
 
   def test_retry_until_success
-    inner = FailingSender.new(['401', '402', '400', '200', '500'])
+    inner = FailingSender.new(%w(401 402 400 200 500))
 
     send_with_retry(10, inner, FakeSleeper.new)
 
@@ -36,7 +24,7 @@ class TestRetrySender < Minitest::Test
   end
 
   def test_return_response_if_retry_limit_exceeded
-    inner = FailingSender.new(['500', '500', '500', '500', '500', '500'])
+    inner = FailingSender.new(%w(500 500 500 500 500 500))
     sleeper = FakeSleeper.new
 
     response = send_with_retry(4, inner, sleeper)
@@ -48,7 +36,7 @@ class TestRetrySender < Minitest::Test
   end
 
   def test_backoff_does_not_exceed_max
-    inner = FailingSender.new(['401', '402', '400', '500', '500', '500', '500', '500', '500', '500', '500', '500', '500', '200'])
+    inner = FailingSender.new(%w(401 402 400 500 500 500 500 500 500 500 500 500 500 200))
     sleeper = FakeSleeper.new
 
     send_with_retry(20, inner, sleeper)
@@ -60,7 +48,7 @@ end
 
 def send_with_retry(retries, inner, sleeper)
   request = Request.new
-  sender = RetrySender.new(retries, inner, sleeper)
+  sender = RetrySender.new(retries, inner, sleeper, FakeLogger.new)
 
   sender.send(request)
 end

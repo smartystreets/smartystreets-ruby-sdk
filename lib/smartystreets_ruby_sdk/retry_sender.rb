@@ -2,10 +2,11 @@ class RetrySender
   MAX_BACKOFF_DURATION = 10
   STATUS_OK = '200'
 
-  def initialize(max_retries, inner, sleeper)
+  def initialize(max_retries, inner, sleeper, logger)
     @max_retries = max_retries
     @inner = inner
     @sleeper = sleeper
+    @logger = logger
   end
 
   def send(request)
@@ -27,7 +28,7 @@ class RetrySender
   def backoff(attempt)
     backoff_duration = [attempt, MAX_BACKOFF_DURATION].min
 
-    puts("There was an error processing the request. Retrying in #{backoff_duration} seconds...")
+    @logger.log("There was an error processing the request. Retrying in #{backoff_duration} seconds...")
     @sleeper.sleep(backoff_duration)
   end
 end
