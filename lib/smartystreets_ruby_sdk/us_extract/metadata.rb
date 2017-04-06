@@ -1,6 +1,8 @@
 module USExtract
   # See "https://smartystreets.com/docs/cloud/us-extract-api#http-response-status"
   class Metadata
+    attr_reader :unicode, :lines, :verified_count, :character_count, :bytes, :address_count
+
     def initialize(obj)
       @lines = obj['lines']
       @unicode = obj['unicode']
