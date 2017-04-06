@@ -6,6 +6,8 @@ module USExtract
   #
   # See "https://smartystreets.com/docs/cloud/us-extract-api#http-request-input-fields"
   class Lookup < JSONAble
+    attr_accessor :text, :result, :aggressive, :addresses_per_line, :html, :addresses_have_line_breaks
+
     def initialize(text=nil, html=nil, aggressive=nil, addresses_have_line_breaks=nil, addresses_per_line=nil)
       @text = text
       @html = html
