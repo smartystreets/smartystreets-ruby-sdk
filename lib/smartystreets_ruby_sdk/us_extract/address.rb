@@ -15,7 +15,7 @@ module USExtract
       @candidates = []
 
       candidates.each { |candidate|
-        @candidates.push(Candidate(candidate))
+        @candidates.push(USStreet::Candidate.new(candidate))
       }
     end
   end
