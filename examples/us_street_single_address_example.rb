@@ -17,7 +17,7 @@ class USStreetSingleAddressExample
 
     begin
       client.send_lookup(lookup)
-    rescue SmartyException => err
+    rescue SmartyError => err
       puts err
       return
     end

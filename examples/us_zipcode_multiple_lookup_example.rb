@@ -23,7 +23,7 @@ class USZipcodeMultipleLookupExample
 
     begin
       client.send_batch(batch)
-    rescue SmartyException => err
+    rescue SmartyError => err
       puts err
       return
     end

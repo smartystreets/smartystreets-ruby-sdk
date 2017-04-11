@@ -1,34 +1,36 @@
-class RetrySender
-  MAX_BACKOFF_DURATION = 10
-  STATUS_OK = '200'
+module Smartystreets
+  class RetrySender
+    MAX_BACKOFF_DURATION = 10
+    STATUS_OK = '200'
 
-  def initialize(max_retries, inner, sleeper, logger)
-    @max_retries = max_retries
-    @inner = inner
-    @sleeper = sleeper
-    @logger = logger
-  end
+    def initialize(max_retries, inner, sleeper, logger)
+      @max_retries = max_retries
+      @inner = inner
+      @sleeper = sleeper
+      @logger = logger
+    end
 
-  def send(request)
-    response = @inner.send(request)
-
-    (0..@max_retries-1).each { |i|
-      if response.status_code == STATUS_OK
-        break
-      end
-
-      backoff(i)
-
+    def send(request)
       response = @inner.send(request)
-    }
 
-  response
-  end
+      (0..@max_retries-1).each { |i|
+        if response.status_code == STATUS_OK
+          break
+        end
 
-  def backoff(attempt)
-    backoff_duration = [attempt, MAX_BACKOFF_DURATION].min
+        backoff(i)
 
-    @logger.log("There was an error processing the request. Retrying in #{backoff_duration} seconds...")
-    @sleeper.sleep(backoff_duration)
+        response = @inner.send(request)
+      }
+
+    response
+    end
+
+    def backoff(attempt)
+      backoff_duration = [attempt, MAX_BACKOFF_DURATION].min
+
+      @logger.log("There was an error processing the request. Retrying in #{backoff_duration} seconds...")
+      @sleeper.sleep(backoff_duration)
+    end
   end
 end

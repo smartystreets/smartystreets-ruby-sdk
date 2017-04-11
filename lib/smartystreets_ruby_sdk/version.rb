@@ -1,3 +1,3 @@
-module SmartystreetsRubySdk
-  VERSION = '0.0.0'
+module Smartystreets
+  VERSION = '0.1.0'
 end

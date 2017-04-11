@@ -5,13 +5,13 @@ require './lib/smartystreets_ruby_sdk/signing_sender'
 
 class TestSigningSender < Minitest::Test
   def setup
-    @inner = MockSender.new(Response.new('Test payload', '200'))
-    @request = Request.new
+    @inner = MockSender.new(Smartystreets::Response.new('Test payload', '200'))
+    @request = Smartystreets::Request.new
   end
 
   def test_successful_signing_with_static_credentials
-    @credentials = StaticCredentials.new('testID', 'testToken')
-    @sender = SigningSender.new(@credentials, @inner)
+    @credentials = Smartystreets::StaticCredentials.new('testID', 'testToken')
+    @sender = Smartystreets::SigningSender.new(@credentials, @inner)
 
     @sender.send(@request)
 
@@ -20,8 +20,8 @@ class TestSigningSender < Minitest::Test
   end
 
   def test_successful_signing_with_shared_credentials
-    @credentials = SharedCredentials.new('testID', 'https://test.host.com')
-    @sender = SigningSender.new(@credentials, @inner)
+    @credentials = Smartystreets::SharedCredentials.new('testID', 'https://test.host.com')
+    @sender = Smartystreets::SigningSender.new(@credentials, @inner)
 
     @sender.send(@request)
 

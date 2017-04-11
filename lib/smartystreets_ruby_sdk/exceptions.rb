@@ -1,28 +1,30 @@
-class SmartyException < Exception
-end
+module Smartystreets
+  class SmartyError < StandardError
+  end
 
-class BadCredentialsError < SmartyException
-end
+  class BadCredentialsError < SmartyError
+  end
 
-class PaymentRequiredError < SmartyException
-end
-
-
-class RequestEntityTooLargeError < SmartyException
-end
+  class PaymentRequiredError < SmartyError
+  end
 
 
-class BadRequestError < SmartyException
-end
+  class RequestEntityTooLargeError < SmartyError
+  end
 
 
-class TooManyRequestsError < SmartyException
-end
+  class BadRequestError < SmartyError
+  end
 
 
-class InternalServerError < SmartyException
-end
+  class TooManyRequestsError < SmartyError
+  end
 
 
-class ServiceUnavailableError < SmartyException
+  class InternalServerError < SmartyError
+  end
+
+
+  class ServiceUnavailableError < SmartyError
+  end
 end

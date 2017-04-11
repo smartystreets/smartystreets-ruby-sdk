@@ -9,21 +9,21 @@ require './lib/smartystreets_ruby_sdk/us_street/client'
 require './lib/smartystreets_ruby_sdk/us_street/candidate'
 
 class TestUSClient < Minitest::Test
-  Lookup = USStreet::Lookup
-  Candidate = USStreet::Candidate
-  Client = USStreet::Client
+  Lookup = Smartystreets::USStreet::Lookup
+  Candidate = Smartystreets::USStreet::Candidate
+  Client = Smartystreets::USStreet::Client
 
   def test_freeform_assigned_to_street_field
-    lookup = Lookup.new('freeform address')
+    lookup = Smartystreets::USStreet::Lookup.new('freeform address')
 
     assert_equal('freeform address', lookup.street)
   end
 
   def test_empty_batch_not_sent
     sender = RequestCapturingSender.new
-    client = Client.new(sender, nil)
+    client = Smartystreets::USStreet::Client.new(sender, nil)
 
-    client.send_batch(Batch.new)
+    client.send_batch(Smartystreets::Batch.new)
 
     assert_nil(sender.request)
   end
@@ -32,10 +32,10 @@ class TestUSClient < Minitest::Test
     expected_payload = 'Hello, World!'
     sender = RequestCapturingSender.new
     serializer = FakeSerializer.new(expected_payload)
-    client = Client.new(sender, serializer)
-    batch = Batch.new
-    batch.add(Lookup.new)
-    batch.add(Lookup.new)
+    client = Smartystreets::USStreet::Client.new(sender, serializer)
+    batch = Smartystreets::Batch.new
+    batch.add(Smartystreets::USStreet::Lookup.new)
+    batch.add(Smartystreets::USStreet::Lookup.new)
 
     client.send_batch(batch)
 
@@ -43,12 +43,12 @@ class TestUSClient < Minitest::Test
   end
 
   def test_deserialize_called_with_response_body
-    response = Response.new('Hello, World!', 0)
+    response = Smartystreets::Response.new('Hello, World!', 0)
     sender = MockSender.new(response)
     deserializer = FakeDeserializer.new(nil)
-    client = Client.new(sender, deserializer)
+    client = Smartystreets::USStreet::Client.new(sender, deserializer)
 
-    client.send_lookup(Lookup.new)
+    client.send_lookup(Smartystreets::USStreet::Lookup.new)
 
     assert_equal(response.payload, deserializer.input)
   end
@@ -60,12 +60,12 @@ class TestUSClient < Minitest::Test
     raw_candidates = [candidate0, candidate1, candidate2]
 
     expected_candidates = [Candidate.new(candidate0), Candidate.new(candidate1), Candidate.new(candidate2)]
-    batch = Batch.new
-    batch.add(Lookup.new)
-    batch.add(Lookup.new)
-    sender = MockSender.new(Response.new('[]', 0))
+    batch = Smartystreets::Batch.new
+    batch.add(Smartystreets::USStreet::Lookup.new)
+    batch.add(Smartystreets::USStreet::Lookup.new)
+    sender = MockSender.new(Smartystreets::Response.new('[]', 0))
     deserializer = FakeDeserializer.new(raw_candidates)
-    client = Client.new(sender, deserializer)
+    client = Smartystreets::USStreet::Client.new(sender, deserializer)
 
     client.send_batch(batch)
 
@@ -75,11 +75,11 @@ class TestUSClient < Minitest::Test
   end
 
   def test_raises_exception_when_response_has_error
-    exception = BadCredentialsError
-    client = Client.new(MockExceptionSender.new(exception), FakeSerializer.new(nil))
+    exception = Smartystreets::BadCredentialsError
+    client = Smartystreets::USStreet::Client.new(MockExceptionSender.new(exception), FakeSerializer.new(nil))
 
     assert_raises exception do
-      client.send_lookup(Lookup.new)
+      client.send_lookup(Smartystreets::USStreet::Lookup.new)
     end
   end
 end

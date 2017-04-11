@@ -1,4 +1,4 @@
-module SmartystreetsRubySdk
+module Smartystreets
   class Sleeper
     def sleep(seconds)
       Kernel::sleep(seconds)

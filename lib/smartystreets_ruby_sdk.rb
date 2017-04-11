@@ -1,6 +1,6 @@
-require_relative 'smartystreets_ruby_sdk/version'
-require_relative 'smartystreets_ruby_sdk/logger'
-require_relative 'smartystreets_ruby_sdk/sleeper'
+require 'smartystreets/version'
+require 'smartystreets/logger'
+require 'smartystreets/sleeper'
 
-module SmartystreetsRubySdk
+module Smartystreets
 end

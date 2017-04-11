@@ -8,6 +8,6 @@ class RequestCapturingSender
   def send(request)
     @request = request
 
-    Response.new('[]', 200)
+    Smartystreets::Response.new('[]', 200)
   end
 end
