@@ -20,7 +20,9 @@ class TestResult < Minitest::Test
           'latitude' => 10,
           'longitude' => 11,
           'precision' => '12',
-          'alternate_counties' => ['13']
+          'alternate_counties' => ['13'],
+          'state_abbreviation' => '14',
+          'state' => '15'
                      }]
     }
 
@@ -44,6 +46,8 @@ class TestResult < Minitest::Test
     assert_equal(11, result.zipcodes[0].longitude)
     assert_equal('12', result.zipcodes[0].precision)
     assert_equal('13', result.zipcodes[0].alternate_counties[0])
+    assert_equal('14', result.zipcodes[0].state_abbreviation)
+    assert_equal('15', result.zipcodes[0].state)
 
     assert(result.is_valid?)
   end
