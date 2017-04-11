@@ -110,7 +110,7 @@ class TestNativeSender < Minitest::Test
 
     native_request = Smartystreets::NativeSender.build_request(smarty_request)
 
-    assert_equal('smartystreets (sdk:ruby@0.1.0), Some plugin, Some other plugin', native_request['User-Agent'])
+    assert_equal('smartystreets (sdk:ruby@2.0.3), Some plugin, Some other plugin', native_request['User-Agent'])
     assert_equal('X value', native_request['X-Something'])
   end
 end
