@@ -67,7 +67,7 @@ class TestCandidate < Minitest::Test
         }
     }
 
-    candidate = USStreet::Candidate.new(obj)
+    candidate = Smartystreets::USStreet::Candidate.new(obj)
 
     assert_equal(0, candidate.input_index)
     assert_equal(1, candidate.candidate_index)

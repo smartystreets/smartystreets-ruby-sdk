@@ -47,8 +47,8 @@ class TestRetrySender < Minitest::Test
 end
 
 def send_with_retry(retries, inner, sleeper)
-  request = Request.new
-  sender = RetrySender.new(retries, inner, sleeper, FakeLogger.new)
+  request = Smartystreets::Request.new
+  sender = Smartystreets::RetrySender.new(retries, inner, sleeper, FakeLogger.new)
 
   sender.send(request)
 end

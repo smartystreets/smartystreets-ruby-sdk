@@ -3,13 +3,13 @@ require './lib/smartystreets_ruby_sdk/batch'
 require './lib/smartystreets_ruby_sdk/us_street/lookup'
 
 class TestBatch < Minitest::Test
-  Lookup = USStreet::Lookup
+  Lookup = Smartystreets::USStreet::Lookup
   def setup
-    @batch = Batch.new
+    @batch = Smartystreets::Batch.new
   end
 
   def test_gets_lookup_by_input_id
-    lookup = Lookup.new
+    lookup = Smartystreets::USStreet::Lookup.new
     lookup.input_id = 'has input id'
 
     @batch.add(lookup)
@@ -18,7 +18,7 @@ class TestBatch < Minitest::Test
   end
 
   def test_gets_lookup_by_index
-    lookup = Lookup.new
+    lookup = Smartystreets::USStreet::Lookup.new
 
     @batch.add(lookup)
 
@@ -26,15 +26,15 @@ class TestBatch < Minitest::Test
   end
 
   def test_returns_correct_size
-    @batch.add(Lookup.new)
-    @batch.add(Lookup.new)
-    @batch.add(Lookup.new)
+    @batch.add(Smartystreets::USStreet::Lookup.new)
+    @batch.add(Smartystreets::USStreet::Lookup.new)
+    @batch.add(Smartystreets::USStreet::Lookup.new)
 
     assert_equal(3, @batch.size)
   end
 
   def test_clear_method_clears_both_lookup_collections
-    lookup = Lookup.new
+    lookup = Smartystreets::USStreet::Lookup.new
     lookup.input_id = 'test'
     @batch.add(lookup)
 
@@ -45,11 +45,11 @@ class TestBatch < Minitest::Test
   end
 
   def test_adding_a_lookup_when_batch_is_full_returns_false
-    lookup = Lookup.new
+    lookup = Smartystreets::USStreet::Lookup.new
 
     success = nil
 
-    (1..Batch::MAX_BATCH_SIZE).each {
+    (1..Smartystreets::Batch::MAX_BATCH_SIZE).each {
         success = @batch.add(lookup)
     }
 

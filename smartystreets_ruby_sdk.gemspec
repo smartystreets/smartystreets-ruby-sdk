@@ -5,11 +5,11 @@ require 'smartystreets_ruby_sdk/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'smartystreets_ruby_sdk'
-  spec.version       = SmartystreetsRubySdk::VERSION
-  spec.authors       = ['SmartyStreets SDK Team']
+  spec.version       = Smartystreets::VERSION
+  spec.authors       = ['Smartystreets SDK Team']
   spec.license       = 'Apache-2.0'
   spec.email         = ['support@smartystreets.com']
-  spec.summary       = 'An official library for the SmartyStreets APIs'
+  spec.summary       = 'An official library for the Smartystreets APIs'
   spec.homepage      = 'https://github.com/smartystreets/smartystreets-ruby-sdk'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|

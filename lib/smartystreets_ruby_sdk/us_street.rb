@@ -1,10 +1,10 @@
-require_relative './us_street/analysis'
-require_relative './us_street/candidate'
-require_relative './us_street/client'
-require_relative './us_street/client_builder'
-require_relative './us_street/components'
-require_relative './us_street/lookup'
-require_relative './us_street/metadata'
+require 'smartystreets_ruby_sdk/us_street/candidate'
+require 'smartystreets_ruby_sdk/us_street/analysis'
+require 'smartystreets_ruby_sdk/us_street/client'
+require 'smartystreets_ruby_sdk/us_street/client_builder'
+require 'smartystreets_ruby_sdk/us_street/components'
+require 'smartystreets_ruby_sdk/us_street/lookup'
+require 'smartystreets_ruby_sdk/us_street/metadata'
 
-module USStreet
+module Smartystreets::USStreet
 end

@@ -7,10 +7,10 @@ class TestCustomHeaderSender < Minitest::Test
     headers = {}
     headers['A'] = %w(1 2)
     headers['B'] = ['1']
-    mock_response = Response.new('Testing','123')
+    mock_response = Smartystreets::Response.new('Testing','123')
     inner = MockSender.new(mock_response)
-    sender = CustomHeaderSender.new(inner, headers)
-    request = Request.new
+    sender = Smartystreets::CustomHeaderSender.new(inner, headers)
+    request = Smartystreets::Request.new
 
     response = sender.send(request)
 

@@ -1,7 +1,7 @@
-require_relative './us_extract/lookup'
-require_relative './us_extract/address'
-require_relative './us_extract/metadata'
-require_relative './us_extract/result'
+require 'smartystreets_ruby_sdk/us_extract/address'
+require 'smartystreets_ruby_sdk/us_extract/lookup'
+require 'smartystreets_ruby_sdk/us_extract/metadata'
+require 'smartystreets_ruby_sdk/us_extract/result'
 
-module USExtract
+module Smartystreets::USExtract
 end
