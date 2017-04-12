@@ -1,5 +1,5 @@
 require 'smartystreets_ruby_sdk/static_credentials'
-require 'smartystreets_ruby_sdk/us_street/client_builder'
+require 'smartystreets_ruby_sdk/client_builder'
 require 'smartystreets_ruby_sdk/us_street/lookup'
 
 class USStreetSingleAddressExample
@@ -8,7 +8,7 @@ class USStreetSingleAddressExample
     auth_token = ENV['SMARTY_AUTH_TOKEN']
     credentials = StaticCredentials.new(auth_id, auth_token)
 
-    client = USStreet::ClientBuilder.new(credentials).build
+    client = ClientBuilder.new(credentials).build_us_street_api_client
 
     lookup = USStreet::Lookup.new
     lookup.street = '1600 Amphitheatre Pkwy'

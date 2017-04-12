@@ -8,7 +8,7 @@ require './test/mocks/mock_exception_sender'
 require './lib/smartystreets_ruby_sdk/us_street/client'
 require './lib/smartystreets_ruby_sdk/us_street/candidate'
 
-class TestUSClient < Minitest::Test
+class TestStreetClient < Minitest::Test
   Lookup = USStreet::Lookup
   Candidate = USStreet::Candidate
   Client = USStreet::Client

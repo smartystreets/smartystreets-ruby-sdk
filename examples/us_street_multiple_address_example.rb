@@ -1,5 +1,5 @@
 require 'smartystreets_ruby_sdk/static_credentials'
-require 'smartystreets_ruby_sdk/us_street/client_builder'
+require 'smartystreets_ruby_sdk/client_builder'
 require 'smartystreets_ruby_sdk/us_street/lookup'
 
 class USStreetMultipleAddressExample
@@ -8,7 +8,7 @@ class USStreetMultipleAddressExample
     auth_token = ENV['SMARTY_AUTH_TOKEN']
     credentials = StaticCredentials.new(auth_id, auth_token)
 
-    client = USStreet::ClientBuilder.new(credentials).build
+    client = ClientBuilder.new(credentials).build_us_street_api_client
     batch = Batch.new
 
     batch.add(USStreet::Lookup.new)

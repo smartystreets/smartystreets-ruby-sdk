@@ -1,5 +1,5 @@
 require 'smartystreets_ruby_sdk/static_credentials'
-require 'smartystreets_ruby_sdk/us_zipcode/client_builder'
+require 'smartystreets_ruby_sdk/client_builder'
 require 'smartystreets_ruby_sdk/us_zipcode/lookup'
 
 class USZipcodeMultipleLookupExample
@@ -8,7 +8,7 @@ class USZipcodeMultipleLookupExample
     auth_token = ENV['SMARTY_AUTH_TOKEN']
     credentials = StaticCredentials.new(auth_id, auth_token)
 
-    client = USZipcode::ClientBuilder.new(credentials).build
+    client = ClientBuilder.new(credentials).build_us_zipcode_api_client
     batch = Batch.new
 
     batch.add(USZipcode::Lookup.new)
