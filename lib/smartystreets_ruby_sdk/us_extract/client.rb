@@ -18,6 +18,9 @@ module USExtract
 
       request = build_request(lookup)
       response = @sender.send(request)
+      result = Result.new(@serializer.deserialize(response.payload))
+
+      lookup.result = result
     end
 
     def build_request(lookup)

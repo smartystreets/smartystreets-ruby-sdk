@@ -10,6 +10,6 @@ class FakeSerializer
   end
 
   def deserialize(payload)
-      nil
-    end
+    {}
+  end
 end
