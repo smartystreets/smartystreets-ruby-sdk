@@ -3,6 +3,7 @@ require 'smartystreets_ruby_sdk/client_builder'
 require 'smartystreets_ruby_sdk/us_street/lookup'
 
 class USStreetMultipleAddressExample
+  Lookup = USStreet::Lookup
   def run
     auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
     auth_token = ENV['SMARTY_AUTH_TOKEN']
@@ -11,24 +12,24 @@ class USStreetMultipleAddressExample
     client = ClientBuilder.new(credentials).build_us_street_api_client
     batch = Batch.new
 
-    batch.add(USStreet::Lookup.new)
+    batch.add(Lookup.new)
     batch[0].street = '1600 amphitheatre parkway'
     batch[0].city = 'Mountain view'
     batch[0].state = 'california'
 
-    batch.add(USStreet::Lookup.new('1 Rosedale, Baltimore, Maryland')) # Freeform addresses work too.
+    batch.add(Lookup.new('1 Rosedale, Baltimore, Maryland')) # Freeform addresses work too.
     batch[1].candidates = 10 # Allows up to ten possible matches to be returned (default is 1).
 
-    batch.add(USStreet::Lookup.new('123 Bogus Street, Pretend Lake, Oklahoma'))
+    batch.add(Lookup.new('123 Bogus Street, Pretend Lake, Oklahoma'))
 
-    batch.add(USStreet::Lookup.new)
+    batch.add(Lookup.new)
     batch[3].street = '1 Infinite Loop'
     batch[3].zipcode = '95014' # You can just input the street and ZIP if you want.
 
     begin
       client.send_batch(batch)
     rescue SmartyException => err
-      print(err)
+      puts err
       return
     end
 

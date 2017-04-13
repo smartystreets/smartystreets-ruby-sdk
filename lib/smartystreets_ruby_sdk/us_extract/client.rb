@@ -1,5 +1,6 @@
 require_relative '../request'
 require_relative '../exceptions'
+require_relative 'result'
 
 module USExtract
   # It is recommended to instantiate this class using ClientBuilder.build_us_extract_api_client()
@@ -13,7 +14,7 @@ module USExtract
     # It also returns the result directly.
     def send(lookup)
       if lookup.nil? or lookup.text.nil? or not lookup.text.is_a? String or lookup.text.empty?
-        raise SmartyException.new('Client.send() requires a Lookup with the "text" field set')
+        raise SmartyException, 'Client.send() requires a Lookup with the "text" field set'
       end
 
       request = build_request(lookup)
