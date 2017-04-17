@@ -9,6 +9,7 @@ require_relative 'logger'
 require_relative 'us_street/client'
 require_relative 'us_zipcode/client'
 require_relative 'us_extract/client'
+require_relative 'us_autocomplete/client'
 
 # The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.
 # You can use ClientBuilder's methods to customize settings like maximum retries or timeout duration.
@@ -71,6 +72,11 @@ class ClientBuilder
     self
   end
 
+  def build_us_autocomplete_api_client
+    ensure_url_prefix_not_null(US_AUTOCOMPLETE_API_URL_API_URL)
+    USAutocomplete::Client.new(build_sender, @serializer)
+  end
+
   def build_us_extract_api_client
     ensure_url_prefix_not_null(US_EXTRACT_API_URL)
     USExtract::Client.new(build_sender, @serializer)
@@ -87,7 +93,7 @@ class ClientBuilder
   end
 
   def build_sender
-    return @http_sender if @http_sender != nil
+    return @http_sender unless @http_sender.nil?
 
     sender = NativeSender.new(@max_timeout)
 
