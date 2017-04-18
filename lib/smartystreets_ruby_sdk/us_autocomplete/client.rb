@@ -1,6 +1,7 @@
 require_relative '../request'
 require_relative '../exceptions'
 require_relative 'geolocation_type'
+require_relative 'suggestion'
 
 module USAutocomplete
   # It is recommended to instantiate this class using ClientBuilder.build_us_autocomplete_api_client
@@ -52,7 +53,7 @@ module USAutocomplete
       converted_suggestions = []
 
       suggestion_hashes.each do |suggestion|
-        converted_suggestions.push(Suggestion.new(suggestion))
+        converted_suggestions.push(USAutocomplete::Suggestion.new(suggestion))
       end
 
       converted_suggestions

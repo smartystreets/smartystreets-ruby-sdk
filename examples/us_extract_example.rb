@@ -5,7 +5,7 @@ require 'smartystreets_ruby_sdk/us_extract/lookup'
 class USExtractExample
   Lookup = USExtract::Lookup
   def run
-    auth_id = ENV['SMARTY_AUTH_ID']  # We recommend storing your keys in environment variables
+    auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
     auth_token = ENV['SMARTY_AUTH_TOKEN']
     credentials = StaticCredentials.new(auth_id, auth_token)
 

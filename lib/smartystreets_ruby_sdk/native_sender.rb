@@ -29,7 +29,11 @@ class NativeSender
 
   def self.build_request(smarty_request)
     query = create_query(smarty_request)
-    request = Net::HTTP::Post.new(URI.parse("#{smarty_request.url_prefix}?#{query}"))
+    if smarty_request.payload.nil?
+      request = Net::HTTP::Get.new(URI.parse("#{smarty_request.url_prefix}?#{query}"))
+    else
+      request = Net::HTTP::Post.new(URI.parse("#{smarty_request.url_prefix}?#{query}"))
+    end
     request.content_type = 'application/json'
     request.body = smarty_request.payload
     request['User-Agent'] = "smartystreets (sdk:ruby@#{SmartystreetsRubySdk::VERSION})"

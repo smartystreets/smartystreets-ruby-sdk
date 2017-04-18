@@ -73,7 +73,7 @@ class ClientBuilder
   end
 
   def build_us_autocomplete_api_client
-    ensure_url_prefix_not_null(US_AUTOCOMPLETE_API_URL_API_URL)
+    ensure_url_prefix_not_null(US_AUTOCOMPLETE_API_URL)
     USAutocomplete::Client.new(build_sender, @serializer)
   end
 
@@ -107,8 +107,6 @@ class ClientBuilder
   end
 
   def ensure_url_prefix_not_null(url)
-    if @url_prefix.nil?
-      @url_prefix = url
-    end
+    @url_prefix = url if @url_prefix.nil?
   end
 end
