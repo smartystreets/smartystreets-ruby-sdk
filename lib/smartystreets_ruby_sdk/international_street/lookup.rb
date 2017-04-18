@@ -12,6 +12,10 @@ module InternationalStreet
   #     When set to language_mode.NATIVE, the results will always be in the language of the output country.
   #     When set to language_mode.LATIN, the results will always be provided using a Latin character set.
   class Lookup
+
+    attr_accessor :freeform, :locality, :postal_code, :address3, :address2, :inputId, :address1,
+                  :geocode, :administrative_area, :country, :organization, :language, :address4
+
     def initialize(freeform=nil, country=nil)
       @result = []
 
