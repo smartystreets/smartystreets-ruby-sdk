@@ -60,7 +60,7 @@ module USAutocomplete
     end
 
     def add_parameter(request, key, value)
-      request.parameters[key] = value if value and not value.empty?
+      request.parameters[key] = value unless value.nil? or value.empty?
     end
   end
 end

@@ -26,3 +26,6 @@ end
 
 class ServiceUnavailableError < SmartyException
 end
+
+class UnprocessableEntityError < SmartyException
+end
