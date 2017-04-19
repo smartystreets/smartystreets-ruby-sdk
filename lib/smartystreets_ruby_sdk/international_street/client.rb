@@ -1,4 +1,5 @@
 require_relative '../request'
+require_relative 'candidate'
 
 module InternationalStreet
   # It is recommended to instantiate this class using ClientBuilder.build_international_street_api_client()

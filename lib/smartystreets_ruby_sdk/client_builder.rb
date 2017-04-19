@@ -75,7 +75,7 @@ class ClientBuilder
 
   def build_international_street_api_client
     ensure_url_prefix_not_null(INTERNATIONAL_STREET_API_URL)
-    InternationalStreet::Client(build_sender, @serializer)
+    InternationalStreet::Client.new(build_sender, @serializer)
   end
 
   def build_us_autocomplete_api_client

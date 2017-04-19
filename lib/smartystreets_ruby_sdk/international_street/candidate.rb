@@ -1,3 +1,7 @@
+require_relative 'components'
+require_relative 'metadata'
+require_relative 'analysis'
+
 module InternationalStreet
   # A candidate is a possible match for an address that was submitted. A lookup can have multiple
   # candidates if the address was ambiguous.
