@@ -1,3 +1,5 @@
+require_relative 'alternate_county'
+
 module USZipcode
   # See "https://smartystreets.com/docs/cloud/us-zipcode-api#zipcodes"
   class ZipCode
@@ -16,7 +18,13 @@ module USZipcode
       @precision = obj['precision']
       @state = obj['state']
       @state_abbreviation = obj['state_abbreviation']
-      @alternate_counties = obj.fetch('alternate_counties', [])
+      alternate_counties = obj.fetch('alternate_counties', [])
+
+      @alternate_counties = []
+
+      alternate_counties.each do |county|
+        @alternate_counties.push(USZipcode::AlternateCounty.new(county))
+      end
     end
   end
 end

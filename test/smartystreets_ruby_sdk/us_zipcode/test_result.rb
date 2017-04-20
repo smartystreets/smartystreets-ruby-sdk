@@ -20,9 +20,14 @@ class TestResult < Minitest::Test
           'latitude' => 10,
           'longitude' => 11,
           'precision' => '12',
-          'alternate_counties' => ['13'],
-          'state_abbreviation' => '14',
-          'state' => '15'
+          'alternate_counties' => [{
+              'county_fips' => '13',
+              'county_name' => '14',
+              'state_abbreviation' => '15',
+              'state' => '16'
+                                   }],
+          'state_abbreviation' => '17',
+          'state' => '18'
                      }]
     }
 
@@ -45,9 +50,12 @@ class TestResult < Minitest::Test
     assert_equal(10, result.zipcodes[0].latitude)
     assert_equal(11, result.zipcodes[0].longitude)
     assert_equal('12', result.zipcodes[0].precision)
-    assert_equal('13', result.zipcodes[0].alternate_counties[0])
-    assert_equal('14', result.zipcodes[0].state_abbreviation)
-    assert_equal('15', result.zipcodes[0].state)
+    assert_equal('13', result.zipcodes[0].alternate_counties[0].county_fips)
+    assert_equal('14', result.zipcodes[0].alternate_counties[0].county_name)
+    assert_equal('15', result.zipcodes[0].alternate_counties[0].state_abbreviation)
+    assert_equal('16', result.zipcodes[0].alternate_counties[0].state)
+    assert_equal('17', result.zipcodes[0].state_abbreviation)
+    assert_equal('18', result.zipcodes[0].state)
 
     assert(result.valid?)
   end

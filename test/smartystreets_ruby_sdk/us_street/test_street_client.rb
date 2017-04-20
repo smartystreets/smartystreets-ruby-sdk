@@ -7,6 +7,7 @@ require './test/mocks/mock_sender'
 require './test/mocks/mock_exception_sender'
 require './lib/smartystreets_ruby_sdk/us_street/client'
 require './lib/smartystreets_ruby_sdk/us_street/candidate'
+require './lib/smartystreets_ruby_sdk/us_street/match_type'
 
 class TestStreetClient < Minitest::Test
   Lookup = USStreet::Lookup
@@ -17,6 +18,30 @@ class TestStreetClient < Minitest::Test
     lookup = Lookup.new('freeform address')
 
     assert_equal('freeform address', lookup.street)
+  end
+
+  def test_send_populated_lookup
+    sender = RequestCapturingSender.new
+    expected_payload = 'Hello, World!'
+    serializer = FakeSerializer.new(expected_payload)
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new
+    lookup.input_id = '1'
+    lookup.street = '2'
+    lookup.street2 = '3'
+    lookup.secondary = '4'
+    lookup.city = '5'
+    lookup.state = '6'
+    lookup.zipcode = '7'
+    lookup.lastline = '8'
+    lookup.addressee = '9'
+    lookup.urbanization = '10'
+    lookup.candidates = '11'
+    lookup.match = MatchType::INVALID
+
+    client.send_lookup(lookup)
+
+    assert_equal(expected_payload, sender.request.payload)
   end
 
   def test_empty_batch_not_sent
