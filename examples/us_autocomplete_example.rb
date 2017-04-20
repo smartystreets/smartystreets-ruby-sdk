@@ -4,6 +4,7 @@ require 'smartystreets_ruby_sdk/us_autocomplete/lookup'
 
 class USAutocompleteExample
   Lookup = USAutocomplete::Lookup
+
   def run
     auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
     auth_token = ENV['SMARTY_AUTH_TOKEN']

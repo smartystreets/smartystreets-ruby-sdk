@@ -3,6 +3,8 @@ require 'smartystreets_ruby_sdk/client_builder'
 require 'smartystreets_ruby_sdk/us_zipcode/lookup'
 
 class USZipcodeMultipleLookupExample
+  Lookup = USZipcode::Lookup
+
   def run
     auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
     auth_token = ENV['SMARTY_AUTH_TOKEN']
@@ -11,14 +13,14 @@ class USZipcodeMultipleLookupExample
     client = ClientBuilder.new(credentials).build_us_zipcode_api_client
     batch = Batch.new
 
-    batch.add(USZipcode::Lookup.new)
+    batch.add(Lookup.new)
     batch[0].zipcode = '12345' # A Lookup may have a ZIP Code, city and state, or city, state, and ZIP Code
 
-    batch.add(USZipcode::Lookup.new)
+    batch.add(Lookup.new)
     batch[1].city = 'Phoenix'
     batch[1].state = 'Arizona'
 
-    batch.add(USZipcode::Lookup.new('cupertino', 'CA', '95014')) # You can also set these with arguments
+    batch.add(Lookup.new('cupertino', 'CA', '95014')) # You can also set these with arguments
 
 
     begin

@@ -2,6 +2,7 @@ require_relative 'city'
 require_relative 'zip_code'
 
 module USZipcode
+  # See "https://smartystreets.com/docs/cloud/us-zipcode-api#root"
   class Result
     attr_reader :reason, :input_index, :cities, :zipcodes, :status
 
@@ -16,8 +17,8 @@ module USZipcode
       @zipcodes = convert_zipcodes
     end
 
-    def is_valid?
-      @status == nil and @reason == nil
+    def valid?
+      @status.nil? and @reason.nil?
     end
 
     def convert_cities

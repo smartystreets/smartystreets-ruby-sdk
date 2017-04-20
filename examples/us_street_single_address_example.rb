@@ -24,7 +24,7 @@ class USStreetSingleAddressExample
 
     result = lookup.result
 
-    if result == nil
+    if result nil?
       puts 'No candidates. This means the address is not valid.'
       return
     end

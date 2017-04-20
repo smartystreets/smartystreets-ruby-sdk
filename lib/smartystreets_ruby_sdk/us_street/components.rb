@@ -1,4 +1,7 @@
 module USStreet
+  # This class contains the matched address broken down into its fundamental pieces.
+  #
+  # See "https://smartystreets.com/docs/cloud/us-street-api#components"
   class Components
     attr_reader :street_postdirection, :delivery_point_check_digit, :secondary_designator, :secondary_number, :zipcode,
                 :pmb_number, :state_abbreviation, :extra_secondary_designator, :urbanization, :street_name, :city_name,

@@ -1,4 +1,5 @@
 module USStreet
+  # See "https://smartystreets.com/docs/cloud/us-street-api#analysis"
   class Analysis
     attr_reader :lacs_link_code, :active, :footnotes, :lacs_link_indicator, :dpv_match_code, :is_suite_link_match,
                 :is_ews_match, :dpv_footnotes, :cmra, :vacant

@@ -16,11 +16,11 @@ require_relative 'international_street/client'
 # You can use ClientBuilder's methods to customize settings like maximum retries or timeout duration.
 # These methods are chainable, so you can usually get set up with one line of code.
 class ClientBuilder
-  INTERNATIONAL_STREET_API_URL = 'https://international-street.api.smartystreets.com/verify'
-  US_AUTOCOMPLETE_API_URL = 'https://us-autocomplete.api.smartystreets.com/suggest'
-  US_EXTRACT_API_URL = 'https://us-extract.api.smartystreets.com/'
-  US_STREET_API_URL = 'https://us-street.api.smartystreets.com/street-address'
-  US_ZIP_CODE_API_URL = 'https://us-zipcode.api.smartystreets.com/lookup'
+  INTERNATIONAL_STREET_API_URL = 'https://international-street.api.smartystreets.com/verify'.freeze
+  US_AUTOCOMPLETE_API_URL = 'https://us-autocomplete.api.smartystreets.com/suggest'.freeze
+  US_EXTRACT_API_URL = 'https://us-extract.api.smartystreets.com/'.freeze
+  US_STREET_API_URL = 'https://us-street.api.smartystreets.com/street-address'.freeze
+  US_ZIP_CODE_API_URL = 'https://us-zipcode.api.smartystreets.com/lookup'.freeze
 
   def initialize(signer)
     @signer = signer
@@ -105,7 +105,7 @@ class ClientBuilder
 
     sender = StatusCodeSender.new(sender)
 
-    sender = SigningSender.new(@signer, sender) if @signer != nil
+    sender = SigningSender.new(@signer, sender) unless @signer.nil?
 
     sender = RetrySender.new(@max_retries, sender, SmartystreetsRubySdk::Sleeper.new, SmartystreetsRubySdk::Logger.new) if @max_retries > 0
 

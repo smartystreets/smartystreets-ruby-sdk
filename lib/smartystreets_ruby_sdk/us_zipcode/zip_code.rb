@@ -1,4 +1,5 @@
 module USZipcode
+  # See "https://smartystreets.com/docs/cloud/us-zipcode-api#zipcodes"
   class ZipCode
     attr_reader :longitude, :county_name, :zipcode, :zipcode_type, :county_fips,
                 :latitude, :precision, :default_city, :alternate_counties,

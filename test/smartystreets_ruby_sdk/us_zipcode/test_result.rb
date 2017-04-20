@@ -49,7 +49,7 @@ class TestResult < Minitest::Test
     assert_equal('14', result.zipcodes[0].state_abbreviation)
     assert_equal('15', result.zipcodes[0].state)
 
-    assert(result.is_valid?)
+    assert(result.valid?)
   end
 
   def test_fields_are_filled_correctly_when_invalid
@@ -63,6 +63,6 @@ class TestResult < Minitest::Test
     assert_equal('testing_status', result.status)
     assert_equal('We are testing.', result.reason)
 
-    assert(!result.is_valid?)
+    assert(!result.valid?)
   end
 end

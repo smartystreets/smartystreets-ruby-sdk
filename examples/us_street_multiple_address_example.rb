@@ -4,8 +4,9 @@ require 'smartystreets_ruby_sdk/us_street/lookup'
 
 class USStreetMultipleAddressExample
   Lookup = USStreet::Lookup
+
   def run
-    auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
+    auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables.
     auth_token = ENV['SMARTY_AUTH_TOKEN']
     credentials = StaticCredentials.new(auth_id, auth_token)
 
@@ -36,7 +37,7 @@ class USStreetMultipleAddressExample
     batch.each_with_index do |lookup, i|
       candidates = lookup.result
 
-      if candidates.length == 0
+      if candidates.empty?
         puts "Address #{i} is invalid.\n\n"
         next
       end

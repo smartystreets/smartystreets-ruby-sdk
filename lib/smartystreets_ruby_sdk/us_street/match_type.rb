@@ -1,5 +1,5 @@
 module MatchType
-  STRICT = 'strict'
-  RANGE = 'range'
-  INVALID = 'invalid'
+  STRICT = 'strict'.freeze
+  RANGE = 'range'.freeze
+  INVALID = 'invalid'.freeze
 end

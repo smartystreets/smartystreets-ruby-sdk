@@ -37,7 +37,7 @@ class NativeSender
     request.content_type = 'application/json'
     request.body = smarty_request.payload
     request['User-Agent'] = "smartystreets (sdk:ruby@#{SmartystreetsRubySdk::VERSION})"
-    request['Referer'] = smarty_request.referer if smarty_request.referer != nil
+    request['Referer'] = smarty_request.referer unless smarty_request.referer.nil?
     set_custom_headers(smarty_request.headers, request)
     request
   end

@@ -3,6 +3,7 @@ require_relative 'metadata'
 require_relative 'analysis'
 
 module USStreet
+  # See "https://smartystreets.com/docs/cloud/us-street-api#metadata"
   class Candidate
     attr_reader :input_index, :candidate_index, :addressee, :delivery_line_1, :delivery_line_2, :delivery_point_barcode,
                 :last_line, :metadata, :components, :analysis

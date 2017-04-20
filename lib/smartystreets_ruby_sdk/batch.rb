@@ -10,11 +10,11 @@ class Batch
   end
 
   def add(lookup)
-    return false if is_full
+    return false if full?
 
     @all_lookups.push(lookup)
 
-    return true if lookup.input_id == nil
+    return true if lookup.input_id.nil?
 
     @named_lookups[lookup.input_id] = lookup
     true
@@ -25,8 +25,12 @@ class Batch
     @all_lookups.clear
   end
 
-  def is_full
+  def full?
     size >= MAX_BATCH_SIZE
+  end
+
+  def empty?
+    size.zero?
   end
 
   def size

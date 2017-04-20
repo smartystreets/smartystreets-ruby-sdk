@@ -3,22 +3,26 @@ require_relative '../request'
 require_relative 'candidate'
 
 module USStreet
+  # It is recommended to instantiate this class using ClientBuilder.build_us_street_api_client
   class Client
     def initialize(sender, serializer)
       @sender = sender
       @serializer = serializer
     end
 
+    # Sends a Lookup object to the US Street API and stores the result in the Lookup's result field.
     def send_lookup(lookup)
       batch = Batch.new
       batch.add(lookup)
       send_batch(batch)
     end
 
+    # Sends a Batch object containing no more than 100 Lookup objects to the US Street API and stores the
+    # results in the result field of the Lookup object.
     def send_batch(batch)
       smarty_request = Request.new
 
-      return if batch.size == 0
+      return if batch.empty?
 
       converted_lookups = remap_keys(batch.all_lookups)
       smarty_request.payload = @serializer.serialize(converted_lookups)
@@ -35,7 +39,7 @@ module USStreet
 
     def remap_keys(obj)
       converted_obj = []
-      obj.each { |lookup|
+      obj.each do |lookup|
         converted_lookup = {}
 
         converted_lookup['street'] = lookup.street
@@ -51,15 +55,15 @@ module USStreet
         converted_lookup['candidates'] = lookup.candidates
 
         converted_obj.push(converted_lookup)
-      }
+      end
       converted_obj
     end
 
     def assign_candidates_to_lookups(batch, candidates)
-      candidates.each { |raw_candidate|
+      candidates.each do |raw_candidate|
         candidate = Candidate.new(raw_candidate)
         batch[candidate.input_index].result.push(candidate)
-      }
+      end
     end
   end
 end
