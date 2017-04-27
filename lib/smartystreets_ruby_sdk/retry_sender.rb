@@ -1,6 +1,6 @@
 class RetrySender
   MAX_BACKOFF_DURATION = 10
-  STATUS_OK = '200'
+  STATUS_OK = '200'.freeze
 
   def initialize(max_retries, inner, sleeper, logger)
     @max_retries = max_retries
@@ -12,7 +12,7 @@ class RetrySender
   def send(request)
     response = @inner.send(request)
 
-    (0..@max_retries-1).each { |i|
+    (0..@max_retries-1).each do |i|
       if response.status_code == STATUS_OK
         break
       end
@@ -20,7 +20,7 @@ class RetrySender
       backoff(i)
 
       response = @inner.send(request)
-    }
+    end
 
   response
   end
