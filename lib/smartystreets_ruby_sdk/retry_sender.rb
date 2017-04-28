@@ -13,16 +13,14 @@ class RetrySender
     response = @inner.send(request)
 
     (0..@max_retries-1).each do |i|
-      if response.status_code == STATUS_OK
-        break
-      end
+      break if response.status_code == STATUS_OK
 
       backoff(i)
 
       response = @inner.send(request)
     end
 
-  response
+    response
   end
 
   def backoff(attempt)
