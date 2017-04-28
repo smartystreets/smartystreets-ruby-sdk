@@ -8,6 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # box-specific
   config.vm.provision "shell", inline: "apt-get update"
   config.vm.provision "shell", inline: "apt-get install -y ruby" # Installs ruby 1.9 but we should install ruby 2.4...
+  config.vm.provision "shell", inline: "apt-get install -y ruby git"
   config.vm.provision "shell", inline: "gem install minitest"
   config.vm.synced_folder "~/.gem", "/home/vagrant/.gem", create: true
 
