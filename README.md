@@ -6,6 +6,12 @@ You may have noticed this page is curiously sparse. Don't panic, there's [docume
 
 [Apache 2.0 License](LICENSE.txt)
 
+---
+
+[![asciicast](https://asciinema.org/a/122129.png)](https://asciinema.org/a/122129)
+
+---
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -20,8 +26,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install smartystreets_ruby_sdk
-
+    $ gem install smartystreets_ruby_sdk    
 
 
 
