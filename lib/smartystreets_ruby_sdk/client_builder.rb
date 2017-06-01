@@ -27,8 +27,9 @@ class ClientBuilder
     @serializer = NativeSerializer.new
     @http_sender = nil
     @max_retries = 5
-    @max_timeout = 10000
+    @max_timeout = 10_000
     @url_prefix = nil
+    @proxy = nil
   end
 
   # Sets the maximum number of times to retry sending the request to the API. (Default is 5)
@@ -73,6 +74,15 @@ class ClientBuilder
     self
   end
 
+  # Assigns a proxy through which all requests will be sent.
+  # proxy is a Proxy object from this module.
+  #
+  # Returns self to accommodate method chaining.
+  def with_proxy(proxy)
+    @proxy = proxy
+    self
+  end
+
   def build_international_street_api_client
     ensure_url_prefix_not_null(INTERNATIONAL_STREET_API_URL)
     InternationalStreet::Client.new(build_sender, @serializer)
@@ -101,7 +111,7 @@ class ClientBuilder
   def build_sender
     return @http_sender unless @http_sender.nil?
 
-    sender = NativeSender.new(@max_timeout)
+    sender = NativeSender.new(@max_timeout, @proxy)
 
     sender = StatusCodeSender.new(sender)
 
