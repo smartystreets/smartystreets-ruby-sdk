@@ -4,11 +4,13 @@ module SmartystreetsRubySdk
   # host should not include a scheme
   class Proxy
 
-    attr_reader :port, :host
+    attr_accessor :port, :host, :username, :password
 
-    def initialize(host, port)
+    def initialize(host, port, username = nil, password = nil)
       @host = host
       @port = port
+      @username = username
+      @password = password
     end
   end
 end

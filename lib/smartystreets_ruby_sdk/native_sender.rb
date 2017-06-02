@@ -54,7 +54,8 @@ class NativeSender
     if @proxy.nil?
       http = Net::HTTP.new(uri.hostname, uri.port)
     else
-      http = Net::HTTP.new(uri.hostname, uri.port, @proxy.host, @proxy.port)
+      http = Net::HTTP.new(uri.hostname, uri.port, @proxy.host,
+                           @proxy.port, @proxy.username, @proxy.password)
     end
 
     http
