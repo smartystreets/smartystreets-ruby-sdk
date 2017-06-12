@@ -6,5 +6,7 @@ require_relative './international_street/candidate'
 require_relative './international_street/client'
 require_relative './international_street/language_mode'
 
-module InternationalStreet
+module SmartyStreets
+  module InternationalStreet
+  end
 end

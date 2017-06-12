@@ -3,14 +3,14 @@ require 'smartystreets_ruby_sdk/client_builder'
 require 'smartystreets_ruby_sdk/us_extract/lookup'
 
 class USExtractExample
-  Lookup = USExtract::Lookup
+  Lookup = SmartyStreets::USExtract::Lookup
 
   def run
     auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
     auth_token = ENV['SMARTY_AUTH_TOKEN']
-    credentials = StaticCredentials.new(auth_id, auth_token)
+    credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
-    client = ClientBuilder.new(credentials).build_us_extract_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials).build_us_extract_api_client
 
     text = "Here is some text.\r\nMy address is 3785 Las Vegs Av." \
            "\r\nLos Vegas, Nevada." \

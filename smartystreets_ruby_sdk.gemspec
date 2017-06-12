@@ -5,7 +5,7 @@ require 'smartystreets_ruby_sdk/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'smartystreets_ruby_sdk'
-  spec.version       = SmartystreetsRubySdk::VERSION
+  spec.version       = SmartyStreets::VERSION
   spec.authors       = ['SmartyStreets SDK Team']
   spec.license       = 'Apache-2.0'
   spec.email         = ['support@smartystreets.com']

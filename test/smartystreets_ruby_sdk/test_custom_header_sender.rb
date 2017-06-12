@@ -1,16 +1,17 @@
 require 'minitest/autorun'
 require_relative '../../lib/smartystreets_ruby_sdk/custom_header_sender'
-require_relative '../../lib/smartystreets_ruby_sdk/response.rb'
+require_relative '../../lib/smartystreets_ruby_sdk/response'
+require_relative '../../lib/smartystreets_ruby_sdk/request'
 
 class TestCustomHeaderSender < Minitest::Test
   def test_all_custom_headers_are_added_to_the_request
     headers = {}
     headers['A'] = %w(1 2)
     headers['B'] = ['1']
-    mock_response = Response.new('Testing','123')
+    mock_response = SmartyStreets::Response.new('Testing','123')
     inner = MockSender.new(mock_response)
-    sender = CustomHeaderSender.new(inner, headers)
-    request = Request.new
+    sender = SmartyStreets::CustomHeaderSender.new(inner, headers)
+    request = SmartyStreets::Request.new
 
     response = sender.send(request)
 

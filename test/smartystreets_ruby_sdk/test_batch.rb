@@ -3,9 +3,11 @@ require './lib/smartystreets_ruby_sdk/batch'
 require './lib/smartystreets_ruby_sdk/us_street/lookup'
 
 class TestBatch < Minitest::Test
-  Lookup = USStreet::Lookup
+  Lookup = SmartyStreets::USStreet::Lookup
+  Batch = SmartyStreets::Batch
+
   def setup
-    @batch = Batch.new
+    @batch = SmartyStreets::Batch.new
   end
 
   def test_gets_lookup_by_input_id

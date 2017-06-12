@@ -31,7 +31,7 @@ class TestResult < Minitest::Test
                      }]
     }
 
-    result = USZipcode::Result.new(obj)
+    result = SmartyStreets::USZipcode::Result.new(obj)
 
     assert_equal(0, result.input_index)
     assert_nil(result.status)
@@ -66,7 +66,7 @@ class TestResult < Minitest::Test
         'reason' => 'We are testing.'
     }
 
-    result = USZipcode::Result.new(obj)
+    result = SmartyStreets::USZipcode::Result.new(obj)
 
     assert_equal('testing_status', result.status)
     assert_equal('We are testing.', result.reason)

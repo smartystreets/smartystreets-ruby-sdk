@@ -1,17 +1,18 @@
 require 'smartystreets_ruby_sdk/static_credentials'
 require 'smartystreets_ruby_sdk/client_builder'
+require 'smartystreets_ruby_sdk/batch'
 require 'smartystreets_ruby_sdk/us_street/lookup'
 
 class USStreetMultipleAddressExample
-  Lookup = USStreet::Lookup
+  Lookup = SmartyStreets::USStreet::Lookup
 
   def run
     auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables.
     auth_token = ENV['SMARTY_AUTH_TOKEN']
-    credentials = StaticCredentials.new(auth_id, auth_token)
+    credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
-    client = ClientBuilder.new(credentials).build_us_street_api_client
-    batch = Batch.new
+    client = SmartyStreets::ClientBuilder.new(credentials).build_us_street_api_client
+    batch = SmartyStreets::Batch.new
 
     batch.add(Lookup.new)
     batch[0].street = '1600 amphitheatre parkway'
@@ -29,7 +30,7 @@ class USStreetMultipleAddressExample
 
     begin
       client.send_batch(batch)
-    rescue SmartyException => err
+    rescue SmartyError => err
       puts err
       return
     end

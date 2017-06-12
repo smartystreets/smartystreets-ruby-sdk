@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/international_street'
+require './lib/smartystreets_ruby_sdk/native_serializer'
 
 class TestInternationalCandidate < Minitest::Test
   def test_all_fields_filled_correctly
@@ -23,8 +24,8 @@ class TestInternationalCandidate < Minitest::Test
                 "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\"},"\
                 "\"analysis\":{\"verification_status\":\"56\",\"address_precision\":\"57\",\"max_address_precision\":\"58\"}}]"
 
-    serializer = NativeSerializer.new
-    candidate = InternationalStreet::Candidate.new(serializer.deserialize(response_payload)[0])
+    serializer = SmartyStreets::NativeSerializer.new
+    candidate = SmartyStreets::InternationalStreet::Candidate.new(serializer.deserialize(response_payload)[0])
 
     assert_equal('1', candidate.organization)
     assert_equal('2', candidate.address1)

@@ -3,5 +3,7 @@ require_relative './us_autocomplete/geolocation_type'
 require_relative './us_autocomplete/suggestion'
 require_relative './us_autocomplete/client'
 
-module USAutocomplete
+module SmartyStreets
+  module USAutocomplete
+  end
 end

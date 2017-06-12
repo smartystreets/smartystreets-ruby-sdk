@@ -7,7 +7,7 @@ class MockExceptionSender
     if not @exception
       nil
     else
-      Response.new(nil, nil, @exception)
+      SmartyStreets::Response.new(nil, nil, @exception)
     end
   end
 end

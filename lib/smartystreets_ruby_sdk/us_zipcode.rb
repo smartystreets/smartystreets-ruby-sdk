@@ -5,5 +5,7 @@ require_relative './us_zipcode/result'
 require_relative './us_zipcode/zip_code'
 require_relative './us_zipcode/alternate_county'
 
-module USZipcode
+module SmartyStreets
+  module USZipcode
+  end
 end

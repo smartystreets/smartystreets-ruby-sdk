@@ -1,17 +1,18 @@
 require 'smartystreets_ruby_sdk/static_credentials'
 require 'smartystreets_ruby_sdk/client_builder'
+require 'smartystreets_ruby_sdk/batch'
 require 'smartystreets_ruby_sdk/us_zipcode/lookup'
 
 class USZipcodeMultipleLookupExample
-  Lookup = USZipcode::Lookup
+  Lookup = SmartyStreets::USZipcode::Lookup
 
   def run
     auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
     auth_token = ENV['SMARTY_AUTH_TOKEN']
-    credentials = StaticCredentials.new(auth_id, auth_token)
+    credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
-    client = ClientBuilder.new(credentials).build_us_zipcode_api_client
-    batch = Batch.new
+    client = SmartyStreets::ClientBuilder.new(credentials).build_us_zipcode_api_client
+    batch = SmartyStreets::Batch.new
 
     batch.add(Lookup.new)
     batch[0].zipcode = '12345' # A Lookup may have a ZIP Code, city and state, or city, state, and ZIP Code
@@ -25,7 +26,7 @@ class USZipcodeMultipleLookupExample
 
     begin
       client.send_batch(batch)
-    rescue SmartyException => err
+    rescue SmartyError => err
       puts err
       return
     end

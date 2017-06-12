@@ -1,12 +1,14 @@
 require 'minitest/autorun'
-require './lib/smartystreets_ruby_sdk/international_street'
-require './lib/smartystreets_ruby_sdk/exceptions'
+require_relative '../../../lib/smartystreets_ruby_sdk/international_street'
+require_relative '../../../lib/smartystreets_ruby_sdk/exceptions'
+require_relative '../../../lib/smartystreets_ruby_sdk/response'
 
 class TestInternationalClient < Minitest::Test
-  Client = InternationalStreet::Client
-  Lookup = InternationalStreet::Lookup
-  Candidate = InternationalStreet::Candidate
-  #LanguageMode = InternationalStreet::LanguageMode
+  Client = SmartyStreets::InternationalStreet::Client
+  Lookup = SmartyStreets::InternationalStreet::Lookup
+  Candidate = SmartyStreets::InternationalStreet::Candidate
+  LanguageMode = SmartyStreets::InternationalStreet::LanguageMode
+  Response = SmartyStreets::Response
 
   def test_sending_freeform_lookup
     sender = RequestCapturingSender.new
@@ -58,7 +60,7 @@ class TestInternationalClient < Minitest::Test
     sender = MockSender.new(nil)
     client = Client.new(sender, nil)
 
-    assert_raises UnprocessableEntityError do
+    assert_raises SmartyStreets::UnprocessableEntityError do
       client.send(Lookup.new)
     end
   end
@@ -68,7 +70,7 @@ class TestInternationalClient < Minitest::Test
     client = Client.new(sender, nil)
     lookup = Lookup.new(nil, '0')
 
-    assert_raises UnprocessableEntityError do
+    assert_raises SmartyStreets::UnprocessableEntityError do
       client.send(lookup)
     end
   end
@@ -79,7 +81,7 @@ class TestInternationalClient < Minitest::Test
     lookup = Lookup.new(nil, '0')
     lookup.address1 = '1'
 
-    assert_raises UnprocessableEntityError do
+    assert_raises SmartyStreets::UnprocessableEntityError do
       client.send(lookup)
     end
   end
@@ -91,7 +93,7 @@ class TestInternationalClient < Minitest::Test
     lookup.address1 = '1'
     lookup.locality = '2'
 
-    assert_raises UnprocessableEntityError do
+    assert_raises SmartyStreets::UnprocessableEntityError do
       client.send(lookup)
     end
   end
@@ -103,7 +105,7 @@ class TestInternationalClient < Minitest::Test
     lookup.address1 = '1'
     lookup.administrative_area = '2'
 
-    assert_raises UnprocessableEntityError do
+    assert_raises SmartyStreets::UnprocessableEntityError do
       client.send(lookup)
     end
   end

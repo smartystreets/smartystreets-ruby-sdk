@@ -3,13 +3,13 @@ require 'smartystreets_ruby_sdk/client_builder'
 require 'smartystreets_ruby_sdk/international_street/lookup'
 
 class InternationalExample
-  Lookup = InternationalStreet::Lookup
+  Lookup = SmartyStreets::InternationalStreet::Lookup
 
   def run
     auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
     auth_token = ENV['SMARTY_AUTH_TOKEN']
-    credentials = StaticCredentials.new(auth_id, auth_token)
-    client = ClientBuilder.new(credentials).build_international_street_api_client
+    credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
+    client = SmartyStreets::ClientBuilder.new(credentials).build_international_street_api_client
 
     lookup = Lookup.new("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", 'Brazil')
     lookup.geocode = true # Must be expressly set to get latitude and longitude.

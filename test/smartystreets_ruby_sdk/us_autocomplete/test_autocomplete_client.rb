@@ -4,8 +4,9 @@ require './lib/smartystreets_ruby_sdk/us_autocomplete/lookup'
 require './lib/smartystreets_ruby_sdk/response'
 
 class TestAutocompleteClient < Minitest::Test
-  Client = USAutocomplete::Client
-  Lookup = USAutocomplete::Lookup
+  Client = SmartyStreets::USAutocomplete::Client
+  Lookup = SmartyStreets::USAutocomplete::Lookup
+  Response = SmartyStreets::Response
 
   def test_sending_prefix_only_lookup
     sender = RequestCapturingSender.new
@@ -27,7 +28,7 @@ class TestAutocompleteClient < Minitest::Test
     lookup.add_state_filter('4')
     lookup.add_state_filter('4.5')
     lookup.add_prefer('5')
-    lookup.geolocate_type = GeolocationType::STATE
+    lookup.geolocate_type = SmartyStreets::USAutocomplete::GeolocationType::STATE
 
     client.send(lookup)
 
@@ -70,7 +71,7 @@ class TestAutocompleteClient < Minitest::Test
     serializer = FakeSerializer.new({})
     client = Client.new(sender, serializer)
 
-    assert_raises(SmartyException) do
+    assert_raises(SmartyStreets::SmartyError) do
       client.send(Lookup.new)
     end
   end

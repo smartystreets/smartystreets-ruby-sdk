@@ -5,7 +5,7 @@ class SuggestionTest < Minitest::Test
   def test_all_fields_get_filled_in_correctly
     response_dictionary = { 'text' => '1', 'street_line' => '2', 'city' => '3', 'state' => '4'}
 
-    suggestion = USAutocomplete::Suggestion.new(response_dictionary)
+    suggestion = SmartyStreets::USAutocomplete::Suggestion.new(response_dictionary)
 
     assert(suggestion)
     assert_equal('1', suggestion.text)

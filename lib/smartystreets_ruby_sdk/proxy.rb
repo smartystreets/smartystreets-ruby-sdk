@@ -1,4 +1,4 @@
-module SmartystreetsRubySdk
+module SmartyStreets
   # Contains information about the proxy through which all requests will be sent.
   #
   # host should not include a scheme

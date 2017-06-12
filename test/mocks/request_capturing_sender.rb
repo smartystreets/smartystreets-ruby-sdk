@@ -1,3 +1,5 @@
+require_relative '../../lib/smartystreets_ruby_sdk/response'
+
 class RequestCapturingSender
   attr_reader :request
 
@@ -8,6 +10,6 @@ class RequestCapturingSender
   def send(request)
     @request = request
 
-    Response.new('[]', 200)
+    SmartyStreets::Response.new('[]', 200)
   end
 end

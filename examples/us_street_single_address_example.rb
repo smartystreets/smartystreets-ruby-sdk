@@ -6,25 +6,25 @@ class USStreetSingleAddressExample
   def run
     auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
     auth_token = ENV['SMARTY_AUTH_TOKEN']
-    credentials = StaticCredentials.new(auth_id, auth_token)
+    credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
-    client = ClientBuilder.new(credentials).build_us_street_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials).build_us_street_api_client
 
-    lookup = USStreet::Lookup.new
+    lookup = SmartyStreets::USStreet::Lookup.new
     lookup.street = '1600 Amphitheatre Pkwy'
     lookup.city = 'Mountain View'
     lookup.state = 'CA'
 
     begin
       client.send_lookup(lookup)
-    rescue SmartyException => err
+    rescue SmartyStreets::SmartyError => err
       puts err
       return
     end
 
     result = lookup.result
 
-    if result nil?
+    if result.nil?
       puts 'No candidates. This means the address is not valid.'
       return
     end

@@ -3,28 +3,28 @@ require './lib/smartystreets_ruby_sdk/us_extract/result'
 class TestResult < Minitest::Test
   def test_all_fields_filled_correctly
     obj = {
-        'meta'=>{
-            'lines'=>1,
-            'unicode'=>true,
-            'address_count'=>2,
-            'verified_count'=>3,
-            'bytes'=>4,
-            'character_count'=>5
+        'meta' => {
+            'lines' => 1,
+            'unicode' => true,
+            'address_count' => 2,
+            'verified_count' => 3,
+            'bytes' => 4,
+            'character_count' => 5
         },
-        'addresses'=>[
+        'addresses' => [
             {
-                'text'=>'6',
-                'verified'=>true,
-                'line'=>7,
-                'start'=>8,
-                'end'=>9,
-                'api_output'=>[{}]
+                'text' => '6',
+                'verified' => true,
+                'line' => 7,
+                'start' => 8,
+                'end' => 9,
+                'api_output' => [{}]
             },
-            {'text'=>'10'}
+            {'text' => '10'}
         ]
     }
 
-    result = USExtract::Result.new(obj)
+    result = SmartyStreets::USExtract::Result.new(obj)
 
     metadata = result.metadata
     assert(metadata)

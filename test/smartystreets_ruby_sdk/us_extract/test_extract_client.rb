@@ -3,6 +3,7 @@ require './lib/smartystreets_ruby_sdk/us_extract/client'
 require './lib/smartystreets_ruby_sdk/us_extract/lookup'
 require './lib/smartystreets_ruby_sdk/us_extract/result'
 require './lib/smartystreets_ruby_sdk/us_street/candidate'
+require './lib/smartystreets_ruby_sdk/response'
 require './test/mocks/request_capturing_sender'
 require './test/mocks/fake_serializer'
 require './test/mocks/fake_deserializer'
@@ -10,10 +11,12 @@ require './test/mocks/mock_sender'
 require './test/mocks/mock_exception_sender'
 
 class TestExtractClient < Minitest::Test
-  Lookup = USExtract::Lookup
-  Candidate = USStreet::Candidate
-  Client = USExtract::Client
-  Result = USExtract::Result
+  Lookup = SmartyStreets::USExtract::Lookup
+  Candidate = SmartyStreets::USStreet::Candidate
+  Client = SmartyStreets::USExtract::Client
+  Result = SmartyStreets::USExtract::Result
+  URLPrefixSender = SmartyStreets::URLPrefixSender
+  Response = SmartyStreets::Response
 
   def test_sending_body_only_lookup
     capturing_sender = RequestCapturingSender.new
@@ -54,7 +57,7 @@ class TestExtractClient < Minitest::Test
     serializer = FakeSerializer.new(nil)
     client = Client.new(sender, serializer)
 
-    assert_raises(SmartyException) do
+    assert_raises(SmartyStreets::SmartyError) do
       client.send(Lookup.new)
     end
   end

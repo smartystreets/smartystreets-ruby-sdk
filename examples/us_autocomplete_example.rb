@@ -3,13 +3,13 @@ require 'smartystreets_ruby_sdk/client_builder'
 require 'smartystreets_ruby_sdk/us_autocomplete/lookup'
 
 class USAutocompleteExample
-  Lookup = USAutocomplete::Lookup
+  Lookup = SmartyStreets::USAutocomplete::Lookup
 
   def run
     auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
     auth_token = ENV['SMARTY_AUTH_TOKEN']
-    credentials = StaticCredentials.new(auth_id, auth_token)
-    client = ClientBuilder.new(credentials).build_us_autocomplete_api_client
+    credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
+    client = SmartyStreets::ClientBuilder.new(credentials).build_us_autocomplete_api_client
     lookup = Lookup.new('4770 Lincoln Ave O')
 
     client.send(lookup)

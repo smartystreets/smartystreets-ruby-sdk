@@ -2,8 +2,14 @@ require 'minitest/autorun'
 require 'net/http'
 require_relative '../../lib/smartystreets_ruby_sdk/native_sender'
 require_relative '../../lib/smartystreets_ruby_sdk/request'
+require_relative '../../lib/smartystreets_ruby_sdk/exceptions'
 
 class TestNativeSender < Minitest::Test
+  NativeSender = SmartyStreets::NativeSender
+  SmartyError = SmartyStreets::SmartyError
+  Request = SmartyStreets::Request
+
+
   Net::HTTP.class_eval do
     class MockResponse
       attr_reader :body, :code
@@ -22,7 +28,7 @@ class TestNativeSender < Minitest::Test
       if request.uri == URI.parse('http://localhost/error?')
         mock_response = MockResponse.new('Error test', '400')
       elsif request.uri == URI.parse('http://localhost/exception?')
-        raise SmartyException
+        raise SmartyError
       else
         mock_response = MockResponse.new('This is the test payload.', '200')
       end
@@ -100,7 +106,7 @@ class TestNativeSender < Minitest::Test
 
     response = sender.send(smarty_request)
 
-    assert_instance_of(SmartyException, response.error)
+    assert_instance_of(SmartyError, response.error)
   end
 
   def test_request_has_all_added_custom_headers

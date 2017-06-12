@@ -2,11 +2,17 @@ require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/static_credentials'
 require './lib/smartystreets_ruby_sdk/shared_credentials'
 require './lib/smartystreets_ruby_sdk/signing_sender'
+require_relative '../../lib/smartystreets_ruby_sdk/request'
+require_relative '../../lib/smartystreets_ruby_sdk/response'
 
 class TestSigningSender < Minitest::Test
+  SharedCredentials = SmartyStreets::SharedCredentials
+  SigningSender = SmartyStreets::SigningSender
+  StaticCredentials = SmartyStreets::StaticCredentials
+
   def setup
-    @inner = MockSender.new(Response.new('Test payload', '200'))
-    @request = Request.new
+    @inner = MockSender.new(SmartyStreets::Response.new('Test payload', '200'))
+    @request = SmartyStreets::Request.new
   end
 
   def test_successful_signing_with_static_credentials

@@ -6,17 +6,17 @@ class UsZipcodeSingleLookupExample
   def run
     auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables.
     auth_token = ENV['SMARTY_AUTH_TOKEN']
-    credentials = StaticCredentials.new(auth_id, auth_token)
+    credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
-    client = ClientBuilder.new(credentials).build_us_zipcode_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials).build_us_zipcode_api_client
 
-    lookup = USZipcode::Lookup.new
+    lookup = SmartyStreets::USZipcode::Lookup.new
     lookup.city = 'Mountain View'
     lookup.state = 'California'
 
     begin
       client.send_lookup(lookup)
-    rescue SmartyException => err
+    rescue SmartyError => err
       puts err
       return
     end

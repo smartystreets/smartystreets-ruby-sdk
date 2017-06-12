@@ -1,4 +1,4 @@
-module SmartystreetsRubySdk
+module SmartyStreets
   class Logger
     def log(message)
       puts message

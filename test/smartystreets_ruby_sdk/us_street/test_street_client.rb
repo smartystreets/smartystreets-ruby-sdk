@@ -8,11 +8,14 @@ require './test/mocks/mock_exception_sender'
 require './lib/smartystreets_ruby_sdk/us_street/client'
 require './lib/smartystreets_ruby_sdk/us_street/candidate'
 require './lib/smartystreets_ruby_sdk/us_street/match_type'
+require './lib/smartystreets_ruby_sdk/response'
 
 class TestStreetClient < Minitest::Test
-  Lookup = USStreet::Lookup
-  Candidate = USStreet::Candidate
-  Client = USStreet::Client
+  Lookup = SmartyStreets::USStreet::Lookup
+  Candidate = SmartyStreets::USStreet::Candidate
+  Client = SmartyStreets::USStreet::Client
+  Batch = SmartyStreets::Batch
+  Response = SmartyStreets::Response
 
   def test_freeform_assigned_to_street_field
     lookup = Lookup.new('freeform address')
@@ -37,7 +40,7 @@ class TestStreetClient < Minitest::Test
     lookup.addressee = '9'
     lookup.urbanization = '10'
     lookup.candidates = '11'
-    lookup.match = MatchType::INVALID
+    lookup.match = SmartyStreets::USStreet::MatchType::INVALID
 
     client.send_lookup(lookup)
 
@@ -100,7 +103,7 @@ class TestStreetClient < Minitest::Test
   end
 
   def test_raises_exception_when_response_has_error
-    exception = BadCredentialsError
+    exception = SmartyStreets::BadCredentialsError
     client = Client.new(MockExceptionSender.new(exception), FakeSerializer.new(nil))
 
     assert_raises exception do

@@ -4,5 +4,7 @@ require_relative './us_extract/metadata'
 require_relative './us_extract/result'
 require_relative './us_extract/client'
 
-module USExtract
+module SmartyStreets
+  module USExtract
+  end
 end

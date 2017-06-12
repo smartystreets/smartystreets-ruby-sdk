@@ -1,12 +1,12 @@
 require 'minitest/autorun'
-require './lib/smartystreets_ruby_sdk/native_serializer'
-require './lib/smartystreets_ruby_sdk/us_street/lookup'
+require_relative '../../lib/smartystreets_ruby_sdk/native_serializer'
+require_relative '../../lib/smartystreets_ruby_sdk/us_street/lookup'
 
 class TestNativeSerializer < Minitest::Test
   def test_serialize
-    serializer = NativeSerializer.new
+    serializer = SmartyStreets::NativeSerializer.new
 
-    result = serializer.serialize([USStreet::Lookup.new('123 fake street')])
+    result = serializer.serialize([SmartyStreets::USStreet::Lookup.new('123 fake street')])
 
     assert(result.include?('"street":"123 fake street"'), "Result is: #{result}")
   end
@@ -20,7 +20,7 @@ class TestNativeSerializer < Minitest::Test
       \"default_city\":true,\"mailable_city\":true}],\"zipcodes\":[{\"zipcode\":\"84606\",\"zipcode_type\":\"S\",\
       \"county_fips\":\"11501\",\"county_name\":\"Utah\",\"latitude\":38.89769,\"longitude\":-77.03869}]},\
             {\"input_index\":2,\"status\":\"invalid_zipcode\",\"reason\":\"Invalid ZIP Code.\"}]"
-    serializer = NativeSerializer.new
+    serializer = SmartyStreets::NativeSerializer.new
 
     results = serializer.deserialize(expected_json_output)
 
