@@ -8,7 +8,7 @@ You may have noticed this page is curiously sparse. Don't panic, there's [docume
 
 ---
 
-[![asciicast](https://asciinema.org/a/122129.png)](https://asciinema.org/a/122129)
+[![asciicast](https://asciinema.org/a/124457.png)](https://asciinema.org/a/124457)
 
 ---
 
