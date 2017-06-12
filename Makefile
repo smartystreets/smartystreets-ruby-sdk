@@ -6,14 +6,14 @@ tests:
 publish-patch:
 	@python tag.py patch
 	gem build smartystreets_ruby_sdk.gemspec
-	gem push smartystreets_ruby_sdk-$(shell git describe).gem
+	gem push smartystreets_ruby_sdk-`git describe`.gem
 
 publish-minor:
 	@python tag.py minor
 	gem build smartystreets_ruby_sdk.gemspec
-	gem push smartystreets_ruby_sdk-$(shell git describe).gem
+	gem push smartystreets_ruby_sdk-`git describe`.gem
 
 publish-major:
 	@python tag.py major
 	gem build smartystreets_ruby_sdk.gemspec
-	gem push smartystreets_ruby_sdk-$(shell git describe).gem
+	gem push smartystreets_ruby_sdk-`git describe`.gem
