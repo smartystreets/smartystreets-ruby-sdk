@@ -2,7 +2,7 @@
   "version": 1,
   "width": 100,
   "height": 45,
-  "duration": 25.40302,
+  "duration": 21.834346,
   "command": null,
   "title": null,
   "env": {
@@ -11,7 +11,7 @@
   },
   "stdout": [
     [
-      0.000875,
+      0.00095,
       "\u001b[?1034hbash-3.2$ "
     ],
     [
@@ -19,159 +19,203 @@
       "g"
     ],
     [
-      0.096613,
+      0.14488,
       "e"
     ],
     [
-      0.199543,
+      0.175927,
       "m"
     ],
     [
-      0.120305,
+      0.128232,
       " "
     ],
     [
-      0.360287,
+      0.135528,
       "i"
     ],
     [
-      0.167696,
+      0.11217,
       "n"
     ],
     [
-      0.119548,
+      0.375507,
       "s"
     ],
     [
-      0.143402,
+      0.135337,
       "t"
     ],
     [
-      0.096943,
+      0.121159,
       "a"
     ],
     [
-      0.159451,
+      0.183897,
       "l"
     ],
     [
-      0.152755,
+      0.14409,
       "l"
     ],
     [
-      0.472194,
+      0.393336,
       " "
     ],
     [
-      0.415625,
+      0.50259,
       "s"
     ],
     [
-      0.128058,
+      0.128145,
       "m"
     ],
     [
-      0.136152,
+      0.135902,
       "a"
     ],
     [
-      0.263332,
+      0.159904,
       "r"
     ],
     [
-      0.224605,
+      0.207946,
       "t"
     ],
     [
-      0.44166,
+      0.199214,
       "y"
     ],
     [
-      0.254094,
+      0.160182,
       "s"
     ],
     [
-      0.127964,
+      0.184664,
       "t"
     ],
     [
-      0.112037,
+      0.071914,
       "r"
     ],
     [
-      0.256337,
+      0.24962,
       "e"
     ],
     [
-      0.135907,
+      0.150388,
       "e"
     ],
     [
-      0.271188,
+      0.103991,
       "t"
     ],
     [
-      0.096752,
+      0.367511,
       "s"
     ],
     [
-      0.543902,
+      0.608296,
       "_"
     ],
     [
-      0.303509,
+      0.31945,
       "r"
     ],
     [
-      0.208053,
+      0.2168,
       "u"
     ],
     [
-      0.248442,
+      0.367931,
       "b"
     ],
     [
-      0.263945,
+      0.303857,
       "y"
     ],
     [
-      0.472192,
+      0.720391,
       "_"
     ],
     [
-      0.583879,
+      0.575703,
       "s"
     ],
     [
-      0.136072,
+      0.111963,
       "d"
     ],
     [
-      0.335389,
+      0.799985,
       "k"
     ],
     [
-      0.711499,
+      0.935086,
       "\r\n"
     ],
     [
-      0.622611,
-      "Successfully installed smartystreets_ruby_sdk-3.0.0\r\n"
+      0.497465,
+      "Fetching: smartystreets_ruby_sdk-4.0.0.gem"
     ],
     [
-      0.112475,
-      "Parsing documentation for smartystreets_ruby_sdk-3.0.0\r\n"
+      4.7e-05,
+      "\rFetching: smartystreets_ruby_sdk-4.0.0.gem (  8%)"
     ],
     [
-      0.233239,
-      "Installing ri documentation for smartystreets_ruby_sdk-3.0.0\r\n"
+      0.000132,
+      "\rFetching: smartystreets_ruby_sdk-4.0.0.gem ( 19%)"
     ],
     [
-      0.076259,
+      0.000123,
+      "\rFetching: smartystreets_ruby_sdk-4.0.0.gem ( 29%)"
+    ],
+    [
+      0.000941,
+      "\rFetching: smartystreets_ruby_sdk-4.0.0.gem ( 40%)"
+    ],
+    [
+      0.002169,
+      "\rFetching: smartystreets_ruby_sdk-4.0.0.gem ( 51%)"
+    ],
+    [
+      0.014076,
+      "\rFetching: smartystreets_ruby_sdk-4.0.0.gem ( 61%)"
+    ],
+    [
+      0.000382,
+      "\rFetching: smartystreets_ruby_sdk-4.0.0.gem ( 72%)"
+    ],
+    [
+      0.001468,
+      "\rFetching: smartystreets_ruby_sdk-4.0.0.gem ( 83%)"
+    ],
+    [
+      0.001077,
+      "\rFetching: smartystreets_ruby_sdk-4.0.0.gem ( 93%)"
+    ],
+    [
+      0.000778,
+      "\rFetching: smartystreets_ruby_sdk-4.0.0.gem (100%)\rFetching: smartystreets_ruby_sdk-4.0.0.gem (100%)\r\n"
+    ],
+    [
+      0.03245,
+      "Successfully installed smartystreets_ruby_sdk-4.0.0\r\n"
+    ],
+    [
+      0.092602,
+      "Parsing documentation for smartystreets_ruby_sdk-4.0.0\r\n"
+    ],
+    [
+      0.233087,
+      "Installing ri documentation for smartystreets_ruby_sdk-4.0.0\r\n"
+    ],
+    [
+      0.091585,
       "Done installing documentation for smartystreets_ruby_sdk after 0 seconds\r\n1 gem installed\r\n"
     ],
     [
-      0.011916,
+      0.015211,
       "bash-3.2$ "
     ],
     [
@@ -179,84 +223,64 @@
       "\r\n"
     ],
     [
-      4e-05,
+      7e-05,
       "bash-3.2$ "
     ],
     [
-      0.144236,
+      0.15999,
       "\r\n"
     ],
     [
-      3.9e-05,
+      0.000102,
       "bash-3.2$ "
     ],
     [
-      0.305081,
+      1.0,
       "c"
     ],
     [
-      0.103617,
+      0.08051,
       "a"
     ],
     [
-      0.287387,
+      0.191263,
       "t"
     ],
     [
-      0.960198,
+      0.200297,
       " "
     ],
     [
-      1.0,
+      0.159047,
       "e"
     ],
     [
-      0.503401,
+      0.744749,
       "x"
     ],
     [
-      0.144016,
+      0.287948,
       "a"
     ],
     [
-      0.320538,
+      0.167355,
       "m"
     ],
     [
-      0.136119,
-      "p"
+      0.247893,
+      "ple.rb "
     ],
     [
-      0.327256,
-      "l"
-    ],
-    [
-      0.400419,
-      "e"
-    ],
-    [
-      0.592251,
-      "."
-    ],
-    [
-      0.535542,
-      "r"
-    ],
-    [
-      0.320377,
-      "b"
-    ],
-    [
-      0.230569,
+      0.871485,
       "\r\n"
     ],
     [
-      0.00306,
-      "require 'smartystreets_ruby_sdk/client_builder'\r\nrequire 'smartystreets_ruby_sdk/static_credentials'\r\nrequire 'smartystreets_ruby_sdk/us_street'\r\n\r\n\r\nclass Example\r\n  def run\r\n    # This keypair will have been deleted by the time you are watching this video... \r\n    auth_id = 'c4df4ec8-2be0-8ccc-8762-d899ce38d1db'\r\n    auth_token = 'KXb5V3XlB537Fx3XIgaa'\r\n    credentials = StaticCredentials.new(auth_id, auth_token)\r\n\r\n    puts 'Step 0. Wire up the client with your keypair.'\r\n    client = ClientBuilder.new(credentials).build_us_street_api_client\r\n\r\n    puts 'Step 1. Make a lookup. (BTW, you can also send entire batches of lookups...)'\r\n    lookup = USStreet::Lookup.new\r\n    lookup.street = '1 Rosedale'\r\n    lookup.lastline = 'Baltimore MD'\r\n    lookup.candidates = 10\r\n\r\n    puts 'Step 2. Send the lookup.'\r\n    client.send_lookup(lookup)\r\n\r\n    puts 'Step 3. Show the resulting candidate addresses:'\r\n    lookup.result.each_with_index do |candidate, c|\r\n      puts \"- #{c}: #{candidate.delivery_line_1}, #{candidat"
+      0.002848,
+      "require 'smartystreets_ruby_sdk/client_builder'\r\nrequire 'smartystreets_ruby_sdk/static_credentials'\r\nrequire 'smartystreets_ruby_sdk/us_street'\r\n\r\n\r\nclass Example\r\n  def run\r\n    # This keypair will have been deleted by the time you are watching this video... \r\n    auth_id = 'f2ad739f-1f49-c201-b770-4625c7f84fe4'\r\n    auth_token = '4RK9lhEJ66Xt6ucDzbrU'\r\n    credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)\r\n\r\n    puts 'Step 0. Wire up the client with your keypair.'\r\n    client = SmartyStreets::ClientBuilder.new(credentials).build_us_street_api_client\r\n\r\n    puts 'Step 1. Make a lookup. (BTW, you can also send entire batches of lookups...)'\r\n    lookup = SmartyStreets::USStreet::Lookup.new\r\n    lookup.street = '1 Rosedale'\r\n    lookup.lastline = 'Baltimore MD'\r\n    lookup.candidates = 10\r\n\r\n    puts 'Step 2. Send the lookup.'\r\n    client.send_lookup(lookup)\r\n\r\n    puts 'Step 3. Show the resulting candidate addresses:'\r\n    lookup.result.each_with_index do |candidate, c|\r\n      puts \"- #"
     ],
     [
-      3e-05,
-      "e.last_line}\\n\"\r\n    end\r\n  end\r\nend\r\n\r\nExample.new.run"
+      3.1e-05,
+      "{c}: #{candidate.delivery_line_1}, #{candidate.last_line}\\n\"\r\n    end\r\n  end\r\nend\r\n\r\nExample.new.run"
     ],
     [
       0.000304,
@@ -267,23 +291,15 @@
       "\r\n"
     ],
     [
-      2.5e-05,
+      0.000115,
       "bash-3.2$ "
     ],
     [
-      0.14381,
+      0.167817,
       "\r\n"
     ],
     [
-      6.9e-05,
-      "bash-3.2$ "
-    ],
-    [
-      0.14446,
-      "\r\n"
-    ],
-    [
-      3.7e-05,
+      0.000102,
       "bash-3.2$ "
     ],
     [
@@ -291,75 +307,47 @@
       "r"
     ],
     [
-      0.144148,
+      0.160298,
       "u"
     ],
     [
-      0.183292,
+      0.215638,
       "b"
     ],
     [
-      0.160194,
+      0.152017,
       "y"
     ],
     [
-      0.143947,
+      0.136009,
       " "
     ],
     [
-      0.223659,
+      0.231998,
       "e"
     ],
     [
-      0.465012,
+      0.399875,
       "x"
     ],
     [
-      0.135554,
-      "a"
+      0.279121,
+      "ample.rb "
     ],
     [
-      0.21534,
-      "m"
-    ],
-    [
-      0.112946,
-      "p"
-    ],
-    [
-      0.217044,
-      "l"
-    ],
-    [
-      0.614323,
-      "e"
-    ],
-    [
-      0.648622,
-      "."
-    ],
-    [
-      0.399935,
-      "r"
-    ],
-    [
-      0.271424,
-      "b"
-    ],
-    [
-      0.687326,
+      1.0,
       "\r\n"
     ],
     [
-      0.072413,
+      0.075529,
       "Step 0. Wire up the client with your keypair.\r\nStep 1. Make a lookup. (BTW, you can also send entire batches of lookups...)\r\nStep 2. Send the lookup.\r\n"
     ],
     [
-      0.248917,
+      0.247698,
       "Step 3. Show the resulting candidate addresses:\r\n- 0: 1 N Rosedale St, Baltimore MD 21229-3737\r\n- 1: 1 S Rosedale St, Baltimore MD 21229-3739\r\n"
     ],
     [
-      0.007523,
+      0.00718,
       "bash-3.2$ "
     ]
   ]
