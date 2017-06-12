@@ -3,6 +3,7 @@ require 'net/http'
 require_relative '../../lib/smartystreets_ruby_sdk/native_sender'
 require_relative '../../lib/smartystreets_ruby_sdk/request'
 require_relative '../../lib/smartystreets_ruby_sdk/exceptions'
+require_relative '../../lib/smartystreets_ruby_sdk/version'
 
 class TestNativeSender < Minitest::Test
   NativeSender = SmartyStreets::NativeSender
@@ -116,7 +117,7 @@ class TestNativeSender < Minitest::Test
 
     native_request = NativeSender.build_request(smarty_request)
 
-    assert_equal('smartystreets (sdk:ruby@0.0.0), Some plugin, Some other plugin', native_request['User-Agent'])
+    assert_equal("smartystreets (sdk:ruby@#{SmartyStreets::VERSION}), Some plugin, Some other plugin", native_request['User-Agent'])
     assert_equal('X value', native_request['X-Something'])
   end
 end
