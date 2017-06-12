@@ -8,7 +8,9 @@ class USStreetSingleAddressExample
     auth_token = ENV['SMARTY_AUTH_TOKEN']
     credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
-    client = SmartyStreets::ClientBuilder.new(credentials).build_us_street_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials).
+                 # with_proxy('localhost', 8080, 'proxyUser', 'proxyPassword'). # Uncomment this line to try it with a proxy
+                 build_us_street_api_client
 
     lookup = SmartyStreets::USStreet::Lookup.new
     lookup.street = '1600 Amphitheatre Pkwy'

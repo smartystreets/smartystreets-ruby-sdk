@@ -6,6 +6,7 @@ require_relative 'retry_sender'
 require_relative 'url_prefix_sender'
 require_relative 'sleeper'
 require_relative 'logger'
+require_relative 'proxy'
 require_relative 'us_street/client'
 require_relative 'us_zipcode/client'
 require_relative 'us_extract/client'
@@ -79,8 +80,8 @@ module SmartyStreets
     # proxy is a Proxy object from this module.
     #
     # Returns self to accommodate method chaining.
-    def with_proxy(proxy)
-      @proxy = proxy
+    def with_proxy(host, port, username, password)
+      @proxy = SmartyStreets::Proxy.new(host, port, username, password)
       self
     end
 
