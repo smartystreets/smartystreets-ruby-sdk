@@ -21,8 +21,8 @@ class TestInternationalCandidate < Minitest::Test
                 "\"building_trailing_type\":\"44\",\"sub_building_type\":\"45\",\"sub_building_number\":\"46\","\
                 "\"sub_building_name\":\"47\",\"sub_building\":\"48\",\"post_box\":\"49\",\"post_box_type\":\"50\","\
                 "\"post_box_number\":\"51\"},\"metadata\":{\"latitude\":52.0,\"longitude\":53.0,"\
-                "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\", \"address_format\":\"56\"},"\
-                "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\",\"max_address_precision\":\"59\"}}]"
+                "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\"},"\
+                "\"analysis\":{\"verification_status\":\"56\",\"address_precision\":\"57\",\"max_address_precision\":\"58\"}}]"
 
     serializer = SmartyStreets::NativeSerializer.new
     candidate = SmartyStreets::InternationalStreet::Candidate.new(serializer.deserialize(response_payload)[0])
@@ -88,12 +88,11 @@ class TestInternationalCandidate < Minitest::Test
     assert_equal(53, metadata.longitude, 0.001)
     assert_equal('54', metadata.geocode_precision)
     assert_equal('55', metadata.max_geocode_precision)
-    assert_equal('56', metadata.address_format)
 
     analysis = candidate.analysis
     assert(analysis)
-    assert_equal('57', analysis.verification_status)
-    assert_equal('58', analysis.address_precision)
-    assert_equal('59', analysis.max_address_precision)
+    assert_equal('56', analysis.verification_status)
+    assert_equal('57', analysis.address_precision)
+    assert_equal('58', analysis.max_address_precision)
   end
 end
