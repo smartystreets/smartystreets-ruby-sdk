@@ -25,6 +25,8 @@ module SmartyStreets
                            RequestEntityTooLargeError.new(REQUEST_ENTITY_TOO_LARGE)
                          when '400'
                            BadRequestError.new(BAD_REQUEST)
+                         when '422'
+                           UnprocessableEntityError.new(UNPROCESSABLE_ENTITY)
                          when '429'
                            TooManyRequestsError.new(TOO_MANY_REQUESTS)
                          when '500'
