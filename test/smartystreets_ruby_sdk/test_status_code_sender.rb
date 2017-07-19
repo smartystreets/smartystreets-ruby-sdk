@@ -58,6 +58,16 @@ class TestStatusCodeSender < Minitest::Test
     assert_equal(expected_response.error, response.error)
   end
 
+  def test_unprocessable_entity_error_given_for_422
+    expected_response = Response.new(nil, '422', SmartyStreets::UnprocessableEntityError.new(SmartyStreets::UNPROCESSABLE_ENTITY))
+    inner = MockSender.new(Response.new(nil, '422', nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_response.error, response.error)
+  end
+
   def test_too_many_requests_error_given_for_429
     expected_response = Response.new(nil, '429', SmartyStreets::TooManyRequestsError.new(SmartyStreets::TOO_MANY_REQUESTS))
     inner = MockSender.new(Response.new(nil, '429', nil))
