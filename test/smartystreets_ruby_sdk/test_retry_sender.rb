@@ -15,8 +15,15 @@ class TestRetrySender < Minitest::Test
     assert_equal(1, inner.current_status_code_index)
   end
 
+  def test_client_error_does_not_retry
+    inner = FailingSender.new(['422'])
+    send_with_retry(5, inner, FakeSleeper.new)
+
+    assert_equal(1, inner.current_status_code_index)
+  end
+
   def test_retry_until_success
-    inner = FailingSender.new(%w(401 402 400 200 500))
+    inner = FailingSender.new(%w(500 500 500 200 500))
 
     send_with_retry(10, inner, FakeSleeper.new)
 
@@ -36,7 +43,7 @@ class TestRetrySender < Minitest::Test
   end
 
   def test_backoff_does_not_exceed_max
-    inner = FailingSender.new(%w(401 402 400 500 500 500 500 500 500 500 500 500 500 200))
+    inner = FailingSender.new(%w(500 500 500 500 500 500 500 500 500 500 500 500 500 200))
     sleeper = FakeSleeper.new
 
     send_with_retry(20, inner, sleeper)
@@ -52,4 +59,3 @@ def send_with_retry(retries, inner, sleeper)
 
   sender.send(request)
 end
-
