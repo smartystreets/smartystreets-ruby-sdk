@@ -36,6 +36,7 @@ module SmartyStreets
         add_parameter(request, 'city_filter', build_filter_string(lookup.city_filter))
         add_parameter(request, 'state_filter', build_filter_string(lookup.state_filter))
         add_parameter(request, 'prefer', build_filter_string(lookup.prefer))
+        add_parameter(request, 'prefer_ratio', lookup.prefer_ratio.to_s)
         if lookup.geolocate_type != GeolocationType::NONE
           request.parameters['geolocate'] = 'true'
           request.parameters['geolocate_precision'] = lookup.geolocate_type

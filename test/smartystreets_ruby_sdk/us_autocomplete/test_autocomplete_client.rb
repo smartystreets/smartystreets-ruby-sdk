@@ -16,6 +16,8 @@ class TestAutocompleteClient < Minitest::Test
     client.send(Lookup.new('1'))
 
     assert_equal('1', sender.request.parameters['prefix'])
+    assert_nil(sender.request.parameters['max_suggestions'])
+    assert_nil(sender.request.parameters['prefer_ratio'])
   end
 
   def test_sending_fully_populated_lookup
@@ -28,6 +30,7 @@ class TestAutocompleteClient < Minitest::Test
     lookup.add_state_filter('4')
     lookup.add_state_filter('4.5')
     lookup.add_prefer('5')
+    lookup.prefer_ratio = 0.6
     lookup.geolocate_type = SmartyStreets::USAutocomplete::GeolocationType::STATE
 
     client.send(lookup)
@@ -37,6 +40,7 @@ class TestAutocompleteClient < Minitest::Test
     assert_equal('3', sender.request.parameters['city_filter'])
     assert_equal('4,4.5', sender.request.parameters['state_filter'])
     assert_equal('5', sender.request.parameters['prefer'])
+    assert_equal('0.6', sender.request.parameters['prefer_ratio'])
     assert_equal('true', sender.request.parameters['geolocate'])
     assert_equal('state', sender.request.parameters['geolocate_precision'])
   end

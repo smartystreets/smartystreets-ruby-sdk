@@ -8,15 +8,17 @@ module SmartyStreets
     # See "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields"
     class Lookup < JSONAble
 
-      attr_accessor :result, :prefix, :state_filter, :prefer, :max_suggestions, :geolocate_type, :city_filter
+      attr_accessor :result, :prefix, :state_filter, :prefer, :prefer_ratio, :max_suggestions, :geolocate_type, :city_filter
 
-      def initialize(prefix=nil, suggestions=nil, city_filter=nil, state_filter=nil, prefer=nil, geolocate_type=nil)
+      def initialize(prefix=nil, suggestions=nil, city_filter=nil, state_filter=nil,
+                     prefer=nil, prefer_ratio=nil, geolocate_type=nil)
         @result = []
         @prefix = prefix
         @max_suggestions = suggestions
         @city_filter = city_filter ? city_filter : []
         @state_filter = state_filter ? state_filter : []
         @prefer = prefer ? prefer : []
+        @prefer_ratio = prefer_ratio
         @geolocate_type = geolocate_type
       end
 
