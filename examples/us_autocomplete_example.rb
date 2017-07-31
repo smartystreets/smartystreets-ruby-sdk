@@ -27,6 +27,7 @@ class USAutocompleteExample
 
     puts
     puts '*** Result with some filters ***'
+    puts
 
     suggestions.each do |suggestion|
       puts suggestion.text
