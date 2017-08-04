@@ -59,6 +59,20 @@ class TestNativeSender < Minitest::Test
     assert_equal('auth-id=testID&auth-token=testToken', query)
   end
 
+  def test_query_encodes_parameters
+    smarty_request = Request.new
+    smarty_request.url_prefix = 'http://localhost'
+    smarty_request.payload = 'Test Payload'
+    smarty_request.parameters = {
+      'needs_encoding' => '&foo=bar',
+      'unicode' => 'Sjömadsvägen'
+    }
+
+    query = NativeSender.create_query(smarty_request)
+
+    assert_equal('needs_encoding=%26foo%3Dbar&unicode=Sj%C3%B6madsv%C3%A4gen', query)
+  end
+
   def test_request_contains_correct_content
     smarty_request = Request.new
     smarty_request.url_prefix = 'http://localhost'
