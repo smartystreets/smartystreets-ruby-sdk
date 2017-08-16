@@ -63,14 +63,7 @@ module SmartyStreets
     end
 
     def self.create_query(smarty_request)
-      query_string = ''
-
-      smarty_request.parameters.each do |key, value|
-        query_string.concat("&#{key}=#{value}")
-      end
-
-      query_string[0] = ''
-      query_string
+      URI.encode_www_form(smarty_request.parameters)
     end
 
     def self.set_custom_headers(smarty_headers, request)
