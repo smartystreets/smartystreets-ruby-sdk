@@ -53,6 +53,7 @@ module SmartyStreets
 
       def convert_suggestions(suggestion_hashes)
         converted_suggestions = []
+        return converted_suggestions if suggestion_hashes.nil?
 
         suggestion_hashes.each do |suggestion|
           converted_suggestions.push(USAutocomplete::Suggestion.new(suggestion))
