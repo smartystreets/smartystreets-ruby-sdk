@@ -51,6 +51,13 @@ class TestRetrySender < Minitest::Test
     assert_equal([0,1,2,3,4,5,6,7,8,9,10,10,10], sleeper.sleep_durations)
   end
 
+  def test_nil_status_does_not_retry
+    inner = FailingSender.new([])
+    send_with_retry(5, inner, FakeSleeper.new)
+
+    assert_equal(1, inner.current_status_code_index)
+  end
+
 end
 
 def send_with_retry(retries, inner, sleeper)

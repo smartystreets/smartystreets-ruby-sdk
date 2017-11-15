@@ -1,7 +1,7 @@
 module SmartyStreets
   class RetrySender
     MAX_BACKOFF_DURATION = 10
-    STATUS_INTERNAL_SERVER_ERROR = '500'.freeze
+    STATUS_INTERNAL_SERVER_ERROR = 500
 
     def initialize(max_retries, inner, sleeper, logger)
       @max_retries = max_retries
@@ -14,7 +14,7 @@ module SmartyStreets
       response = @inner.send(request)
 
       (0..@max_retries-1).each do |i|
-        break if response.status_code < STATUS_INTERNAL_SERVER_ERROR
+        break if response.status_code.to_i < STATUS_INTERNAL_SERVER_ERROR
 
         backoff(i)
 
