@@ -52,7 +52,7 @@ class TestNativeSender < Minitest::Test
     smarty_request = Request.new
     smarty_request.url_prefix = 'http://localhost'
     smarty_request.payload = 'Test Payload'
-    smarty_request.parameters = {'auth-id' => 'testID', 'auth-token' => 'testToken'}
+    smarty_request.parameters = { 'auth-id' => 'testID', 'auth-token' => 'testToken' }
 
     query = NativeSender.create_query(smarty_request)
 
