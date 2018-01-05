@@ -6,8 +6,13 @@ class USExtractExample
   Lookup = SmartyStreets::USExtract::Lookup
 
   def run
-    auth_id = ENV['SMARTY_AUTH_ID'] # We recommend storing your keys in environment variables
-    auth_token = ENV['SMARTY_AUTH_TOKEN']
+    auth_id = 'Your SmartyStreets Auth ID here'
+    auth_token = 'Your SmartyStreets Auth Token here'
+
+    # We recommend storing your secret keys in environment variables instead---it's safer!
+    # auth_id = ENV['SMARTY_AUTH_ID']
+    # auth_token = ENV['SMARTY_AUTH_TOKEN']
+
     credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
     client = SmartyStreets::ClientBuilder.new(credentials).build_us_extract_api_client
