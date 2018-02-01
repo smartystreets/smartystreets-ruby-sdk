@@ -4,7 +4,7 @@ require_relative 'response'
 
 module SmartyStreets
   class NativeSender
-    def initialize(max_timeout = 10_000, proxy = nil)
+    def initialize(max_timeout = 10, proxy = nil)
       @max_timeout = max_timeout
       @proxy = proxy
     end

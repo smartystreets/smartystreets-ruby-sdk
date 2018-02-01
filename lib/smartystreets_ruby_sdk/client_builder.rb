@@ -29,7 +29,7 @@ module SmartyStreets
       @serializer = NativeSerializer.new
       @http_sender = nil
       @max_retries = 5
-      @max_timeout = 10_000
+      @max_timeout = 10
       @url_prefix = nil
       @proxy = nil
     end
@@ -42,8 +42,7 @@ module SmartyStreets
       self
     end
 
-    # The maximum time (in milliseconds) to wait for a connection, and also to wait for
-    # the response to be read. (Default is 10000)
+    # The maximum time (in seconds) to wait for the response to be read. (Default is 10)
     #
     # Returns self to accommodate method chaining.
     def with_max_timeout(max_timeout)
