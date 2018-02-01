@@ -3,7 +3,7 @@ module SmartyStreets
     # See "https://smartystreets.com/docs/cloud/international-street-api#components"
     class Components
       attr_reader :premise, :thoroughfare_trailing_type, :sub_building, :locality, :post_box_number,
-                  :thoroughfare_name, :thoroughfare_postdirection, :dependent_thoroughfare,
+                  :thoroughfare_name, :thoroughfare_postdirection, :dependent_thoroughfare, :premise_prefix_number,
                   :thoroughfare, :dependent_thoroughfare_name, :postal_code_short, :dependent_thoroughfare_trailing_type,
                   :administrative_area, :post_box, :building_leading_type, :dependent_locality_name, :thoroughfare_type,
                   :dependent_thoroughfare_postdirection, :double_dependent_locality, :premise_number,
@@ -27,6 +27,7 @@ module SmartyStreets
         @premise = obj.fetch('premise', nil)
         @premise_extra = obj.fetch('premise_extra', nil)
         @premise_number = obj.fetch('premise_number', nil)
+        @premise_prefix_number = obj.fetch('premise_prefix_number', nil)
         @premise_type = obj.fetch('premise_type', nil)
         @thoroughfare = obj.fetch('thoroughfare', nil)
         @thoroughfare_predirection = obj.fetch('thoroughfare_predirection', nil)
