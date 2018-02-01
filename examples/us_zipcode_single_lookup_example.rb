@@ -21,7 +21,7 @@ class UsZipcodeSingleLookupExample
 
     begin
       client.send_lookup(lookup)
-    rescue SmartyError => err
+    rescue SmartyStreets::SmartyError => err
       puts err
       return
     end

@@ -25,8 +25,20 @@ class TestStreetClient < Minitest::Test
 
   def test_send_populated_lookup
     sender = RequestCapturingSender.new
-    expected_payload = 'Hello, World!'
-    serializer = FakeSerializer.new(expected_payload)
+    expected_parameters = {
+        'street' => '2',
+        'street2' => '3',
+        'secondary' => '4',
+        'city' => '5',
+        'state' => '6',
+        'zipcode' => '7',
+        'lastline' => '8',
+        'addressee' => '9',
+        'urbanization' => '10',
+        'candidates' => '11',
+        'match' => SmartyStreets::USStreet::MatchType::INVALID
+    }
+    serializer = FakeSerializer.new(expected_parameters)
     client = Client.new(sender, serializer)
     lookup = Lookup.new
     lookup.input_id = '1'
@@ -44,7 +56,7 @@ class TestStreetClient < Minitest::Test
 
     client.send_lookup(lookup)
 
-    assert_equal(expected_payload, sender.request.payload)
+    assert_equal(expected_parameters, sender.request.parameters)
   end
 
   def test_empty_batch_not_sent
@@ -82,9 +94,9 @@ class TestStreetClient < Minitest::Test
   end
 
   def test_candidates_correctly_assigned_to_corresponding_lookup
-    candidate0 = {'input_index'=> 0, 'candidate_index'=> 0, 'addressee'=> 'Mister 0'}
-    candidate1 = {'input_index'=> 1, 'candidate_index'=> 0, 'addressee'=> 'Mister 1'}
-    candidate2 = {'input_index'=> 1, 'candidate_index'=> 1, 'addressee'=> 'Mister 2'}
+    candidate0 = {'input_index' => 0, 'candidate_index' => 0, 'addressee' => 'Mister 0'}
+    candidate1 = {'input_index' => 1, 'candidate_index' => 0, 'addressee' => 'Mister 1'}
+    candidate2 = {'input_index' => 1, 'candidate_index' => 1, 'addressee' => 'Mister 2'}
     raw_candidates = [candidate0, candidate1, candidate2]
 
     expected_candidates = [Candidate.new(candidate0), Candidate.new(candidate1), Candidate.new(candidate2)]

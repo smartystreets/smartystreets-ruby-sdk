@@ -21,6 +21,22 @@ class TestZipcodeClient < Minitest::Test
     assert_nil(sender.request)
   end
 
+  def test_successfully_sends_populated_lookup
+    expected_parameters = {
+        'city' => '1',
+        'state' => '2',
+        'zipcode' => '3'
+    }
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new(expected_parameters)
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1', '2', '3')
+
+    client.send_lookup(lookup)
+
+    assert_equal(expected_parameters, sender.request.parameters)
+  end
+
   def test_successfully_sends_batch
     expected_payload = 'Hello, World!'
     sender = RequestCapturingSender.new

@@ -26,14 +26,19 @@ module SmartyStreets
         return if batch.empty?
 
         converted_lookups = remap_keys(batch.all_lookups)
-        smarty_request.payload = @serializer.serialize(converted_lookups)
+
+        if batch.size > 1
+          smarty_request.payload = @serializer.serialize(converted_lookups)
+        else
+          smarty_request.parameters = converted_lookups[0]
+        end
 
         response = @sender.send(smarty_request)
 
         raise response.error if response.error
 
         results = @serializer.deserialize(response.payload)
-        results = [] if results == nil
+        results = [] if results.nil?
         assign_results_to_lookups(batch, results)
       end
 
