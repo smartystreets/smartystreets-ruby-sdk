@@ -11,7 +11,7 @@ module SmartyStreets
   REQUEST_ENTITY_TOO_LARGE = 'Request Entity Too Large: The request body has exceeded the maximum size.'.freeze
 
   BAD_REQUEST = 'Bad Request (Malformed Payload): A GET request lacked a street field or the request body of a
- POST request contained malformed JSON, possibly because a value was submitted as a number rather than as a string.'.freeze
+ POST request contained malformed JSON.'.freeze
 
   UNPROCESSABLE_ENTITY = 'GET request lacked required fields.'.freeze
 
