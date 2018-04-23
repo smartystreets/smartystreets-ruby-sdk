@@ -35,7 +35,7 @@ class USStreetMultipleAddressExample
 
     begin
       client.send_batch(batch)
-    rescue SmartyError => err
+    rescue SmartyStreets::SmartyError => err
       puts err
       return
     end
