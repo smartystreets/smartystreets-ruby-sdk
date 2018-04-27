@@ -7,6 +7,7 @@ require_relative 'url_prefix_sender'
 require_relative 'sleeper'
 require_relative 'logger'
 require_relative 'proxy'
+require_relative 'custom_header_sender'
 require_relative 'us_street/client'
 require_relative 'us_zipcode/client'
 require_relative 'us_extract/client'
@@ -32,6 +33,7 @@ module SmartyStreets
       @max_timeout = 10
       @url_prefix = nil
       @proxy = nil
+      @headers = nil
     end
 
     # Sets the maximum number of times to retry sending the request to the API. (Default is 5)
@@ -84,6 +86,15 @@ module SmartyStreets
       self
     end
 
+    # Allows you to submit custom headers using a Hash.
+    # headers is a Hash object.
+    #
+    # Returns self to accommodate method chaining.
+    def with_custom_headers(headers)
+      @headers = headers
+      self
+    end
+
     def build_international_street_api_client
       ensure_url_prefix_not_null(INTERNATIONAL_STREET_API_URL)
       InternationalStreet::Client.new(build_sender, @serializer)
@@ -115,6 +126,8 @@ module SmartyStreets
       sender = NativeSender.new(@max_timeout, @proxy)
 
       sender = StatusCodeSender.new(sender)
+
+      sender = CustomHeaderSender.new(sender, @headers) unless @headers.nil?
 
       sender = SigningSender.new(@signer, sender) unless @signer.nil?
 

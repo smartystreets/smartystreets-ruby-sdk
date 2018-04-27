@@ -42,6 +42,9 @@ module SmartyStreets
       request['User-Agent'] = "smartystreets (sdk:ruby@#{SmartyStreets::VERSION})"
       request['Referer'] = smarty_request.referer unless smarty_request.referer.nil?
       set_custom_headers(smarty_request.headers, request)
+      for key in request.each_key
+        puts(key + " " + request[key])
+      end
       request
     end
 
@@ -68,8 +71,12 @@ module SmartyStreets
 
     def self.set_custom_headers(smarty_headers, request)
       smarty_headers.each do |key, values|
-        values.each do |value|
-          request.add_field(key, value)
+        if values.respond_to? :each
+          values.each do |value|
+            request.add_field(key, value)
+          end
+        else
+          request.add_field(key, values)
         end
       end
     end
