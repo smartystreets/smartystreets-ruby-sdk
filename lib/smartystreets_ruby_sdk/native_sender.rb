@@ -42,9 +42,6 @@ module SmartyStreets
       request['User-Agent'] = "smartystreets (sdk:ruby@#{SmartyStreets::VERSION})"
       request['Referer'] = smarty_request.referer unless smarty_request.referer.nil?
       set_custom_headers(smarty_request.headers, request)
-      for key in request.each_key
-        puts(key + " " + request[key])
-      end
       request
     end
 
