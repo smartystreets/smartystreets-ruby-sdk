@@ -34,6 +34,7 @@ module SmartyStreets
       @url_prefix = nil
       @proxy = nil
       @headers = nil
+      @debug = nil
     end
 
     # Sets the maximum number of times to retry sending the request to the API. (Default is 5)
@@ -95,6 +96,16 @@ module SmartyStreets
       self
     end
 
+    # Enables debug mode, which will print information about the HTTP request and response to $stdout.
+    #
+    # Returns self to accommodate method chaining.
+    def with_debug
+      @debug = true
+      self
+    end
+
+    # <editor-fold desc="Build methods">
+
     def build_international_street_api_client
       ensure_url_prefix_not_null(INTERNATIONAL_STREET_API_URL)
       InternationalStreet::Client.new(build_sender, @serializer)
@@ -120,10 +131,12 @@ module SmartyStreets
       USZipcode::Client.new(build_sender, @serializer)
     end
 
+    # </editor-fold>
+
     def build_sender
       return @http_sender unless @http_sender.nil?
 
-      sender = NativeSender.new(@max_timeout, @proxy)
+      sender = NativeSender.new(@max_timeout, @proxy, @debug)
 
       sender = StatusCodeSender.new(sender)
 

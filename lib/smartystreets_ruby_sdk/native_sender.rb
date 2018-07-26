@@ -4,9 +4,10 @@ require_relative 'response'
 
 module SmartyStreets
   class NativeSender
-    def initialize(max_timeout = 10, proxy = nil)
+    def initialize(max_timeout = 10, proxy = nil, debug = false)
       @max_timeout = max_timeout
       @proxy = proxy
+      @debug = debug
     end
 
     def send(smarty_request)
@@ -58,6 +59,8 @@ module SmartyStreets
         http = Net::HTTP.new(uri.hostname, uri.port, @proxy.host,
                              @proxy.port, @proxy.username, @proxy.password)
       end
+
+      http.set_debug_output($stdout) if @debug
 
       http
     end
