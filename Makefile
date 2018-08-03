@@ -1,25 +1,31 @@
 #!/usr/bin/make -f
 
+SOURCE_VERSION := 5.4
+VERSION_FILE = lib/smartystreets_ruby_sdk/version.rb
+CREDENTIALS_FILE = ~/.gem/credentials
+
+clean:
+	rm -f *.gem
+	git checkout "$(VERSION_FILE)"
+
 tests:
-	ruby -Ilib -e 'ARGV.each { |f| require f }' \
-		./test/smartystreets_ruby_sdk/test*.rb \
-		./test/smartystreets_ruby_sdk/us_street/test*.rb \
-		./test/smartystreets_ruby_sdk/us_zipcode/test*.rb \
-		./test/smartystreets_ruby_sdk/us_autocomplete/test*.rb \
-		./test/smartystreets_ruby_sdk/us_extract/test*.rb \
-		./test/smartystreets_ruby_sdk/international_street/test*.rb
+	rake test
 
-publish-patch:
-	@python tag.py patch
-	gem build smartystreets_ruby_sdk.gemspec
-	gem push smartystreets_ruby_sdk-`git describe`.gem
+publish: clean credentials
+	sed -i "s/0\.0\.0/$(shell git describe)/g" "$(VERSION_FILE)"
+	gem build *.gemspec #&& gem push *.gem
+	git checkout "$(VERSION_FILE)"
 
-publish-minor:
-	@python tag.py minor
-	gem build smartystreets_ruby_sdk.gemspec
-	gem push smartystreets_ruby_sdk-`git describe`.gem
+credentials:
+	@test -f $(CREDENTIALS_FILE) || \
+		(mkdir -p "$(dir $(CREDENTIALS_FILE))" && echo "rubygems_api_key: $(RUBYGEMS_API_KEY)" > $(CREDENTIALS_FILE))
 
-publish-major:
-	@python tag.py major
-	gem build smartystreets_ruby_sdk.gemspec
-	gem push smartystreets_ruby_sdk-`git describe`.gem
+dependencies:
+	gem install minitest
+
+version:
+	$(eval PREFIX := $(SOURCE_VERSION).)
+	$(eval CURRENT := $(shell git describe 2>/dev/null))
+	$(eval EXPECTED := $(PREFIX)$(shell git tag -l "$(PREFIX)*" | wc -l | xargs expr -1 +))
+	$(eval INCREMENTED := $(PREFIX)$(shell git tag -l "$(PREFIX)*" | wc -l | xargs expr 0 +))
+	@if [ "$(CURRENT)" != "$(EXPECTED)" ]; then git tag -a "$(INCREMENTED)" -m "" 2>/dev/null || true; fi
