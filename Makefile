@@ -23,3 +23,6 @@ publish-major:
 	@python tag.py major
 	gem build smartystreets_ruby_sdk.gemspec
 	gem push smartystreets_ruby_sdk-`git describe`.gem
+
+dependencies:
+	gem install minitest
