@@ -22,8 +22,8 @@ publish: clean credentials
 credentials:
 	@test -f $(CREDENTIALS_FILE) || \
 		(mkdir -p "$(dir $(CREDENTIALS_FILE))" && echo "rubygems_api_key: $(RUBYGEMS_API_KEY)" > $(CREDENTIALS_FILE))
-	chmod 0640 $(CREDENTIALS_FILE)
-	
+	chmod 0600 $(CREDENTIALS_FILE)
+
 dependencies:
 	gem install minitest
 
