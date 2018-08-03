@@ -37,7 +37,7 @@ version:
 ####################################################################3
 
 tests:
-	docker-compose run sdk make tests
+	docker-compose run sdk make local-test
 
 package:
 	docker-compose run sdk make local-package
