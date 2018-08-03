@@ -11,12 +11,12 @@ clean:
 tests:
 	rake test
 
-package:
+package: clean 
 	sed -i "s/0\.0\.0/$(shell git describe)/g" "$(VERSION_FILE)"
 	gem build *.gemspec
 	git checkout "$(VERSION_FILE)"
 
-publish: clean credentials
+publish: credentials
 	gem push *.gem
 
 credentials:
