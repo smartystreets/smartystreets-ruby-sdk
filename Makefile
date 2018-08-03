@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-SOURCE_VERSION := 5.4
+SOURCE_VERSION := 5.5
 VERSION_FILE = lib/smartystreets_ruby_sdk/version.rb
 CREDENTIALS_FILE = ~/.gem/credentials
 
