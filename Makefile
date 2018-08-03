@@ -20,8 +20,8 @@ publish: clean credentials
 	gem push *.gem
 
 credentials:
-	@test -f $(CREDENTIALS_FILE) || \
-		(mkdir -p "$(dir $(CREDENTIALS_FILE))" && echo ":rubygems_api_key: $(RUBYGEMS_API_KEY)" > $(CREDENTIALS_FILE))
+	mkdir -p "$(dir $(CREDENTIALS_FILE))"
+	test -f $(CREDENTIALS_FILE) || echo ":rubygems_api_key: $(RUBYGEMS_API_KEY)" > $(CREDENTIALS_FILE)
 	chmod 0600 $(CREDENTIALS_FILE)
 
 dependencies:
