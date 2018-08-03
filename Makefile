@@ -8,15 +8,15 @@ clean:
 	rm -f *.gem
 	git checkout "$(VERSION_FILE)"
 
-tests:
+local-test:
 	rake test
 
-package: clean 
+local-package: clean 
 	sed -i "s/0\.0\.0/$(shell git describe)/g" "$(VERSION_FILE)"
 	gem build *.gemspec
 	git checkout "$(VERSION_FILE)"
 
-publish: credentials
+local-publish: local-package credentials
 	gem push *.gem
 
 credentials:
@@ -36,10 +36,12 @@ version:
 
 ####################################################################3
 
-container-test:
+tests:
 	docker-compose run sdk make tests
-container-package: version
-	docker-compose run sdk make package
-container-publish:
-	docker-compose run sdk make publish
+
+package:
+	docker-compose run sdk make local-package
+
+publish: version
+	docker-compose run sdk make local-publish
 	git push origin --tags
