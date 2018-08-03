@@ -11,10 +11,13 @@ clean:
 tests:
 	rake test
 
-publish: clean credentials
+package:
 	sed -i "s/0\.0\.0/$(shell git describe)/g" "$(VERSION_FILE)"
-	gem build *.gemspec #&& gem push *.gem
+	gem build *.gemspec
 	git checkout "$(VERSION_FILE)"
+
+publish: clean credentials
+	gem push *.gem
 
 credentials:
 	@test -f $(CREDENTIALS_FILE) || \
@@ -29,3 +32,13 @@ version:
 	$(eval EXPECTED := $(PREFIX)$(shell git tag -l "$(PREFIX)*" | wc -l | xargs expr -1 +))
 	$(eval INCREMENTED := $(PREFIX)$(shell git tag -l "$(PREFIX)*" | wc -l | xargs expr 0 +))
 	@if [ "$(CURRENT)" != "$(EXPECTED)" ]; then git tag -a "$(INCREMENTED)" -m "" 2>/dev/null || true; fi
+
+####################################################################3
+
+container-test:
+	docker-compose run sdk make tests
+container-package: version
+	docker-compose run sdk make package
+container-publish:
+	docker-compose run sdk make publish
+	git push origin --tags
