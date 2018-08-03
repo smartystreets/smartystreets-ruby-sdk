@@ -2,15 +2,23 @@
 
 SOURCE_VERSION := 5.4
 VERSION_FILE = lib/smartystreets_ruby_sdk/version.rb
+CREDENTIALS_FILE = ~/.gem/credentials
+
+clean:
+	rm -f *.gem
+	git checkout "$(VERSION_FILE)"
 
 tests:
 	rake test
 
-publish:
+publish: clean credentials
 	sed -i "s/0\.0\.0/$(shell git describe)/g" "$(VERSION_FILE)"
-	@#gem build "smartystreets_ruby_sdk.gemspec"
-	@#gem push "smartystreets_ruby_sdk-$(shell git describe).gem"
+	gem build *.gemspec #&& gem push *.gem
 	git checkout "$(VERSION_FILE)"
+
+credentials:
+	@test -f $(CREDENTIALS_FILE) || \
+		(mkdir -p "$(dir $(CREDENTIALS_FILE))" && echo "rubygems_api_key: $(RUBYGEMS_API_KEY)" > $(CREDENTIALS_FILE))
 
 dependencies:
 	gem install minitest
