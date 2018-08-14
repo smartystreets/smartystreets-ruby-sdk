@@ -22,6 +22,8 @@ module SmartyStreets
 
         response = @sender.send(request)
 
+        raise response.error if response.error
+
         result = @serializer.deserialize(response.payload)
         suggestions = convert_suggestions(result.fetch('suggestions', []))
         lookup.result = suggestions

@@ -20,6 +20,7 @@ module SmartyStreets
 
         request = build_request(lookup)
         response = @sender.send(request)
+        raise response.error if response.error
         result = USExtract::Result.new(@serializer.deserialize(response.payload))
 
         lookup.result = result

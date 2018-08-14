@@ -17,6 +17,8 @@ module SmartyStreets
 
         response = @sender.send(request)
 
+        raise response.error if response.error
+
         candidates = convert_candidates(@serializer.deserialize(response.payload))
         lookup.result = candidates
       end
