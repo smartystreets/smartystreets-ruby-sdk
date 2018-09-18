@@ -19,7 +19,7 @@ package: clean dependencies test
 		&& git checkout "$(VERSION_FILE)"
 
 identity:
-	test -f $(IDENTITY_FILE) || (mkdir -p $(dir $(IDENTITY_FILE)) \
+	@test -f $(IDENTITY_FILE) || (mkdir -p $(dir $(IDENTITY_FILE)) \
 		&& echo ":rubygems_api_key: $(RUBYGEMS_API_KEY)" > $(IDENTITY_FILE) \
 		&& chmod 0600 $(IDENTITY_FILE))
 
