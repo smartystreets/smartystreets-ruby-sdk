@@ -1,10 +1,12 @@
 version: '3.7'
 services:
   sdk:
-    build: .
+    build:
+      context: .
+      args:
+        - RUBYGEMS_API_KEY
     volumes: 
       - .:/code
     environment:
       - SMARTY_AUTH_ID
       - SMARTY_AUTH_TOKEN
-      - RUBYGEMS_API_KEY
