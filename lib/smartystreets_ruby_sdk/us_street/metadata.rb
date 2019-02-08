@@ -4,7 +4,7 @@ module SmartyStreets
     class Metadata
       attr_reader :elot_sort, :longitude, :elot_sequence, :county_fips, :building_default_indicator, :rdi,
                   :congressional_district, :latitude, :precision, :time_zone, :zip_type, :county_name, :utc_offset,
-                  :record_type, :carrier_route, :obeys_dst
+                  :record_type, :carrier_route, :obeys_dst, :is_an_ews_match
 
       def initialize(obj)
         @record_type = obj['record_type']
@@ -23,6 +23,7 @@ module SmartyStreets
         @time_zone = obj['time_zone']
         @utc_offset = obj['utc_offset']
         @obeys_dst = obj['dst']
+        @is_an_ews_match = obj['ews_match']
       end
     end
   end

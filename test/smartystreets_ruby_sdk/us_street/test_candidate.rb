@@ -51,19 +51,20 @@ class TestCandidate < Minitest::Test
             'precision' => '38',
             'time_zone' => '39',
             'utc_offset' => 40.0,
-            'dst' => '41'
+            'dst' => '41',
+            'ews_match' => '42'
         },
         'analysis' => {
-            'dpv_match_code' => '42',
-            'dpv_footnotes' => '43',
-            'dpv_cmra' => '44',
-            'dpv_vacant' => '45',
-            'active' => '46',
-            'ews_match' => '47',
-            'footnotes' => '48',
-            'lacslink_code' => '49',
-            'lacslink_indicator' => '50',
-            'suitelink_match' => '51'
+            'dpv_match_code' => '43',
+            'dpv_footnotes' => '44',
+            'dpv_cmra' => '45',
+            'dpv_vacant' => '46',
+            'active' => '47',
+            'ews_match' => '48',
+            'footnotes' => '49',
+            'lacslink_code' => '50',
+            'lacslink_indicator' => '51',
+            'suitelink_match' => '52'
         }
     }
 
@@ -113,16 +114,17 @@ class TestCandidate < Minitest::Test
     assert_equal('39', candidate.metadata.time_zone)
     assert_equal(40.0, candidate.metadata.utc_offset)
     assert_equal('41', candidate.metadata.obeys_dst)
+    assert_equal('42', candidate.metadata.is_an_ews_match)
 
-    assert_equal('42', candidate.analysis.dpv_match_code)
-    assert_equal('43', candidate.analysis.dpv_footnotes)
-    assert_equal('44', candidate.analysis.cmra)
-    assert_equal('45', candidate.analysis.vacant)
-    assert_equal('46', candidate.analysis.active)
-    assert_equal('47', candidate.analysis.is_ews_match)
-    assert_equal('48', candidate.analysis.footnotes)
-    assert_equal('49', candidate.analysis.lacs_link_code)
-    assert_equal('50', candidate.analysis.lacs_link_indicator)
-    assert_equal('51', candidate.analysis.is_suite_link_match)
+    assert_equal('43', candidate.analysis.dpv_match_code)
+    assert_equal('44', candidate.analysis.dpv_footnotes)
+    assert_equal('45', candidate.analysis.cmra)
+    assert_equal('46', candidate.analysis.vacant)
+    assert_equal('47', candidate.analysis.active)
+    assert_equal(false, candidate.analysis.is_ews_match)
+    assert_equal('49', candidate.analysis.footnotes)
+    assert_equal('50', candidate.analysis.lacs_link_code)
+    assert_equal('51', candidate.analysis.lacs_link_indicator)
+    assert_equal('52', candidate.analysis.is_suite_link_match)
   end
 end
