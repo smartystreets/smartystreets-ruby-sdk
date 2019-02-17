@@ -27,7 +27,7 @@ module SmartyStreets
     def backoff(attempt)
       backoff_duration = [attempt, MAX_BACKOFF_DURATION].min
 
-      @logger.log("There was an error processing the request. Retrying in #{backoff_duration} seconds...")
+      @logger.warn("There was an error processing the request. Retrying in #{backoff_duration} seconds...")
       @sleeper.sleep(backoff_duration)
     end
   end
