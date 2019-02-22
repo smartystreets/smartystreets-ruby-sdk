@@ -242,6 +242,5 @@ class TestStreetClient < Minitest::Test
     assert_equal("lacslink_code", candidate.analysis.lacs_link_code)
     assert_equal("lacslink_indicator", candidate.analysis.lacs_link_indicator)
     assert_equal(true, candidate.analysis.is_suite_link_match)
-    assert_equal(false, candidate.analysis.is_ews_match)
   end
 end
