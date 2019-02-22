@@ -11,7 +11,7 @@ module SmartyStreets
         @cmra = obj['dpv_cmra']
         @vacant = obj['dpv_vacant']
         @active = obj['active']
-        @is_ews_match = false  # deprecated
+        @is_ews_match = false #deprecated
         @footnotes = obj['footnotes']
         @lacs_link_code = obj['lacslink_code']
         @lacs_link_indicator = obj['lacslink_indicator']

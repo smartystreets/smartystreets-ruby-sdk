@@ -121,7 +121,6 @@ class TestCandidate < Minitest::Test
     assert_equal('45', candidate.analysis.cmra)
     assert_equal('46', candidate.analysis.vacant)
     assert_equal('47', candidate.analysis.active)
-    assert_equal(false, candidate.analysis.is_ews_match)
     assert_equal('49', candidate.analysis.footnotes)
     assert_equal('50', candidate.analysis.lacs_link_code)
     assert_equal('51', candidate.analysis.lacs_link_indicator)
