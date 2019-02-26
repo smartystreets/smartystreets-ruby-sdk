@@ -21,6 +21,7 @@ class USStreetSingleAddressExample
     lookup.street = '1600 Amphitheatre Pkwy'
     lookup.city = 'Mountain View'
     lookup.state = 'CA'
+    lookup.match = SmartyStreets::USStreet::MatchType::INVALID
 
     begin
       client.send_lookup(lookup)

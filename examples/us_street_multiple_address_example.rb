@@ -23,6 +23,7 @@ class USStreetMultipleAddressExample
     batch[0].street = '1600 amphitheatre parkway'
     batch[0].city = 'Mountain view'
     batch[0].state = 'california'
+    batch[0].match = SmartyStreets::USStreet::MatchType::INVALID
 
     batch.add(Lookup.new('1 Rosedale, Baltimore, Maryland')) # Freeform addresses work too.
     batch[1].candidates = 10 # Allows up to ten possible matches to be returned (default is 1).
