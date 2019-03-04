@@ -5,7 +5,7 @@ class FakeLogger
     @log = []
   end
 
-  def warn(message)
+  def log(message)
     @log.push(message)
   end
 end
