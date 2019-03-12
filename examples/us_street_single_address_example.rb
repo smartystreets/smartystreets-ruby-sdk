@@ -14,14 +14,24 @@ class USStreetSingleAddressExample
     credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
     client = SmartyStreets::ClientBuilder.new(credentials).
-                 # with_proxy('localhost', 8080, 'proxyUser', 'proxyPassword'). # Uncomment this line to try it with a proxy
-                 build_us_street_api_client
+        # with_proxy('localhost', 8080, 'proxyUser', 'proxyPassword'). # Uncomment this line to try it with a proxy
+        build_us_street_api_client
+
+    # Documentation for input fields can be found at:
+    # https://smartystreets.com/docs/cloud/us-street-api
 
     lookup = SmartyStreets::USStreet::Lookup.new
+    lookup.input_id = '24601'  # Optional ID from your system
+    lookup.addressee = 'John Doe'
     lookup.street = '1600 Amphitheatre Pkwy'
+    lookup.street2 = 'closet under the stairs'
+    lookup.secondary = 'APT 2'
+    lookup.urbanization = ''  # Only applies to Puerto Rico addresses
     lookup.city = 'Mountain View'
     lookup.state = 'CA'
-    lookup.match = SmartyStreets::USStreet::MatchType::INVALID
+    lookup.zipcode = '21229'
+    lookup.candidates = 3
+    lookup.match = 'invalid'.freeze # "invalid" is the most permissive match type
 
     begin
       client.send_lookup(lookup)

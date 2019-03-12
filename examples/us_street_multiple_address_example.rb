@@ -19,11 +19,20 @@ class USStreetMultipleAddressExample
     client = SmartyStreets::ClientBuilder.new(credentials).build_us_street_api_client
     batch = SmartyStreets::Batch.new
 
+    # Documentation for input fields can be found at:
+    # https://smartystreets.com/docs/cloud/us-street-api
+
     batch.add(Lookup.new)
+    batch[0].input_id = '8675309'  # Optional ID from your system
+    batch[0].addressee = 'John Doe'
     batch[0].street = '1600 amphitheatre parkway'
-    batch[0].city = 'Mountain view'
-    batch[0].state = 'california'
-    batch[0].match = SmartyStreets::USStreet::MatchType::INVALID
+    batch[0].street2 = 'second star to the right'
+    batch[0].secondary = 'APT 2'
+    batch[0].urbanization = ''  # Only applies to Puerto Rico addresses
+    batch[0].lastline = 'Mountain view, California'
+    batch[0].zipcode = '21229'
+    batch[0].candidates = 3
+    batch[0].match = 'invalid'.freeze # "invalid" is the most permissive match type
 
     batch.add(Lookup.new('1 Rosedale, Baltimore, Maryland')) # Freeform addresses work too.
     batch[1].candidates = 10 # Allows up to ten possible matches to be returned (default is 1).

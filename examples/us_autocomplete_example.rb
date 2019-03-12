@@ -15,7 +15,12 @@ class USAutocompleteExample
 
     credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
     client = SmartyStreets::ClientBuilder.new(credentials).build_us_autocomplete_api_client
+
+    # Documentation for input fields can be found at:
+    # https://smartystreets.com/docs/cloud/us-autocomplete-api
+
     lookup = Lookup.new('4770 Lincoln Ave O')
+    lookup.max_suggestions = 10
 
     client.send(lookup)
 
@@ -25,8 +30,11 @@ class USAutocompleteExample
       puts suggestion.text
     end
 
+    lookup.add_city_filter('Ogden')
     lookup.add_state_filter('IL')
+    lookup.add_prefer('Ogden, IL')
     lookup.max_suggestions = 5
+    lookup.prefer_ratio = 0.333333
 
     suggestions = client.send(lookup) # The client will also return the suggestions directly
 

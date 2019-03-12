@@ -16,8 +16,19 @@ class InternationalExample
     credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
     client = SmartyStreets::ClientBuilder.new(credentials).build_international_street_api_client
 
-    lookup = Lookup.new("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", 'Brazil')
+    # Documentation for input fields can be found at:
+    # https://smartystreets.com/docs/cloud/international-street-api
+
+    lookup = Lookup.new()
+    lookup.inputId = 'ID-8675309' # Optional ID from your system
     lookup.geocode = true # Must be expressly set to get latitude and longitude.
+    lookup.organization = 'John Doe'
+    lookup.address1 = "Rua Padre Antonio D'Angelo 121"
+    lookup.address2 = 'Casa Verde'
+    lookup.locality = 'Sao Paulo'
+    lookup.administrative_area = 'SP'
+    lookup.country = 'Brazil'
+    lookup.postal_code = '02516-050'
 
     candidates = client.send(lookup) # The candidates are also stored in the lookup's 'result' field.
 
