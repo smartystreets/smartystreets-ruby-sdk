@@ -19,7 +19,11 @@ class USZipcodeMultipleLookupExample
     client = SmartyStreets::ClientBuilder.new(credentials).build_us_zipcode_api_client
     batch = SmartyStreets::Batch.new
 
+    # Documentation for input fields can be found at:
+    # https://smartystreets.com/docs/cloud/us-zipcode-api
+
     batch.add(Lookup.new)
+    batch[0].input_id = '01189998819991197253' # Optional ID from your system
     batch[0].zipcode = '12345' # A Lookup may have a ZIP Code, city and state, or city, state, and ZIP Code
 
     batch.add(Lookup.new)

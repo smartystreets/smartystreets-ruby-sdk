@@ -21,7 +21,13 @@ class USExtractExample
            "\r\nLos Vegas, Nevada." \
            "\r\nMeet me at 1 Rosedale Baltimore Maryland, not at 123 Phony Street, Boise Idaho."
 
+    # Documentation for input fields can be found at:
+    # https://smartystreets.com/docs/cloud/us-extract-api
+
     lookup = Lookup.new(text)
+    lookup.aggressive = true
+    lookup.addresses_have_line_breaks = false
+    lookup.addresses_per_line = 2
 
     result = client.send(lookup)
 

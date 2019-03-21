@@ -15,9 +15,14 @@ class UsZipcodeSingleLookupExample
 
     client = SmartyStreets::ClientBuilder.new(credentials).build_us_zipcode_api_client
 
+    # Documentation for input fields can be found at:
+    # https://smartystreets.com/docs/cloud/us-zipcode-api
+
     lookup = SmartyStreets::USZipcode::Lookup.new
+    lookup.input_id = 'dfc33cb6-829e-4fea-aa1b-b6d6580f0817'  # Optional ID from your system
     lookup.city = 'Mountain View'
     lookup.state = 'California'
+    lookup.zipcode = '94043'
 
     begin
       client.send_lookup(lookup)
