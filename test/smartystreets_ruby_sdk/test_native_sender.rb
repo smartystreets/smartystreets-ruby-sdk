@@ -43,7 +43,7 @@ class TestNativeSender < Minitest::Test
     smarty_request.url_prefix = 'http://localhost'
     smarty_request.payload = 'Test Payload'
 
-    request = NativeSender.build_request(smarty_request)
+    request = NativeSender.new.build_request(smarty_request)
 
     assert_equal('POST', request.method)
   end
@@ -54,7 +54,7 @@ class TestNativeSender < Minitest::Test
     smarty_request.payload = 'Test Payload'
     smarty_request.parameters = { 'auth-id' => 'testID', 'auth-token' => 'testToken' }
 
-    query = NativeSender.create_query(smarty_request)
+    query = NativeSender.new.create_query(smarty_request)
 
     assert_equal('auth-id=testID&auth-token=testToken', query)
   end
@@ -68,7 +68,7 @@ class TestNativeSender < Minitest::Test
       'unicode' => 'Sjömadsvägen'
     }
 
-    query = NativeSender.create_query(smarty_request)
+    query = NativeSender.new.create_query(smarty_request)
 
     assert_equal('needs_encoding=%26foo%3Dbar&unicode=Sj%C3%B6madsv%C3%A4gen', query)
   end
@@ -78,7 +78,7 @@ class TestNativeSender < Minitest::Test
     smarty_request.url_prefix = 'http://localhost'
     smarty_request.payload = 'This is the test content.'
 
-    request = NativeSender.build_request(smarty_request)
+    request = NativeSender.new.build_request(smarty_request)
 
     assert_equal('This is the test content.', request.body)
   end
@@ -129,7 +129,7 @@ class TestNativeSender < Minitest::Test
     smarty_request.url_prefix = 'http://localhost'
     smarty_request.headers = {'User-Agent' => ['Some plugin', 'Some other plugin'], 'X-Something' => ['X value']}
 
-    native_request = NativeSender.build_request(smarty_request)
+    native_request = NativeSender.new.build_request(smarty_request)
 
     assert_equal("smartystreets (sdk:ruby@#{SmartyStreets::VERSION}), Some plugin, Some other plugin", native_request['User-Agent'])
     assert_equal('X value', native_request['X-Something'])

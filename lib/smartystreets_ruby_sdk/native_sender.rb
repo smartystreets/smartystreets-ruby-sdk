@@ -11,25 +11,12 @@ module SmartyStreets
     end
 
     def send(smarty_request)
-      request = self.class.build_request(smarty_request)
+      response = make_request(smarty_request)
 
-      begin
-        http = build_http(request)
-        http.use_ssl = true
-        http.ssl_version = :TLSv1_2
-        http.read_timeout = @max_timeout
-
-        response = http.request(request)
-
-        http.finish if http.started?
-      rescue StandardError => err
-        return Response.new(nil, nil, err)
-      end
-
-      build_smarty_response(response)
+      Response.new(response[:body], response[:code], response[:error])
     end
 
-    def self.build_request(smarty_request)
+    def build_request(smarty_request)
       query = create_query(smarty_request)
 
       if smarty_request.payload.nil?
@@ -46,10 +33,6 @@ module SmartyStreets
       request
     end
 
-    def build_smarty_response(native_response)
-      Response.new(native_response.body, native_response.code)
-    end
-
     def build_http(request)
       uri = request.uri
 
@@ -61,15 +44,18 @@ module SmartyStreets
       end
 
       http.set_debug_output($stdout) if @debug
+      http.use_ssl = true
+      http.ssl_version = :TLSv1_2
+      http.read_timeout = @max_timeout
 
       http
     end
 
-    def self.create_query(smarty_request)
+    def create_query(smarty_request)
       URI.encode_www_form(smarty_request.parameters)
     end
 
-    def self.set_custom_headers(smarty_headers, request)
+    def set_custom_headers(smarty_headers, request)
       smarty_headers.each do |key, values|
         if values.respond_to? :each
           values.each do |value|
@@ -79,6 +65,20 @@ module SmartyStreets
           request.add_field(key, values)
         end
       end
+    end
+
+    private
+
+    def make_request(smarty_request)
+      request = build_request(smarty_request)
+      http = build_http(request)
+      response = http.request(request)
+
+      http.finish if http.started?
+
+      { body: response.body, code: response.code, error: nil }
+    rescue StandardError => e
+      { body: nil, code: nil, error: e }
     end
   end
 end
