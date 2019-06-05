@@ -13,7 +13,7 @@ module SmartyStreets
         @addresses = []
 
         addresses.each {|address|
-          @addresses.push(Address.new(address))
+          @addresses.push(SmartyStreets::USExtract::Address.new(address))
         }
       end
     end
