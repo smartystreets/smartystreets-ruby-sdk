@@ -7,6 +7,7 @@ require './lib/smartystreets_ruby_sdk/us_street/analysis'
 class TestCandidate < Minitest::Test
   def test_all_fields_filled_correctly
     obj = {
+        'input_id' => "1234",
         'input_index' => 0,
         'candidate_index' => 1,
         'addressee' => '2',
@@ -70,6 +71,7 @@ class TestCandidate < Minitest::Test
 
     candidate = SmartyStreets::USStreet::Candidate.new(obj)
 
+    assert_equal("1234", candidate.input_id)
     assert_equal(0, candidate.input_index)
     assert_equal(1, candidate.candidate_index)
     assert_equal('2', candidate.addressee)

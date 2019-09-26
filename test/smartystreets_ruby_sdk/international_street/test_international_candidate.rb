@@ -4,7 +4,7 @@ require './lib/smartystreets_ruby_sdk/native_serializer'
 
 class TestInternationalCandidate < Minitest::Test
   def test_all_fields_filled_correctly
-    response_payload = "[{\"organization\":\"1\",\"address1\":\"2\",\"address2\":\"3\","\
+    response_payload = "[{\"input_id\":\"1234\",\"organization\":\"1\",\"address1\":\"2\",\"address2\":\"3\","\
                 "\"address3\":\"4\",\"address4\":\"5\",\"address5\":\"6\",\"address6\":\"7\",\"address7\":\"8\","\
                 "\"address8\":\"9\",\"address9\":\"10\",\"address10\":\"11\",\"address11\":\"12\",\"address12\":\"13\","\
                 "\"components\":{\"country_iso_3\":\"14\",\"super_administrative_area\":\"15\","\
@@ -45,6 +45,7 @@ class TestInternationalCandidate < Minitest::Test
     serializer = SmartyStreets::NativeSerializer.new
     candidate = SmartyStreets::InternationalStreet::Candidate.new(serializer.deserialize(response_payload)[0])
 
+    assert_equal('1234', candidate.input_id)
     assert_equal('1', candidate.organization)
     assert_equal('2', candidate.address1)
     assert_equal('3', candidate.address2)

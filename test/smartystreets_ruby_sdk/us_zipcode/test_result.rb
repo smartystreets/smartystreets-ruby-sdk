@@ -4,6 +4,7 @@ require './lib/smartystreets_ruby_sdk/us_zipcode/result'
 class TestResult < Minitest::Test
   def test_all_fields_filled_correctly_when_valid
     obj = {
+      'input_id' => "1234",
       'input_index' => 0,
       'city_states' => [{
           'city' => '1',
@@ -37,6 +38,7 @@ class TestResult < Minitest::Test
     assert_nil(result.status)
     assert_nil(result.reason)
 
+    assert_equal('1234', result.input_id)
     assert_equal('1', result.cities[0].city)
     assert_equal('2', result.cities[0].state_abbreviation)
     assert_equal('3', result.cities[0].state)

@@ -1,10 +1,11 @@
 module SmartyStreets
   module InternationalStreet
     class RootLevel
-      attr_reader :organization, :address1, :address2, :address3, :address4, :address5, :address6, :address7, :address8,
-                  :address9, :address10, :address11, :address12
+      attr_reader :input_id, :organization, :address1, :address2, :address3, :address4, :address5, :address6, :address7,
+                  :address8, :address9, :address10, :address11, :address12
 
       def initialize(obj)
+        @input_id = obj.fetch('input_id', nil)
         @organization = obj.fetch('organization', nil)
         @address1 = obj.fetch('address1', nil)
         @address2 = obj.fetch('address2', nil)

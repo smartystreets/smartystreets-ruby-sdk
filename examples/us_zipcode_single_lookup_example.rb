@@ -35,6 +35,8 @@ class UsZipcodeSingleLookupExample
     zipcodes = result.zipcodes
     cities = result.cities
 
+    puts "Input ID: #{result.input_id}"
+
     cities.each do |city|
       puts "\nCity: #{city.city}"
       puts "State: #{city.state}"

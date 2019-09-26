@@ -5,11 +5,12 @@ module SmartyStreets
   module USZipcode
     # See "https://smartystreets.com/docs/cloud/us-zipcode-api#root"
     class Result
-      attr_reader :reason, :input_index, :cities, :zipcodes, :status
+      attr_reader :reason, :input_id, :input_index, :cities, :zipcodes, :status
 
       def initialize(obj)
         @status = obj['status']
         @reason = obj['reason']
+        @input_id = obj['input_id']
         @input_index = obj['input_index']
         @cities = obj.fetch('city_states', [])
         @zipcodes = obj.fetch('zipcodes', [])

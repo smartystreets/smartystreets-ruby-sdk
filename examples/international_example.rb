@@ -33,6 +33,7 @@ class InternationalExample
     candidates = client.send(lookup) # The candidates are also stored in the lookup's 'result' field.
 
     first_candidate = candidates[0]
+    puts "Input ID: #{first_candidate.input_id}"
     puts "Address is #{first_candidate.analysis.verification_status}"
     puts "Address precision: #{first_candidate.analysis.address_precision}\n\n"
     puts "First Line: #{first_candidate.address1}"

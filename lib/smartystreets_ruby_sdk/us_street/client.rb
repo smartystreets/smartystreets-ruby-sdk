@@ -48,6 +48,7 @@ module SmartyStreets
         obj.each do |lookup|
           converted_lookup = {}
 
+          converted_lookup['input_id'] = lookup.input_id
           converted_lookup['street'] = lookup.street
           converted_lookup['street2'] = lookup.street2
           converted_lookup['secondary'] = lookup.secondary

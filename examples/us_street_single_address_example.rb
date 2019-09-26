@@ -50,6 +50,7 @@ class USStreetSingleAddressExample
     first_candidate = result[0]
 
     puts "Address is valid. (There is at least one candidate)\n"
+    puts "Input ID: #{first_candidate.input_id}"
     puts "ZIP Code: #{first_candidate.components.zipcode}"
     puts "County: #{first_candidate.metadata.county_name}"
     puts "Latitude: #{first_candidate.metadata.latitude}"

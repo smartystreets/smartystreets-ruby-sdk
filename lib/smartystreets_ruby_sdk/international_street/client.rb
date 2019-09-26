@@ -26,6 +26,7 @@ module SmartyStreets
       def build_request(lookup)
         request = SmartyStreets::Request.new
 
+        add_parameter(request, 'input_id', lookup.input_id)
         add_parameter(request, 'country', lookup.country)
         add_parameter(request, 'geocode', lookup.geocode.to_s)
         add_parameter(request, 'language', lookup.language)

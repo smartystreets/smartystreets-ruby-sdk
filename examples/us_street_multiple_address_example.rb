@@ -65,6 +65,7 @@ class USStreetMultipleAddressExample
         metadata = candidate.metadata
 
         puts "\nCandidate #{candidate.candidate_index} : "
+        puts "Input ID: #{candidate.input_id}"
         puts "Delivery line 1: #{candidate.delivery_line_1}"
         puts "Last line:       #{candidate.last_line}"
         puts "ZIP Code:        #{components.zipcode}-#{components.plus4_code}"

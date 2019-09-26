@@ -14,13 +14,13 @@ module SmartyStreets
     #     When set to language_mode.LATIN, the results will always be provided using a Latin character set.
     class Lookup
 
-      attr_accessor :freeform, :locality, :postal_code, :address3, :address2, :inputId, :address1,
+      attr_accessor :input_id, :freeform, :locality, :postal_code, :address3, :address2, :inputId, :address1,
                     :geocode, :administrative_area, :country, :organization, :language, :address4, :result
 
       def initialize(freeform=nil, country=nil)
         @result = []
 
-        @inputId = nil
+        @input_id = nil
         @country = country
         @geocode = nil
         @language = nil

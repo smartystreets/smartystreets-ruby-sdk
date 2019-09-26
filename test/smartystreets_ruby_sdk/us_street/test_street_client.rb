@@ -27,6 +27,7 @@ class TestStreetClient < Minitest::Test
   def test_send_populated_lookup
     sender = RequestCapturingSender.new
     expected_parameters = {
+        'input_id' => '1',
         'street' => '2',
         'street2' => '3',
         'secondary' => '4',

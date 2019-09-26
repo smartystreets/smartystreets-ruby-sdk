@@ -27,6 +27,7 @@ class TestInternationalClient < Minitest::Test
     serializer = FakeDeserializer.new({})
     client = Client.new(sender, serializer)
     lookup = Lookup.new
+    lookup.input_id = '1234'
     lookup.country = '0'
     lookup.geocode = true
     lookup.language = LanguageMode::NATIVE
@@ -42,6 +43,7 @@ class TestInternationalClient < Minitest::Test
 
     client.send(lookup)
 
+    assert_equal('1234', sender.request.parameters['input_id'])
     assert_equal('0', sender.request.parameters['country'])
     assert_equal('true', sender.request.parameters['geocode'])
     assert_equal(LanguageMode::NATIVE, sender.request.parameters['language'])
