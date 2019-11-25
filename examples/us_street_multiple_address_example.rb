@@ -32,7 +32,9 @@ class USStreetMultipleAddressExample
     batch[0].lastline = 'Mountain view, California'
     batch[0].zipcode = '21229'
     batch[0].candidates = 3
-    batch[0].match = 'invalid'.freeze # "invalid" is the most permissive match type
+    batch[0].match = 'invalid'.freeze # "invalid" is the most permissive match,
+                                      # this will always return at least one result even if the address is invalid.
+                                      # Refer to the documentation for additional Match Strategy options.
 
     batch.add(Lookup.new('1 Rosedale, Baltimore, Maryland')) # Freeform addresses work too.
     batch[1].candidates = 10 # Allows up to ten possible matches to be returned (default is 1).
