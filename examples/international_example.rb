@@ -14,7 +14,8 @@ class InternationalExample
     # auth_token = ENV['SMARTY_AUTH_TOKEN']
 
     credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
-    client = SmartyStreets::ClientBuilder.new(credentials).build_international_street_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials) # .with_licenses(%w(international-fake-license))
+                 .build_international_street_api_client
 
     # Documentation for input fields can be found at:
     # https://smartystreets.com/docs/cloud/international-street-api

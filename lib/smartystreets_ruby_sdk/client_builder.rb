@@ -4,6 +4,7 @@ require_relative 'status_code_sender'
 require_relative 'signing_sender'
 require_relative 'retry_sender'
 require_relative 'url_prefix_sender'
+require_relative 'license_sender'
 require_relative 'sleeper'
 require_relative 'logger'
 require_relative 'proxy'
@@ -34,6 +35,7 @@ module SmartyStreets
       @url_prefix = nil
       @proxy = nil
       @headers = nil
+      @licenses = %w()
       @debug = nil
     end
 
@@ -96,6 +98,14 @@ module SmartyStreets
       self
     end
 
+    # Allows the caller to specify the subscription license (aka "track") they wish to use.
+    #
+    # Returns self to accommodate method chaining.
+    def with_licenses(licenses)
+      @licenses.concat licenses
+      self
+    end
+
     # Enables debug mode, which will print information about the HTTP request and response to $stdout.
     #
     # Returns self to accommodate method chaining.
@@ -145,6 +155,8 @@ module SmartyStreets
       sender = SigningSender.new(@signer, sender) unless @signer.nil?
 
       sender = RetrySender.new(@max_retries, sender, SmartyStreets::Sleeper.new,SmartyStreets::Logger.new) if @max_retries > 0
+
+      sender = LicenseSender.new(sender, @licenses)
 
       URLPrefixSender.new(@url_prefix, sender)
     end

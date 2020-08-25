@@ -16,7 +16,8 @@ class USStreetMultipleAddressExample
 
     credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
-    client = SmartyStreets::ClientBuilder.new(credentials).build_us_street_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials) # .with_licenses(%w(us-rooftop-geocoding-cloud))
+                 .build_us_street_api_client
     batch = SmartyStreets::Batch.new
 
     # Documentation for input fields can be found at:
