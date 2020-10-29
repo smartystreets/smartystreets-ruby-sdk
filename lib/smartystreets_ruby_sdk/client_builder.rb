@@ -14,6 +14,7 @@ require_relative 'us_zipcode/client'
 require_relative 'us_extract/client'
 require_relative 'us_autocomplete/client'
 require_relative 'international_street/client'
+require_relative 'us_reverse_geo/client'
 
 module SmartyStreets
   # The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.
@@ -25,6 +26,7 @@ module SmartyStreets
     US_EXTRACT_API_URL = 'https://us-extract.api.smartystreets.com/'.freeze
     US_STREET_API_URL = 'https://us-street.api.smartystreets.com/street-address'.freeze
     US_ZIP_CODE_API_URL = 'https://us-zipcode.api.smartystreets.com/lookup'.freeze
+    US_REVERSE_GEO_API_URL = 'https://us-reverse-geo.api.smartystreets.com/lookup'.freeze
 
     def initialize(signer)
       @signer = signer
@@ -139,6 +141,11 @@ module SmartyStreets
     def build_us_zipcode_api_client
       ensure_url_prefix_not_null(US_ZIP_CODE_API_URL)
       USZipcode::Client.new(build_sender, @serializer)
+    end
+
+    def build_us_reverse_geo_api_client
+      ensure_url_prefix_not_null(US_REVERSE_GEO_API_URL)
+      USReverseGeo::Client.new(build_sender, @serializer)
     end
 
     # </editor-fold>
