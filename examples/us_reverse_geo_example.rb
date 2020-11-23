@@ -36,6 +36,7 @@ class USReverseGeoExample
     puts "City: #{address.city}"
     puts "State Abbreviation: #{address.state_abbreviation}"
     puts "ZIP Code: #{address.zipcode}"
+    puts "License: #{coordinate.get_license}"
   end
 end
 

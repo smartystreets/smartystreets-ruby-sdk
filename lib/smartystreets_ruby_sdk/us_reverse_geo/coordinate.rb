@@ -10,6 +10,15 @@ module SmartyStreets
         @accuracy = obj.fetch('accuracy', nil)
         @license = obj.fetch('license', nil)
       end
+
+      def get_license()
+        case @license
+        when 1
+          return "SmartyStreets Proprietary"
+        else
+          return "SmartyStreets"
+        end
+      end
     end
   end
 end
