@@ -50,8 +50,10 @@ module SmartyStreets
       def convert_candidates(raw_candidates)
         candidates = []
 
-        raw_candidates.each do |candidate|
-          candidates.push(Candidate.new(candidate))
+        unless raw_candidates.nil?
+          raw_candidates.each do |candidate|
+            candidates.push(Candidate.new(candidate))
+          end
         end
 
         candidates
