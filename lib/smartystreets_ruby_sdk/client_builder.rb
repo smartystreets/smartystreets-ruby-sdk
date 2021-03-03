@@ -15,6 +15,7 @@ require_relative 'us_extract/client'
 require_relative 'us_autocomplete/client'
 require_relative 'international_street/client'
 require_relative 'us_reverse_geo/client'
+require_relative 'us_autocomplete_pro/client'
 
 module SmartyStreets
   # The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.
@@ -23,6 +24,7 @@ module SmartyStreets
   class ClientBuilder
     INTERNATIONAL_STREET_API_URL = 'https://international-street.api.smartystreets.com/verify'.freeze
     US_AUTOCOMPLETE_API_URL = 'https://us-autocomplete.api.smartystreets.com/suggest'.freeze
+    US_AUTOCOMPLETE_PRO_API_URL = 'https://us-autocomplete-pro.api.smartystreets.com/lookup'.freeze
     US_EXTRACT_API_URL = 'https://us-extract.api.smartystreets.com/'.freeze
     US_STREET_API_URL = 'https://us-street.api.smartystreets.com/street-address'.freeze
     US_ZIP_CODE_API_URL = 'https://us-zipcode.api.smartystreets.com/lookup'.freeze
@@ -126,6 +128,11 @@ module SmartyStreets
     def build_us_autocomplete_api_client
       ensure_url_prefix_not_null(US_AUTOCOMPLETE_API_URL)
       USAutocomplete::Client.new(build_sender, @serializer)
+    end
+
+    def build_us_autocomplete_pro_api_client
+      ensure_url_prefix_not_null(US_AUTOCOMPLETE_PRO_API_URL)
+      USAutocompletePro::Client.new(build_sender, @serializer)
     end
 
     def build_us_extract_api_client
