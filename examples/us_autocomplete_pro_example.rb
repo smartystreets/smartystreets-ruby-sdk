@@ -1,0 +1,43 @@
+require 'smartystreets_ruby_sdk/shared_credentials'
+require '../lib/smartystreets_ruby_sdk/client_builder'
+require '../lib/smartystreets_ruby_sdk/us_autocomplete_pro/lookup'
+
+class USAutocompleteProExample
+  Lookup = SmartyStreets::USAutocompletePro::Lookup
+
+  def run
+    # key = 'Your SmartyStreets Auth ID here'
+    # hostname = 'Your SmartyStreets Auth Token here'
+
+    # We recommend storing your secret keys in environment variables instead---it's safer!
+    key = ENV['SMARTY_AUTH_WEB']
+    referer = ENV['SMARTY_AUTH_REFERER']
+
+    credentials = SmartyStreets::SharedCredentials.new(key, referer)
+    client = SmartyStreets::ClientBuilder.new(credentials).build_us_autocomplete_pro_api_client
+
+    # Documentation for input fields can be found at:
+    # https://smartystreets.com/docs/cloud/us-autocomplete-api
+
+    lookup = Lookup.new('4770 Lincoln Ave O')
+    lookup.max_results = 10
+    lookup.add_city_filter('Ogden')
+    lookup.add_state_filter('IL')
+    lookup.max_results = 5
+    lookup.prefer_ratio = 3
+
+    suggestions = client.send(lookup) # The client will also return the suggestions directly
+
+    puts
+    puts '*** Result with some filters ***'
+    puts
+
+    suggestions.each do |suggestion|
+      puts "#{suggestion.street_line} #{suggestion.city}, #{suggestion.state}"
+    end
+
+  end
+end
+
+USAutocompleteProExample.new.run
+

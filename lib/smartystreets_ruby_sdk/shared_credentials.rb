@@ -6,7 +6,7 @@ module SmartyStreets
     end
 
     def sign(request)
-      request.parameters['auth-id'] = @id
+      request.parameters['key'] = @id
       request.referer = @host_name
     end
   end
