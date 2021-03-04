@@ -65,7 +65,8 @@ class TestCandidate < Minitest::Test
             'footnotes' => '49',
             'lacslink_code' => '50',
             'lacslink_indicator' => '51',
-            'suitelink_match' => '52'
+            'suitelink_match' => '52',
+            'dpv_no_stat' => '53'
         }
     }
 
@@ -127,5 +128,6 @@ class TestCandidate < Minitest::Test
     assert_equal('50', candidate.analysis.lacs_link_code)
     assert_equal('51', candidate.analysis.lacs_link_indicator)
     assert_equal('52', candidate.analysis.is_suite_link_match)
+    assert_equal('53', candidate.analysis.no_stat)
   end
 end

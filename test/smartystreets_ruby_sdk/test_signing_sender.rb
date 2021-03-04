@@ -31,7 +31,7 @@ class TestSigningSender < Minitest::Test
 
     @sender.send(@request)
 
-    assert_equal('testID', @request.parameters['auth-id'])
+    assert_equal('testID', @request.parameters['key'])
     assert_equal('https://test.host.com', @request.referer)
   end
 end
