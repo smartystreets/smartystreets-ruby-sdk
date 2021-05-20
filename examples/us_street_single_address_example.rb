@@ -13,7 +13,10 @@ class USStreetSingleAddressExample
 
     credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
-    client = SmartyStreets::ClientBuilder.new(credentials).
+    # The appropriate license values to be used for your subscriptions
+    # can be found on the Subscriptions page of the account dashboard.
+    # https://www.smartystreets.com/docs/cloud/licensing
+    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(%w('us-rooftop-geocoding-cloud'))
         # with_proxy('localhost', 8080, 'proxyUser', 'proxyPassword'). # Uncomment this line to try it with a proxy
         build_us_street_api_client
 

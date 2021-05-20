@@ -14,7 +14,12 @@ class USAutocompleteProExample
     referer = ENV['SMARTY_AUTH_REFERER']
 
     credentials = SmartyStreets::SharedCredentials.new(key, referer)
-    client = SmartyStreets::ClientBuilder.new(credentials).build_us_autocomplete_pro_api_client
+
+    # The appropriate license values to be used for your subscriptions
+    # can be found on the Subscriptions page of the account dashboard.
+    # https://www.smartystreets.com/docs/cloud/licensing
+    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(%w('us-autocomplete-pro-cloud'))
+                 .build_us_autocomplete_pro_api_client
 
     # Documentation for input fields can be found at:
     # https://smartystreets.com/docs/cloud/us-autocomplete-api
