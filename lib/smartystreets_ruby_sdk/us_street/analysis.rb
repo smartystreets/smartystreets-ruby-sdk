@@ -3,7 +3,7 @@ module SmartyStreets
     # See "https://smartystreets.com/docs/cloud/us-street-api#analysis"
     class Analysis
       attr_reader :lacs_link_code, :active, :footnotes, :lacs_link_indicator, :dpv_match_code, :is_suite_link_match,
-                  :is_ews_match, :dpv_footnotes, :cmra, :vacant, :no_stat
+                  :is_ews_match, :dpv_footnotes, :cmra, :vacant, :no_stat, :match_mode, :match_details
 
       def initialize(obj)
         @dpv_match_code = obj['dpv_match_code']
@@ -17,6 +17,8 @@ module SmartyStreets
         @lacs_link_code = obj['lacslink_code']
         @lacs_link_indicator = obj['lacslink_indicator']
         @is_suite_link_match = obj['suitelink_match']
+        @match_mode = obj['match_mode']
+        @match_details = obj['match_details']
       end
     end
   end
