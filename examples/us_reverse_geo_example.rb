@@ -18,7 +18,7 @@ class USReverseGeoExample
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.
     # https://www.smartystreets.com/docs/cloud/licensing
-    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(%w('us-reverse-geocoding-cloud'))
+    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['us-reverse-geocoding-cloud'])
                  .build_us_reverse_geo_api_client
 
     # Documentation for input fields can be found at:

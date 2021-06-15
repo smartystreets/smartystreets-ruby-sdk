@@ -18,7 +18,7 @@ class USAutocompleteProExample
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.
     # https://www.smartystreets.com/docs/cloud/licensing
-    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(%w('us-autocomplete-pro-cloud'))
+    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['us-autocomplete-pro-cloud'])
                  .build_us_autocomplete_pro_api_client
 
     # Documentation for input fields can be found at:
