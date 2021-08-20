@@ -125,7 +125,7 @@ module SmartyStreets
       InternationalStreet::Client.new(build_sender, @serializer)
     end
 
-    def build_us_autocomplete_api_client
+    def build_us_autocomplete_api_client # Deprecated
       ensure_url_prefix_not_null(US_AUTOCOMPLETE_API_URL)
       USAutocomplete::Client.new(build_sender, @serializer)
     end
