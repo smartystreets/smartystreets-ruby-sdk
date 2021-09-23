@@ -43,6 +43,7 @@ module SmartyStreets
         add_parameter(request, 'prefer_states', build_filter_string(lookup.prefer_states))
         add_parameter(request, 'prefer_zip_codes', build_filter_string(lookup.prefer_zip_codes))
         add_parameter(request, 'prefer_ratio', lookup.prefer_ratio.to_s)
+        add_parameter(request, 'source', lookup.source)
         if lookup.prefer_zip_codes or lookup.zip_filter
           request.parameters['prefer_geolocation'] = GeolocationType::NONE
         else

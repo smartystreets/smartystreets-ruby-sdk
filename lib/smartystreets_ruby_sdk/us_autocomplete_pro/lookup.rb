@@ -9,11 +9,12 @@ module SmartyStreets
     class Lookup < JSONAble
 
       attr_accessor :result, :search, :max_results, :city_filter, :state_filter, :zip_filter,
-                    :exclude_states, :prefer_cities, :prefer_states, :prefer_zip_codes, :prefer_ratio, :prefer_geolocation, :selected
+                    :exclude_states, :prefer_cities, :prefer_states, :prefer_zip_codes, :prefer_ratio,
+                    :prefer_geolocation, :selected, :source
 
       def initialize(search=nil, max_results=nil, city_filter=nil, state_filter=nil, zip_filter=nil,
                      exclude_states=nil, prefer_cities=nil, prefer_states=nil, prefer_zips=nil, prefer_ratio=nil,
-                     prefer_geolocation=nil, selected=nil)
+                     prefer_geolocation=nil, selected=nil, source=nil)
         @result = []
         @search = search
         @max_results = max_results
@@ -27,6 +28,7 @@ module SmartyStreets
         @prefer_ratio = prefer_ratio
         @prefer_geolocation = prefer_geolocation
         @selected = selected
+        @source = source
       end
 
       def add_city_filter(city)

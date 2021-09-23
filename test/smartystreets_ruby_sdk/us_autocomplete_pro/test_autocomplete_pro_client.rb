@@ -36,6 +36,7 @@ class TestAutocompleteProClient < Minitest::Test
     lookup.add_preferred_zip('9')
     lookup.prefer_ratio = 10
     lookup.prefer_geolocation = SmartyStreets::USAutocompletePro::GeolocationType::CITY
+    lookup.source = "all"
 
     client.send(lookup)
 
@@ -50,6 +51,7 @@ class TestAutocompleteProClient < Minitest::Test
     assert_equal('9', sender.request.parameters['prefer_zip_codes'])
     assert_equal('10', sender.request.parameters['prefer_ratio'])
     assert_equal('none', sender.request.parameters['prefer_geolocation'])
+    assert_equal('all', sender.request.parameters['source'])
   end
 
   def test_deserialize_called_with_response_body

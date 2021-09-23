@@ -30,6 +30,7 @@ class USAutocompleteProExample
     lookup.add_state_filter('IL')
     lookup.max_results = 5
     lookup.prefer_ratio = 3
+    lookup.source = "all"
 
     suggestions = client.send(lookup) # The client will also return the suggestions directly
 
