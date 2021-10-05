@@ -23,6 +23,7 @@ module SmartyStreets
   # These methods are chainable, so you can usually get set up with one line of code.
   class ClientBuilder
     INTERNATIONAL_STREET_API_URL = 'https://international-street.api.smartystreets.com/verify'.freeze
+    INTERNATIONAL_AUTOCOMPLETE_API_URL = "https://international-autocomplete.api.smartystreets.com/lookup".freeze
     US_AUTOCOMPLETE_API_URL = 'https://us-autocomplete.api.smartystreets.com/suggest'.freeze
     US_AUTOCOMPLETE_PRO_API_URL = 'https://us-autocomplete-pro.api.smartystreets.com/lookup'.freeze
     US_EXTRACT_API_URL = 'https://us-extract.api.smartystreets.com/'.freeze
@@ -123,6 +124,11 @@ module SmartyStreets
     def build_international_street_api_client
       ensure_url_prefix_not_null(INTERNATIONAL_STREET_API_URL)
       InternationalStreet::Client.new(build_sender, @serializer)
+    end
+
+    def build_international_autocomplete_api_client
+      ensure_url_prefix_not_null(INTERNATIONAL_AUTOCOMPLETE_API_URL)
+      InternationalAutocomplete::Client.new(build_sender, @serializer)
     end
 
     def build_us_autocomplete_api_client # Deprecated
