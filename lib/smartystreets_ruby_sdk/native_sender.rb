@@ -17,6 +17,7 @@ module SmartyStreets
         http = build_http(request)
         http.use_ssl = true
         http.ssl_version = :TLSv1_2
+        http.open_timeout = @max_timeout
         http.read_timeout = @max_timeout
 
         response = http.request(request)
