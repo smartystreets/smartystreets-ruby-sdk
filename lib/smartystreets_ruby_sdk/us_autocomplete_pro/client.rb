@@ -55,7 +55,7 @@ module SmartyStreets
       end
 
       def build_filter_string(filter_list)
-        filter_list ? filter_list.join(',') : nil
+        filter_list ? filter_list.join(';') : nil
       end
 
       def convert_suggestions(suggestion_hashes)

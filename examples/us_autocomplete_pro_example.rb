@@ -24,10 +24,11 @@ class USAutocompleteProExample
     # Documentation for input fields can be found at:
     # https://smartystreets.com/docs/cloud/us-autocomplete-api
 
-    lookup = Lookup.new('4770 Lincoln Ave O')
-    lookup.max_results = 10
-    lookup.add_city_filter('Ogden')
-    lookup.add_state_filter('IL')
+    lookup = Lookup.new('1042 W Center')
+    lookup.add_state_filter('CO')
+    lookup.add_state_filter('UT')
+    lookup.add_city_filter('Denver')
+    lookup.add_city_filter('Orem')
     lookup.max_results = 5
     lookup.prefer_ratio = 3
     lookup.source = "all"
