@@ -43,7 +43,7 @@ class TestAutocompleteProClient < Minitest::Test
     assert_equal('1', sender.request.parameters['search'])
     assert_equal('2', sender.request.parameters['max_results'])
     assert_equal('3', sender.request.parameters['include_only_cities'])
-    assert_equal('4,4.5', sender.request.parameters['include_only_states'])
+    assert_equal('4;4.5', sender.request.parameters['include_only_states'])
     assert_equal('5', sender.request.parameters['include_only_zip_codes'])
     assert_equal('6', sender.request.parameters['exclude_states'])
     assert_equal('7', sender.request.parameters['prefer_cities'])
