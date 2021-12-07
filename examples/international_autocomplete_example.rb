@@ -3,7 +3,7 @@ require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/international_autocomplete/lookup'
 require '../lib/smartystreets_ruby_sdk/international_autocomplete/client'
 
-class USAutocompleteProExample
+class InternationalAutocompleteExample
   Lookup = SmartyStreets::InternationalAutocomplete::Lookup
 
   def run
@@ -42,6 +42,6 @@ class USAutocompleteProExample
   end
 end
 
-USAutocompleteProExample.new.run
+InternationalAutocompleteExample.new.run
 
 
