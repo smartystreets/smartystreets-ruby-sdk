@@ -1,4 +1,5 @@
 require 'smartystreets_ruby_sdk/shared_credentials'
+require 'smartystreets_ruby_sdk/static_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/us_autocomplete_pro/lookup'
 
@@ -14,6 +15,11 @@ class USAutocompleteProExample
     referer = ENV['SMARTY_AUTH_REFERER']
 
     credentials = SmartyStreets::SharedCredentials.new(key, referer)
+
+    # auth_id = ENV['SMARTY_AUTH_ID']
+    # auth_token = ENV['SMARTY_AUTH_TOKEN']
+    #
+    # credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.
