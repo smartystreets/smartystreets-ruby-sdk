@@ -37,8 +37,8 @@ class TestStreetClient < Minitest::Test
         'lastline' => '8',
         'addressee' => '9',
         'urbanization' => '10',
-        'candidates' => '11',
-        'match' => SmartyStreets::USStreet::MatchType::INVALID
+        'match' => SmartyStreets::USStreet::MatchType::ENHANCED,
+        'candidates' => 5
     }
     serializer = FakeSerializer.new(expected_parameters)
     client = Client.new(sender, serializer)
@@ -53,8 +53,7 @@ class TestStreetClient < Minitest::Test
     lookup.lastline = '8'
     lookup.addressee = '9'
     lookup.urbanization = '10'
-    lookup.candidates = '11'
-    lookup.match = SmartyStreets::USStreet::MatchType::INVALID
+    lookup.match = SmartyStreets::USStreet::MatchType::ENHANCED
 
     client.send_lookup(lookup)
 
