@@ -64,7 +64,7 @@ class USStreetMultipleAddressExample
         next
       end
 
-      puts "Address #{i} is valid. (There is at least one candidate)"
+      puts "Address #{i} has at least one candidate.\n If the match parameter is set to STRICT, the address is valid.\n Otherwise, check the Analysis output fields to see if the address is valid."
 
       candidates.each do |candidate|
         components = candidate.components
