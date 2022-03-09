@@ -47,7 +47,7 @@ module SmartyStreets
         converted_obj = []
         obj.each do |lookup|
           converted_lookup = {}
-          lookup.candidates = 5 if lookup.match == "enhanced" && lookup.candidates == 1
+          lookup.candidates = 5 if lookup.match == "enhanced" && lookup.candidates == 0
 
           converted_lookup['input_id'] = lookup.input_id
           converted_lookup['street'] = lookup.street
