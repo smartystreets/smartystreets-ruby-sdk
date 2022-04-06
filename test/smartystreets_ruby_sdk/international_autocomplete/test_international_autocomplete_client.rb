@@ -52,7 +52,7 @@ class TestInternationalAutocompleteClient < Minitest::Test
 
   def test_result_correctly_assigned_to_corresponding_lookup
     lookup = Lookup.new('1')
-    expected_result = [{ 'street' => '2' }]
+    expected_result = { 'candidates' => [{ 'street' => '2' }]}
 
     sender = MockSender.new(Response.new('{[]}', 0))
     deserializer = FakeDeserializer.new(expected_result)

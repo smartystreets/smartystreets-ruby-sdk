@@ -24,7 +24,7 @@ module SmartyStreets
         raise response.error if response.error
 
         result = @serializer.deserialize(response.payload)
-        suggestions = convert_suggestions(result)
+        suggestions = convert_suggestions(result.fetch('candidates', []))
         lookup.result = suggestions
       end
 
