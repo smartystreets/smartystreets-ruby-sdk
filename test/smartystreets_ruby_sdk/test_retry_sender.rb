@@ -58,6 +58,15 @@ class TestRetrySender < Minitest::Test
     assert_equal(1, inner.current_status_code_index)
   end
 
+  def test_sleep_on_rate_limit
+    inner = FailingSender.new(%w(429 200))
+    sleeper = FakeSleeper.new
+
+    send_with_retry(5, inner, sleeper)
+
+    assert_equal([5], sleeper.sleep_durations)
+  end
+
 end
 
 def send_with_retry(retries, inner, sleeper)
