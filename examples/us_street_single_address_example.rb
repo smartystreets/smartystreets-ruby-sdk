@@ -4,12 +4,12 @@ require 'smartystreets_ruby_sdk/us_street/lookup'
 
 class USStreetSingleAddressExample
   def run
-    auth_id = 'Your SmartyStreets Auth ID here'
-    auth_token = 'Your SmartyStreets Auth Token here'
+    # auth_id = 'Your SmartyStreets Auth ID here'
+    # auth_token = 'Your SmartyStreets Auth Token here'
 
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    # auth_id = ENV['SMARTY_AUTH_ID']
-    # auth_token = ENV['SMARTY_AUTH_TOKEN']
+    auth_id = ENV['SMARTY_AUTH_ID']
+    auth_token = ENV['SMARTY_AUTH_TOKEN']
 
     credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
