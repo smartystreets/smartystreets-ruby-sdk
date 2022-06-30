@@ -1,6 +1,7 @@
 require 'smartystreets_ruby_sdk/static_credentials'
 require 'smartystreets_ruby_sdk/client_builder'
 require 'smartystreets_ruby_sdk/us_street/lookup'
+require 'smartystreets_ruby_sdk/us_street/match_type'
 
 class USStreetSingleAddressExample
   def run
@@ -36,7 +37,8 @@ class USStreetSingleAddressExample
     lookup.state = 'CA'
     lookup.zipcode = '21229'
     lookup.candidates = 3
-    lookup.match = Lookup.INVALID # "invalid" is the most permissive match,
+    lookup.match = SmartyStreets::USStreet::MatchType::INVALID
+                                    # "invalid" is the most permissive match,
                                     # this will always return at least one result even if the address is invalid.
                                     # Refer to the documentation for additional Match Strategy options.
 
