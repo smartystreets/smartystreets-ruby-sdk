@@ -5,7 +5,7 @@ on:
     tags: 
       - '*'
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
     env:
       GEM_HOST_API_KEY: ${{ secrets.GEM_HOST_API_KEY }}
@@ -41,8 +41,9 @@ jobs:
       - name: Grab Version
         run: |
           echo "VERSION = \"${{ env.RELEASE_VERSION }}\"" >> version.rb \
+          && cat version.rb \
           && gem build *.gemspec \
-          && git checkout smartystreets_ruby_sdk/version.rb
+          && git checkout version.rb
      
       - name: Push to rubygems.org
         run: |
