@@ -41,6 +41,7 @@ jobs:
       - name: Grab Version
         run: |
           echo "VERSION = \"${{ env.RELEASE_VERSION }}\"" >> version.rb \
+          && echo "Hello World" \
           && cat version.rb \
 #          && gem build *.gemspec \
 #          && git checkout version.rb
