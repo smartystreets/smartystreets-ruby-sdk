@@ -40,11 +40,9 @@ jobs:
 
       - name: Grab Version
         run: |
-          pwd \
-          && sed -i "s/0\.0\.0/$(env.RELEASE_VERSION)/g" version.rb \
+          echo "Module SmartyStreets\n VERSION = ${{ env.RELEASE_VERSION }}\ \nend" >> version.rb \
           && gem build *.gemspec \
           && git checkout version.rb
-#          echo "VERSION = \"${{ env.RELEASE_VERSION }}\"" >> version.rb \
 
       - name: Push to rubygems.org
         run: |
