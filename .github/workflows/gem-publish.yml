@@ -41,7 +41,7 @@ jobs:
       - name: Grab Version
         run: |
           echo "Module SmartyStreets
-          VERSION = ${{ env.RELEASE_VERSION }} 
+          VERSION = '${{ env.RELEASE_VERSION }}' 
           end" >> version.rb \
           && cat version.rb \
           && gem build *.gemspec \
