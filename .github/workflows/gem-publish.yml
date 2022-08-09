@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # need all the commits
+          fetch-depth: 0
       
       - uses: ruby/setup-ruby@v1
         with:
@@ -54,6 +54,5 @@ jobs:
           chmod 0600 $HOME/.gem/credentials
           printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
           gem push *.gem
-#          chmod 0600 /root/.gem/credentials
         env:
           GEM_HOST_API_KEY: "${{secrets.GEM_HOST_API_KEY}}"
