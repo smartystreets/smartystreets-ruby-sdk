@@ -40,7 +40,7 @@ jobs:
 
       - name: Grab Version
         run: |
-          pwd
+          pwd \
           && sed -i "s/0\.0\.0/$(env.RELEASE_VERSION)/g" version.rb \
           && gem build *.gemspec \
           && git checkout version.rb
