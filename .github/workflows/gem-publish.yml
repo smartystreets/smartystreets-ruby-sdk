@@ -42,8 +42,8 @@ jobs:
         run: |
           echo "VERSION = \"${{ env.RELEASE_VERSION }}\"" >> version.rb \
           && cat version.rb \
-#          && gem build *.gemspec \
-#          && git checkout version.rb
+          && gem build *.gemspec \
+          && git checkout version.rb
      
       - name: Push to rubygems.org
         run: |
