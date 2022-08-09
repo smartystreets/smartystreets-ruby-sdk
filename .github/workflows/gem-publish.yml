@@ -45,7 +45,7 @@ jobs:
           end" >> version.rb \
           && cat version.rb \
           && gem build *.gemspec \
-          && git checkout version.rb
+          && git checkout lib/smartystreets_ruby_sdk/version.rb
 
       - name: Push to rubygems.org
         run: |
