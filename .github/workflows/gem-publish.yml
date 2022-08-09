@@ -40,7 +40,7 @@ jobs:
 
       - name: Grab Version
         run: |
-          sed -i "s/0\.0\.0/$(env.RELEASE_VERSION)/g" "smartystreets_ruby_sdk/version.rb" \
+          sed -i "s/0\.0\.0/$(env.RELEASE_VERSION)/g" version.rb \
           && gem build *.gemspec \
           && git checkout version.rb
 #          echo "VERSION = \"${{ env.RELEASE_VERSION }}\"" >> version.rb \
