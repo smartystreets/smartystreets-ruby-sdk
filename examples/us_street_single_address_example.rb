@@ -1,6 +1,7 @@
 require 'smartystreets_ruby_sdk/static_credentials'
 require 'smartystreets_ruby_sdk/client_builder'
 require 'smartystreets_ruby_sdk/us_street/lookup'
+require 'smartystreets_ruby_sdk/us_street/match_type'
 
 class USStreetSingleAddressExample
   def run
@@ -16,9 +17,11 @@ class USStreetSingleAddressExample
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.
     # https://www.smartystreets.com/docs/cloud/licensing
-    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['us-core-cloud'])
-        # with_proxy('localhost', 8080, 'proxyUser', 'proxyPassword'). # Uncomment this line to try it with a proxy
-        build_us_street_api_client
+    #
+    # To try with a proxy, add this method call after with_licences
+    #   with_proxy('localhost', 8080, 'proxyUser', 'proxyPassword')
+    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['us-core-cloud']).
+             build_us_street_api_client
 
     # Documentation for input fields can be found at:
     # https://smartystreets.com/docs/cloud/us-street-api
@@ -34,7 +37,8 @@ class USStreetSingleAddressExample
     lookup.state = 'CA'
     lookup.zipcode = '21229'
     lookup.candidates = 3
-    lookup.match = Lookup.INVALID # "invalid" is the most permissive match,
+    lookup.match = SmartyStreets::USStreet::MatchType::INVALID
+                                    # "invalid" is the most permissive match,
                                     # this will always return at least one result even if the address is invalid.
                                     # Refer to the documentation for additional Match Strategy options.
 
