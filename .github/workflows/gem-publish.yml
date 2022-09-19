@@ -40,9 +40,7 @@ jobs:
 
       - name: Grab Version
         run: |
-          echo "Module SmartyStreets \n \
-          VERSION = '${{ env.RELEASE_VERSION }}' \n \
-          end" >> version.rb \
+          sed -i "s/0\.0\.0/${{ env.RELEASE_VERSION }}/g" lib/smartystreets_ruby_sdk/version.rb \
           && cat version.rb \
           && gem build *.gemspec \
           && git checkout lib/smartystreets_ruby_sdk/version.rb
