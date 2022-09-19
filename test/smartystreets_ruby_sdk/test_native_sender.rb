@@ -13,11 +13,12 @@ class TestNativeSender < Minitest::Test
 
   Net::HTTP.class_eval do
     class MockResponse
-      attr_reader :body, :code
+      attr_reader :body, :code, :header
 
-      def initialize(payload, status_code)
+      def initialize(payload, status_code, header = nil)
         @body = payload
         @code = status_code
+        @header = header
       end
 
       def json
@@ -127,7 +128,7 @@ class TestNativeSender < Minitest::Test
   def test_request_has_all_added_custom_headers
     smarty_request = Request.new
     smarty_request.url_prefix = 'http://localhost'
-    smarty_request.headers = {'User-Agent' => ['Some plugin', 'Some other plugin'], 'X-Something' => ['X value']}
+    smarty_request.header = {'User-Agent' => ['Some plugin', 'Some other plugin'], 'X-Something' => ['X value']}
 
     native_request = NativeSender.build_request(smarty_request)
 

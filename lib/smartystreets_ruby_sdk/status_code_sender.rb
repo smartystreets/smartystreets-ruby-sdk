@@ -10,9 +10,27 @@ module SmartyStreets
     def send(request)
       response = @inner.send(request)
 
+      if response.status_code == '429'
+        response.error = parse_rate_limit_response(response)
+      end
       assign_exception(response) if response.error == nil
 
       response
+    end
+
+    def parse_rate_limit_response(response)
+      error_message = ""
+      if !response.payload.nil?
+        response_json = JSON.parse(response.payload)
+        response_json["errors"].each do |error|
+          error_message += (" " + error["message"])
+        end
+        error_message.strip!
+      end
+      if error_message == ""
+        error_message = TOO_MANY_REQUESTS
+      end
+      TooManyRequestsError.new(error_message)
     end
 
     def assign_exception(response)

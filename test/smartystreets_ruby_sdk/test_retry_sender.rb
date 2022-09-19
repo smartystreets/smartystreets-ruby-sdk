@@ -64,7 +64,31 @@ class TestRetrySender < Minitest::Test
 
     send_with_retry(5, inner, sleeper)
 
-    assert_equal([5], sleeper.sleep_durations)
+    assert_equal([10], sleeper.sleep_durations)
+  end
+
+  def test_rate_limit_error_return
+    inner = FailingSender.new(%w(429), {'Retry-After' => 7})
+    sleeper = FakeSleeper.new
+
+    send_with_retry(10, inner, sleeper)
+    assert_equal([7], sleeper.sleep_durations)
+  end
+
+  def test_retry_after_invalid_value
+    inner = FailingSender.new(%w(429), {'Retry-After' => 'a'})
+    sleeper = FakeSleeper.new
+
+    send_with_retry(10, inner, sleeper)
+    assert_equal([10], sleeper.sleep_durations)
+  end
+
+  def test_retry_error
+    inner = FailingSender.new(%w(429), nil, "Big Bad")
+    sleeper = FakeSleeper.new
+
+    response = send_with_retry(10, inner, sleeper)
+    assert_equal("Big Bad", response.error)
   end
 
 end

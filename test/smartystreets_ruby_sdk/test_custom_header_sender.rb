@@ -17,8 +17,8 @@ class TestCustomHeaderSender < Minitest::Test
 
     assert_equal('Testing', response.payload)
     assert_equal('123', response.status_code)
-    assert_equal(2, request.headers.length)
-    assert_equal(%w(1 2), request.headers['A'])
-    assert_equal(['1'], request.headers['B'])
+    assert_equal(2, request.header.length)
+    assert_equal(%w(1 2), request.header['A'])
+    assert_equal(['1'], request.header['B'])
   end
 end

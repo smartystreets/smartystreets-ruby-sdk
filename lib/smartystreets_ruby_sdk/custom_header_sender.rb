@@ -1,12 +1,12 @@
 module SmartyStreets
   class CustomHeaderSender
-    def initialize(inner, headers)
+    def initialize(inner, header)
       @inner = inner
-      @headers = headers
+      @header = header
     end
 
     def send(request)
-      request.headers = @headers
+      request.header = @header
       @inner.send(request)
     end
   end

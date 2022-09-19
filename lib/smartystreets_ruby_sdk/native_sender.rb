@@ -24,7 +24,11 @@ module SmartyStreets
 
         http.finish if http.started?
       rescue StandardError => err
-        return Response.new(nil, nil, err)
+        if response.nil?
+          return Response.new(nil, nil, nil, err)
+        else
+          return Response.new(nil, nil, response.header, err)
+        end
       end
 
       build_smarty_response(response)
@@ -43,12 +47,16 @@ module SmartyStreets
       request.body = smarty_request.payload
       request['User-Agent'] = "smartystreets (sdk:ruby@#{SmartyStreets::VERSION})"
       request['Referer'] = smarty_request.referer unless smarty_request.referer.nil?
-      set_custom_headers(smarty_request.headers, request)
+      set_custom_headers(smarty_request.header, request)
       request
     end
 
     def build_smarty_response(native_response)
-      Response.new(native_response.body, native_response.code)
+      if native_response.header.nil?
+        Response.new(native_response.body, native_response.code)
+      else
+        Response.new(native_response.body, native_response.code, native_response.header)
+      end
     end
 
     def build_http(request)
@@ -70,8 +78,8 @@ module SmartyStreets
       URI.encode_www_form(smarty_request.parameters)
     end
 
-    def self.set_custom_headers(smarty_headers, request)
-      smarty_headers.each do |key, values|
+    def self.set_custom_headers(smarty_header, request)
+      smarty_header.each do |key, values|
         if values.respond_to? :each
           values.each do |value|
             request.add_field(key, value)

@@ -1,8 +1,8 @@
 module SmartyStreets
   class RetrySender
     MAX_BACKOFF_DURATION = 10
-    STATUS_INTERNAL_SERVER_ERROR = 500
     STATUS_TOO_MANY_REQUESTS = 429
+    STATUS_TO_RETRY = [408, 429, 500, 502, 503, 504]
 
     def initialize(max_retries, inner, sleeper, logger)
       @max_retries = max_retries
@@ -15,14 +15,20 @@ module SmartyStreets
       response = @inner.send(request)
 
       (0..@max_retries-1).each do |i|
+
+        break if STATUS_TO_RETRY.include?(response.status_code.to_i) == false
+
         if response.status_code.to_i == STATUS_TOO_MANY_REQUESTS
-          backoff(5)
+          seconds_to_backoff = 10
+          if response.header.nil? == false
+            if Integer(response.header["Retry-After"], exception: false)
+              seconds_to_backoff = response.header["Retry-After"].to_i
+            end
+          end
+          rate_limit_backoff(seconds_to_backoff)
+        else
+          backoff(i)
         end
-        
-        break if response.status_code.to_i < STATUS_INTERNAL_SERVER_ERROR
-
-        backoff(i)
-
         response = @inner.send(request)
       end
 
@@ -33,6 +39,11 @@ module SmartyStreets
       backoff_duration = [attempt, MAX_BACKOFF_DURATION].min
 
       @logger.log("There was an error processing the request. Retrying in #{backoff_duration} seconds...")
+      @sleeper.sleep(backoff_duration)
+    end
+
+    def rate_limit_backoff(backoff_duration)
+      @logger.log("Rate limit reached. Retrying in #{backoff_duration} seconds...")
       @sleeper.sleep(backoff_duration)
     end
   end

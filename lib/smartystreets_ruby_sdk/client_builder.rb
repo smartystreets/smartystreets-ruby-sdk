@@ -39,7 +39,7 @@ module SmartyStreets
       @max_timeout = 10
       @url_prefix = nil
       @proxy = nil
-      @headers = nil
+      @header = nil
       @licenses = %w()
       @debug = nil
     end
@@ -98,8 +98,8 @@ module SmartyStreets
     # headers is a Hash object.
     #
     # Returns self to accommodate method chaining.
-    def with_custom_headers(headers)
-      @headers = headers
+    def with_custom_headers(header)
+      @header = header
       self
     end
 
@@ -170,7 +170,7 @@ module SmartyStreets
 
       sender = StatusCodeSender.new(sender)
 
-      sender = CustomHeaderSender.new(sender, @headers) unless @headers.nil?
+      sender = CustomHeaderSender.new(sender, @header) unless @header.nil?
 
       sender = SigningSender.new(@signer, sender) unless @signer.nil?
 
