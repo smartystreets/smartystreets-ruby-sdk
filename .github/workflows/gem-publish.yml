@@ -41,7 +41,7 @@ jobs:
       - name: Grab Version
         run: |
           sed -i "s/0\.0\.0/${{ env.RELEASE_VERSION }}/g" lib/smartystreets_ruby_sdk/version.rb \
-          && cat version.rb \
+          && cat lib/smartystreets_ruby_sdk/version.rb
           && gem build *.gemspec \
           && git checkout lib/smartystreets_ruby_sdk/version.rb
 
