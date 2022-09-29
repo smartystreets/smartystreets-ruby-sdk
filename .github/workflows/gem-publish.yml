@@ -1,56 +1,30 @@
-name: Ruby Gem Publish
+name: Publish Gem
 
 on:
   push:
-    tags: 
-      - '*'
+    tags:
+    - 'v*'
+
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    env:
-      GEM_HOST_API_KEY: ${{ secrets.GEM_HOST_API_KEY }}
-    
+  build:
+    name: Build + Publish
+    runs-on: ubuntu-20.04
+
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '2.6'
-          bundler-cache: false
-      
-      - uses: actions/setup-node@v2
-      
-      - name: Clean
-        run: |
-          rm -f *.gem
-          git checkout lib/smartystreets_ruby_sdk/version.rb
-      
-      - name: Dependencies
-        run: |
-          gem install minitest
-      
-      - name: Test
-        run: |
-          rake test
-      
-      - name: Set Environment Variable
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+    - uses: actions/checkout@v1
+    - name: Set up Ruby 2.7
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.7.x
 
-      - name: Grab Version
-        run: |
-          sed -i "s/0\.0\.0/${{ env.RELEASE_VERSION }}/g" lib/smartystreets_ruby_sdk/version.rb \
-          && cat lib/smartystreets_ruby_sdk/version.rb \
-          && gem build *.gemspec \
-          && git checkout lib/smartystreets_ruby_sdk/version.rb
-
-      - name: Push to rubygems.org
-        run: |
-          mkdir -p $HOME/.gem
-          touch $HOME/.gem/credentials
-          chmod 0600 $HOME/.gem/credentials
-          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
-          gem push *.gem
-        env:
-          GEM_HOST_API_KEY: "${{secrets.GEM_HOST_API_KEY}}"
+    - name: Publish to GPR
+      run: |
+        mkdir -p $HOME/.gem
+        touch $HOME/.gem/credentials
+        chmod 0600 $HOME/.gem/credentials
+        printf -- "---\n:github: Bearer ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+        gem build *.gemspec
+        gem push --KEY github --host https://rubygems.pkg.github.com/${OWNER} *.gem
+      env:
+        GEM_HOST_API_KEY: ${{secrets.GITHUB_TOKEN}}
+        OWNER: fastly
