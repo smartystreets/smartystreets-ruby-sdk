@@ -13,7 +13,7 @@ dependencies:
 	gem install minitest
 
 package: clean dependencies test
-	sed -i "s/0\.0\.0/${}VERSION}/g" "$(VERSION_FILE)" \
+	sed -i "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE)" \
 		&& gem build *.gemspec \
 		&& git checkout "$(VERSION_FILE)"
 
