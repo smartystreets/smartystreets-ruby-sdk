@@ -19,38 +19,14 @@ jobs:
         with:
           ruby-version: '2.6'
           bundler-cache: false
-      
+
+      # Comment this out and test it
       - uses: actions/setup-node@v2
-      
-      - name: Clean
-        run: |
-          rm -f *.gem
-          git checkout lib/smartystreets_ruby_sdk/version.rb
-      
-      - name: Dependencies
-        run: |
-          gem install minitest
-      
-      - name: Test
-        run: |
-          rake test
-      
-      - name: Set Environment Variable
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
-      - name: Grab Version
-        run: |
-          sed -i "s/0\.0\.0/${{ env.RELEASE_VERSION }}/g" lib/smartystreets_ruby_sdk/version.rb \
-          && cat lib/smartystreets_ruby_sdk/version.rb \
-          && gem build *.gemspec \
-          && git checkout lib/smartystreets_ruby_sdk/version.rb
-
-      - name: Push to rubygems.org
+      - name: Publish
         run: |
           mkdir -p $HOME/.gem
-          touch $HOME/.gem/credentials
-          chmod 0600 $HOME/.gem/credentials
-          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
-          gem push *.gem
+          printf -- "---\n:rubygems_api_key: ${API_KEY}\n" > $HOME/.gem/credentials
+          VERSION=${GITHUB_REF#refs/*/} make publish
         env:
-          GEM_HOST_API_KEY: "${{secrets.GEM_HOST_API_KEY}}"
+          API_KEY: "${{secrets.GEM_HOST_API_KEY}}"
