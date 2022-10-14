@@ -21,7 +21,7 @@ jobs:
           bundler-cache: false
 
       # Comment this out and test it
-      - uses: actions/setup-node@v2
+      #- uses: actions/setup-node@v2
 
       - name: Publish
         run: |
