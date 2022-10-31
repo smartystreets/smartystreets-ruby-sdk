@@ -22,9 +22,8 @@ jobs:
 
       - name: Publish
         run: |
-          mkdir -p $HOME/.gem
-          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+#          mkdir -p $HOME/.gem
+#          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
           VERSION=${GITHUB_REF#refs/*/} make publish
-          echo ${GITHUB_REF#refs/*/}
-#        env:
-#          API_KEY: "${{ secrets.GEM_HOST_API_KEY }}"
+        env:
+          API_KEY: "${{ secrets.GEM_HOST_API_KEY }}"
