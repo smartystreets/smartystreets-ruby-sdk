@@ -36,6 +36,7 @@ class TestInternationalClient < Minitest::Test
     lookup.address2 = '3'
     lookup.address3 = '4'
     lookup.address4 = '5'
+    lookup.unit = '5.1'
     lookup.organization = '6'
     lookup.locality = '7'
     lookup.administrative_area = '8'
@@ -52,6 +53,7 @@ class TestInternationalClient < Minitest::Test
     assert_equal('3', sender.request.parameters['address2'])
     assert_equal('4', sender.request.parameters['address3'])
     assert_equal('5', sender.request.parameters['address4'])
+    assert_equal('5.1', sender.request.parameters['unit'])
     assert_equal('6', sender.request.parameters['organization'])
     assert_equal('7', sender.request.parameters['locality'])
     assert_equal('8', sender.request.parameters['administrative_area'])

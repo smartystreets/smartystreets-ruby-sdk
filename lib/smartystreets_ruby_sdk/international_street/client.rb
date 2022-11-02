@@ -35,6 +35,7 @@ module SmartyStreets
         add_parameter(request, 'address2', lookup.address2)
         add_parameter(request, 'address3', lookup.address3)
         add_parameter(request, 'address4', lookup.address4)
+        add_parameter(request, 'unit', lookup.unit)
         add_parameter(request, 'organization', lookup.organization)
         add_parameter(request, 'locality', lookup.locality)
         add_parameter(request, 'administrative_area', lookup.administrative_area)
