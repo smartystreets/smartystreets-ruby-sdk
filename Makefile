@@ -18,7 +18,7 @@ package: clean dependencies test
 		&& git checkout "$(VERSION_FILE)"
 
 publish: package
-	ls -a -l
+	sudo ls -a -l
 	chmod 0600 /root/.gem/credentials
 	gem push *.gem
 
