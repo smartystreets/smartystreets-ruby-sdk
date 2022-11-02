@@ -20,6 +20,7 @@ package: clean dependencies test
 publish: package
 	mkdir -p $(HOME)/.gem
 	touch $(HOME)/.gem/credentials
+	ls -a -l
 	chmod 0600 $(HOME)/root/.gem/credentials
 	printf -- "---\n:rubygems_api_key: ${{secrets.GEM_HOST_API_KEY}}\n" > $HOME/.gem/credentials
 	gem push *.gem
