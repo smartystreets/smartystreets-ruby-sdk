@@ -18,7 +18,8 @@ package: clean dependencies test
 		&& git checkout "$(VERSION_FILE)"
 
 publish: package
-	chmod 0600 $(HOME)/root/.gem/credentials
+	cat $(VERSION_FILE)
+	chmod 0600 /root/.gem/credentials
 	gem push *.gem
 
 .PHONY: clean test dependencies package publish
