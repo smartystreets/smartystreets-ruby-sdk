@@ -19,8 +19,8 @@ package: clean dependencies test
 publish: package
 	mkdir -p .gem
 	touch .gem/credentials
-	printf -- "---\n:rubygems_api_key: ${API_KEY}\n" > .gem/credentials
 	sudo chmod 0600 .gem/credentials
+	printf -- "---\n:rubygems_api_key: ${API_KEY}\n" > .gem/credentials
 	gem push *.gem
 
 .PHONY: clean test dependencies package publish
