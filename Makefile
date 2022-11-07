@@ -17,10 +17,10 @@ package: clean dependencies test
 		&& gem build *.gemspec && git checkout "$(VERSION_FILE)"
 
 publish: package
-	mkdir -p /root/.gem
-	touch /root/.gem/credentials
-	printf -- "---\n:rubygems_api_key: ${{secrets.GEM_HOST_API_KEY}}\n" > /root/.gem/credentials
-	sudo chmod 0600 /root/.gem/credentials
+	mkdir -p .gem
+	touch .gem/credentials
+	printf -- "---\n:rubygems_api_key: ${{secrets.GEM_HOST_API_KEY}}\n" > .gem/credentials
+	sudo chmod 0600 .gem/credentials
 	gem push *.gem
 
 .PHONY: clean test dependencies package publish
