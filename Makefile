@@ -18,11 +18,11 @@ package: clean dependencies test
 	&& git checkout "$(VERSION_FILE)"
 
 publish: package
-	mkdir -p $HOME/.gem
-	touch $HOME/.gem/credentials
-	chmod 0600 $HOME/.gem/credentials
-	printf -- "---\n:rubygems_api_key: ${API_KEY}\n" > $HOME/.gem/credentials
-	cat $HOME/.gem/credentials
+	mkdir -p ~/.gem
+	touch ~/.gem/credentials
+	chmod 0600 ~/.gem/credentials
+	printf -- "---\n:rubygems_api_key: ${API_KEY}\n" > ~/.gem/credentials
+	cat ~/.gem/credentials
 	gem push *.gem
 
 .PHONY: clean test dependencies package publish
