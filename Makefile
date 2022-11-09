@@ -15,8 +15,7 @@ dependencies:
 package: clean dependencies test
 	sed -i "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE)" \
 	&& gem build *.gemspec \
-	&& git checkout "$(VERSION_FILE)" \
-	&& cat /root/.gem/credentials
+	&& git checkout "$(VERSION_FILE)"
 
 publish: package
 	sudo chmod 0600 /root/.gem/credentials
