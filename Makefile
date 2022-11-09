@@ -22,7 +22,6 @@ publish: package
 	touch ~/.gem/credentials
 	chmod 0600 ~/.gem/credentials
 	printf -- "---\n:rubygems_api_key: ${API_KEY}\n" > ~/.gem/credentials
-	cat ~/.gem/credentials
 	gem push *.gem
 
 .PHONY: clean test dependencies package publish
