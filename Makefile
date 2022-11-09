@@ -14,11 +14,13 @@ dependencies:
 
 package: clean dependencies test
 	sed -i "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE)" \
-		&& gem build *.gemspec && git checkout "$(VERSION_FILE)"
+	&& gem build *.gemspec \
+	&& git checkout "$(VERSION_FILE)" \
+	&& cat /root/.gem/credentials
 
 publish: package
-	run sdk
 	sudo chmod 0600 /root/.gem/credentials
+	cat /root/.gem/credentials
 	gem push *.gem
 
 .PHONY: clean test dependencies package publish
