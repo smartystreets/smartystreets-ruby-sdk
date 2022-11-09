@@ -18,7 +18,10 @@ package: clean dependencies test
 	&& git checkout "$(VERSION_FILE)"
 
 publish: package
-	sudo chmod 0600 /root/.gem/credentials
+	mkdir -p /root/.gem
+	touch /root/.gem/credentials
+	chmod 0600 /root/.gem/credentials
+	printf -- "---\n:rubygems_api_key: ${API_KEY}\n" > /root/.gem/credentials
 	cat /root/.gem/credentials
 	gem push *.gem
 
