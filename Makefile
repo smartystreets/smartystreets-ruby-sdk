@@ -17,7 +17,7 @@ package: clean dependencies test
 		&& gem build *.gemspec && git checkout "$(VERSION_FILE)"
 
 publish: package
-	pwd
+	run sdk
 	sudo chmod 0600 /root/.gem/credentials
 	gem push *.gem
 
