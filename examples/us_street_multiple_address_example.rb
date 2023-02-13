@@ -7,14 +7,16 @@ class USStreetMultipleAddressExample
   Lookup = SmartyStreets::USStreet::Lookup
 
   def run
-    # auth_id = 'Your SmartyStreets Auth ID here'
-    # auth_token = 'Your SmartyStreets Auth Token here'
-
+    # key = 'Your SmartyStreets Auth Key here'
+    # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    auth_id = ENV['SMARTY_AUTH_ID']
-    auth_token = ENV['SMARTY_AUTH_TOKEN']
+    key = ENV['SMARTY_AUTH_WEB']
+    referer = ENV['SMARTY_AUTH_REFERER']
+    credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
-    credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
+    # id = ENV['SMARTY_AUTH_ID']
+    # token = ENV['SMARTY_AUTH_TOKEN']
+    # credentials = SmartyStreets::StaticCredentials(id, token);
 
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.

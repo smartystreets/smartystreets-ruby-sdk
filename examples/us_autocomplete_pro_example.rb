@@ -7,14 +7,16 @@ class USAutocompleteProExample
   Lookup = SmartyStreets::USAutocompletePro::Lookup
 
   def run
-    # key = 'Your SmartyStreets Auth ID here'
-    # hostname = 'Your SmartyStreets Auth Token here'
-
+    # key = 'Your SmartyStreets Auth Key here'
+    # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
     key = ENV['SMARTY_AUTH_WEB']
     referer = ENV['SMARTY_AUTH_REFERER']
-
     credentials = SmartyStreets::SharedCredentials.new(key, referer)
+
+    # id = ENV['SMARTY_AUTH_ID']
+    # token = ENV['SMARTY_AUTH_TOKEN']
+    # credentials = SmartyStreets::StaticCredentials(id, token);
 
     # auth_id = ENV['SMARTY_AUTH_ID']
     # auth_token = ENV['SMARTY_AUTH_TOKEN']

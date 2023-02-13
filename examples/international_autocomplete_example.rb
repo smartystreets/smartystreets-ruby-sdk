@@ -7,14 +7,16 @@ class InternationalAutocompleteExample
   Lookup = SmartyStreets::InternationalAutocomplete::Lookup
 
   def run
-    # key = 'Your SmartyStreets Auth ID here'
-    # hostname = 'Your SmartyStreets Auth Token here'
-
+    # key = 'Your SmartyStreets Auth Key here'
+    # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
     key = ENV['SMARTY_AUTH_WEB']
     referer = ENV['SMARTY_AUTH_REFERER']
-
     credentials = SmartyStreets::SharedCredentials.new(key, referer)
+
+    # id = ENV['SMARTY_AUTH_ID']
+    # token = ENV['SMARTY_AUTH_TOKEN']
+    # credentials = SmartyStreets::StaticCredentials(id, token);
 
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.
