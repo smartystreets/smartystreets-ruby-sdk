@@ -6,15 +6,20 @@ module SmartyStreets
     # of the lookup after it comes back from the API.
     class Lookup < JSONAble
 
-      attr_accessor :result, :search, :country, :administrative_area, :locality, :postal_code
+      attr_accessor :result, :search, :country, :max_results, :distance, :geolocation, :administrative_area, :locality, :postal_code, :latitude, :longitude
 
-      def initialize(search=nil, country=nil, administrative_area=nil, locality=nil, postal_code=nil)
+      def initialize(search = nil, country = nil, max_results = nil, distance = nil, geolocation = nil, administrative_area = nil, locality = nil, postal_code = nil, latitude = nil, longitude = nil)
         @result = []
         @search = search
         @country = country
+        @max_results = max_results
+        @distance = distance
+        @geolocation = geolocation
         @administrative_area = administrative_area
         @locality = locality
         @postal_code = postal_code
+        @latitude = latitude
+        @longitude = longitude
       end
     end
   end

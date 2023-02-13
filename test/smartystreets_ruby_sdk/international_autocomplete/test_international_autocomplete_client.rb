@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/international_autocomplete/client'
 require './lib/smartystreets_ruby_sdk/international_autocomplete/lookup'
+require './lib/smartystreets_ruby_sdk/international_autocomplete/international_geolocation_type'
 require './lib/smartystreets_ruby_sdk/response'
 
 class TestInternationalAutocompleteClient < Minitest::Test
@@ -24,17 +25,27 @@ class TestInternationalAutocompleteClient < Minitest::Test
     client = Client.new(sender, serializer)
     lookup = Lookup.new('1')
     lookup.country = '2'
+    lookup.max_results = 7
+    lookup.distance = 3
+    lookup.geolocation = SmartyStreets::InternationalAutocomplete::InternationalGeolocationType::GEOCODES
     lookup.administrative_area = '3'
     lookup.locality = '4'
     lookup.postal_code = '5'
+    lookup.latitude = 65.33443
+    lookup.longitude = -119.0984
 
     client.send(lookup)
 
     assert_equal('1', sender.request.parameters['search'])
     assert_equal('2', sender.request.parameters['country'])
+    assert_equal('7', sender.request.parameters['max_results'])
+    assert_equal('3', sender.request.parameters['distance'])
+    assert_equal('geocodes', sender.request.parameters['geolocation'])
     assert_equal('3', sender.request.parameters['include_only_administrative_area'])
     assert_equal('4', sender.request.parameters['include_only_locality'])
     assert_equal('5', sender.request.parameters['include_only_postal_code'])
+    assert_equal('65.33443', sender.request.parameters['latitude'])
+    assert_equal('-119.0984', sender.request.parameters['longitude'])
 
   end
 
