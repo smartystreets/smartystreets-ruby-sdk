@@ -1,7 +1,9 @@
-require 'smartystreets_ruby_sdk/shared_credentials'
+require '../lib/smartystreets_ruby_sdk/shared_credentials'
+require '../lib/smartystreets_ruby_sdk/static_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/international_autocomplete/lookup'
 require '../lib/smartystreets_ruby_sdk/international_autocomplete/client'
+require '../lib/smartystreets_ruby_sdk/international_autocomplete/international_geolocation_type'
 
 class InternationalAutocompleteExample
   Lookup = SmartyStreets::InternationalAutocomplete::Lookup
@@ -16,7 +18,7 @@ class InternationalAutocompleteExample
 
     # id = ENV['SMARTY_AUTH_ID']
     # token = ENV['SMARTY_AUTH_TOKEN']
-    # credentials = SmartyStreets::StaticCredentials(id, token);
+    # credentials = SmartyStreets::StaticCredentials.new(id, token)
 
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.
@@ -30,6 +32,7 @@ class InternationalAutocompleteExample
     lookup = Lookup.new('Louis')
     lookup.country = "FRA"
     lookup.locality = "Paris"
+    lookup.geolocation = SmartyStreets::InternationalAutocomplete::InternationalGeolocationType::NONE
 
     suggestions = client.send(lookup) # The client will also return the suggestions directly
 

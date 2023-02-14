@@ -1,5 +1,5 @@
-require 'smartystreets_ruby_sdk/shared_credentials'
-require 'smartystreets_ruby_sdk/static_credentials'
+require '../lib/smartystreets_ruby_sdk/shared_credentials'
+require '../lib/smartystreets_ruby_sdk/static_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/us_autocomplete_pro/lookup'
 
@@ -16,7 +16,7 @@ class USAutocompleteProExample
 
     # id = ENV['SMARTY_AUTH_ID']
     # token = ENV['SMARTY_AUTH_TOKEN']
-    # credentials = SmartyStreets::StaticCredentials(id, token);
+    # credentials = SmartyStreets::StaticCredentials.new(id, token)
 
     # auth_id = ENV['SMARTY_AUTH_ID']
     # auth_token = ENV['SMARTY_AUTH_TOKEN']

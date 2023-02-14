@@ -1,7 +1,9 @@
-require 'smartystreets_ruby_sdk/static_credentials'
-require 'smartystreets_ruby_sdk/client_builder'
-require 'smartystreets_ruby_sdk/batch'
-require 'smartystreets_ruby_sdk/us_street/lookup'
+require '../lib/smartystreets_ruby_sdk/static_credentials'
+require '../lib/smartystreets_ruby_sdk/shared_credentials'
+require '../lib/smartystreets_ruby_sdk/client_builder'
+require '../lib/smartystreets_ruby_sdk/batch'
+require '../lib/smartystreets_ruby_sdk/us_street/lookup'
+require '../lib/smartystreets_ruby_sdk/us_street/match_type'
 
 class USStreetMultipleAddressExample
   Lookup = SmartyStreets::USStreet::Lookup
@@ -16,7 +18,7 @@ class USStreetMultipleAddressExample
 
     # id = ENV['SMARTY_AUTH_ID']
     # token = ENV['SMARTY_AUTH_TOKEN']
-    # credentials = SmartyStreets::StaticCredentials(id, token);
+    # credentials = SmartyStreets::StaticCredentials.new(id, token)
 
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.
@@ -38,7 +40,7 @@ class USStreetMultipleAddressExample
     batch[0].lastline = 'Mountain view, California'
     batch[0].zipcode = '21229'
     batch[0].candidates = 3
-    batch[0].match = Lookup.INVALID # "invalid" is the most permissive match,
+    batch[0].match = SmartyStreets::USStreet::MatchType::INVALID # "invalid" is the most permissive match,
                                       # this will always return at least one result even if the address is invalid.
                                       # Refer to the documentation for additional Match Strategy options.
 

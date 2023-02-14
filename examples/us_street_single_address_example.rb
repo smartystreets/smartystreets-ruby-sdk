@@ -1,7 +1,8 @@
-require 'smartystreets_ruby_sdk/static_credentials'
-require 'smartystreets_ruby_sdk/client_builder'
-require 'smartystreets_ruby_sdk/us_street/lookup'
-require 'smartystreets_ruby_sdk/us_street/match_type'
+require '../lib/smartystreets_ruby_sdk/static_credentials'
+require '../lib/smartystreets_ruby_sdk/shared_credentials'
+require '../lib/smartystreets_ruby_sdk/client_builder'
+require '../lib/smartystreets_ruby_sdk/us_street/lookup'
+require '../lib/smartystreets_ruby_sdk/us_street/match_type'
 
 class USStreetSingleAddressExample
   def run
@@ -14,7 +15,7 @@ class USStreetSingleAddressExample
 
     # id = ENV['SMARTY_AUTH_ID']
     # token = ENV['SMARTY_AUTH_TOKEN']
-    # credentials = SmartyStreets::StaticCredentials(id, token);
+    # credentials = SmartyStreets::StaticCredentials.new(id, token)
 
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.

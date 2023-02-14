@@ -1,7 +1,8 @@
-require 'smartystreets_ruby_sdk/static_credentials'
-require 'smartystreets_ruby_sdk/client_builder'
-require 'smartystreets_ruby_sdk/batch'
-require 'smartystreets_ruby_sdk/us_zipcode/lookup'
+require '../lib/smartystreets_ruby_sdk/static_credentials'
+require '../lib/smartystreets_ruby_sdk/shared_credentials'
+require '../lib/smartystreets_ruby_sdk/client_builder'
+require '../lib/smartystreets_ruby_sdk/batch'
+require '../lib/smartystreets_ruby_sdk/us_zipcode/lookup'
 
 class USZipcodeMultipleLookupExample
   Lookup = SmartyStreets::USZipcode::Lookup
@@ -16,7 +17,7 @@ class USZipcodeMultipleLookupExample
 
     # id = ENV['SMARTY_AUTH_ID']
     # token = ENV['SMARTY_AUTH_TOKEN']
-    # credentials = SmartyStreets::StaticCredentials(id, token);
+    # credentials = SmartyStreets::StaticCredentials.new(id, token)
 
     client = SmartyStreets::ClientBuilder.new(credentials).build_us_zipcode_api_client
     batch = SmartyStreets::Batch.new

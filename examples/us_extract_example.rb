@@ -1,6 +1,7 @@
-require 'smartystreets_ruby_sdk/static_credentials'
-require 'smartystreets_ruby_sdk/client_builder'
-require 'smartystreets_ruby_sdk/us_extract/lookup'
+require '../lib/smartystreets_ruby_sdk/static_credentials'
+require '../lib/smartystreets_ruby_sdk/shared_credentials'
+require '../lib/smartystreets_ruby_sdk/client_builder'
+require '../lib/smartystreets_ruby_sdk/us_extract/lookup'
 
 class USExtractExample
   Lookup = SmartyStreets::USExtract::Lookup
@@ -15,7 +16,7 @@ class USExtractExample
 
     # id = ENV['SMARTY_AUTH_ID']
     # token = ENV['SMARTY_AUTH_TOKEN']
-    # credentials = SmartyStreets::StaticCredentials(id, token);
+    # credentials = SmartyStreets::StaticCredentials.new(id, token)
 
     client = SmartyStreets::ClientBuilder.new(credentials).build_us_extract_api_client
 
