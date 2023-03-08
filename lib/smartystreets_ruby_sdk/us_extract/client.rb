@@ -1,6 +1,8 @@
 require_relative '../request'
 require_relative '../exceptions'
 require_relative 'result'
+require_relative '../us_street/match_type'
+
 
 module SmartyStreets
   module USExtract
@@ -35,6 +37,9 @@ module SmartyStreets
         add_parameter(request, 'aggressive', lookup.aggressive.to_s)
         add_parameter(request, 'addr_line_breaks', lookup.addresses_have_line_breaks.to_s)
         add_parameter(request, 'addr_per_line', lookup.addresses_per_line.to_s)
+        if lookup.match !=  SmartyStreets::USStreet::MatchType::STRICT && lookup.match != nil
+          add_parameter(request, 'match', lookup.match)
+        end
 
         request
       end

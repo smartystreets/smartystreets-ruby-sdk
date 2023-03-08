@@ -4,6 +4,7 @@ require './lib/smartystreets_ruby_sdk/us_extract/lookup'
 require './lib/smartystreets_ruby_sdk/us_extract/result'
 require './lib/smartystreets_ruby_sdk/us_street/candidate'
 require './lib/smartystreets_ruby_sdk/response'
+require './lib/smartystreets_ruby_sdk/international_autocomplete/international_geolocation_type'
 require './test/mocks/request_capturing_sender'
 require './test/mocks/fake_serializer'
 require './test/mocks/fake_deserializer'
@@ -41,6 +42,7 @@ class TestExtractClient < Minitest::Test
     lookup.aggressive = true
     lookup.addresses_have_line_breaks = true
     lookup.addresses_per_line = 2
+    lookup.match =  SmartyStreets::USStreet::MatchType::ENHANCED
 
     client.send(lookup)
 
@@ -49,6 +51,35 @@ class TestExtractClient < Minitest::Test
     assert_equal('true', request.parameters['aggressive'])
     assert_equal('true', request.parameters['addr_line_breaks'])
     assert_equal('2', request.parameters['addr_per_line'])
+    assert_equal('enhanced', request.parameters['match'])
+  end
+
+  def test_match_empty_lookup
+    capturing_sender = RequestCapturingSender.new
+    sender = URLPrefixSender.new('http://localhost/', capturing_sender)
+    serializer = FakeSerializer.new(nil)
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1')
+    lookup.match =  SmartyStreets::USStreet::MatchType::STRICT
+
+    client.send(lookup)
+
+    request = capturing_sender.request
+    assert_equal(nil, request.parameters['match'])
+  end
+
+  def test_match_invalid_lookup
+    capturing_sender = RequestCapturingSender.new
+    sender = URLPrefixSender.new('http://localhost/', capturing_sender)
+    serializer = FakeSerializer.new(nil)
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1')
+    lookup.match =  SmartyStreets::USStreet::MatchType::INVALID
+
+    client.send(lookup)
+
+    request = capturing_sender.request
+    assert_equal('invalid', request.parameters['match'])
   end
 
   def test_reject_blank_lookup

@@ -7,14 +7,15 @@ module SmartyStreets
     #
     # See "https://smartystreets.com/docs/cloud/us-extract-api#http-request-input-fields"
     class Lookup < JSONAble
-      attr_accessor :text, :result, :aggressive, :addresses_per_line, :html, :addresses_have_line_breaks
+      attr_accessor :text, :result, :aggressive, :addresses_per_line, :html, :addresses_have_line_breaks, :match
 
-      def initialize(text=nil, html=nil, aggressive=nil, addresses_have_line_breaks=nil, addresses_per_line=nil)
+      def initialize(text=nil, html=nil, aggressive=nil, addresses_have_line_breaks=nil, addresses_per_line=nil, match=nil)
         @text = text
         @html = html
         @aggressive = aggressive
         @addresses_have_line_breaks = addresses_have_line_breaks
         @addresses_per_line = addresses_per_line
+        @match = match
         @result = nil
       end
     end
