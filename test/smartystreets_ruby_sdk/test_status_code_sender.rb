@@ -78,6 +78,23 @@ class TestStatusCodeSender < Minitest::Test
     assert_equal(response.error, expected_exception)
   end
 
+  def test_422_return_payload_error_when_present
+    messages = ['Invalid Field 1', 'Invalid Field 2']
+    expected_message = messages.join(', ')
+    expected_exception = SmartyStreets::UnprocessableEntityError.new(expected_message)
+    payload = {"errors": [{message: 'Invalid Field 1'}, {message: 'Invalid Field 2'}]}
+    expected_response = Response.new(JSON.generate(payload), 422, nil, expected_exception)
+    inner = MockSender.new(expected_response)
+
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_response.error, response.error)
+    assert_equal(expected_exception, response.error)
+    assert_equal(expected_message, response.error.message)
+  end
+
   def test_too_many_requests_error_given_for_429
     expected_exception = SmartyStreets::TooManyRequestsError.new(SmartyStreets::TOO_MANY_REQUESTS)
     expected_response = Response.new(nil, '429', nil, expected_exception)

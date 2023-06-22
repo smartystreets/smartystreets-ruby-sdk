@@ -2,3 +2,5 @@
 .idea
 coverage
 *.gem
+.byebug_history
+.ruby-version
