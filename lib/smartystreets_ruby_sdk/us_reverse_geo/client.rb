@@ -26,6 +26,7 @@ module SmartyStreets
 
         add_parameter(request, 'latitude', lookup.latitude)
         add_parameter(request, 'longitude', lookup.longitude)
+        add_parameter(request, 'source', lookup.source)
 
         request
       end
