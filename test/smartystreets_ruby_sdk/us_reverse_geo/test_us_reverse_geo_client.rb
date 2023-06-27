@@ -27,7 +27,7 @@ class TestUSReverseGeoClient < Minitest::Test
     deserializer = FakeDeserializer.new({"results"=>[{}]})
     client = Client.new(sender, deserializer)
 
-    client.send(Lookup.new('1', '2'))
+    client.send(Lookup.new('1', '2', ''))
 
     assert_equal(response.payload, deserializer.input)
   end
