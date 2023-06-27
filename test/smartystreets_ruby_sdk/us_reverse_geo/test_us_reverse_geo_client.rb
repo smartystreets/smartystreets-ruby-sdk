@@ -12,7 +12,7 @@ class TestUSReverseGeoClient < Minitest::Test
     sender = RequestCapturingSender.new
     serializer = FakeDeserializer.new({"results"=>[{}]})
     client = Client.new(sender, serializer)
-    lookup = Lookup.new(44.888888888, -111.111111111)
+    lookup = Lookup.new(44.888888888, -111.111111111, "")
 
     client.send(lookup)
 
