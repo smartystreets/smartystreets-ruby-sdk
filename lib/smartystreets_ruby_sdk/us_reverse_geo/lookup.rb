@@ -10,11 +10,12 @@ module SmartyStreets
 
     class Lookup
 
-      attr_accessor :latitude, :longitude, :response
+      attr_accessor :latitude, :longitude, :source, :response
 
-      def initialize(latitude, longitude)
+      def initialize(latitude, longitude, source)
         @latitude = sprintf('%.8f', latitude)
         @longitude = sprintf('%.8f', longitude)
+        @source = source
       end
     end
   end
