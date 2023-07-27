@@ -16,7 +16,7 @@ module SmartyStreets
 
       (0..@max_retries-1).each do |i|
 
-        break if STATUS_TO_RETRY.include?(response.status_code.to_i) == false
+        break if !STATUS_TO_RETRY.include?(response.status_code.to_i) && !response.timeout?
 
         if response.status_code.to_i == STATUS_TOO_MANY_REQUESTS
           seconds_to_backoff = 10

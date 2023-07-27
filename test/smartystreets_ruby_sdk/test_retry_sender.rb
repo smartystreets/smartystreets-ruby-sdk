@@ -1,7 +1,9 @@
 require 'minitest/autorun'
+require 'timeout'
 require './test/mocks/failing_sender'
 require './test/mocks/fake_sleeper'
 require './test/mocks/fake_logger'
+require './test/mocks/mock_exception_sender'
 require './lib/smartystreets_ruby_sdk/request'
 require './lib/smartystreets_ruby_sdk/retry_sender'
 
@@ -91,6 +93,14 @@ class TestRetrySender < Minitest::Test
     assert_equal("Big Bad", response.error)
   end
 
+  def test_retry_timeout
+    exception = TimeoutError.new
+    inner = MockExceptionSender.new(exception)
+    sleeper = FakeSleeper.new
+
+    send_with_retry(10, inner, sleeper)
+    assert_equal([0,1,2,3,4,5,6,7,8,9], sleeper.sleep_durations)
+  end
 end
 
 def send_with_retry(retries, inner, sleeper)
