@@ -11,7 +11,21 @@ module SmartyStreets
       end
 
       # Sends a Lookup object to the International Street API and stores the result in the Lookup's result field.
+      # Deprecated, please use send_lookup instead.
       def send(lookup)
+        lookup.ensure_enough_info
+        request = build_request(lookup)
+
+        response = @sender.send(request)
+
+        raise response.error if response.error
+
+        candidates = convert_candidates(@serializer.deserialize(response.payload))
+        lookup.result = candidates
+      end
+
+      # Sends a Lookup object to the International Street API and stores the result in the Lookup's result field.
+      def send_lookup(lookup)
         lookup.ensure_enough_info
         request = build_request(lookup)
 
