@@ -16,7 +16,7 @@ class TestInternationalClient < Minitest::Test
     client = Client.new(sender, serializer)
     lookup = Lookup.new('1', '2')
 
-    client.send(lookup)
+    client.send_lookup(lookup)
 
     assert_equal('1', sender.request.parameters['freeform'])
     assert_equal('2', sender.request.parameters['country'])
@@ -41,7 +41,7 @@ class TestInternationalClient < Minitest::Test
     lookup.administrative_area = '8'
     lookup.postal_code = '9'
 
-    client.send(lookup)
+    client.send_lookup(lookup)
 
     assert_equal('1234', sender.request.parameters['input_id'])
     assert_equal('0', sender.request.parameters['country'])
@@ -63,7 +63,7 @@ class TestInternationalClient < Minitest::Test
     client = Client.new(sender, nil)
 
     assert_raises SmartyStreets::UnprocessableEntityError do
-      client.send(Lookup.new)
+      client.send_lookup(Lookup.new)
     end
   end
 
@@ -73,7 +73,7 @@ class TestInternationalClient < Minitest::Test
     lookup = Lookup.new(nil, '0')
 
     assert_raises SmartyStreets::UnprocessableEntityError do
-      client.send(lookup)
+      client.send_lookup(lookup)
     end
   end
 
@@ -84,7 +84,7 @@ class TestInternationalClient < Minitest::Test
     lookup.address1 = '1'
 
     assert_raises SmartyStreets::UnprocessableEntityError do
-      client.send(lookup)
+      client.send_lookup(lookup)
     end
   end
 
@@ -96,7 +96,7 @@ class TestInternationalClient < Minitest::Test
     lookup.locality = '2'
 
     assert_raises SmartyStreets::UnprocessableEntityError do
-      client.send(lookup)
+      client.send_lookup(lookup)
     end
   end
 
@@ -108,7 +108,7 @@ class TestInternationalClient < Minitest::Test
     lookup.administrative_area = '2'
 
     assert_raises SmartyStreets::UnprocessableEntityError do
-      client.send(lookup)
+      client.send_lookup(lookup)
     end
   end
 
@@ -120,17 +120,17 @@ class TestInternationalClient < Minitest::Test
 
     lookup.country = '0'
     lookup.freeform = '1'
-    client.send(lookup)
+    client.send_lookup(lookup)
 
     lookup.freeform = nil
     lookup.address1 = '1'
     lookup.postal_code = '2'
-    client.send(lookup)
+    client.send_lookup(lookup)
 
     lookup.postal_code = nil
     lookup.locality = '3'
     lookup.administrative_area = '4'
-    client.send(lookup)
+    client.send_lookup(lookup)
   end
 
   def test_deserialize_called_with_response_body
@@ -140,7 +140,7 @@ class TestInternationalClient < Minitest::Test
     deserializer = FakeDeserializer.new({})
     client = Client.new(sender, deserializer)
 
-    client.send(Lookup.new('1', '2'))
+    client.send_lookup(Lookup.new('1', '2'))
 
     assert_equal(response.payload, deserializer.input)
   end
@@ -153,7 +153,7 @@ class TestInternationalClient < Minitest::Test
     deserializer = FakeDeserializer.new(raw_candidates)
     client = Client.new(sender, deserializer)
 
-    client.send(lookup)
+    client.send_lookup(lookup)
 
     assert_equal(expected_candidates[0].address1, lookup.result[0].address1)
     assert_equal(expected_candidates[1].address1, lookup.result[1].address1)

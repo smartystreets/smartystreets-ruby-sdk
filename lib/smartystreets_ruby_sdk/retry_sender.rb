@@ -14,7 +14,7 @@ module SmartyStreets
     def send(request)
       response = @inner.send(request)
 
-      (0..@max_retries-1).each do |i|
+      (1..@max_retries).each do |i|
 
         break if STATUS_TO_RETRY.include?(response.status_code.to_i) == false
 

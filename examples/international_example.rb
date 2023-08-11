@@ -38,7 +38,7 @@ class InternationalExample
     lookup.country = 'Brazil'
     lookup.postal_code = '02516-050'
 
-    candidates = client.send(lookup) # The candidates are also stored in the lookup's 'result' field.
+    candidates = client.send_lookup(lookup) # The candidates are also stored in the lookup's 'result' field.
 
     first_candidate = candidates[0]
     puts "Input ID: #{first_candidate.input_id}"
