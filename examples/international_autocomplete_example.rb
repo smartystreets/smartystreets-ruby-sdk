@@ -3,7 +3,6 @@ require '../lib/smartystreets_ruby_sdk/static_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/international_autocomplete/lookup'
 require '../lib/smartystreets_ruby_sdk/international_autocomplete/client'
-require '../lib/smartystreets_ruby_sdk/international_autocomplete/international_geolocation_type'
 
 class InternationalAutocompleteExample
   Lookup = SmartyStreets::InternationalAutocomplete::Lookup
@@ -32,7 +31,6 @@ class InternationalAutocompleteExample
     lookup = Lookup.new('Louis')
     lookup.country = "FRA"
     lookup.locality = "Paris"
-    lookup.geolocation = SmartyStreets::InternationalAutocomplete::InternationalGeolocationType::NONE
 
     suggestions = client.send(lookup) # The client will also return the suggestions directly
 
@@ -41,7 +39,11 @@ class InternationalAutocompleteExample
     puts
 
     suggestions.each do |suggestion|
-      puts "#{suggestion.street} #{suggestion.locality}, #{suggestion.country_iso3}"
+      if suggestion.address_text
+        puts "#{suggestion.entries} #{suggestion.address_text}, #{suggestion.address_id}"
+      else
+        puts "#{suggestion.street} #{suggestion.locality}, #{suggestion.country_iso3}"
+      end
     end
 
   end

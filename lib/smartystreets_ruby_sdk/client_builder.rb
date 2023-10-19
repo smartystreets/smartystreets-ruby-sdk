@@ -14,6 +14,7 @@ require_relative 'us_zipcode/client'
 require_relative 'us_extract/client'
 require_relative 'us_autocomplete/client'
 require_relative 'international_street/client'
+require_relative 'international_autocomplete/client'
 require_relative 'us_reverse_geo/client'
 require_relative 'us_autocomplete_pro/client'
 
@@ -23,7 +24,7 @@ module SmartyStreets
   # These methods are chainable, so you can usually get set up with one line of code.
   class ClientBuilder
     INTERNATIONAL_STREET_API_URL = 'https://international-street.api.smarty.com/verify'.freeze
-    INTERNATIONAL_AUTOCOMPLETE_API_URL = "https://international-autocomplete.api.smarty.com/lookup".freeze
+    INTERNATIONAL_AUTOCOMPLETE_API_URL = "https://international-autocomplete.api.smarty.com/v2/lookup".freeze
     US_AUTOCOMPLETE_API_URL = 'https://us-autocomplete.api.smarty.com/suggest'.freeze
     US_AUTOCOMPLETE_PRO_API_URL = 'https://us-autocomplete-pro.api.smarty.com/lookup'.freeze
     US_EXTRACT_API_URL = 'https://us-extract.api.smarty.com/'.freeze
