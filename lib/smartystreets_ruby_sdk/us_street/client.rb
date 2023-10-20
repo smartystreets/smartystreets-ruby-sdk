@@ -61,7 +61,7 @@ module SmartyStreets
           converted_lookup['urbanization'] = lookup.urbanization
           converted_lookup['match'] = lookup.match
           converted_lookup['candidates'] = lookup.candidates
-
+          converted_lookup['format'] = lookup.format
           converted_obj.push(converted_lookup)
         end
         converted_obj

@@ -9,10 +9,10 @@ module SmartyStreets
     # @match:: Must be set to 'strict', 'range', or 'invalid'. Constants for these are in match_type.rb
     class Lookup < JSONAble
       attr_accessor :input_id, :street, :street2, :secondary, :city, :state, :zipcode, :lastline, :addressee, :urbanization,
-                    :match, :candidates, :result
+                    :match, :candidates, :format, :result
 
       def initialize(street=nil, street2=nil, secondary=nil, city=nil, state=nil, zipcode=nil, lastline=nil,
-                     addressee=nil, urbanization=nil, match=nil, candidates=0, input_id=nil)
+                     addressee=nil, urbanization=nil, match=nil, candidates=0, input_id=nil, format=nil)
         @input_id = input_id
         @street = street
         @street2 = street2
@@ -25,6 +25,7 @@ module SmartyStreets
         @urbanization = urbanization
         @match = match
         @candidates = candidates
+        @format = format
         @result = []
       end
     end
