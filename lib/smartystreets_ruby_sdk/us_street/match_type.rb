@@ -10,7 +10,6 @@ module SmartyStreets
     module OutputFormat
       DEFAULT = 'default'.freeze
       PROJECT_USA = 'project-usa'.freeze
-      CASS = 'cass'.freeze
     end
   end
 end
