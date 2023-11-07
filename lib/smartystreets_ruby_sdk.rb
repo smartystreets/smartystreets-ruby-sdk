@@ -27,6 +27,7 @@ require 'smartystreets_ruby_sdk/us_zipcode'
 require 'smartystreets_ruby_sdk/us_autocomplete'
 require 'smartystreets_ruby_sdk/us_autocomplete_pro'
 require 'smartystreets_ruby_sdk/international_street'
+require 'smartystreets_ruby_sdk/international_autocomplete'
 require 'smartystreets_ruby_sdk/us_reverse_geo'
 
 module SmartyStreets
