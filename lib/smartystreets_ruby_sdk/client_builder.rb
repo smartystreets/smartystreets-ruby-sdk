@@ -14,6 +14,7 @@ require_relative 'us_zipcode/client'
 require_relative 'us_extract/client'
 require_relative 'us_autocomplete/client'
 require_relative 'international_street/client'
+require_relative 'international_autocomplete/client'
 require_relative 'us_reverse_geo/client'
 require_relative 'us_autocomplete_pro/client'
 
