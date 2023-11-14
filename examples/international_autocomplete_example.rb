@@ -22,7 +22,7 @@ class InternationalAutocompleteExample
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.
     # https://www.smartystreets.com/docs/cloud/licensing
-    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['international-autocomplete-cloud'])
+    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['international-autocomplete-v2-cloud'])
                  .build_international_autocomplete_api_client
 
     # Documentation for input fields can be found at:
