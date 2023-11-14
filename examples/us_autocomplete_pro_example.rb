@@ -33,10 +33,8 @@ class USAutocompleteProExample
     # https://smartystreets.com/docs/cloud/us-autocomplete-api
 
     lookup = Lookup.new('1042 W Center')
-    lookup.add_state_filter('CO')
-    lookup.add_state_filter('UT')
-    lookup.add_city_filter('Denver')
-    lookup.add_city_filter('Orem')
+    lookup.add_city_filter('Denver,Aurora,CO')
+    lookup.add_city_filter('Orem,UT')
     lookup.max_results = 5
     lookup.prefer_ratio = 3
     lookup.source = "all"
