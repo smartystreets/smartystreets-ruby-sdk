@@ -8,7 +8,7 @@ module SmartyStreets
                     def initialize(smarty_key)
                         @smarty_key = smarty_key
                         @data_set = "property"
-                        @data_sub_set = "principal"
+                        @data_sub_set = "financial"
                     end
                 end
             end

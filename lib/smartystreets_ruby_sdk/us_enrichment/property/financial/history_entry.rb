@@ -1,7 +1,7 @@
 module SmartyStreets
     module USEnrichment
-        module Property:
-            module Financial:
+        module Property
+            module Financial
                 class HistoryEntry
                     attr_reader :code_title_company, :instrument_date, :interest_rate_type_2, :lender_address, :lender_address_2, 
                     :lender_city, :lender_city_2, :lender_code_2, :lender_first_name, :lender_first_name_2, :lender_last_name, 

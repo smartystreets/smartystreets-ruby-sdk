@@ -12,15 +12,15 @@ module SmartyStreets
                 @serializer = serializer
             end
 
-            def sendPropertyFinancialLookup(smarty_key)
-                __send__(Financial.lookup.new(smarty_key))
+            def send_property_financial_lookup(smarty_key)
+                __send(USEnrichment::Property::Financial::Lookup.new(smarty_key))
             end
 
-            def sendPropertyPrincipalLookup(smarty_key)
-                __send__(Principal.lookup.new(smarty_key))
+            def send_property_principal_lookup(smarty_key)
+                __send(USEnrichment::Property::Principal::Lookup.new(smarty_key))
             end
 
-            def __send__(lookup)
+            def __send(lookup)
                 smarty_request = Request.new
 
                 return if lookup.nil?
@@ -29,16 +29,18 @@ module SmartyStreets
 
                 response = @sender.send(smarty_request)
                 results = @serializer.deserialize(response.payload)
+                
                 results = [] if results.nil?
+                raise response.error if response.error
                 
                 output = []
                 results.each do |raw_result|
                     result = nil
                     if lookup.data_sub_set == "financial"
-                        result = Financial.Response.new(raw_result)
+                        result = USEnrichment::Property::Financial::Response.new(raw_result)
                     end
                     if lookup.data_sub_set == "principal"
-                        result = Principal.Response.new(raw_result)
+                        result = USEnrichment::Property::Principal::Response.new(raw_result)
                     end
                     output << result
                 end

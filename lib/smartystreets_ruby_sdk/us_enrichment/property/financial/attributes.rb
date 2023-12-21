@@ -2,8 +2,8 @@ require_relative 'history_entry'
 
 module SmartyStreets
     module USEnrichment
-        module Property:
-            module Financial:
+        module Property
+            module Financial
                 class Attributes
                     attr_reader :assessed_improvement_percent, :assessed_improvement_value, :assessed_land_value, :assessed_value, 
                     :assessor_last_update, :assessor_taxroll_update, :contact_city, :contact_crrt, :contact_full_address, :contact_house_number, 
@@ -126,7 +126,7 @@ module SmartyStreets
                     def createFinancialHistory(historyArray)
                         entryArray = []
                         for entry in historyArray do
-                            entryArray << FinancialHistoryEntry.new(entry)
+                            entryArray << Financial::HistoryEntry.new(entry)
                         end
                         return entryArray
                     end

@@ -1,9 +1,9 @@
 module SmartyStreets
     module USEnrichment
-        module Property:
-            module Principal:
+        module Property
+            module Principal
                 class Attributes
-                    attr_reader :1st_floor_sqft, :2nd_floor_sqft, :acres, :air_conditioner, :arbor_pergola, :assessed_improvement_percent, :assessed_improvement_value, :assessed_land_value, 
+                    attr_reader :first_floor_sqft, :second_floor_sqft, :acres, :air_conditioner, :arbor_pergola, :assessed_improvement_percent, :assessed_improvement_value, :assessed_land_value, 
                     :assessed_value, :assessor_last_update, :assessor_taxroll_update, :attic_area, :attic_flag, :balcony, :balcony_area, :basement_sqft, :basement_sqft_finished, 
                     :basement_sqft_unfinished, :bath_house, :bath_house_sqft, :bathrooms_partial, :bathrooms_total, :bedrooms, :block1, :block2, :boat_access, :boat_house, :boat_house_sqft, 
                     :boat_lift, :bonus_room, :breakfast_nook, :breezeway, :building_definition_code, :building_sqft, :cabin, :cabin_sqft, :canopy, :canopy_sqft, :carport, :carport_sqft, :cbsa_code, 

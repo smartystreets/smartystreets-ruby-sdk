@@ -2,8 +2,8 @@ require_relative "attributes"
 
 module SmartyStreets
     module USEnrichment
-        module ResponseTypes:
-            module Financial:
+        module Property
+            module Financial
                 class Response
                     attr_reader :smarty_key, :data_set, :data_sub_set, :attributes
             
