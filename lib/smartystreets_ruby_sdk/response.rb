@@ -1,3 +1,6 @@
+require 'timeout'
+
+
 module SmartyStreets
   class Response
     attr_accessor :payload, :status_code, :header, :error
@@ -7,6 +10,10 @@ module SmartyStreets
       @status_code = status_code
       @header = header
       @error = error
+    end
+
+    def timeout?
+      @error.is_a?(TimeoutError)
     end
   end
 end
