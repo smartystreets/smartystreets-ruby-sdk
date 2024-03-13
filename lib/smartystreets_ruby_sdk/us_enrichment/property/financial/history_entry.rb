@@ -3,7 +3,7 @@ module SmartyStreets
         module Property
             module Financial
                 class HistoryEntry
-                    attr_reader :code_title_company, :instrument_date, :interest_rate_type_2, :lender_address, :lender_address_2, 
+                    attr_reader :code_title_company, :document_type_description, :instrument_date, :interest_rate_type_2, :lender_address, :lender_address_2, 
                     :lender_city, :lender_city_2, :lender_code_2, :lender_first_name, :lender_first_name_2, :lender_last_name, 
                     :lender_last_name_2, :lender_name, :lender_name_2, :lender_seller_carry_back, :lender_seller_carry_back_2, 
                     :lender_state, :lender_state_2, :lender_zip, :lender_zip_2, :lender_zip_extended, :lender_zip_extended_2, 
@@ -14,6 +14,7 @@ module SmartyStreets
             
                     def initialize(obj)
                         @code_title_company = obj['code_title_company']
+                        @document_type_description = obj['document_type_description']
                         @instrument_date = obj['instrument_date']
                         @interest_rate_type_2 = obj['interest_rate_type_2']
                         @lender_address = obj['lender_address']

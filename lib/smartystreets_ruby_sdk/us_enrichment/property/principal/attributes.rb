@@ -13,7 +13,7 @@ module SmartyStreets
                     :contact_zip, :contact_zip4, :courtyard, :courtyard_area, :deck, :deck_area, :deed_document_page, :deed_document_book, :deed_document_number, :deed_owner_first_name, :deed_owner_first_name2, 
                     :deed_owner_first_name3, :deed_owner_first_name4, :deed_owner_full_name, :deed_owner_full_name2, :deed_owner_full_name3, :deed_owner_full_name4, :deed_owner_last_name, :deed_owner_last_name2, 
                     :deed_owner_last_name3, :deed_owner_last_name4, :deed_owner_middle_name, :deed_owner_middle_name2, :deed_owner_middle_name3, :deed_owner_middle_name4, :deed_owner_suffix, :deed_owner_suffix2, 
-                    :deed_owner_suffix3, :deed_owner_suffix4, :deed_sale_date, :deed_sale_price, :deed_transaction_id, :depth_linear_footage, :disabled_tax_exemption, :driveway_sqft, :driveway_type, :effective_year_built, 
+                    :deed_owner_suffix3, :deed_owner_suffix4, :deed_sale_date, :deed_sale_price, :deed_transaction_id, :depth_linear_footage, :disabled_tax_exemption, :document_type_description, :driveway_sqft, :driveway_type, :effective_year_built, 
                     :elevation_feet, :elevator, :equestrian_arena, :escalator, :exercise_room, :exterior_walls, :family_room, :fence, :fence_area, :fips_code, :fire_resistance_code, :fire_sprinklers_flag, :fireplace, 
                     :fireplace_number, :first_name, :first_name_2, :first_name_3, :first_name_4, :flooring, :foundation, :game_room, :garage, :garage_sqft, :gazebo, :gazebo_sqft, :golf_course, :grainery, :grainery_sqft, 
                     :great_room, :greenhouse, :greenhouse_sqft, :gross_sqft, :guesthouse, :guesthouse_sqft, :handicap_accessibility, :heat, :heat_fuel_type, :hobby_room, :homeowner_tax_exemption, :instrument_date, 
@@ -143,6 +143,7 @@ module SmartyStreets
                         @deed_transaction_id = obj['deed_transaction_id']
                         @depth_linear_footage = obj['depth_linear_footage']
                         @disabled_tax_exemption = obj['disabled_tax_exemption']
+                        @document_type_description = obj['document_type_description']
                         @driveway_sqft = obj['driveway_sqft']
                         @driveway_type = obj['driveway_type']
                         @effective_year_built = obj['effective_year_built']
