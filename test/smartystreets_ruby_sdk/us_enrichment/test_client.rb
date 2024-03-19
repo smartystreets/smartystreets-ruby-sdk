@@ -14,9 +14,9 @@ class TestStreetClient < Minitest::Test
     client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
 
     client.send_property_financial_lookup("xxx")
-    assert_equal("/xxx/property/financial", sender.request.url_prefix)
+    assert_equal("/xxx/property/financial", sender.request.url_components)
 
     client.send_property_principal_lookup("123")
-    assert_equal("/123/property/principal", sender.request.url_prefix)
+    assert_equal("/123/property/principal", sender.request.url_components)
   end
 end

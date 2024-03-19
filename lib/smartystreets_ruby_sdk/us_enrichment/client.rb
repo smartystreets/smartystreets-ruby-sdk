@@ -25,7 +25,7 @@ module SmartyStreets
 
                 return if lookup.nil?
 
-                smarty_request.url_prefix = '/' + lookup.smarty_key + '/' + lookup.data_set + '/' + lookup.data_sub_set
+                smarty_request.url_components = '/' + lookup.smarty_key + '/' + lookup.data_set + '/' + lookup.data_sub_set
 
                 response = @sender.send(smarty_request)
                 results = @serializer.deserialize(response.payload)

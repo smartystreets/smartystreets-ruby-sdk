@@ -7,7 +7,7 @@ class TestURLPrefixSender < Minitest::Test
   def test_request_url_present
     inner = MockSender.new(SmartyStreets::Response.new(nil, 123))
     request = SmartyStreets::Request.new
-    request.url_prefix = '/jimbo' 
+    request.url_components = '/jimbo' 
     sender = SmartyStreets::URLPrefixSender.new('http://mysite.com/lookup', inner)
 
     sender.send(request)
@@ -22,5 +22,16 @@ class TestURLPrefixSender < Minitest::Test
     sender.send(request)
 
     assert_equal('http://mysite.com/lookup', request.url_prefix)
+  end
+  def test_multiple_sends
+    inner = MockSender.new(SmartyStreets::Response.new(nil, 123))
+    request = SmartyStreets::Request.new
+    request.url_components = '/jimbo' 
+    sender = SmartyStreets::URLPrefixSender.new('http://mysite.com/lookup', inner)
+
+    sender.send(request)
+    sender.send(request)
+
+    assert_equal('http://mysite.com/lookup/jimbo', request.url_prefix)
   end
 end
