@@ -6,10 +6,10 @@ module SmartyStreets
     end
 
     def send(request)
-      if request.url_prefix.nil?
+      if request.url_components.nil?
         request.url_prefix = @url_prefix
       else
-        request.url_prefix = @url_prefix + request.url_prefix
+        request.url_prefix = @url_prefix + request.url_components
       end
 
       @inner.send(request)

@@ -33,7 +33,7 @@ module SmartyStreets
         request = Request.new
 
         unless lookup.address_id.nil?
-          request.url_prefix = '/' + lookup.address_id
+          request.url_components = '/' + lookup.address_id
         end
 
         add_parameter(request, 'search', lookup.search)

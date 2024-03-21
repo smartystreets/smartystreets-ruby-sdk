@@ -36,7 +36,7 @@ class TestInternationalAutocompleteClient < Minitest::Test
     assert_equal('7', sender.request.parameters['max_results'])
     assert_equal('3', sender.request.parameters['include_only_locality'])
     assert_equal('4', sender.request.parameters['include_only_postal_code'])
-    assert_equal('/5', sender.request.url_prefix)
+    assert_equal('/5', sender.request.url_components)
 
   end
 
