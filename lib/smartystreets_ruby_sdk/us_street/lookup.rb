@@ -6,7 +6,7 @@ module SmartyStreets
     #
     # See "https://smartystreets.com/docs/cloud/us-street-api#input-fields"
     #
-    # @match:: Must be set to 'strict', 'range', or 'invalid'. Constants for these are in match_type.rb
+    # @match:: Must be set to 'strict', 'enhanced', or 'invalid'. Constants for these are in match_type.rb
     class Lookup < JSONAble
       attr_accessor :input_id, :street, :street2, :secondary, :city, :state, :zipcode, :lastline, :addressee, :urbanization,
                     :match, :candidates, :format, :result
