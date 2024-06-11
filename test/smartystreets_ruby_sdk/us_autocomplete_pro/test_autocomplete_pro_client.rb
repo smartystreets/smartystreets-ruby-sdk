@@ -88,4 +88,22 @@ class TestAutocompleteProClient < Minitest::Test
       client.send(Lookup.new)
     end
   end
+
+  def test_sets_geolocation_as_city_if_no_city_and_zip_filters
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+
+    lookup = Lookup.new('1')
+    lookup.max_results = 2
+    lookup.source = "all"
+    lookup.prefer_geolocation = SmartyStreets::USAutocompletePro::GeolocationType::CITY
+
+    client.send(lookup)
+
+    assert_equal('1', sender.request.parameters['search'])
+    assert_equal('2', sender.request.parameters['max_results'])
+    assert_equal('city', sender.request.parameters['prefer_geolocation'])
+    assert_equal('all', sender.request.parameters['source'])
+  end
 end
