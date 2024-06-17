@@ -12,7 +12,6 @@ require_relative 'custom_header_sender'
 require_relative 'us_street/client'
 require_relative 'us_zipcode/client'
 require_relative 'us_extract/client'
-require_relative 'us_autocomplete/client'
 require_relative 'international_street/client'
 require_relative 'international_autocomplete/client'
 require_relative 'us_reverse_geo/client'
@@ -26,7 +25,6 @@ module SmartyStreets
   class ClientBuilder
     INTERNATIONAL_STREET_API_URL = 'https://international-street.api.smarty.com/verify'.freeze
     INTERNATIONAL_AUTOCOMPLETE_API_URL = "https://international-autocomplete.api.smarty.com/v2/lookup".freeze
-    US_AUTOCOMPLETE_API_URL = 'https://us-autocomplete.api.smarty.com/suggest'.freeze
     US_AUTOCOMPLETE_PRO_API_URL = 'https://us-autocomplete-pro.api.smarty.com/lookup'.freeze
     US_EXTRACT_API_URL = 'https://us-extract.api.smarty.com/'.freeze
     US_STREET_API_URL = 'https://us-street.api.smarty.com/street-address'.freeze
@@ -132,11 +130,6 @@ module SmartyStreets
     def build_international_autocomplete_api_client
       ensure_url_prefix_not_null(INTERNATIONAL_AUTOCOMPLETE_API_URL)
       InternationalAutocomplete::Client.new(build_sender, @serializer)
-    end
-
-    def build_us_autocomplete_api_client # Deprecated
-      ensure_url_prefix_not_null(US_AUTOCOMPLETE_API_URL)
-      USAutocomplete::Client.new(build_sender, @serializer)
     end
 
     def build_us_autocomplete_pro_api_client
