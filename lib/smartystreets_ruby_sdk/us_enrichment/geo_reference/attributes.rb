@@ -17,46 +17,6 @@ module SmartyStreets
                     @core_based_stat_area = GeoReference::CoreBasedStatAreaEntry.new(obj['core_based_stat_area'])
                     @place = GeoReference::PlaceEntry.new(obj['place'])
                 end
-                    
-                def createCensusBlock(censusBlockArray)
-                    entryArray = []
-                    for entry in censusBlockArray do
-                        entryArray << GeoReference::CensusBlockEntry.new(entry)
-                    end
-                    return entryArray
-                end
-
-                def createCensusCountyDivision(censusCountyDivisionArray)
-                    entryArray = []
-                    for entry in censusCountyDivisionArray do
-                        entryArray << GeoReference::CensusCountyDivisionEntry.new(entry)
-                    end
-                    return entryArray
-                end
-
-                def createCensusTract(censusTractArray)
-                    entryArray = []
-                    for entry in censusTractArray do
-                        entryArray << GeoReference::CensusTractEntry.new(entry)
-                    end
-                    return entryArray
-                end
-
-                def createCoreBasedStatArea(coreBasedStatAreaArray)
-                    entryArray = []
-                    for entry in coreBasedStatAreaArray do
-                        entryArray << GeoReference::CoreBasedStatAreaEntry.new(entry)
-                    end
-                    return entryArray
-                end
-
-                def createPlace(placeArray)
-                    entryArray = []
-                    for entry in placeArray do
-                        entryArray << GeoReference::PlaceEntry.new(entry)
-                    end
-                    return entryArray
-                end
             end
         end
     end
