@@ -38,6 +38,26 @@ module SmartyStreets
                 __send(USEnrichment::Secondary::Count::Lookup.new(smarty_key))
             end
 
+            def send_generic_lookup(smarty_key, data_set, data_sub_set = nil)
+                if data_sub_set == "financial"
+                    return __send(USEnrichment::Property::Financial::Lookup.new(smarty_key))
+                end
+                if data_sub_set == "principal"
+                    puts(smarty_key)
+                    return __send(USEnrichment::Property::Principal::Lookup.new(smarty_key))
+                end
+                if data_set == "geo-reference"
+                    return __send(USEnrichment::GeoReference::Lookup.new(smarty_key))
+                end
+                if data_set == "secondary"
+                    if data_sub_set == "count"
+                        return __send(USEnrichment::Secondary::Count::Lookup.new(smarty_key))
+                    elsif data_sub_set.nil?
+                        return __send(USEnrichment::Secondary::Lookup.new(smarty_key))
+                    end
+                end
+            end
+
             def __send(lookup)
                 smarty_request = Request.new
 
