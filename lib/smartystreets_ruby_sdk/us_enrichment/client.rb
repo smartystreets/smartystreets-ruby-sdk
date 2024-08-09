@@ -8,6 +8,7 @@ require_relative "secondary/response"
 require_relative "secondary/lookup"
 require_relative "secondary/count/response"
 require_relative "secondary/count/lookup"
+require_relative "lookup"
 require_relative '../request'
 
 module SmartyStreets
@@ -39,23 +40,7 @@ module SmartyStreets
             end
 
             def send_generic_lookup(smarty_key, data_set, data_sub_set = nil)
-                if data_sub_set == "financial"
-                    return __send(USEnrichment::Property::Financial::Lookup.new(smarty_key))
-                end
-                if data_sub_set == "principal"
-                    puts(smarty_key)
-                    return __send(USEnrichment::Property::Principal::Lookup.new(smarty_key))
-                end
-                if data_set == "geo-reference"
-                    return __send(USEnrichment::GeoReference::Lookup.new(smarty_key))
-                end
-                if data_set == "secondary"
-                    if data_sub_set == "count"
-                        return __send(USEnrichment::Secondary::Count::Lookup.new(smarty_key))
-                    elsif data_sub_set.nil?
-                        return __send(USEnrichment::Secondary::Lookup.new(smarty_key))
-                    end
-                end
+                __send(USEnrichment::Lookup.new(smarty_key, data_set, data_sub_set))
             end
 
             def __send(lookup)
