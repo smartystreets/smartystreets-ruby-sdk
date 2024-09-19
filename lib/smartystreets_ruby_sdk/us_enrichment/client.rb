@@ -79,10 +79,27 @@ module SmartyStreets
                 end
             end
 
+            def send_geo_reference_lookup(smarty_key)
+                __send(USEnrichment::GeoReference::Lookup.new(smarty_key))
+            end
+
+            def send_secondary_lookup(smarty_key)
+                __send(USEnrichment::Secondary::Lookup.new(smarty_key))
+            end
+
+            def send_secondary_count_lookup(smarty_key)
+                __send(USEnrichment::Secondary::Count::Lookup.new(smarty_key))
+            end
+
+            def send_generic_lookup(smarty_key, data_set, data_sub_set = nil)
+                __send(USEnrichment::Lookup.new(smarty_key, data_set, data_sub_set))
+            end
+
             def __send(lookup)
                 smarty_request = Request.new
 
                 return if lookup.nil?
+<<<<<<< HEAD
                 if (lookup.smarty_key.nil?)
                     if (lookup.data_sub_set.nil?)
                         smarty_request.url_components = '/search/' + lookup.data_set
@@ -102,6 +119,14 @@ module SmartyStreets
                     end
                 end
                 
+=======
+
+                if (lookup.data_sub_set.nil?)
+                    smarty_request.url_components = '/' + lookup.smarty_key + '/' + lookup.data_set
+                else
+                    smarty_request.url_components = '/' + lookup.smarty_key + '/' + lookup.data_set + '/' + lookup.data_sub_set
+                end
+>>>>>>> 48dda29c9382c5cd28b751e3595b772f6427acc8
 
                 response = @sender.send(smarty_request)
                 results = @serializer.deserialize(response.payload)
