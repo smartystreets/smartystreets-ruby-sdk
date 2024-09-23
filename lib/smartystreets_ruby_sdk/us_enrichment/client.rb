@@ -19,40 +19,89 @@ module SmartyStreets
                 @serializer = serializer
             end
 
-            def send_property_financial_lookup(smarty_key)
-                __send(USEnrichment::Property::Financial::Lookup.new(smarty_key))
+            def send_property_financial_lookup(lookup)
+                if (lookup.instance_of? String)
+                    __send(USEnrichment::Property::Financial::Lookup.new(lookup))
+                elsif (lookup.instance_of? USEnrichment::Lookup)
+                    lookup.data_set = 'property'
+                    lookup.data_sub_set = 'financial'
+                    __send(lookup)
+                end
             end
 
-            def send_property_principal_lookup(smarty_key)
-                __send(USEnrichment::Property::Principal::Lookup.new(smarty_key))
+            def send_property_principal_lookup(lookup)
+                if (lookup.instance_of? String)
+                    __send(USEnrichment::Property::Principal::Lookup.new(lookup))
+                elsif (lookup.instance_of? USEnrichment::Lookup)
+                    lookup.data_set = 'property'
+                    lookup.data_sub_set = 'principal'
+                    __send(lookup)
+                end
             end
 
-            def send_geo_reference_lookup(smarty_key)
-                __send(USEnrichment::GeoReference::Lookup.new(smarty_key))
+            def send_geo_reference_lookup(lookup)
+                if (lookup.instance_of? String)
+                    __send(USEnrichment::GeoReference::Lookup.new(lookup))
+                elsif (lookup.instance_of? USEnrichment::Lookup)
+                    lookup.data_set = 'geo-reference'
+                    lookup.data_sub_set = nil
+                    __send(lookup)
+                end
             end
 
-            def send_secondary_lookup(smarty_key)
-                __send(USEnrichment::Secondary::Lookup.new(smarty_key))
+            def send_secondary_lookup(lookup)
+                if (lookup.instance_of? String)
+                    __send(USEnrichment::Secondary::Lookup.new(lookup))
+                elsif (lookup.instance_of? USEnrichment::Lookup)
+                    lookup.data_set = 'secondary'
+                    lookup.data_sub_set = nil
+                    __send(lookup)
+                end
             end
 
-            def send_secondary_count_lookup(smarty_key)
-                __send(USEnrichment::Secondary::Count::Lookup.new(smarty_key))
+            def send_secondary_count_lookup(lookup)
+                if (lookup.instance_of? String)
+                    __send(USEnrichment::Secondary::Count::Lookup.new(lookup))
+                elsif (lookup.instance_of? USEnrichment::Lookup)
+                    lookup.data_set = 'secondary'
+                    lookup.data_sub_set = 'count'
+                    __send(lookup)
+                end
             end
 
-            def send_generic_lookup(smarty_key, data_set, data_sub_set = nil)
-                __send(USEnrichment::Lookup.new(smarty_key, data_set, data_sub_set))
+            def send_generic_lookup(lookup, data_set, data_sub_set = nil)
+                if (lookup.instance_of? String)
+                    __send(USEnrichment::Lookup.new(lookup, data_set, data_sub_set))
+                elsif (lookup.instance_of? USEnrichment::Lookup)
+                    lookup.data_set = data_set
+                    lookup.data_sub_set = data_sub_set
+                    __send(lookup)
+                end
             end
 
             def __send(lookup)
                 smarty_request = Request.new
 
                 return if lookup.nil?
-
-                if (lookup.data_sub_set.nil?)
-                    smarty_request.url_components = '/' + lookup.smarty_key + '/' + lookup.data_set
+                if (lookup.smarty_key.nil?)
+                    if (lookup.data_sub_set.nil?)
+                        smarty_request.url_components = '/search/' + lookup.data_set
+                    else
+                        smarty_request.url_components = '/search/' + lookup.data_set + '/' + lookup.data_sub_set
+                    end
+                    add_parameter(smarty_request, 'freeform', lookup.freeform)
+                    add_parameter(smarty_request, 'street', lookup.street)
+                    add_parameter(smarty_request, 'city', lookup.city)
+                    add_parameter(smarty_request, 'state', lookup.state)
+                    add_parameter(smarty_request, 'zipcode', lookup.zipcode)
                 else
-                    smarty_request.url_components = '/' + lookup.smarty_key + '/' + lookup.data_set + '/' + lookup.data_sub_set
+                    if (lookup.data_sub_set.nil?)
+                        smarty_request.url_components = '/' + lookup.smarty_key + '/' + lookup.data_set
+                    else
+                        smarty_request.url_components = '/' + lookup.smarty_key + '/' + lookup.data_set + '/' + lookup.data_sub_set
+                    end
                 end
+                
 
                 response = @sender.send(smarty_request)
                 results = @serializer.deserialize(response.payload)
@@ -82,6 +131,10 @@ module SmartyStreets
                     output << result
                 end
                 output
+            end
+
+            def add_parameter(request, key, value)
+                request.parameters[key] = value unless value.nil? or value.empty?
             end
         end
     end
