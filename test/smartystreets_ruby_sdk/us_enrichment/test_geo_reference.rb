@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require '../../../lib/smartystreets_ruby_sdk/us_enrichment/geo_reference/response'
+require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/geo_reference/response'
 
 class TestGeoReferenceResponse < Minitest::Test
   def test_all_fields_filled_correctly

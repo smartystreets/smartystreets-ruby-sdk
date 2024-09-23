@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require '../../../lib/smartystreets_ruby_sdk/us_enrichment/property/financial/response'
+require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/property/financial/response'
 
 class TestPropertyFinancialResponse < Minitest::Test
   def test_all_fields_filled_correctly

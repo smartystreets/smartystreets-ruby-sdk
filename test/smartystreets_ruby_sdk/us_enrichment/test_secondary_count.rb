@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require '../../../lib/smartystreets_ruby_sdk/us_enrichment/secondary/count/response'
+require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/secondary/count/response'
 
 class TestSecondaryCountResponse < Minitest::Test
   def test_all_fields_filled_correctly
