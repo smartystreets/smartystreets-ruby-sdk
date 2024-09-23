@@ -1,12 +1,12 @@
 require 'minitest/autorun'
-require '../../../lib/smartystreets_ruby_sdk/exceptions'
-require '../../../test/mocks/request_capturing_sender'
-require '../../../test/mocks/fake_serializer'
-require '../../../test/mocks/fake_deserializer'
-require '../../../test/mocks/mock_sender'
-require '../../../test/mocks/mock_exception_sender'
-require '../../../lib/smartystreets_ruby_sdk/us_enrichment/client'
-require '../../../lib/smartystreets_ruby_sdk/us_enrichment/lookup'
+require_relative '../../../lib/smartystreets_ruby_sdk/exceptions'
+require_relative '../../../test/mocks/request_capturing_sender'
+require_relative '../../../test/mocks/fake_serializer'
+require_relative '../../../test/mocks/fake_deserializer'
+require_relative '../../../test/mocks/mock_sender'
+require_relative '../../../test/mocks/mock_exception_sender'
+require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/client'
+require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/lookup'
 
 class TestStreetClient < Minitest::Test
 
