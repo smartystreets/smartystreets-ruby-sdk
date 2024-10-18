@@ -23,7 +23,9 @@ class TestInternationalCandidate < Minitest::Test
                 "\"building_trailing_type\":\"44\",\"sub_building_type\":\"45\",\"sub_building_number\":\"46\","\
                 "\"sub_building_name\":\"47\",\"sub_building\":\"48\",\"level_type\":\"48.1\",\"level_number\":\"48.2\","\
                 "\"post_box\":\"49\",\"post_box_type\":\"50\","\
-                "\"post_box_number\":\"51\"},\"metadata\":{\"latitude\":52.0,\"longitude\":53.0,"\
+                "\"post_box_number\":\"51\",\"additional_content\":\"112\",\"delivery_installation\":\"113\","\
+                "\"delivery_installation_type\":\"114\",\"delivery_installation_qualifier_name\":\"115\","\
+                "\"route\":\"116\",\"route_number\":\"117\",\"route_type\":\"118\"},\"metadata\":{\"latitude\":52.0,\"longitude\":53.0,"\
                 "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\", \"address_format\":\"56\"},"\
                 "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\","\
                 "\"max_address_precision\":\"59\",\"changes\":{\"organization\":\"60\",\"address1\":\"61\","\
@@ -109,6 +111,13 @@ class TestInternationalCandidate < Minitest::Test
     assert_equal('49', components.post_box)
     assert_equal('50', components.post_box_type)
     assert_equal('51', components.post_box_number)
+    assert_equal('112', components.additional_content)
+    assert_equal('113', components.delivery_installation)
+    assert_equal('114', components.delivery_installation_type)
+    assert_equal('115', components.delivery_installation_qualifier_name)
+    assert_equal('116', components.route)
+    assert_equal('117', components.route_number)
+    assert_equal('118', components.route_type)
 
     metadata = candidate.metadata
     assert(metadata)
