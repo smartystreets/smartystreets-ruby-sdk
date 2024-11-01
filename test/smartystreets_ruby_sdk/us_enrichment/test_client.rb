@@ -38,6 +38,21 @@ class TestStreetClient < Minitest::Test
     assert_equal("street city state zipcode", sender.request.parameters["freeform"])
   end
 
+  def test_financial_etag_present
+    sender = RequestCapturingSender.new
+    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new
+    lookup.street = "street"
+    lookup.city = "city"
+    lookup.state = "state"
+    lookup.zipcode = "zipcode"
+    lookup.etag = "etag"
+
+    client.send_property_financial_lookup(lookup)
+    assert_equal("etag", sender.request.header["ETAG"])
+  end
+
   def test_principal_url_formatted_correctly
     sender = RequestCapturingSender.new
     client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
@@ -66,6 +81,21 @@ class TestStreetClient < Minitest::Test
     assert_equal("street city state zipcode", sender.request.parameters["freeform"])
   end
 
+  def test_principal_etag_present
+    sender = RequestCapturingSender.new
+    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new
+    lookup.street = "street"
+    lookup.city = "city"
+    lookup.state = "state"
+    lookup.zipcode = "zipcode"
+    lookup.etag = "etag"
+
+    client.send_property_principal_lookup(lookup)
+    assert_equal("etag", sender.request.header["ETAG"])
+  end
+
   def test_geo_reference_url_formatted_correctly
     sender = RequestCapturingSender.new
     client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
@@ -92,6 +122,21 @@ class TestStreetClient < Minitest::Test
     client.send_geo_reference_lookup(freeform_lookup)
     assert_equal("/search/geo-reference", sender.request.url_components)
     assert_equal("street city state zipcode", sender.request.parameters["freeform"])
+  end
+
+  def test_geo_reference_etag_present
+    sender = RequestCapturingSender.new
+    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new
+    lookup.street = "street"
+    lookup.city = "city"
+    lookup.state = "state"
+    lookup.zipcode = "zipcode"
+    lookup.etag = "etag"
+
+    client.send_geo_reference_lookup(lookup)
+    assert_equal("etag", sender.request.header["ETAG"])
   end
     
   def test_secondary_url_formatted_correctly
@@ -122,6 +167,21 @@ class TestStreetClient < Minitest::Test
     assert_equal("street city state zipcode", sender.request.parameters["freeform"])
   end
 
+  def test_secondary_etag_present
+    sender = RequestCapturingSender.new
+    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new
+    lookup.street = "street"
+    lookup.city = "city"
+    lookup.state = "state"
+    lookup.zipcode = "zipcode"
+    lookup.etag = "etag"
+
+    client.send_secondary_lookup(lookup)
+    assert_equal("etag", sender.request.header["ETAG"])
+  end
+
   def test_secondary_count_url_formatted_correctly
     sender = RequestCapturingSender.new
     client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
@@ -148,5 +208,20 @@ class TestStreetClient < Minitest::Test
     client.send_secondary_count_lookup(freeform_lookup)
     assert_equal("/search/secondary/count", sender.request.url_components)
     assert_equal("street city state zipcode", sender.request.parameters["freeform"])
+  end
+
+  def test_financial_etag_present
+    sender = RequestCapturingSender.new
+    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new
+    lookup.street = "street"
+    lookup.city = "city"
+    lookup.state = "state"
+    lookup.zipcode = "zipcode"
+    lookup.etag = "etag"
+
+    client.send_secondary_count_lookup(lookup)
+    assert_equal("etag", sender.request.header["ETAG"])
   end
 end

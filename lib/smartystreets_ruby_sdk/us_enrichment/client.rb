@@ -83,6 +83,10 @@ module SmartyStreets
                 smarty_request = Request.new
 
                 return if lookup.nil?
+
+                if (!lookup.etag.nil?)
+                    smarty_request.header["ETAG"] = lookup.etag
+                end
                 if (lookup.smarty_key.nil?)
                     if (lookup.data_sub_set.nil?)
                         smarty_request.url_components = '/search/' + lookup.data_set
@@ -113,19 +117,19 @@ module SmartyStreets
                 results.each do |raw_result|
                     result = nil
                     if lookup.data_sub_set == "financial"
-                        result = USEnrichment::Property::Financial::Response.new(raw_result)
+                        result = USEnrichment::Property::Financial::Response.new(raw_result, response.header['etag'])
                     end
                     if lookup.data_sub_set == "principal"
-                        result = USEnrichment::Property::Principal::Response.new(raw_result)
+                        result = USEnrichment::Property::Principal::Response.new(raw_result, response.header['etag'])
                     end
                     if lookup.data_set == "geo-reference"
-                      result = USEnrichment::GeoReference::Response.new(raw_result)
+                      result = USEnrichment::GeoReference::Response.new(raw_result, response.header['etag'])
                     end
                     if lookup.data_set == "secondary"
                       if lookup.data_sub_set == "count"
-                        result = USEnrichment::Secondary::Count::Response.new(raw_result)
+                        result = USEnrichment::Secondary::Count::Response.new(raw_result, response.header['etag'])
                       elsif lookup.data_sub_set.nil?
-                        result = USEnrichment::Secondary::Response.new(raw_result)
+                        result = USEnrichment::Secondary::Response.new(raw_result, response.header['etag'])
                       end
                     end
                     output << result

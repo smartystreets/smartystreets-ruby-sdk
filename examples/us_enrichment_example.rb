@@ -33,6 +33,7 @@ class USEnrichmentAddressExample
     lookup.city = "Somerville"
     lookup.state = "NJ"
     lookup.zipcode = "08876"
+    #lookup.etag = "AUBAGDQDAIGQYCYC"
 
     # Or, create a freeform lookup to search using a single line address
     freeform_lookup = SmartyStreets::USEnrichment::Lookup.new

@@ -35,6 +35,8 @@ module SmartyStreets
 
     def assign_exception(response)
       response.error = case response.status_code
+                         when '304'          
+                           NotModifiedInfo.new(NOT_MODIFIED)
                          when '401'
                            BadCredentialsError.new(BAD_CREDENTIALS)
                          when '402'
