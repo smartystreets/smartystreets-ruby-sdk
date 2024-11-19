@@ -8,15 +8,15 @@ class UsZipcodeSingleLookupExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    # key = ENV['SMARTY_AUTH_WEB']
-    # referer = ENV['SMARTY_AUTH_REFERER']
-    # credentials = SmartyStreets::SharedCredentials.new(key, referer)
+    key = ENV['SMARTY_AUTH_WEB']
+    referer = ENV['SMARTY_AUTH_REFERER']
+    credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
-    id = ENV['SMARTY_AUTH_ID']
-    token = ENV['SMARTY_AUTH_TOKEN']
-    credentials = SmartyStreets::StaticCredentials.new(id, token)
+    # id = ENV['SMARTY_AUTH_ID']
+    # token = ENV['SMARTY_AUTH_TOKEN']
+    # credentials = SmartyStreets::StaticCredentials.new(id, token)
 
-    client = SmartyStreets::ClientBuilder.new(credentials).with_debug().build_us_zipcode_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials).build_us_zipcode_api_client
 
     # Documentation for input fields can be found at:
     # https://smartystreets.com/docs/cloud/us-zipcode-api
@@ -27,8 +27,7 @@ class UsZipcodeSingleLookupExample
     lookup.state = 'California'
     lookup.zipcode = '94043'
 
-    lookup.add_custom_parameter('parameter', 'custom')
-    lookup.add_custom_parameter('stack', 'working')
+    # lookup.add_custom_parameter('parameter', 'value')
 
     begin
       client.send_lookup(lookup)

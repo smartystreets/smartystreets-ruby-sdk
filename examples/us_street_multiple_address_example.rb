@@ -12,18 +12,18 @@ class USStreetMultipleAddressExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    # key = ENV['SMARTY_AUTH_WEB']
-    # referer = ENV['SMARTY_AUTH_REFERER']
-    # credentials = SmartyStreets::SharedCredentials.new(key, referer)
+    key = ENV['SMARTY_AUTH_WEB']
+    referer = ENV['SMARTY_AUTH_REFERER']
+    credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
-    id = ENV['SMARTY_AUTH_ID']
-    token = ENV['SMARTY_AUTH_TOKEN']
-    credentials = SmartyStreets::StaticCredentials.new(id, token)
+    # id = ENV['SMARTY_AUTH_ID']
+    # token = ENV['SMARTY_AUTH_TOKEN']
+    # credentials = SmartyStreets::StaticCredentials.new(id, token)
 
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.
     # https://www.smartystreets.com/docs/cloud/licensing
-    client = SmartyStreets::ClientBuilder.new(credentials).with_debug().with_licenses(['us-core-cloud'])
+    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['us-core-cloud'])
                  .build_us_street_api_client
     batch = SmartyStreets::Batch.new
 
@@ -44,8 +44,7 @@ class USStreetMultipleAddressExample
                                       # this will always return at least one result even if the address is invalid.
                                       # Refer to the documentation for additional Match Strategy options.
 
-    batch[0].add_custom_parameter('parameter', 'custom')
-    batch[0].add_custom_parameter('stack', 'working')
+    # batch[0].add_custom_parameter('parameter', 'value')
 
     batch.add(Lookup.new('1 Rosedale, Baltimore, Maryland')) # Freeform addresses work too.
     batch[1].candidates = 10 # Allows up to ten possible matches to be returned (default is 1).

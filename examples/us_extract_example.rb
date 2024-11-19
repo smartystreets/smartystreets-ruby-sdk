@@ -12,15 +12,15 @@ class USExtractExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    # key = ENV['SMARTY_AUTH_WEB']
-    # referer = ENV['SMARTY_AUTH_REFERER']
-    # credentials = SmartyStreets::SharedCredentials.new(key, referer)
+    key = ENV['SMARTY_AUTH_WEB']
+    referer = ENV['SMARTY_AUTH_REFERER']
+    credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
-    id = ENV['SMARTY_AUTH_ID']
-    token = ENV['SMARTY_AUTH_TOKEN']
-    credentials = SmartyStreets::StaticCredentials.new(id, token)
+    # id = ENV['SMARTY_AUTH_ID']
+    # token = ENV['SMARTY_AUTH_TOKEN']
+    # credentials = SmartyStreets::StaticCredentials.new(id, token)
 
-    client = SmartyStreets::ClientBuilder.new(credentials).with_debug().build_us_extract_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials).build_us_extract_api_client
 
     text = "Here is some text.\r\nMy address is 3785 Las Vegas Av." \
            "\r\nLos Vegas, Nevada." \
@@ -37,8 +37,7 @@ class USExtractExample
     lookup.addresses_per_line = 2
     lookup.match =  SmartyStreets::USStreet::MatchType::ENHANCED
 
-    lookup.add_custom_parameter('parameter', 'custom')
-    lookup.add_custom_parameter('stack', 'working')
+    # lookup.add_custom_parameter('parameter', 'value')
 
     result = client.send(lookup)
 
