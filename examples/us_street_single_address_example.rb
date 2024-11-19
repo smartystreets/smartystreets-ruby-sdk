@@ -41,7 +41,7 @@ class USStreetSingleAddressExample
     lookup.zipcode = '21229'
     lookup.candidates = 3
     lookup.county_source = SmartyStreets::USStreet::CountySource::GEOGRAPHIC
-    lookup.match = SmartyStreets::USStreet::MatchType::ENHANCED
+    lookup.match = SmartyStreets::USStreet::MatchType::INVALID
                                     # "invalid" is the most permissive match,
                                     # this will always return at least one result even if the address is invalid.
                                     # Refer to the documentation for additional Match Strategy options.
