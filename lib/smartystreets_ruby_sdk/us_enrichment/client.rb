@@ -105,6 +105,9 @@ module SmartyStreets
                         smarty_request.url_components = '/' + lookup.smarty_key + '/' + lookup.data_set + '/' + lookup.data_sub_set
                     end
                 end
+                for key in lookup.custom_param_hash.keys do
+                    add_parameter(smarty_request, key, lookup.custom_param_hash[key])
+                end
                 
 
                 response = @sender.send(smarty_request)

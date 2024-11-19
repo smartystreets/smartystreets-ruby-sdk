@@ -10,12 +10,17 @@ module SmartyStreets
 
     class Lookup
 
-      attr_accessor :latitude, :longitude, :source, :response
+      attr_accessor :latitude, :longitude, :source, :response, :custom_param_hash
 
-      def initialize(latitude, longitude, source)
+      def initialize(latitude, longitude, source=nil, custom_param_hash=nil)
         @latitude = sprintf('%.8f', latitude)
         @longitude = sprintf('%.8f', longitude)
         @source = source
+        @custom_param_hash = {}
+      end
+
+      def add_custom_parameter(parameter, value)
+        @custom_param_hash[parameter] = value
       end
     end
   end

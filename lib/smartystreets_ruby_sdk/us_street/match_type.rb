@@ -10,5 +10,10 @@ module SmartyStreets
       DEFAULT = 'default'.freeze
       PROJECT_USA = 'project-usa'.freeze
     end
+
+    module CountySource
+      POSTAL = 'postal'.freeze
+      GEOGRAPHIC = 'geographic'.freeze
+    end
   end
 end

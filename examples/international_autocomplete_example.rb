@@ -32,6 +32,8 @@ class InternationalAutocompleteExample
     lookup.country = "FRA"
     lookup.locality = "Paris"
 
+    # lookup.add_custom_parameter('parameter', 'value')
+
     suggestions = client.send(lookup) # The client will also return the suggestions directly
 
     puts

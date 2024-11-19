@@ -42,6 +42,10 @@ module SmartyStreets
         add_parameter(request, 'include_only_locality', lookup.locality)
         add_parameter(request, 'include_only_postal_code', lookup.postal_code)
 
+        for key in lookup.custom_param_hash.keys do
+          add_parameter(request, key, lookup.custom_param_hash[key])
+        end
+
         request
       end
 

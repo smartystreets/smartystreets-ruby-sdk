@@ -38,6 +38,8 @@ class InternationalExample
     lookup.country = 'Brazil'
     lookup.postal_code = '02516-050'
 
+    # lookup.add_custom_parameter('parameter', 'value')
+
     candidates = client.send_lookup(lookup) # The candidates are also stored in the lookup's 'result' field.
 
     first_candidate = candidates[0]

@@ -11,15 +11,15 @@ class USZipcodeMultipleLookupExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    key = ENV['SMARTY_AUTH_WEB']
-    referer = ENV['SMARTY_AUTH_REFERER']
-    credentials = SmartyStreets::SharedCredentials.new(key, referer)
+    # key = ENV['SMARTY_AUTH_WEB']
+    # referer = ENV['SMARTY_AUTH_REFERER']
+    # credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
-    # id = ENV['SMARTY_AUTH_ID']
-    # token = ENV['SMARTY_AUTH_TOKEN']
-    # credentials = SmartyStreets::StaticCredentials.new(id, token)
+    id = ENV['SMARTY_AUTH_ID']
+    token = ENV['SMARTY_AUTH_TOKEN']
+    credentials = SmartyStreets::StaticCredentials.new(id, token)
 
-    client = SmartyStreets::ClientBuilder.new(credentials).build_us_zipcode_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials).with_debug().build_us_zipcode_api_client
     batch = SmartyStreets::Batch.new
 
     # Documentation for input fields can be found at:
@@ -28,6 +28,9 @@ class USZipcodeMultipleLookupExample
     batch.add(Lookup.new)
     batch[0].input_id = '01189998819991197253' # Optional ID from your system
     batch[0].zipcode = '12345' # A Lookup may have a ZIP Code, city and state, or city, state, and ZIP Code
+
+    batch[0].add_custom_parameter('parameter', 'custom')
+    batch[0].add_custom_parameter('stack', 'working')
 
     batch.add(Lookup.new)
     batch[1].city = 'Phoenix'

@@ -15,7 +15,7 @@ module SmartyStreets
     class Lookup
 
       attr_accessor :input_id, :freeform, :locality, :postal_code, :address3, :address2, :inputId, :address1,
-                    :geocode, :administrative_area, :country, :organization, :language, :address4, :result
+                    :geocode, :administrative_area, :country, :organization, :language, :address4, :result, :custom_param_hash
 
       def initialize(freeform=nil, country=nil)
         @result = []
@@ -33,6 +33,11 @@ module SmartyStreets
         @locality = nil
         @administrative_area = nil
         @postal_code = nil
+        @custom_param_hash = {}
+      end
+
+      def add_custom_parameter(parameter, value)
+        @custom_param_hash[parameter] = value
       end
 
       def missing_country

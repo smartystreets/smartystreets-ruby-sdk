@@ -51,6 +51,10 @@ module SmartyStreets
         end
         add_parameter(request, 'selected', lookup.selected)
 
+        for key in lookup.custom_param_hash.keys do
+          add_parameter(request, key, lookup.custom_param_hash[key])
+        end
+
         request
       end
 

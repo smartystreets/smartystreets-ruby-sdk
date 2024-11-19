@@ -9,13 +9,13 @@ class USStreetSingleAddressExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    key = ENV['SMARTY_AUTH_WEB']
-    referer = ENV['SMARTY_AUTH_REFERER']
-    credentials = SmartyStreets::SharedCredentials.new(key, referer)
+    # key = ENV['SMARTY_AUTH_WEB']
+    # referer = ENV['SMARTY_AUTH_REFERER']
+    # credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
-    # id = ENV['SMARTY_AUTH_ID']
-    # token = ENV['SMARTY_AUTH_TOKEN']
-    # credentials = SmartyStreets::StaticCredentials.new(id, token)
+    id = ENV['SMARTY_AUTH_ID']
+    token = ENV['SMARTY_AUTH_TOKEN']
+    credentials = SmartyStreets::StaticCredentials.new(id, token)
 
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.
@@ -23,27 +23,32 @@ class USStreetSingleAddressExample
     #
     # To try with a proxy, add this method call after with_licences
     #   with_proxy('localhost', 8080, 'proxyUser', 'proxyPassword')
-    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['us-core-cloud']).
+    client = SmartyStreets::ClientBuilder.new(credentials).with_debug().with_licenses(['us-core-cloud']).
              build_us_street_api_client
 
     # Documentation for input fields can be found at:
     # https://smartystreets.com/docs/cloud/us-street-api
 
     lookup = SmartyStreets::USStreet::Lookup.new
-    lookup.input_id = '24601'  # Optional ID from your system
-    lookup.addressee = 'John Doe'
-    lookup.street = '1600 Amphitheatre Pkwy'
-    lookup.street2 = 'closet under the stairs'
-    lookup.secondary = 'APT 2'
-    lookup.urbanization = ''  # Only applies to Puerto Rico addresses
-    lookup.city = 'Mountain View'
-    lookup.state = 'CA'
-    lookup.zipcode = '21229'
-    lookup.candidates = 3
-    lookup.match = SmartyStreets::USStreet::MatchType::INVALID
+    # lookup.input_id = '24601'  # Optional ID from your system
+    # lookup.addressee = 'John Doe'
+    # lookup.street = '1600 Amphitheatre Pkwy'
+    # lookup.street2 = 'closet under the stairs'
+    # lookup.secondary = 'APT 2'
+    # lookup.urbanization = ''  # Only applies to Puerto Rico addresses
+    # lookup.city = 'Mountain View'
+    # lookup.state = 'CA'
+    # lookup.zipcode = '21229'
+    # lookup.candidates = 3
+    lookup.street = '2325 Mt. Pleasant Rd, 15666'
+    # lookup.county_source = SmartyStreets::USStreet::CountySource::GEOGRAPHIC
+    # lookup.match = SmartyStreets::USStreet::MatchType::ENHANCED
                                     # "invalid" is the most permissive match,
                                     # this will always return at least one result even if the address is invalid.
                                     # Refer to the documentation for additional Match Strategy options.
+
+    lookup.add_custom_parameter('parameter', 'custom')
+    lookup.add_custom_parameter('stack', 'working')
 
     begin
       client.send_lookup(lookup)

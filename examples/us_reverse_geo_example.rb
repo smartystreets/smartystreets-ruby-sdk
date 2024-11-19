@@ -10,24 +10,27 @@ class USReverseGeoExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    key = ENV['SMARTY_AUTH_WEB']
-    referer = ENV['SMARTY_AUTH_REFERER']
-    credentials = SmartyStreets::SharedCredentials.new(key, referer)
+    # key = ENV['SMARTY_AUTH_WEB']
+    # referer = ENV['SMARTY_AUTH_REFERER']
+    # credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
-    # id = ENV['SMARTY_AUTH_ID']
-    # token = ENV['SMARTY_AUTH_TOKEN']
-    # credentials = SmartyStreets::StaticCredentials.new(id, token)
+    id = ENV['SMARTY_AUTH_ID']
+    token = ENV['SMARTY_AUTH_TOKEN']
+    credentials = SmartyStreets::StaticCredentials.new(id, token)
 
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.
     # https://www.smartystreets.com/docs/cloud/licensing
-    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['us-reverse-geocoding-cloud'])
+    client = SmartyStreets::ClientBuilder.new(credentials).with_debug().with_licenses(['us-reverse-geocoding-cloud'])
                  .build_us_reverse_geo_api_client
 
     # Documentation for input fields can be found at:
     # https://smartystreets.com/docs/cloud/us-reverse-geo-api#http-request-input-fields
 
     lookup = Lookup.new(40.111111, -111.111111)
+
+    lookup.add_custom_parameter('parameter', 'custom')
+    lookup.add_custom_parameter('stack', 'working')
 
     response = client.send(lookup)
     result = response.results[0]
