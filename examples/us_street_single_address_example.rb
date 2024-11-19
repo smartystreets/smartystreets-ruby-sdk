@@ -30,19 +30,18 @@ class USStreetSingleAddressExample
     # https://smartystreets.com/docs/cloud/us-street-api
 
     lookup = SmartyStreets::USStreet::Lookup.new
-    # lookup.input_id = '24601'  # Optional ID from your system
-    # lookup.addressee = 'John Doe'
-    # lookup.street = '1600 Amphitheatre Pkwy'
-    # lookup.street2 = 'closet under the stairs'
-    # lookup.secondary = 'APT 2'
-    # lookup.urbanization = ''  # Only applies to Puerto Rico addresses
-    # lookup.city = 'Mountain View'
-    # lookup.state = 'CA'
-    # lookup.zipcode = '21229'
-    # lookup.candidates = 3
-    lookup.street = '2325 Mt. Pleasant Rd, 15666'
-    # lookup.county_source = SmartyStreets::USStreet::CountySource::GEOGRAPHIC
-    # lookup.match = SmartyStreets::USStreet::MatchType::ENHANCED
+    lookup.input_id = '24601'  # Optional ID from your system
+    lookup.addressee = 'John Doe'
+    lookup.street = '1600 Amphitheatre Pkwy'
+    lookup.street2 = 'closet under the stairs'
+    lookup.secondary = 'APT 2'
+    lookup.urbanization = ''  # Only applies to Puerto Rico addresses
+    lookup.city = 'Mountain View'
+    lookup.state = 'CA'
+    lookup.zipcode = '21229'
+    lookup.candidates = 3
+    lookup.county_source = SmartyStreets::USStreet::CountySource::GEOGRAPHIC
+    lookup.match = SmartyStreets::USStreet::MatchType::ENHANCED
                                     # "invalid" is the most permissive match,
                                     # this will always return at least one result even if the address is invalid.
                                     # Refer to the documentation for additional Match Strategy options.
