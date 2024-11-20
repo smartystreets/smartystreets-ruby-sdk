@@ -40,6 +40,8 @@ class TestStreetClient < Minitest::Test
         'match' => SmartyStreets::USStreet::MatchType::ENHANCED,
         'candidates' => 5,
         'format' => SmartyStreets::USStreet::OutputFormat::PROJECT_USA,
+        'county_source' => SmartyStreets::USStreet::CountySource::GEOGRAPHIC,
+        'parameter' => 'value',
     }
     serializer = FakeSerializer.new(expected_parameters)
     client = Client.new(sender, serializer)
@@ -56,6 +58,8 @@ class TestStreetClient < Minitest::Test
     lookup.urbanization = '10'
     lookup.match = SmartyStreets::USStreet::MatchType::ENHANCED
     lookup.format = SmartyStreets::USStreet::OutputFormat::PROJECT_USA
+    lookup.county_source = SmartyStreets::USStreet::CountySource::GEOGRAPHIC
+    lookup.add_custom_parameter('parameter', 'value')
     client.send_lookup(lookup)
 
     assert_equal(expected_parameters, sender.request.parameters)
