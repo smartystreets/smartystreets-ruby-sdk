@@ -39,6 +39,8 @@ class USAutocompleteProExample
     lookup.prefer_ratio = 3
     lookup.source = "all"
 
+    # lookup.add_custom_parameter('parameter', 'value')
+
     suggestions = client.send(lookup) # The client will also return the suggestions directly
 
     puts

@@ -37,6 +37,8 @@ class USExtractExample
     lookup.addresses_per_line = 2
     lookup.match =  SmartyStreets::USStreet::MatchType::ENHANCED
 
+    # lookup.add_custom_parameter('parameter', 'value')
+
     result = client.send(lookup)
 
     metadata = result.metadata

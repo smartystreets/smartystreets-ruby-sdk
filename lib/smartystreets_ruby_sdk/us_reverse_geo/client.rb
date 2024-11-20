@@ -28,6 +28,10 @@ module SmartyStreets
         add_parameter(request, 'longitude', lookup.longitude)
         add_parameter(request, 'source', lookup.source)
 
+        for key in lookup.custom_param_hash.keys do
+          add_parameter(request, key, lookup.custom_param_hash[key])
+        end
+
         request
       end
 

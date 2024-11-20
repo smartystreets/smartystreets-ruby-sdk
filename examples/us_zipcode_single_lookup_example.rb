@@ -27,6 +27,8 @@ class UsZipcodeSingleLookupExample
     lookup.state = 'California'
     lookup.zipcode = '94043'
 
+    # lookup.add_custom_parameter('parameter', 'value')
+
     begin
       client.send_lookup(lookup)
     rescue SmartyStreets::SmartyError => err

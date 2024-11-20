@@ -44,6 +44,8 @@ class USStreetMultipleAddressExample
                                       # this will always return at least one result even if the address is invalid.
                                       # Refer to the documentation for additional Match Strategy options.
 
+    # batch[0].add_custom_parameter('parameter', 'value')
+
     batch.add(Lookup.new('1 Rosedale, Baltimore, Maryland')) # Freeform addresses work too.
     batch[1].candidates = 10 # Allows up to ten possible matches to be returned (default is 1).
 

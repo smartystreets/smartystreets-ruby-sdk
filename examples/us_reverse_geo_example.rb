@@ -29,6 +29,8 @@ class USReverseGeoExample
 
     lookup = Lookup.new(40.111111, -111.111111)
 
+    # lookup.add_custom_parameter('parameter', 'value')
+
     response = client.send(lookup)
     result = response.results[0]
 

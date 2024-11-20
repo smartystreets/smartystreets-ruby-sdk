@@ -58,6 +58,10 @@ module SmartyStreets
           add_field(converted_lookup, 'state', lookup.state)
           add_field(converted_lookup, 'zipcode', lookup.zipcode)
 
+          for key in lookup.custom_param_hash.keys do
+            add_field(converted_lookup, key, lookup.custom_param_hash[key])
+          end
+
           converted_obj.push(converted_lookup)
         end
 
