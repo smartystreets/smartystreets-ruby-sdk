@@ -1,9 +1,11 @@
+require_relative 'component_analysis'
+
 module SmartyStreets
   module USStreet
     # See "https://smartystreets.com/docs/cloud/us-street-api#analysis"
     class Analysis
       attr_reader :lacs_link_code, :active, :footnotes, :lacs_link_indicator, :dpv_match_code, :is_suite_link_match,
-                  :is_ews_match, :dpv_footnotes, :cmra, :vacant, :no_stat, :enhanced_match
+                  :is_ews_match, :dpv_footnotes, :cmra, :vacant, :no_stat, :enhanced_match, :components
 
       def initialize(obj)
         @dpv_match_code = obj['dpv_match_code']
@@ -18,6 +20,7 @@ module SmartyStreets
         @lacs_link_indicator = obj['lacslink_indicator']
         @is_suite_link_match = obj['suitelink_match']
         @enhanced_match = obj['enhanced_match']
+        @components = ComponentAnalysis.new(obj.fetch('components', {}))
       end
     end
   end
