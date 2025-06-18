@@ -17,14 +17,9 @@ class USStreetSingleAddressExample
     # token = ENV['SMARTY_AUTH_TOKEN']
     # credentials = SmartyStreets::StaticCredentials.new(id, token)
 
-    # The appropriate license values to be used for your subscriptions
-    # can be found on the Subscriptions page of the account dashboard.
-    # https://www.smartystreets.com/docs/cloud/licensing
-    #
-    # To try with a proxy, add this method call after with_licences
+    # To try with a proxy, add this method before build_us_street_api_client
     #   with_proxy('localhost', 8080, 'proxyUser', 'proxyPassword')
-    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['us-core-cloud']).
-             build_us_street_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials).build_us_street_api_client
 
     # Documentation for input fields can be found at:
     # https://smartystreets.com/docs/cloud/us-street-api
