@@ -152,16 +152,16 @@ class TestPropertyFinancialResponse < Minitest::Test
 
     obj = {
         'smarty_key' => 'xxx',
-        'data_set' => 'property',
-        'data_sub_set' => 'financial',
+        'data_set_name' => 'property',
+        'data_subset_name' => 'financial',
         'attributes' => attributes_obj
     }
 
     response = SmartyStreets::USEnrichment::Property::Financial::Response.new(obj)
 
     assert_equal('xxx', response.smarty_key)
-    assert_equal('property', response.data_set)
-    assert_equal('financial', response.data_sub_set)
+    assert_equal('property', response.data_set_name)
+    assert_equal('financial', response.data_subset_name)
 
     attributes = response.attributes
 
