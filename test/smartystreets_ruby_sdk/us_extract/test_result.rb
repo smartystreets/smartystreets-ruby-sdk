@@ -1,3 +1,4 @@
+require_relative '../../test_helper'
 require './lib/smartystreets_ruby_sdk/us_extract/result'
 
 class TestResult < Minitest::Test

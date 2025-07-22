@@ -124,6 +124,7 @@ module SmartyStreets
                     end
                     
                     def createFinancialHistory(historyArray)
+                        return [] unless historyArray
                         entryArray = []
                         for entry in historyArray do
                             entryArray << Financial::HistoryEntry.new(entry)

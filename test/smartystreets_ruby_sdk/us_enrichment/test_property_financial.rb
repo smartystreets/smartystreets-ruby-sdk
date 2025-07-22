@@ -1,5 +1,63 @@
 require 'minitest/autorun'
 require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/property/financial/response'
+require_relative '../../test_helper'
+require 'smartystreets_ruby_sdk/us_enrichment/property/financial/attributes'
+require 'smartystreets_ruby_sdk/us_enrichment/property/financial/history_entry'
+
+module SmartyStreets
+  module USEnrichment
+    module Property
+      module Financial
+        class TestHistoryEntry < Minitest::Test
+          def test_attribute_assignment
+            sample = {
+              'lender_name' => 'Bank',
+              'mortgage_amount' => 100000,
+              'recording_date' => '2020-01-01'
+            }
+            entry = HistoryEntry.new(sample)
+            assert_equal 'Bank', entry.lender_name
+            assert_equal 100000, entry.mortgage_amount
+            assert_equal '2020-01-01', entry.recording_date
+          end
+
+          def test_missing_keys_are_nil
+            entry = HistoryEntry.new({})
+            assert_nil entry.lender_name
+            assert_nil entry.mortgage_amount
+          end
+        end
+
+        class TestAttributes < Minitest::Test
+          def test_attribute_assignment
+            sample = {
+              'assessed_value' => 500000,
+              'owner_full_name' => 'John Doe',
+              'tax_billed_amount' => 2500
+            }
+            attrs = Attributes.new(sample)
+            assert_equal 500000, attrs.assessed_value
+            assert_equal 'John Doe', attrs.owner_full_name
+            assert_equal 2500, attrs.tax_billed_amount
+          end
+
+          def test_financial_history_array
+            sample = {
+              'financial_history' => [
+                { 'lender_name' => 'Bank1', 'mortgage_amount' => 100000 },
+                { 'lender_name' => 'Bank2', 'mortgage_amount' => 200000 }
+              ]
+            }
+            attrs = Attributes.new(sample)
+            assert_equal 2, attrs.financial_history.size
+            assert_equal 'Bank1', attrs.financial_history[0].lender_name
+            assert_equal 200000, attrs.financial_history[1].mortgage_amount
+          end
+        end
+      end
+    end
+  end
+end
 
 class TestPropertyFinancialResponse < Minitest::Test
   def test_all_fields_filled_correctly

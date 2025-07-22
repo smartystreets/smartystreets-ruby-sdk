@@ -1,3 +1,4 @@
+require_relative '../../test_helper'
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/us_street/candidate'
 require './lib/smartystreets_ruby_sdk/us_street/components'

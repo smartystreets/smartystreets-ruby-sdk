@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/us_zipcode/result'
+require_relative '../../test_helper'
 
 class TestResult < Minitest::Test
   def test_all_fields_filled_correctly_when_valid

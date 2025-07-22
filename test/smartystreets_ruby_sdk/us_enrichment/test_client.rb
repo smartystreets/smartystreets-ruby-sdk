@@ -1,12 +1,147 @@
 require 'minitest/autorun'
+require_relative '../../test_helper'
 require_relative '../../../lib/smartystreets_ruby_sdk/exceptions'
-require_relative '../../../test/mocks/request_capturing_sender'
-require_relative '../../../test/mocks/fake_serializer'
-require_relative '../../../test/mocks/fake_deserializer'
-require_relative '../../../test/mocks/mock_sender'
-require_relative '../../../test/mocks/mock_exception_sender'
+require_relative '../../mocks/fake_serializer'
+require_relative '../../mocks/fake_deserializer'
+require_relative '../../mocks/mock_sender'
+require_relative '../../mocks/mock_exception_sender'
+require_relative '../../mocks/request_capturing_sender'
 require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/client'
 require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/lookup'
+
+module SmartyStreets
+  module USEnrichment
+    class FakeSender
+      attr_reader :last_request, :response
+      def initialize(response)
+        @response = response
+      end
+      def send(request)
+        @last_request = request
+        @response
+      end
+    end
+
+    class FakeSerializer
+      def deserialize(payload)
+        # Return a structure that works for all tested response types
+        [
+          {
+            # For Property::Financial::Response and Principal::Response
+            'assessed_value' => 123,
+            'first_floor_sqft' => 456,
+            # For GeoReference::Response
+            'geo_id' => 'GEO123',
+            # For Secondary::Response
+            'root_address' => {},
+            # For Secondary::Count::Response
+            'count' => 1
+          }
+        ]
+      end
+    end
+
+    class FakeResponse
+      attr_reader :payload, :error, :header
+      def initialize(payload = nil, error = nil, header = {})
+        @payload = payload
+        @error = error
+        @header = header
+      end
+    end
+
+    class TestClient < Minitest::Test
+      def setup
+        @serializer = FakeSerializer.new
+        @response = FakeResponse.new('{}', nil, { 'etag' => 'ETAG' })
+        @sender = FakeSender.new(@response)
+        @client = Client.new(@sender, @serializer)
+      end
+
+      def test_send_property_financial_lookup_with_string
+        lookup = 'foo'
+        serializer = Class.new {
+          def deserialize(_); [{ 'attributes' => { 'assessed_value' => 123 } }]; end
+        }.new
+        USEnrichment::Property::Financial::Lookup.stub(:new, OpenStruct.new(data_set: 'property', data_sub_set: 'financial', custom_param_hash: {}, smarty_key: nil, etag: nil, freeform: nil, street: nil, city: nil, state: nil, zipcode: nil)) do
+          @sender = FakeSender.new(FakeResponse.new(nil, nil, { 'etag' => 'ETAG' }))
+          @client = Client.new(@sender, serializer)
+          assert @client.send_property_financial_lookup(lookup)
+        end
+      end
+
+      def test_send_property_principal_lookup_with_string
+        lookup = 'foo'
+        serializer = Class.new {
+          def deserialize(_); [{ 'attributes' => { 'first_floor_sqft' => 456 } }]; end
+        }.new
+        USEnrichment::Property::Principal::Lookup.stub(:new, OpenStruct.new(data_set: 'property', data_sub_set: 'principal', custom_param_hash: {}, smarty_key: nil, etag: nil, freeform: nil, street: nil, city: nil, state: nil, zipcode: nil)) do
+          @sender = FakeSender.new(FakeResponse.new(nil, nil, { 'etag' => 'ETAG' }))
+          @client = Client.new(@sender, serializer)
+          assert @client.send_property_principal_lookup(lookup)
+        end
+      end
+
+      def test_send_geo_reference_lookup_with_string
+        lookup = 'foo'
+        serializer = Class.new {
+          def deserialize(_)
+            [{
+              'attributes' => {
+                'geo_id' => 'GEO123',
+                'census_block' => {},
+                'census_county_division' => {},
+                'census_tract' => {},
+                'core_based_stat_area' => {},
+                'place' => {}
+              }
+            }]
+          end
+        }.new
+        USEnrichment::GeoReference::Lookup.stub(:new, OpenStruct.new(data_set: 'geo-reference', data_sub_set: nil, custom_param_hash: {}, smarty_key: nil, etag: nil, freeform: nil, street: nil, city: nil, state: nil, zipcode: nil)) do
+          @sender = FakeSender.new(FakeResponse.new(nil, nil, { 'etag' => 'ETAG' }))
+          @client = Client.new(@sender, serializer)
+          assert @client.send_geo_reference_lookup(lookup)
+        end
+      end
+
+      def test_send_secondary_lookup_with_string
+        lookup = 'foo'
+        serializer = Class.new {
+          def deserialize(_); [{ 'root_address' => {}, 'secondaries' => [] }]; end
+        }.new
+        USEnrichment::Secondary::Lookup.stub(:new, OpenStruct.new(data_set: 'secondary', data_sub_set: nil, custom_param_hash: {}, smarty_key: nil, etag: nil, freeform: nil, street: nil, city: nil, state: nil, zipcode: nil)) do
+          @sender = FakeSender.new(FakeResponse.new(nil, nil, { 'etag' => 'ETAG' }))
+          @client = Client.new(@sender, serializer)
+          assert @client.send_secondary_lookup(lookup)
+        end
+      end
+
+      def test_send_secondary_count_lookup_with_string
+        lookup = 'foo'
+        USEnrichment::Secondary::Count::Lookup.stub(:new, OpenStruct.new(data_set: 'secondary', data_sub_set: 'count', custom_param_hash: {}, smarty_key: nil, etag: nil, freeform: nil, street: nil, city: nil, state: nil, zipcode: nil)) do
+          assert @client.send_secondary_count_lookup(lookup)
+        end
+      end
+
+      def test_send_generic_lookup_with_string
+        lookup = 'foo'
+        USEnrichment::Lookup.stub(:new, OpenStruct.new(data_set: 'foo', data_sub_set: 'bar', custom_param_hash: {}, smarty_key: nil, etag: nil, freeform: nil, street: nil, city: nil, state: nil, zipcode: nil)) do
+          assert @client.send_generic_lookup(lookup, 'foo', 'bar')
+        end
+      end
+
+      def test_send_raises_on_error
+        sender = FakeSender.new(FakeResponse.new('{}', 'boom', {}))
+        client = Client.new(sender, @serializer)
+        lookup = OpenStruct.new(data_set: 'property', data_sub_set: 'financial', custom_param_hash: {}, smarty_key: nil, etag: nil, freeform: nil, street: nil, city: nil, state: nil, zipcode: nil)
+        assert_raises RuntimeError do
+          client.__send(lookup)
+        end
+      end
+    end
+  end
+end
 
 class TestStreetClient < Minitest::Test
 

@@ -1,9 +1,10 @@
-require 'minitest/autorun'
+require_relative '../test_helper'
 require './lib/smartystreets_ruby_sdk/static_credentials'
 require './lib/smartystreets_ruby_sdk/shared_credentials'
 require './lib/smartystreets_ruby_sdk/signing_sender'
 require_relative '../../lib/smartystreets_ruby_sdk/request'
 require_relative '../../lib/smartystreets_ruby_sdk/response'
+require_relative '../mocks/mock_sender'
 
 class TestSigningSender < Minitest::Test
   SharedCredentials = SmartyStreets::SharedCredentials

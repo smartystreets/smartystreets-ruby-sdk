@@ -1,4 +1,4 @@
-require 'minitest/autorun'
+require_relative '../test_helper'
 require './test/mocks/failing_sender'
 require './test/mocks/fake_sleeper'
 require './test/mocks/fake_logger'

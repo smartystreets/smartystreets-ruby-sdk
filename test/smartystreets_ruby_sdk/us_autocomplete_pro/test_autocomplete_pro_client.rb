@@ -1,7 +1,91 @@
-require 'minitest/autorun'
+require_relative '../../test_helper'
 require './lib/smartystreets_ruby_sdk/us_autocomplete_pro/client'
 require './lib/smartystreets_ruby_sdk/us_autocomplete_pro/lookup'
 require './lib/smartystreets_ruby_sdk/response'
+require_relative '../../mocks/mock_sender'
+require_relative '../../mocks/request_capturing_sender'
+require_relative '../../mocks/fake_serializer'
+require_relative '../../mocks/fake_deserializer'
+
+module SmartyStreets
+  module USAutocompletePro
+    class FakeSender
+      attr_reader :last_request, :response
+      def initialize(response)
+        @response = response
+      end
+      def send(request)
+        @last_request = request
+        @response
+      end
+    end
+
+    class FakeSerializer
+      def deserialize(payload); { 'suggestions' => [{ 'text' => 'foo' }] }; end
+    end
+
+    class FakeResponse
+      attr_reader :payload, :error
+      def initialize(payload = nil, error = nil)
+        @payload = payload
+        @error = error
+      end
+    end
+
+    class FakeLookup
+      attr_accessor :search, :max_results, :city_filter, :state_filter, :zip_filter, :exclude_states, :prefer_cities, :prefer_states, :prefer_zip_codes, :prefer_ratio, :source, :prefer_geolocation, :selected, :custom_param_hash, :result
+      def initialize
+        @search = 'foo'
+        @max_results = 10
+        @city_filter = []
+        @state_filter = []
+        @zip_filter = []
+        @exclude_states = []
+        @prefer_cities = []
+        @prefer_states = []
+        @prefer_zip_codes = []
+        @prefer_ratio = 1
+        @source = nil
+        @prefer_geolocation = nil
+        @selected = nil
+        @custom_param_hash = {}
+        @result = nil
+      end
+    end
+
+    class TestClient < Minitest::Test
+      def setup
+        @serializer = FakeSerializer.new
+        @response = FakeResponse.new('{}', nil)
+        @sender = FakeSender.new(@response)
+        @client = Client.new(@sender, @serializer)
+      end
+
+      def test_send_assigns_suggestions
+        lookup = FakeLookup.new
+        @client.send(lookup)
+        assert lookup.result.first.is_a?(SmartyStreets::USAutocompletePro::Suggestion)
+      end
+
+      def test_send_raises_on_missing_search
+        lookup = FakeLookup.new
+        lookup.search = nil
+        assert_raises SmartyStreets::SmartyError do
+          @client.send(lookup)
+        end
+      end
+
+      def test_send_raises_on_error
+        sender = FakeSender.new(FakeResponse.new('{}', 'boom'))
+        client = Client.new(sender, @serializer)
+        lookup = FakeLookup.new
+        assert_raises RuntimeError do
+          client.send(lookup)
+        end
+      end
+    end
+  end
+end
 
 class TestAutocompleteProClient < Minitest::Test
   Client = SmartyStreets::USAutocompletePro::Client

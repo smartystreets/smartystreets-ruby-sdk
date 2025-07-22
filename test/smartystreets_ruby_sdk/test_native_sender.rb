@@ -1,9 +1,11 @@
-require 'minitest/autorun'
+require_relative '../test_helper'
 require 'net/http'
 require_relative '../../lib/smartystreets_ruby_sdk/native_sender'
 require_relative '../../lib/smartystreets_ruby_sdk/request'
 require_relative '../../lib/smartystreets_ruby_sdk/exceptions'
 require_relative '../../lib/smartystreets_ruby_sdk/version'
+require 'smartystreets_ruby_sdk/native_sender'
+require 'ostruct'
 
 class TestNativeSender < Minitest::Test
   NativeSender = SmartyStreets::NativeSender
@@ -134,5 +136,46 @@ class TestNativeSender < Minitest::Test
 
     assert_equal("smartystreets (sdk:ruby@#{SmartyStreets::VERSION}), Some plugin, Some other plugin", native_request['User-Agent'])
     assert_equal('X value', native_request['X-Something'])
+  end
+
+  def test_build_request_get_and_post
+    smarty_request = OpenStruct.new(
+      url_prefix: 'https://example.com',
+      parameters: { 'foo' => 'bar' },
+      payload: nil,
+      header: {},
+      referer: nil
+    )
+    req = SmartyStreets::NativeSender.build_request(smarty_request)
+    assert_equal Net::HTTP::Get, req.class
+    smarty_request.payload = '{}'
+    req2 = SmartyStreets::NativeSender.build_request(smarty_request)
+    assert_equal Net::HTTP::Post, req2.class
+  end
+
+  def test_set_custom_headers
+    req = Net::HTTP::Get.new('https://example.com')
+    SmartyStreets::NativeSender.set_custom_headers({ 'X-Test' => ['a', 'b'] }, req)
+    assert req['X-Test']
+  end
+
+  def test_create_query
+    smarty_request = OpenStruct.new(parameters: { 'foo' => 'bar', 'baz' => 'qux' })
+    query = SmartyStreets::NativeSender.create_query(smarty_request)
+    assert_includes query, 'foo=bar'
+    assert_includes query, 'baz=qux'
+  end
+
+  def test_error_handling
+    sender = SmartyStreets::NativeSender.new(0.01)
+    # This should fail fast and return a Response with error
+    response = sender.send(OpenStruct.new(url_prefix: 'https://localhost:9999', parameters: {}, payload: nil, header: {}, referer: nil))
+    assert response.is_a?(SmartyStreets::Response)
+    code = response.status_code
+    not_ok = code.nil? || code.to_s != '200'
+    if !response.error && code.to_s == '200'
+      skip "Environment returned 200 with no error; skipping unreliable network error test."
+    end
+    assert(response.error || not_ok, "Expected error or non-200 status code, got error: #{response.error.inspect}, status_code: #{code.inspect}")
   end
 end

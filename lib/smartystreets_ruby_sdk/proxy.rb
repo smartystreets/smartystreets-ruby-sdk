@@ -7,6 +7,7 @@ module SmartyStreets
     attr_accessor :port, :host, :username, :password
 
     def initialize(host, port, username = nil, password = nil)
+      raise ArgumentError, 'host cannot be nil' if host.nil?
       @host = host
       @port = port
       @username = username

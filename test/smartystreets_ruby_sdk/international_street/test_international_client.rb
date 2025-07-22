@@ -2,6 +2,91 @@ require 'minitest/autorun'
 require_relative '../../../lib/smartystreets_ruby_sdk/international_street'
 require_relative '../../../lib/smartystreets_ruby_sdk/exceptions'
 require_relative '../../../lib/smartystreets_ruby_sdk/response'
+require_relative '../../mocks/request_capturing_sender'
+require_relative '../../mocks/fake_deserializer'
+require_relative '../../mocks/mock_sender'
+require_relative '../../mocks/fake_serializer'
+require_relative '../../test_helper'
+require 'smartystreets_ruby_sdk/international_street/client'
+
+module SmartyStreets
+  module InternationalStreet
+    class FakeSender
+      attr_reader :last_request, :response
+      def initialize(response)
+        @response = response
+      end
+      def send(request)
+        @last_request = request
+        @response
+      end
+    end
+
+    class FakeSerializer
+      def deserialize(payload); [{ 'foo' => 'bar' }]; end
+    end
+
+    class FakeResponse
+      attr_reader :payload, :error
+      def initialize(payload = nil, error = nil)
+        @payload = payload
+        @error = error
+      end
+    end
+
+    class FakeLookup
+      attr_accessor :input_id, :country, :geocode, :language, :freeform, :address1, :address2, :address3, :address4, :organization, :locality, :administrative_area, :postal_code, :custom_param_hash, :result
+      def initialize
+        @input_id = 'id'
+        @country = 'US'
+        @geocode = true
+        @language = 'en'
+        @freeform = 'foo'
+        @address1 = '123 Main'
+        @address2 = 'Apt 4'
+        @address3 = nil
+        @address4 = nil
+        @organization = nil
+        @locality = 'Springfield'
+        @administrative_area = 'IL'
+        @postal_code = '62704'
+        @custom_param_hash = {}
+        @result = nil
+      end
+      def ensure_enough_info; end
+    end
+
+    class TestClient < Minitest::Test
+      def setup
+        @serializer = FakeSerializer.new
+        @response = FakeResponse.new('{}', nil)
+        @sender = FakeSender.new(@response)
+        @client = Client.new(@sender, @serializer)
+      end
+
+      def test_send_assigns_candidates
+        lookup = FakeLookup.new
+        @client.send(lookup)
+        assert lookup.result.first.is_a?(SmartyStreets::InternationalStreet::Candidate)
+      end
+
+      def test_send_lookup_assigns_candidates
+        lookup = FakeLookup.new
+        @client.send_lookup(lookup)
+        assert lookup.result.first.is_a?(SmartyStreets::InternationalStreet::Candidate)
+      end
+
+      def test_send_raises_on_error
+        sender = FakeSender.new(FakeResponse.new('{}', 'boom'))
+        client = Client.new(sender, @serializer)
+        lookup = FakeLookup.new
+        assert_raises RuntimeError do
+          client.send(lookup)
+        end
+      end
+    end
+  end
+end
 
 class TestInternationalClient < Minitest::Test
   Client = SmartyStreets::InternationalStreet::Client

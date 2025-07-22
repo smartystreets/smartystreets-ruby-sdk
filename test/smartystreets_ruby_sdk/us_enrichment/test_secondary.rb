@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require_relative '../../test_helper'
 require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/secondary/response'
 
 class TestSecondaryResponse < Minitest::Test

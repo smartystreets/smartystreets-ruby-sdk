@@ -22,5 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 2.4.6'
   spec.add_development_dependency 'rake', '~> 13.0.6'
   spec.add_development_dependency 'minitest', '~> 5.8', '>= 5.8.3'
-  spec.add_development_dependency 'simplecov', '~> 0.12.0'
+  spec.add_development_dependency 'simplecov', '>= 0.21.2'
 end

@@ -1,5 +1,7 @@
 require 'minitest/autorun'
 require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/property/principal/response'
+require_relative '../../test_helper'
+require 'smartystreets_ruby_sdk/us_enrichment/property/principal/attributes'
 
 class TestPropertyFinancialResponse < Minitest::Test
   def test_all_fields_filled_correctly
@@ -740,5 +742,37 @@ class TestPropertyFinancialResponse < Minitest::Test
     assert_equal('wine_cellar', attributes.wine_cellar)
     assert_equal('year_built', attributes.year_built)
     assert_equal('zoning', attributes.zoning)
+  end
+end
+
+module SmartyStreets
+  module USEnrichment
+    module Property
+      module Principal
+        class TestAttributes < Minitest::Test
+          def test_attribute_assignment
+            sample = {
+              '1st_floor_sqft' => 123,
+              '2nd_floor_sqft' => 456,
+              'acres' => 1.5,
+              'air_conditioner' => true,
+              'zoning' => 'Residential'
+            }
+            attrs = Attributes.new(sample)
+            assert_equal 123, attrs.first_floor_sqft
+            assert_equal 456, attrs.second_floor_sqft
+            assert_equal 1.5, attrs.acres
+            assert_equal true, attrs.air_conditioner
+            assert_equal 'Residential', attrs.zoning
+          end
+
+          def test_missing_keys_are_nil
+            attrs = Attributes.new({})
+            assert_nil attrs.first_floor_sqft
+            assert_nil attrs.zoning
+          end
+        end
+      end
+    end
   end
 end

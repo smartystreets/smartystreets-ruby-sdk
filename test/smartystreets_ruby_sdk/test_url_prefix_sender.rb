@@ -1,7 +1,8 @@
-require 'minitest/autorun'
+require_relative '../test_helper'
 require_relative '../../lib/smartystreets_ruby_sdk/url_prefix_sender'
 require_relative '../../lib/smartystreets_ruby_sdk/request'
 require_relative '../../lib/smartystreets_ruby_sdk/response'
+require_relative '../mocks/mock_sender'
 
 class TestURLPrefixSender < Minitest::Test
   def test_request_url_present

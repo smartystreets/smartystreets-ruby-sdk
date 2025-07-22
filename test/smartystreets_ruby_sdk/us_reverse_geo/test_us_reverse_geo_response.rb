@@ -1,6 +1,9 @@
+require_relative '../../test_helper'
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/us_reverse_geo'
 require './lib/smartystreets_ruby_sdk/native_serializer'
+require_relative '../../mocks/mock_sender'
+require_relative '../../mocks/fake_deserializer'
 
 class TestUSReverseGeoResponse < Minitest::Test
 

@@ -1,7 +1,11 @@
+require_relative '../../test_helper'
 require 'minitest/autorun'
 require_relative '../../../lib/smartystreets_ruby_sdk/us_reverse_geo'
 require_relative '../../../lib/smartystreets_ruby_sdk/exceptions'
 require_relative '../../../lib/smartystreets_ruby_sdk/response'
+require_relative '../../mocks/request_capturing_sender'
+require_relative '../../mocks/fake_deserializer'
+require_relative '../../mocks/mock_sender'
 
 class TestUSReverseGeoClient < Minitest::Test
   Client = SmartyStreets::USReverseGeo::Client

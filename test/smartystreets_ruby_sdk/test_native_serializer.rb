@@ -1,4 +1,4 @@
-require 'minitest/autorun'
+require_relative '../test_helper'
 require_relative '../../lib/smartystreets_ruby_sdk/native_serializer'
 require_relative '../../lib/smartystreets_ruby_sdk/us_street/lookup'
 

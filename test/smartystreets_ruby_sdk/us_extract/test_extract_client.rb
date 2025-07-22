@@ -1,14 +1,16 @@
+require_relative '../../test_helper'
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/us_extract/client'
 require './lib/smartystreets_ruby_sdk/us_extract/lookup'
 require './lib/smartystreets_ruby_sdk/us_extract/result'
 require './lib/smartystreets_ruby_sdk/us_street/candidate'
 require './lib/smartystreets_ruby_sdk/response'
-require './test/mocks/request_capturing_sender'
-require './test/mocks/fake_serializer'
-require './test/mocks/fake_deserializer'
-require './test/mocks/mock_sender'
-require './test/mocks/mock_exception_sender'
+require_relative '../../../test/mocks/request_capturing_sender'
+require_relative '../../../test/mocks/fake_serializer'
+require_relative '../../../test/mocks/fake_deserializer'
+require_relative '../../../test/mocks/mock_sender'
+require_relative '../../../test/mocks/mock_exception_sender'
+require 'smartystreets_ruby_sdk/url_prefix_sender'
 
 class TestExtractClient < Minitest::Test
   Lookup = SmartyStreets::USExtract::Lookup

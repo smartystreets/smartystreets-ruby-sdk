@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/us_autocomplete_pro/suggestion'
+require_relative '../../test_helper'
 
 class SuggestionTest < Minitest::Test
   def test_all_fields_get_filled_in_correctly

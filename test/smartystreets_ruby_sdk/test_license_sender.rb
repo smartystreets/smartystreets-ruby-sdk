@@ -1,7 +1,8 @@
-require 'minitest/autorun'
+require_relative '../test_helper'
 require_relative '../../lib/smartystreets_ruby_sdk/license_sender'
 require_relative '../../lib/smartystreets_ruby_sdk/response'
 require_relative '../../lib/smartystreets_ruby_sdk/request'
+require_relative '../mocks/mock_sender'
 
 class TestLicenseSender < Minitest::Test
   def test_licenses_are_added_to_query

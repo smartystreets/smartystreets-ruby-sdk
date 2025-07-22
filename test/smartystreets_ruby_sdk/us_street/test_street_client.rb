@@ -1,15 +1,17 @@
+require_relative '../../test_helper'
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/exceptions'
-require './test/mocks/request_capturing_sender'
-require './test/mocks/fake_serializer'
-require './test/mocks/fake_deserializer'
-require './test/mocks/mock_sender'
-require './test/mocks/mock_exception_sender'
+require_relative '../../mocks/request_capturing_sender'
+require_relative '../../mocks/fake_serializer'
+require_relative '../../mocks/fake_deserializer'
+require_relative '../../mocks/mock_sender'
+require_relative '../../mocks/mock_exception_sender'
 require './lib/smartystreets_ruby_sdk/us_street/client'
 require './lib/smartystreets_ruby_sdk/us_street/candidate'
 require './lib/smartystreets_ruby_sdk/us_street/match_type'
 require './lib/smartystreets_ruby_sdk/response'
 require './lib/smartystreets_ruby_sdk/native_serializer'
+require_relative '../../../lib/smartystreets_ruby_sdk/us_street/lookup'
 
 class TestStreetClient < Minitest::Test
   Lookup = SmartyStreets::USStreet::Lookup

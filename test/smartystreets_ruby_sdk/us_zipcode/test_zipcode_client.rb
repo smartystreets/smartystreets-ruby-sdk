@@ -1,8 +1,14 @@
+require_relative '../../test_helper'
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/us_zipcode/client'
 require './lib/smartystreets_ruby_sdk/us_zipcode/lookup'
 require './lib/smartystreets_ruby_sdk/exceptions'
 require './lib/smartystreets_ruby_sdk/response'
+require_relative '../../mocks/request_capturing_sender'
+require_relative '../../mocks/fake_serializer'
+require_relative '../../mocks/mock_sender'
+require_relative '../../mocks/fake_deserializer'
+require_relative '../../mocks/mock_exception_sender'
 
 
 class TestZipcodeClient < Minitest::Test
