@@ -40,6 +40,7 @@ class TestInternationalClient < Minitest::Test
     lookup.locality = '7'
     lookup.administrative_area = '8'
     lookup.postal_code = '9'
+    lookup.features = '10'
 
     client.send_lookup(lookup)
 
@@ -56,6 +57,7 @@ class TestInternationalClient < Minitest::Test
     assert_equal('7', sender.request.parameters['locality'])
     assert_equal('8', sender.request.parameters['administrative_area'])
     assert_equal('9', sender.request.parameters['postal_code'])
+    assert_equal('10', sender.request.parameters['features'])
   end
 
   def test_empty_lookup_rejected

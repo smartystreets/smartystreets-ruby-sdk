@@ -13,7 +13,7 @@ module SmartyStreets
                   :super_administrative_area, :premise_extra, :dependent_thoroughfare_predirection,
                   :building_trailing_type, :thoroughfare_predirection, :building_name, :level_type, :level_number,
                   :country_iso_3, :sub_building_type, :additional_content, :delivery_installation, :delivery_installation_type,
-                  :delivery_installation_qualifier_name, :route, :route_number, :route_type, :use_indicator
+                  :delivery_installation_qualifier_name, :route, :route_number, :route_type
 
       def initialize(obj)
         @country_iso_3 = obj.fetch('country_iso_3', nil)
@@ -67,7 +67,6 @@ module SmartyStreets
         @route = obj.fetch('route', nil)
         @route_number = obj.fetch('route_number', nil)
         @route_type = obj.fetch('route_type', nil)
-        @use_indicator = obj.fetch('use_indicator', nil)
       end
     end
   end
