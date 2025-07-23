@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../request'
 require_relative 'candidate'
 
@@ -54,7 +56,7 @@ module SmartyStreets
         add_parameter(request, 'administrative_area', lookup.administrative_area)
         add_parameter(request, 'postal_code', lookup.postal_code)
 
-        for key in lookup.custom_param_hash.keys do
+        lookup.custom_param_hash.each_key do |key|
           add_parameter(request, key, lookup.custom_param_hash[key])
         end
 
@@ -62,16 +64,14 @@ module SmartyStreets
       end
 
       def add_parameter(request, key, value)
-        request.parameters[key] = value unless value.nil? or value.empty?
+        request.parameters[key] = value unless value.nil? || value.empty?
       end
 
       def convert_candidates(raw_candidates)
         candidates = []
 
-        unless raw_candidates.nil?
-          raw_candidates.each do |candidate|
-            candidates.push(Candidate.new(candidate))
-          end
+        raw_candidates&.each do |candidate|
+          candidates.push(Candidate.new(candidate))
         end
 
         candidates

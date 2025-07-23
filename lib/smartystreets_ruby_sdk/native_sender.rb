@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'net/http'
 require_relative 'version'
 require_relative 'response'

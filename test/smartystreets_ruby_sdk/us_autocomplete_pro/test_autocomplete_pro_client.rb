@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../../test_helper'
 require './lib/smartystreets_ruby_sdk/us_autocomplete_pro/client'
 require './lib/smartystreets_ruby_sdk/us_autocomplete_pro/lookup'

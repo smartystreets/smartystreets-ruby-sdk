@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/us_autocomplete_pro/suggestion'
 require_relative '../../test_helper'

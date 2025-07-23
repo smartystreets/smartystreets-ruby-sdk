@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   module USAutocompletePro
     # See "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-response"

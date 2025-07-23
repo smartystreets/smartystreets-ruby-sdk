@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'us_zipcode/city'
 require_relative 'us_zipcode/client'
 require_relative 'us_zipcode/lookup'

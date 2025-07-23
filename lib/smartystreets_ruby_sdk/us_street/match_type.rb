@@ -1,19 +1,21 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   module USStreet
     module MatchType
-      STRICT = 'strict'.freeze
-      INVALID = 'invalid'.freeze
-      ENHANCED = 'enhanced'.freeze
+      STRICT = 'strict'
+      INVALID = 'invalid'
+      ENHANCED = 'enhanced'
     end
 
     module OutputFormat
-      DEFAULT = 'default'.freeze
-      PROJECT_USA = 'project-usa'.freeze
+      DEFAULT = 'default'
+      PROJECT_USA = 'project-usa'
     end
 
     module CountySource
-      POSTAL = 'postal'.freeze
-      GEOGRAPHIC = 'geographic'.freeze
+      POSTAL = 'postal'
+      GEOGRAPHIC = 'geographic'
     end
   end
 end

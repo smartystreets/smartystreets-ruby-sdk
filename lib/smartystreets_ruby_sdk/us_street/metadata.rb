@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   module USStreet
     # See "https://smartystreets.com/docs/cloud/us-street-api#metadata"

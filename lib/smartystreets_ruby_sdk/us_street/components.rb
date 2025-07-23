@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   module USStreet
     # This class contains the matched address broken down into its fundamental pieces.

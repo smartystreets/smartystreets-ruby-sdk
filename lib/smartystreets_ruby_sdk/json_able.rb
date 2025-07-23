@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 
 module SmartyStreets
@@ -13,7 +15,7 @@ module SmartyStreets
     def from_json!(string)
       raise ArgumentError, 'Input JSON string cannot be empty or nil' if string.nil? || string.strip.empty?
 
-      JSON.load(string).each do |var, val|
+      JSON.parse(string).each do |var, val|
         instance_variable_set("@#{var}", val)
       end
     end

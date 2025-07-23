@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../request'
 require_relative '../exceptions'
 require_relative 'suggestion'
@@ -32,7 +34,7 @@ module SmartyStreets
       def build_request(lookup)
         request = Request.new
 
-        request.url_components = '/' + lookup.address_id unless lookup.address_id.nil?
+        request.url_components = "/#{lookup.address_id}" unless lookup.address_id.nil?
 
         add_parameter(request, 'search', lookup.search)
         add_parameter(request, 'country', lookup.country)
@@ -40,7 +42,7 @@ module SmartyStreets
         add_parameter(request, 'include_only_locality', lookup.locality)
         add_parameter(request, 'include_only_postal_code', lookup.postal_code)
 
-        for key in lookup.custom_param_hash.keys do
+        lookup.custom_param_hash.each_key do |key|
           add_parameter(request, key, lookup.custom_param_hash[key])
         end
 
@@ -59,7 +61,7 @@ module SmartyStreets
       end
 
       def add_parameter(request, key, value)
-        request.parameters[key] = value unless value.nil? or value.empty?
+        request.parameters[key] = value unless value.nil? || value.empty?
       end
     end
   end

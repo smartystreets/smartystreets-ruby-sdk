@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   class SharedCredentials
     def initialize(id, host_name)

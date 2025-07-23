@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../batch'
 require_relative '../request'
 require_relative 'candidate'
@@ -47,7 +49,7 @@ module SmartyStreets
         converted_obj = []
         obj.each do |lookup|
           converted_lookup = {}
-          lookup.candidates = 5 if lookup.match == 'enhanced' && lookup.candidates == 0
+          lookup.candidates = 5 if lookup.match == 'enhanced' && lookup.candidates.zero?
 
           converted_lookup['input_id'] = lookup.input_id
           converted_lookup['street'] = lookup.street
@@ -64,7 +66,7 @@ module SmartyStreets
           converted_lookup['format'] = lookup.format
           converted_lookup['county_source'] = lookup.county_source
 
-          for key in lookup.custom_param_hash.keys do
+          lookup.custom_param_hash.each_key do |key|
             converted_lookup[key] = lookup.custom_param_hash[key]
           end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'result'
 require_relative '../batch'
 require_relative '../request'
@@ -58,7 +60,7 @@ module SmartyStreets
           add_field(converted_lookup, 'state', lookup.state)
           add_field(converted_lookup, 'zipcode', lookup.zipcode)
 
-          for key in lookup.custom_param_hash.keys do
+          lookup.custom_param_hash.each_key do |key|
             add_field(converted_lookup, key, lookup.custom_param_hash[key])
           end
 
@@ -69,7 +71,7 @@ module SmartyStreets
       end
 
       def add_field(converted_lookup, key, value)
-        converted_lookup[key] = value unless value.nil? or value.empty?
+        converted_lookup[key] = value unless value.nil? || value.empty?
       end
     end
   end

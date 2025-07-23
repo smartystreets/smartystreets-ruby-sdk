@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'us_enrichment/property/financial/attributes'
 require_relative 'us_enrichment/property/financial/history_entry'
 require_relative 'us_enrichment/property/financial/response'

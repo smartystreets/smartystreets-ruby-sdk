@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FakeSleeper
   attr_reader :sleep_durations
 

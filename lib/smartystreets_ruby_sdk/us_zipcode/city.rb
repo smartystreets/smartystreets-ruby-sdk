@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   module USZipcode
     # Known in the SmartyStreets US ZIP Code API documentation as a city_state

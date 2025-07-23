@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   class LicenseSender
     def initialize(inner, licenses)
@@ -6,7 +8,7 @@ module SmartyStreets
     end
 
     def send(request)
-      request.parameters['license'] = @licenses.join(',') if @licenses.length > 0
+      request.parameters['license'] = @licenses.join(',') if @licenses.length.positive?
       @inner.send(request)
     end
   end

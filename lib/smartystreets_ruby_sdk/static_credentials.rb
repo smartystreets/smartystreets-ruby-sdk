@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   class StaticCredentials
     def initialize(auth_id, auth_token)

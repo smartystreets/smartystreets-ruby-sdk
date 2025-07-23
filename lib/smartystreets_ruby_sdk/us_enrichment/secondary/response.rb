@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'root_address_entry'
 require_relative 'aliases_entry'
 require_relative 'secondaries_entry'
@@ -17,19 +19,15 @@ module SmartyStreets
         end
 
         def createAliasesArray(obj)
-          aliasesArray = []
-          for item in obj do
-            aliasesArray << Secondary::AliasesEntry.new(item)
+          obj.map do |item|
+            Secondary::AliasesEntry.new(item)
           end
-          aliasesArray
         end
 
         def createSecondariesArray(obj)
-          secondariesArray = []
-          for item in obj do
-            secondariesArray << Secondary::SecondariesEntry.new(item)
+          obj.map do |item|
+            Secondary::SecondariesEntry.new(item)
           end
-          secondariesArray
         end
       end
     end

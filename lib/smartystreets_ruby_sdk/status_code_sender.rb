@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'exceptions'
 require_relative 'errors'
 
@@ -21,9 +23,9 @@ module SmartyStreets
       unless response.payload.nil?
         response_json = JSON.parse(response.payload)
         response_json['errors'].each do |error|
-          error_message += (' ' + error['message'])
+          error_message += " #{error['message']}"
         end
-        error_message.strip!
+        error_message = error_message.strip
       end
       error_message = TOO_MANY_REQUESTS if error_message == ''
       TooManyRequestsError.new(error_message)

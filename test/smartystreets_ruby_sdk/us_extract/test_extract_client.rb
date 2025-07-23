@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../../test_helper'
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/us_extract/client'
@@ -30,7 +32,7 @@ class TestExtractClient < Minitest::Test
     client.send(Lookup.new('Hello, World!'))
 
     assert_equal(expected_payload, capturing_sender.request.payload)
-    assert(!capturing_sender.request.parameters.has_key?('html'))
+    assert(!capturing_sender.request.parameters.key?('html'))
   end
 
   def test_sending_fully_populated_lookup

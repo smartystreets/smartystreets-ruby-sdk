@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   class Sleeper
     def sleep(seconds)

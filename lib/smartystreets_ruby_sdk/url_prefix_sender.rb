@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   class URLPrefixSender
     def initialize(url_prefix, inner)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'components'
 require_relative 'metadata'
 require_relative 'analysis'

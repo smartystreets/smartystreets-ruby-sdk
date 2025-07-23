@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'minitest/autorun'
 require_relative '../../../lib/smartystreets_ruby_sdk/international_street'
 require_relative '../../../lib/smartystreets_ruby_sdk/exceptions'

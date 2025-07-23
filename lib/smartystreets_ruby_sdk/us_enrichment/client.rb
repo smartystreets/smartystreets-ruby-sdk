@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'property/financial/response'
 require_relative 'property/principal/response'
 require_relative 'property/financial/lookup'
@@ -87,9 +89,9 @@ module SmartyStreets
         smarty_request.header['ETAG'] = lookup.etag unless lookup.etag.nil?
         if lookup.smarty_key.nil?
           smarty_request.url_components = if lookup.data_sub_set.nil?
-                                            '/search/' + lookup.data_set
+                                            "/search/#{lookup.data_set}"
                                           else
-                                            '/search/' + lookup.data_set + '/' + lookup.data_sub_set
+                                            "/search/#{lookup.data_set}/#{lookup.data_sub_set}"
                                           end
           add_parameter(smarty_request, 'freeform', lookup.freeform)
           add_parameter(smarty_request, 'street', lookup.street)
@@ -98,12 +100,12 @@ module SmartyStreets
           add_parameter(smarty_request, 'zipcode', lookup.zipcode)
         else
           smarty_request.url_components = if lookup.data_sub_set.nil?
-                                            '/' + lookup.smarty_key + '/' + lookup.data_set
+                                            "/#{lookup.smarty_key}/#{lookup.data_set}"
                                           else
-                                            '/' + lookup.smarty_key + '/' + lookup.data_set + '/' + lookup.data_sub_set
+                                            "/#{lookup.smarty_key}/#{lookup.data_set}/#{lookup.data_sub_set}"
                                           end
         end
-        for key in lookup.custom_param_hash.keys do
+        lookup.custom_param_hash.each_key do |key|
           add_parameter(smarty_request, key, lookup.custom_param_hash[key])
         end
 
@@ -138,7 +140,7 @@ module SmartyStreets
       end
 
       def add_parameter(request, key, value)
-        request.parameters[key] = value unless value.nil? or value.empty?
+        request.parameters[key] = value unless value.nil? || value.empty?
       end
     end
   end

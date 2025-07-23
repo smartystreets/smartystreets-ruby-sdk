@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'smartystreets_ruby_sdk/version'
 require 'smartystreets_ruby_sdk/logger'
 require 'smartystreets_ruby_sdk/sleeper'
@@ -7,7 +9,6 @@ require 'smartystreets_ruby_sdk/custom_header_sender'
 require 'smartystreets_ruby_sdk/errors'
 require 'smartystreets_ruby_sdk/exceptions'
 require 'smartystreets_ruby_sdk/json_able'
-require 'smartystreets_ruby_sdk/logger'
 require 'smartystreets_ruby_sdk/native_sender'
 require 'smartystreets_ruby_sdk/native_serializer'
 require 'smartystreets_ruby_sdk/request'

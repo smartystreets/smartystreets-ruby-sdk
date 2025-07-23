@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'minitest/autorun'
 require 'smartystreets_ruby_sdk/international_autocomplete/client'
 require 'smartystreets_ruby_sdk/international_autocomplete/lookup'
@@ -122,7 +124,7 @@ class TestInternationalAutocompleteClient < Minitest::Test
     hashes = [{ 'street' => 'A' }, { 'street' => 'B' }]
     suggestions = client.convert_suggestions(hashes)
     assert_equal 2, suggestions.size
-    assert(suggestions.all? { |s| s.is_a?(SmartyStreets::InternationalAutocomplete::Suggestion) })
+    assert(suggestions.all?(SmartyStreets::InternationalAutocomplete::Suggestion))
     assert_equal 'A', suggestions[0].street
     assert_equal 'B', suggestions[1].street
   end

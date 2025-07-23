@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   class RetrySender
     MAX_BACKOFF_DURATION = 10
     STATUS_TOO_MANY_REQUESTS = 429
-    STATUS_TO_RETRY = [408, 429, 500, 502, 503, 504]
+    STATUS_TO_RETRY = [408, 429, 500, 502, 503, 504].freeze
 
     def initialize(max_retries, inner, sleeper, logger)
       @max_retries = max_retries

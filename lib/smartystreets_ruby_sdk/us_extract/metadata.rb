@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   module USExtract
     # See "https://smartystreets.com/docs/cloud/us-extract-api#http-response-status"

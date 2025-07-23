@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'census_block_entry'
 require_relative 'census_county_division_entry'
 require_relative 'census_tract_entry'

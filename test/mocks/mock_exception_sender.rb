@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MockExceptionSender
   def initialize(exception)
     @exception = exception

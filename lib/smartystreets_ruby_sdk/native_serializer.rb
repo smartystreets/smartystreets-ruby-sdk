@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 
 module SmartyStreets
@@ -7,7 +9,7 @@ module SmartyStreets
     end
 
     def deserialize(payload)
-      JSON.load(payload)
+      JSON.parse(payload)
     end
   end
 end

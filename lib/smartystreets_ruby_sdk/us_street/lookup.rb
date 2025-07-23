@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../json_able'
 module SmartyStreets
   module USStreet

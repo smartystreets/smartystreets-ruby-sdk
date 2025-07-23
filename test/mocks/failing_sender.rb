@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './lib/smartystreets_ruby_sdk/response'
 
 class FailingSender

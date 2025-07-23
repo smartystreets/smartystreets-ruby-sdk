@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../request'
 require_relative 'us_reverse_geo_response'
 
@@ -28,7 +30,7 @@ module SmartyStreets
         add_parameter(request, 'longitude', lookup.longitude)
         add_parameter(request, 'source', lookup.source)
 
-        for key in lookup.custom_param_hash.keys do
+        lookup.custom_param_hash.each_key do |key|
           add_parameter(request, key, lookup.custom_param_hash[key])
         end
 
@@ -36,7 +38,7 @@ module SmartyStreets
       end
 
       def add_parameter(request, key, value)
-        request.parameters[key] = value unless value.nil? or value.empty?
+        request.parameters[key] = value unless value.nil? || value.empty?
       end
     end
   end

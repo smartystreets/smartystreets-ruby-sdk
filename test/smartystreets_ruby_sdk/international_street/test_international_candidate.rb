@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/international_street'
 require './lib/smartystreets_ruby_sdk/native_serializer'

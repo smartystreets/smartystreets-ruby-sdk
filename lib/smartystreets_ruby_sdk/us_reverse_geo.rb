@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'us_reverse_geo/address'
 require_relative 'us_reverse_geo/client'
 require_relative 'us_reverse_geo/coordinate'

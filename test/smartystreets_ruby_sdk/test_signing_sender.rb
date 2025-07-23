@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../test_helper'
 require './lib/smartystreets_ruby_sdk/static_credentials'
 require './lib/smartystreets_ruby_sdk/shared_credentials'

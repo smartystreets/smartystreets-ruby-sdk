@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../test_helper'
 require 'minitest/autorun'
 require_relative '../../lib/smartystreets_ruby_sdk/shared_credentials'
@@ -98,7 +100,7 @@ class TestAuth < Minitest::Test
     creds = StaticCredentials.new('id', 'token')
     dummy = DummySender.new
     sender = SigningSender.new(creds, dummy)
-    threads = 10.times.map do
+    threads = Array.new(10) do
       Thread.new do
         req = Request.new
         sender.send(req)

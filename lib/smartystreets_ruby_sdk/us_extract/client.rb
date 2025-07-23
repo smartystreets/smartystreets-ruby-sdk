@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../request'
 require_relative '../exceptions'
 require_relative 'result'
@@ -15,7 +17,7 @@ module SmartyStreets
       # Sends a Lookup object to the US Extract Code API and stores the result in the Lookup's result field.
       # It also returns the result directly.
       def send(lookup)
-        if lookup.nil? or lookup.text.nil? or !lookup.text.is_a? String or lookup.text.empty?
+        if lookup.nil? || lookup.text.nil? || !lookup.text.is_a?(String) || lookup.text.empty?
           raise SmartyError, 'Client.send() requires a Lookup with the "text" field set'
         end
 
@@ -41,7 +43,7 @@ module SmartyStreets
           add_parameter(request, 'match', lookup.match)
         end
 
-        for key in lookup.custom_param_hash.keys do
+        lookup.custom_param_hash.each_key do |key|
           add_parameter(request, key, lookup.custom_param_hash[key])
         end
 
@@ -49,7 +51,7 @@ module SmartyStreets
       end
 
       def add_parameter(request, key, value)
-        return unless value and !value.empty?
+        return unless value && !value.empty?
 
         request.parameters[key] = value
       end

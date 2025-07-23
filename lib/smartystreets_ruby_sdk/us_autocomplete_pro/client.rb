@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../request'
 require_relative '../exceptions'
 require_relative 'geolocation_type'
@@ -14,7 +16,7 @@ module SmartyStreets
 
       # Sends a Lookup object to the US Autocomplete Pro API and stores the result in the Lookup's result field.
       def send(lookup)
-        if !lookup or !lookup.search
+        if !lookup || !lookup.search
           raise SmartyStreets::SmartyError, 'Send() must be passed a Lookup with the prefix field set.'
         end
 
@@ -50,7 +52,7 @@ module SmartyStreets
         end
         add_parameter(request, 'selected', lookup.selected)
 
-        for key in lookup.custom_param_hash.keys do
+        lookup.custom_param_hash.each_key do |key|
           add_parameter(request, key, lookup.custom_param_hash[key])
         end
 
@@ -58,7 +60,7 @@ module SmartyStreets
       end
 
       def build_filter_string(filter_list)
-        filter_list ? filter_list.join(';') : nil
+        filter_list&.join(';')
       end
 
       def convert_suggestions(suggestion_hashes)
@@ -73,7 +75,7 @@ module SmartyStreets
       end
 
       def add_parameter(request, key, value)
-        request.parameters[key] = value unless value.nil? or value.empty?
+        request.parameters[key] = value unless value.nil? || value.empty?
       end
     end
   end

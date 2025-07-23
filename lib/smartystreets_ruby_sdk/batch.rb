@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   # The Batch class is used to send up to 100 lookups at once
   class Batch
@@ -56,6 +58,7 @@ module SmartyStreets
       return nil unless lookup
       # Only return if the lookup's current input_id matches the key
       return lookup if lookup.input_id == input_id
+
       nil
     end
 
@@ -76,9 +79,7 @@ module SmartyStreets
       batch.instance_variable_get(:@all_lookups).each do |lookup|
         original_id = batch.instance_variable_get(:@lookup_to_input_id)[lookup]
         current_id = lookup.input_id
-        if original_id != current_id
-          batch.instance_variable_get(:@named_lookups).delete(original_id)
-        end
+        batch.instance_variable_get(:@named_lookups).delete(original_id) if original_id != current_id
       end
     end
   end

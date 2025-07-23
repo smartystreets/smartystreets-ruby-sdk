@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MockSender
   def initialize(response)
     @response = response

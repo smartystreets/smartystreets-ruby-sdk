@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'history_entry'
 
 module SmartyStreets
@@ -126,11 +128,9 @@ module SmartyStreets
           def createFinancialHistory(historyArray)
             return [] unless historyArray
 
-            entryArray = []
-            for entry in historyArray do
-              entryArray << Financial::HistoryEntry.new(entry)
+            historyArray.map do |entry|
+              Financial::HistoryEntry.new(entry)
             end
-            entryArray
           end
         end
       end

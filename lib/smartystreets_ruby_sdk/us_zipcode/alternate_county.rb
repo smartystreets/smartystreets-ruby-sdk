@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   module USZipcode
     # See "https://smartystreets.com/docs/cloud/us-zipcode-api#zipcodes"

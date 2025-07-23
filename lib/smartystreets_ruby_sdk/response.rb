@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   class Response
     attr_accessor :payload, :status_code, :header, :error

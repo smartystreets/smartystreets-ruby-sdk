@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../../test_helper'
 require 'smartystreets_ruby_sdk/us_street/lookup'
 

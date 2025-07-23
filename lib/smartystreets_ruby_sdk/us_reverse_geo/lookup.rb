@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   module USReverseGeo
     # In addition to holding all of the input data for this lookup, this class also will contain the

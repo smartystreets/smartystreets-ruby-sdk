@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'native_serializer'
 require_relative 'native_sender'
 require_relative 'status_code_sender'
@@ -23,14 +25,14 @@ module SmartyStreets
   # You can use ClientBuilder's methods to customize settings like maximum retries or timeout duration.
   # These methods are chainable, so you can usually get set up with one line of code.
   class ClientBuilder
-    INTERNATIONAL_STREET_API_URL = 'https://international-street.api.smarty.com/verify'.freeze
-    INTERNATIONAL_AUTOCOMPLETE_API_URL = 'https://international-autocomplete.api.smarty.com/v2/lookup'.freeze
-    US_AUTOCOMPLETE_PRO_API_URL = 'https://us-autocomplete-pro.api.smarty.com/lookup'.freeze
-    US_EXTRACT_API_URL = 'https://us-extract.api.smarty.com/'.freeze
-    US_STREET_API_URL = 'https://us-street.api.smarty.com/street-address'.freeze
-    US_ZIP_CODE_API_URL = 'https://us-zipcode.api.smarty.com/lookup'.freeze
-    US_REVERSE_GEO_API_URL = 'https://us-reverse-geo.api.smarty.com/lookup'.freeze
-    US_ENRICHMENT_API_URL = 'https://us-enrichment.api.smarty.com/lookup'.freeze
+    INTERNATIONAL_STREET_API_URL = 'https://international-street.api.smarty.com/verify'
+    INTERNATIONAL_AUTOCOMPLETE_API_URL = 'https://international-autocomplete.api.smarty.com/v2/lookup'
+    US_AUTOCOMPLETE_PRO_API_URL = 'https://us-autocomplete-pro.api.smarty.com/lookup'
+    US_EXTRACT_API_URL = 'https://us-extract.api.smarty.com/'
+    US_STREET_API_URL = 'https://us-street.api.smarty.com/street-address'
+    US_ZIP_CODE_API_URL = 'https://us-zipcode.api.smarty.com/lookup'
+    US_REVERSE_GEO_API_URL = 'https://us-reverse-geo.api.smarty.com/lookup'
+    US_ENRICHMENT_API_URL = 'https://us-enrichment.api.smarty.com/lookup'
 
     def initialize(signer)
       @signer = signer
@@ -175,7 +177,7 @@ module SmartyStreets
 
       sender = SigningSender.new(@signer, sender) unless @signer.nil?
 
-      if @max_retries > 0
+      if @max_retries.positive?
         sender = RetrySender.new(@max_retries, sender, SmartyStreets::Sleeper.new,
                                  SmartyStreets::Logger.new)
       end

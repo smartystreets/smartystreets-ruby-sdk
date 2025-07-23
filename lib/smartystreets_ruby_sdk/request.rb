@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   class Request
     attr_accessor :parameters, :payload, :url_components, :url_prefix, :referer, :header, :content_type

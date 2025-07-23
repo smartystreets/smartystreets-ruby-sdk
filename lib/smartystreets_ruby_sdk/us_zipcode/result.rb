@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'city'
 require_relative 'zip_code'
 
@@ -24,23 +26,15 @@ module SmartyStreets
       end
 
       def convert_cities
-        converted_cities = []
-
-        @cities.each do |city|
-          converted_cities.push(City.new(city))
+        @cities.map do |city|
+          City.new(city)
         end
-
-        converted_cities
       end
 
       def convert_zipcodes
-        converted_zipcodes = []
-
-        @zipcodes.each do |zipcode|
-          converted_zipcodes.push(ZipCode.new(zipcode))
+        @zipcodes.map do |zipcode|
+          ZipCode.new(zipcode)
         end
-
-        converted_zipcodes
       end
     end
   end

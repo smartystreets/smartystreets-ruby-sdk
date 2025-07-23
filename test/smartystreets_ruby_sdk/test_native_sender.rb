@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../test_helper'
 require 'net/http'
 require_relative '../../lib/smartystreets_ruby_sdk/native_sender'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SmartyStreets
   module USReverseGeo
     # See "https://smartystreets.com/docs/cloud/us-reverse-geo-api#address"
