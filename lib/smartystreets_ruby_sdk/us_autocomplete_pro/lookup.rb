@@ -13,24 +13,20 @@ module SmartyStreets
                     :exclude_states, :prefer_cities, :prefer_states, :prefer_zip_codes, :prefer_ratio,
                     :prefer_geolocation, :selected, :source, :custom_param_hash
 
-      def initialize(search = nil, max_results = nil, city_filter = nil, state_filter = nil, zip_filter = nil,
-                     exclude_states = nil, prefer_cities = nil, prefer_states = nil, prefer_zips = nil, prefer_ratio = nil,
-                     prefer_geolocation = nil, selected = nil, source = nil, _custom_param_hash = nil)
-        @result = []
+      def initialize(search = nil, max_results = nil, city_filter = nil, state_filter = nil, zip_filter = nil, input_id = nil, custom_param_hash = nil)
+        super()
         @search = search
         @max_results = max_results
         @city_filter = city_filter || []
         @state_filter = state_filter || []
         @zip_filter = zip_filter || []
-        @exclude_states = exclude_states || []
-        @prefer_cities = prefer_cities || []
-        @prefer_states = prefer_states || []
-        @prefer_zip_codes = prefer_zips || []
-        @prefer_ratio = prefer_ratio
-        @prefer_geolocation = prefer_geolocation
-        @selected = selected
-        @source = source
-        @custom_param_hash = {}
+        @exclude_states = []
+        @prefer_cities = []
+        @prefer_states = []
+        @prefer_zip_codes = []
+        @input_id = input_id
+        @custom_param_hash = custom_param_hash || {}
+        @result = []
       end
 
       def add_custom_parameter(parameter, value)

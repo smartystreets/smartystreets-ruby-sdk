@@ -15,6 +15,7 @@ module SmartyStreets
 
       def initialize(street = nil, street2 = nil, secondary = nil, city = nil, state = nil, zipcode = nil, lastline = nil,
                      addressee = nil, urbanization = nil, match = nil, candidates = 0, input_id = nil, county_source = nil, format = nil)
+        super()
         @input_id = input_id
         @street = street
         @street2 = street2

@@ -9,26 +9,27 @@ require_relative '../../lib/smartystreets_ruby_sdk/version'
 require 'smartystreets_ruby_sdk/native_sender'
 require 'ostruct'
 
+# Move MockResponse class definition outside of any block
+class MockResponse
+  attr_reader :body, :code, :header
+
+  def initialize(payload, status_code, header = nil)
+    @body = payload
+    @code = status_code
+    @header = header
+  end
+
+  def json
+    @body
+  end
+end
+
 class TestNativeSender < Minitest::Test
   NativeSender = SmartyStreets::NativeSender
   SmartyError = SmartyStreets::SmartyError
   Request = SmartyStreets::Request
 
   Net::HTTP.class_eval do
-    class MockResponse
-      attr_reader :body, :code, :header
-
-      def initialize(payload, status_code, header = nil)
-        @body = payload
-        @code = status_code
-        @header = header
-      end
-
-      def json
-        @body
-      end
-    end
-
     def request(request)
       if request.uri == URI.parse('http://localhost/error?')
         mock_response = MockResponse.new('Error test', '400')

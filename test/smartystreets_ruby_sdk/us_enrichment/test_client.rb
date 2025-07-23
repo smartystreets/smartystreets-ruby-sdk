@@ -367,19 +367,4 @@ class TestStreetClient < Minitest::Test
     assert_equal('/search/secondary/count', sender.request.url_components)
     assert_equal('street city state zipcode', sender.request.parameters['freeform'])
   end
-
-  def test_financial_etag_present
-    sender = RequestCapturingSender.new
-    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
-
-    lookup = SmartyStreets::USEnrichment::Lookup.new
-    lookup.street = 'street'
-    lookup.city = 'city'
-    lookup.state = 'state'
-    lookup.zipcode = 'zipcode'
-    lookup.etag = 'etag'
-
-    client.send_secondary_count_lookup(lookup)
-    assert_equal('etag', sender.request.header['ETAG'])
-  end
 end

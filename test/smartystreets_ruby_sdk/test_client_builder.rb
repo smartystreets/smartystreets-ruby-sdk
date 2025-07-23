@@ -5,7 +5,9 @@ require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/client_builder'
 
 module SmartyStreets
-  class DummySigner; end
+  class DummySigner
+    def sign(request); end
+  end
 end
 
 class TestClientBuilder < Minitest::Test

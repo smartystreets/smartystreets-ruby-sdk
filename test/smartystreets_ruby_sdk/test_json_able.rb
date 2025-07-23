@@ -8,6 +8,7 @@ class DummyJson < SmartyStreets::JSONAble
   attr_accessor :foo, :bar
 
   def initialize(foo = nil, bar = nil)
+    super()
     @foo = foo
     @bar = bar
   end

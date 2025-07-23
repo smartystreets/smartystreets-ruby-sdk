@@ -9,16 +9,16 @@ module SmartyStreets
     class Lookup < JSONAble
       attr_accessor :result, :search, :address_id, :country, :max_results, :locality, :postal_code, :custom_param_hash
 
-      def initialize(search = nil, address_id = nil, country = nil, max_results = nil, locality = nil,
-                     postal_code = nil, _custom_param_hash = nil)
-        @result = []
+      def initialize(search = nil, address_id = nil, country = nil, max_results = nil, locality = nil, postal_code = nil, custom_param_hash = nil)
+        super()
         @search = search
         @address_id = address_id
         @country = country
         @max_results = max_results
         @locality = locality
         @postal_code = postal_code
-        @custom_param_hash = {}
+        @custom_param_hash = custom_param_hash || {}
+        @result = []
       end
 
       def add_custom_parameter(parameter, value)

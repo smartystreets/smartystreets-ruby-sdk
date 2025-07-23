@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class FakeLogger
-  attr_reader :log
+  attr_reader :messages
 
   def initialize
-    @log = []
+    @messages = []
   end
 
   def log(message)
-    @log.push(message)
+    @messages.push(message)
   end
 end

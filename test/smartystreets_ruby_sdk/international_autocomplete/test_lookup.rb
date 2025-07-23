@@ -27,7 +27,7 @@ class InternationalAutocompleteLookupTest < Minitest::Test
     assert_equal 5, lookup.max_results
     assert_equal 'local', lookup.locality
     assert_equal '90210', lookup.postal_code
-    assert_equal({}, lookup.custom_param_hash) # always resets to {}
+    assert_equal({ 'foo' => 'bar' }, lookup.custom_param_hash)
   end
 
   def test_add_custom_parameter
