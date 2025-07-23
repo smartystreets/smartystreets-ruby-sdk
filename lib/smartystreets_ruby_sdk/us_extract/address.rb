@@ -15,9 +15,9 @@ module SmartyStreets
         candidates = obj.fetch('api_output', [])
         @candidates = []
 
-        candidates.each {|candidate|
+        candidates.each do |candidate|
           @candidates.push(USStreet::Candidate.new(candidate))
-        }
+        end
       end
     end
   end

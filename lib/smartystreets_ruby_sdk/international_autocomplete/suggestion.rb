@@ -1,8 +1,8 @@
 module SmartyStreets
   module InternationalAutocomplete
     class Suggestion
-
-      attr_reader :street, :locality, :administrative_area, :administrative_area_short, :administrative_area_long, :postal_code, :country_iso3, :entries, :address_text, :address_id
+      attr_reader :street, :locality, :administrative_area, :administrative_area_short, :administrative_area_long,
+                  :postal_code, :country_iso3, :entries, :address_text, :address_id
 
       def initialize(obj)
         @street = obj.fetch('street', nil)

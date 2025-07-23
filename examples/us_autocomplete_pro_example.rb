@@ -10,8 +10,8 @@ class USAutocompleteProExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    key = ENV['SMARTY_AUTH_WEB']
-    referer = ENV['SMARTY_AUTH_REFERER']
+    key = ENV.fetch('SMARTY_AUTH_WEB', nil)
+    referer = ENV.fetch('SMARTY_AUTH_REFERER', nil)
     credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
     # id = ENV['SMARTY_AUTH_ID']
@@ -33,7 +33,7 @@ class USAutocompleteProExample
     lookup.add_city_filter('Orem,UT')
     lookup.max_results = 5
     lookup.prefer_ratio = 3
-    lookup.source = "all"
+    lookup.source = 'all'
 
     # lookup.add_custom_parameter('parameter', 'value')
 
@@ -46,9 +46,7 @@ class USAutocompleteProExample
     suggestions.each do |suggestion|
       puts "#{suggestion.street_line} #{suggestion.city}, #{suggestion.state}"
     end
-
   end
 end
 
 USAutocompleteProExample.new.run
-

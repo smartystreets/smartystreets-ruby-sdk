@@ -13,6 +13,7 @@ class TestAuth < Minitest::Test
 
   class DummySender
     attr_reader :last_request
+
     def send(request)
       @last_request = request
       'sent!'
@@ -69,4 +70,92 @@ class TestAuth < Minitest::Test
     assert_equal 'id2', req.parameters['key']
     assert_equal 'host2', req.referer
   end
-end 
+
+  def test_shared_credentials_with_nil_and_empty
+    creds = SharedCredentials.new(nil, '')
+    req = Request.new
+    creds.sign(req)
+    assert_nil req.parameters['key']
+    assert_equal '', req.referer
+  end
+
+  def test_static_credentials_with_non_string_types
+    creds = StaticCredentials.new(123, :token)
+    req = Request.new
+    creds.sign(req)
+    assert_equal 123, req.parameters['auth-id']
+    assert_equal :token, req.parameters['auth-token']
+  end
+
+  def test_signing_sender_with_nil_sender
+    creds = StaticCredentials.new('id', 'token')
+    assert_raises(TypeError) do
+      SigningSender.new(creds, nil).send(Request.new)
+    end
+  end
+
+  def test_signing_sender_thread_safety
+    creds = StaticCredentials.new('id', 'token')
+    dummy = DummySender.new
+    sender = SigningSender.new(creds, dummy)
+    threads = 10.times.map do
+      Thread.new do
+        req = Request.new
+        sender.send(req)
+        assert_equal 'id', req.parameters['auth-id']
+        assert_equal 'token', req.parameters['auth-token']
+      end
+    end
+    threads.each(&:join)
+  end
+
+  def test_signing_same_request_multiple_times
+    creds = StaticCredentials.new('id', 'token')
+    req = Request.new
+    creds.sign(req)
+    creds.sign(req)
+    assert_equal 'id', req.parameters['auth-id']
+    assert_equal 'token', req.parameters['auth-token']
+  end
+
+  def test_signing_request_with_existing_parameters
+    creds = StaticCredentials.new('id', 'token')
+    req = Request.new
+    req.parameters['auth-id'] = 'existing'
+    creds.sign(req)
+    assert_equal 'id', req.parameters['auth-id']
+    assert_equal 'token', req.parameters['auth-token']
+  end
+
+  def test_signing_request_with_nil_parameters_hash
+    creds = StaticCredentials.new('id', 'token')
+    req = Request.new
+    req.instance_variable_set(:@parameters, nil)
+    assert_raises(NoMethodError) { creds.sign(req) }
+  end
+
+  def test_signing_frozen_request
+    creds = StaticCredentials.new('id', 'token')
+    req = Request.new
+    req.parameters.freeze
+    assert_raises(FrozenError) { creds.sign(req) }
+  end
+
+  def test_signing_sender_with_nil_credentials
+    dummy = DummySender.new
+    assert_raises(NoMethodError) do
+      SigningSender.new(nil, dummy).send(Request.new)
+    end
+  end
+
+  def test_signing_sender_with_deep_chain
+    dummy = DummySender.new
+    sender = 10.downto(1).inject(dummy) do |inner, i|
+      SigningSender.new(StaticCredentials.new("id#{i}", "token#{i}"), inner)
+    end
+    req = Request.new
+    sender.send(req)
+    assert_equal 'id10', req.parameters['auth-id']
+    assert_equal 'token10', req.parameters['auth-token']
+  end
+end

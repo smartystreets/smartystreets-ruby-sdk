@@ -24,7 +24,7 @@ module SmartyStreets
   # These methods are chainable, so you can usually get set up with one line of code.
   class ClientBuilder
     INTERNATIONAL_STREET_API_URL = 'https://international-street.api.smarty.com/verify'.freeze
-    INTERNATIONAL_AUTOCOMPLETE_API_URL = "https://international-autocomplete.api.smarty.com/v2/lookup".freeze
+    INTERNATIONAL_AUTOCOMPLETE_API_URL = 'https://international-autocomplete.api.smarty.com/v2/lookup'.freeze
     US_AUTOCOMPLETE_PRO_API_URL = 'https://us-autocomplete-pro.api.smarty.com/lookup'.freeze
     US_EXTRACT_API_URL = 'https://us-extract.api.smarty.com/'.freeze
     US_STREET_API_URL = 'https://us-street.api.smarty.com/street-address'.freeze
@@ -41,7 +41,7 @@ module SmartyStreets
       @url_prefix = nil
       @proxy = nil
       @header = nil
-      @licenses = %w()
+      @licenses = %w[]
       @debug = nil
     end
 
@@ -175,7 +175,10 @@ module SmartyStreets
 
       sender = SigningSender.new(@signer, sender) unless @signer.nil?
 
-      sender = RetrySender.new(@max_retries, sender, SmartyStreets::Sleeper.new,SmartyStreets::Logger.new) if @max_retries > 0
+      if @max_retries > 0
+        sender = RetrySender.new(@max_retries, sender, SmartyStreets::Sleeper.new,
+                                 SmartyStreets::Logger.new)
+      end
 
       sender = LicenseSender.new(sender, @licenses)
 

@@ -8,74 +8,74 @@ require './lib/smartystreets_ruby_sdk/us_street/analysis'
 class TestCandidate < Minitest::Test
   def test_all_fields_filled_correctly
     obj = {
-        'input_id' => "1234",
-        'input_index' => 0,
-        'candidate_index' => 1,
-        'addressee' => '2',
-        'delivery_line_1' => '3',
-        'delivery_line_2' => '4',
-        'last_line' => '5',
-        'delivery_point_barcode' => '6',
-        'smarty_key' => '112',
-        'components' => {
-            'urbanization' => '7',
-            'primary_number' => '8',
-            'street_name' => '9',
-            'street_predirection' => '10',
-            'street_postdirection' => '11',
-            'street_suffix' => '12',
-            'secondary_number' => '13',
-            'secondary_designator' => '14',
-            'extra_secondary_number' => '15',
-            'extra_secondary_designator' => '16',
-            'pmb_designator' => '17',
-            'pmb_number' => '18',
-            'city_name' => '19',
-            'default_city_name' => '20',
-            'state_abbreviation' => '21',
-            'zipcode' => '22',
-            'plus4_code' => '23',
-            'delivery_point' => '24',
-            'delivery_point_check_digit' => '25'
-        },
-        'metadata' => {
-            'record_type' => '26',
-            'zip_type' => '27',
-            'county_fips' => '28',
-            'county_name' => '29',
-            'carrier_route' => '30',
-            'congressional_district' => '31',
-            'building_default_indicator' => '32',
-            'rdi' => '33',
-            'elot_sequence' => '34',
-            'elot_sort' => '35',
-            'latitude' => 36.0,
-            'longitude' => 37.0,
-            'precision' => '38',
-            'time_zone' => '39',
-            'utc_offset' => 40.0,
-            'dst' => '41',
-            'ews_match' => '42'
-        },
-        'analysis' => {
-            'dpv_match_code' => '43',
-            'dpv_footnotes' => '44',
-            'dpv_cmra' => '45',
-            'dpv_vacant' => '46',
-            'active' => '47',
-            'ews_match' => '48',
-            'footnotes' => '49',
-            'lacslink_code' => '50',
-            'lacslink_indicator' => '51',
-            'suitelink_match' => '52',
-            'dpv_no_stat' => '53',
-            'enhanced_match' => '54'
-        }
+      'input_id' => '1234',
+      'input_index' => 0,
+      'candidate_index' => 1,
+      'addressee' => '2',
+      'delivery_line_1' => '3',
+      'delivery_line_2' => '4',
+      'last_line' => '5',
+      'delivery_point_barcode' => '6',
+      'smarty_key' => '112',
+      'components' => {
+        'urbanization' => '7',
+        'primary_number' => '8',
+        'street_name' => '9',
+        'street_predirection' => '10',
+        'street_postdirection' => '11',
+        'street_suffix' => '12',
+        'secondary_number' => '13',
+        'secondary_designator' => '14',
+        'extra_secondary_number' => '15',
+        'extra_secondary_designator' => '16',
+        'pmb_designator' => '17',
+        'pmb_number' => '18',
+        'city_name' => '19',
+        'default_city_name' => '20',
+        'state_abbreviation' => '21',
+        'zipcode' => '22',
+        'plus4_code' => '23',
+        'delivery_point' => '24',
+        'delivery_point_check_digit' => '25'
+      },
+      'metadata' => {
+        'record_type' => '26',
+        'zip_type' => '27',
+        'county_fips' => '28',
+        'county_name' => '29',
+        'carrier_route' => '30',
+        'congressional_district' => '31',
+        'building_default_indicator' => '32',
+        'rdi' => '33',
+        'elot_sequence' => '34',
+        'elot_sort' => '35',
+        'latitude' => 36.0,
+        'longitude' => 37.0,
+        'precision' => '38',
+        'time_zone' => '39',
+        'utc_offset' => 40.0,
+        'dst' => '41',
+        'ews_match' => '42'
+      },
+      'analysis' => {
+        'dpv_match_code' => '43',
+        'dpv_footnotes' => '44',
+        'dpv_cmra' => '45',
+        'dpv_vacant' => '46',
+        'active' => '47',
+        'ews_match' => '48',
+        'footnotes' => '49',
+        'lacslink_code' => '50',
+        'lacslink_indicator' => '51',
+        'suitelink_match' => '52',
+        'dpv_no_stat' => '53',
+        'enhanced_match' => '54'
+      }
     }
 
     candidate = SmartyStreets::USStreet::Candidate.new(obj)
 
-    assert_equal("1234", candidate.input_id)
+    assert_equal('1234', candidate.input_id)
     assert_equal(0, candidate.input_index)
     assert_equal(1, candidate.candidate_index)
     assert_equal('2', candidate.addressee)

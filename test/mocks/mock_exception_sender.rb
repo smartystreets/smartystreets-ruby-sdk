@@ -3,11 +3,9 @@ class MockExceptionSender
     @exception = exception
   end
 
-  def send(request)
-    if not @exception
-      nil
-    else
-      SmartyStreets::Response.new(nil, nil, nil, @exception)
-    end
+  def send(_request)
+    return unless @exception
+
+    SmartyStreets::Response.new(nil, nil, nil, @exception)
   end
 end

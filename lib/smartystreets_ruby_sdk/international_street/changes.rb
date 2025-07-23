@@ -8,7 +8,7 @@ module SmartyStreets
 
       def initialize(obj)
         @components = Components.new(obj.fetch('components', {}))
-        super(obj)
+        super
       end
     end
   end

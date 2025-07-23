@@ -16,7 +16,7 @@ module SmartyStreets
         @components = Components.new(obj.fetch('components', {}))
         @metadata = Metadata.new(obj.fetch('metadata', {}))
         @analysis = Analysis.new(obj.fetch('analysis', {}))
-        super(obj)
+        super
       end
     end
   end

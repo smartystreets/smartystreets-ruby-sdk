@@ -49,7 +49,7 @@ class TestProxy < Minitest::Test
 
   def test_negative_port
     proxy = Proxy.new('localhost', -1)
-    assert_equal -1, proxy.port
+    assert_equal(-1, proxy.port)
   end
 
   def test_string_port
@@ -74,4 +74,4 @@ class TestProxy < Minitest::Test
     assert_equal p1.username, p2.username
     assert_equal p1.password, p2.password
   end
-end 
+end

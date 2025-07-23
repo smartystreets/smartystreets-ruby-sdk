@@ -13,11 +13,10 @@ module SmartyStreets
     #     When set to language_mode.NATIVE, the results will always be in the language of the output country.
     #     When set to language_mode.LATIN, the results will always be provided using a Latin character set.
     class Lookup
-
       attr_accessor :input_id, :freeform, :locality, :postal_code, :address3, :address2, :inputId, :address1,
                     :geocode, :administrative_area, :country, :organization, :language, :address4, :result, :custom_param_hash
 
-      def initialize(freeform=nil, country=nil)
+      def initialize(freeform = nil, country = nil)
         @result = []
 
         @input_id = nil
@@ -65,7 +64,7 @@ module SmartyStreets
       end
 
       def field_is_set(field)
-        not field_is_missing(field)
+        !field_is_missing(field)
       end
 
       def ensure_enough_info
@@ -77,10 +76,10 @@ module SmartyStreets
 
         return true if has_postal_code
 
-        if missing_locality_or_administrative_area
-          raise UnprocessableEntityError, 'Insufficient information:'\
-              'One or more required fields were not set on the lookup.'
-        end
+        return unless missing_locality_or_administrative_area
+
+        raise UnprocessableEntityError, 'Insufficient information:' \
+                                        'One or more required fields were not set on the lookup.'
       end
     end
   end

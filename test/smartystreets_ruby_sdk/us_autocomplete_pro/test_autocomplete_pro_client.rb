@@ -11,9 +11,11 @@ module SmartyStreets
   module USAutocompletePro
     class FakeSender
       attr_reader :last_request, :response
+
       def initialize(response)
         @response = response
       end
+
       def send(request)
         @last_request = request
         @response
@@ -21,11 +23,14 @@ module SmartyStreets
     end
 
     class FakeSerializer
-      def deserialize(payload); { 'suggestions' => [{ 'text' => 'foo' }] }; end
+      def deserialize(_payload)
+        { 'suggestions' => [{ 'text' => 'foo' }] }
+      end
     end
 
     class FakeResponse
       attr_reader :payload, :error
+
       def initialize(payload = nil, error = nil)
         @payload = payload
         @error = error
@@ -33,7 +38,9 @@ module SmartyStreets
     end
 
     class FakeLookup
-      attr_accessor :search, :max_results, :city_filter, :state_filter, :zip_filter, :exclude_states, :prefer_cities, :prefer_states, :prefer_zip_codes, :prefer_ratio, :source, :prefer_geolocation, :selected, :custom_param_hash, :result
+      attr_accessor :search, :max_results, :city_filter, :state_filter, :zip_filter, :exclude_states, :prefer_cities,
+                    :prefer_states, :prefer_zip_codes, :prefer_ratio, :source, :prefer_geolocation, :selected, :custom_param_hash, :result
+
       def initialize
         @search = 'foo'
         @max_results = 10
@@ -120,7 +127,7 @@ class TestAutocompleteProClient < Minitest::Test
     lookup.add_preferred_zip('9')
     lookup.prefer_ratio = 10
     lookup.prefer_geolocation = SmartyStreets::USAutocompletePro::GeolocationType::CITY
-    lookup.source = "all"
+    lookup.source = 'all'
 
     client.send(lookup)
 
@@ -180,7 +187,7 @@ class TestAutocompleteProClient < Minitest::Test
 
     lookup = Lookup.new('1')
     lookup.max_results = 2
-    lookup.source = "all"
+    lookup.source = 'all'
     lookup.prefer_geolocation = SmartyStreets::USAutocompletePro::GeolocationType::CITY
 
     client.send(lookup)

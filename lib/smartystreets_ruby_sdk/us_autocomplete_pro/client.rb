@@ -14,7 +14,7 @@ module SmartyStreets
 
       # Sends a Lookup object to the US Autocomplete Pro API and stores the result in the Lookup's result field.
       def send(lookup)
-        if not lookup or not lookup.search
+        if !lookup or !lookup.search
           raise SmartyStreets::SmartyError, 'Send() must be passed a Lookup with the prefix field set.'
         end
 
@@ -28,7 +28,6 @@ module SmartyStreets
         suggestions = convert_suggestions(result.fetch('suggestions', []))
         lookup.result = suggestions
       end
-
 
       def build_request(lookup)
         request = Request.new
@@ -79,4 +78,3 @@ module SmartyStreets
     end
   end
 end
-

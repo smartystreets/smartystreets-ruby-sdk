@@ -6,9 +6,7 @@ module SmartyStreets
     end
 
     def send(request)
-      if @licenses.length > 0
-        request.parameters['license'] = @licenses.join(',')
-      end
+      request.parameters['license'] = @licenses.join(',') if @licenses.length > 0
       @inner.send(request)
     end
   end

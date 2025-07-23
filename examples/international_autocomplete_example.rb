@@ -11,8 +11,8 @@ class InternationalAutocompleteExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    key = ENV['SMARTY_AUTH_WEB']
-    referer = ENV['SMARTY_AUTH_REFERER']
+    key = ENV.fetch('SMARTY_AUTH_WEB', nil)
+    referer = ENV.fetch('SMARTY_AUTH_REFERER', nil)
     credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
     # id = ENV['SMARTY_AUTH_ID']
@@ -25,8 +25,8 @@ class InternationalAutocompleteExample
     # https://smartystreets.com/docs/cloud/us-autocomplete-api
 
     lookup = Lookup.new('Louis')
-    lookup.country = "FRA"
-    lookup.locality = "Paris"
+    lookup.country = 'FRA'
+    lookup.locality = 'Paris'
 
     # lookup.add_custom_parameter('parameter', 'value')
 
@@ -43,10 +43,7 @@ class InternationalAutocompleteExample
         puts "#{suggestion.street} #{suggestion.locality}, #{suggestion.country_iso3}"
       end
     end
-
   end
 end
 
 InternationalAutocompleteExample.new.run
-
-

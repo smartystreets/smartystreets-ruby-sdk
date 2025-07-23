@@ -9,12 +9,11 @@ module SmartyStreets
     # See "https://smartystreets.com/docs/cloud/us-reverse-geo-api#http-request-input-fields"
 
     class Lookup
-
       attr_accessor :latitude, :longitude, :source, :response, :custom_param_hash
 
-      def initialize(latitude, longitude, source=nil, custom_param_hash=nil)
-        @latitude = sprintf('%.8f', latitude)
-        @longitude = sprintf('%.8f', longitude)
+      def initialize(latitude, longitude, source = nil, _custom_param_hash = nil)
+        @latitude = format('%.8f', latitude)
+        @longitude = format('%.8f', longitude)
         @source = source
         @custom_param_hash = {}
       end

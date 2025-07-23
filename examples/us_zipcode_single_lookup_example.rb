@@ -8,8 +8,8 @@ class UsZipcodeSingleLookupExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    key = ENV['SMARTY_AUTH_WEB']
-    referer = ENV['SMARTY_AUTH_REFERER']
+    key = ENV.fetch('SMARTY_AUTH_WEB', nil)
+    referer = ENV.fetch('SMARTY_AUTH_REFERER', nil)
     credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
     # id = ENV['SMARTY_AUTH_ID']
@@ -22,7 +22,7 @@ class UsZipcodeSingleLookupExample
     # https://smartystreets.com/docs/cloud/us-zipcode-api
 
     lookup = SmartyStreets::USZipcode::Lookup.new
-    lookup.input_id = 'dfc33cb6-829e-4fea-aa1b-b6d6580f0817'  # Optional ID from your system
+    lookup.input_id = 'dfc33cb6-829e-4fea-aa1b-b6d6580f0817' # Optional ID from your system
     lookup.city = 'Mountain View'
     lookup.state = 'California'
     lookup.zipcode = '94043'
@@ -31,8 +31,8 @@ class UsZipcodeSingleLookupExample
 
     begin
       client.send_lookup(lookup)
-    rescue SmartyStreets::SmartyError => err
-      puts err
+    rescue SmartyStreets::SmartyError => e
+      puts e
       return
     end
 

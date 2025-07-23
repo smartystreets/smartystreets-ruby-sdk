@@ -2,7 +2,6 @@ module SmartyStreets
   module InternationalStreet
     # See "https://smartystreets.com/docs/cloud/international-street-api#metadata"
     class Metadata
-
       attr_reader :longitude, :geocode_precision, :max_geocode_precision, :latitude, :address_format
 
       def initialize(obj)

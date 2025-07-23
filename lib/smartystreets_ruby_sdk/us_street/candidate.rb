@@ -7,7 +7,7 @@ module SmartyStreets
     # See "https://smartystreets.com/docs/cloud/us-street-api#metadata"
     class Candidate
       attr_reader :input_id, :input_index, :candidate_index, :addressee, :delivery_line_1, :delivery_line_2,
-                  :last_line,:delivery_point_barcode, :smarty_key, :metadata, :components, :analysis
+                  :last_line, :delivery_point_barcode, :smarty_key, :metadata, :components, :analysis
 
       def initialize(obj)
         @input_id = obj['input_id']

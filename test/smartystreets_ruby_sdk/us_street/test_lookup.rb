@@ -5,7 +5,8 @@ module SmartyStreets
   module USStreet
     class TestLookup < Minitest::Test
       def test_constructor_assigns_attributes
-        l = Lookup.new('123 Main', 'Apt 4', 'Sec', 'Springfield', 'IL', '62704', 'last', 'addressee', 'urb', 'strict', 2, 'id', 'county', 'format')
+        l = Lookup.new('123 Main', 'Apt 4', 'Sec', 'Springfield', 'IL', '62704', 'last', 'addressee', 'urb', 'strict',
+                       2, 'id', 'county', 'format')
         assert_equal '123 Main', l.street
         assert_equal 'Apt 4', l.street2
         assert_equal 'Sec', l.secondary
@@ -35,4 +36,4 @@ module SmartyStreets
       end
     end
   end
-end 
+end

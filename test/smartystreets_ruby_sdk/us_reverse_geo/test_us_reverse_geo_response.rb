@@ -6,26 +6,25 @@ require_relative '../../mocks/mock_sender'
 require_relative '../../mocks/fake_deserializer'
 
 class TestUSReverseGeoResponse < Minitest::Test
-
   def test_all_fields_filled_correctly
     obj = {
-        'results' => [
-            {
-                'coordinate' => {
-                    'latitude' => 1.1,
-                    'longitude' => 2.2,
-                    'accuracy' => '3',
-                    'license' => 4
-                },
-                'distance' => 5.5,
-                'address' => {
-                    'street' => '6',
-                    'city' => '7',
-                    'state_abbreviation' => '8',
-                    'zipcode' => '9'
-                }
-            }
-        ]
+      'results' => [
+        {
+          'coordinate' => {
+            'latitude' => 1.1,
+            'longitude' => 2.2,
+            'accuracy' => '3',
+            'license' => 4
+          },
+          'distance' => 5.5,
+          'address' => {
+            'street' => '6',
+            'city' => '7',
+            'state_abbreviation' => '8',
+            'zipcode' => '9'
+          }
+        }
+      ]
     }
 
     response = SmartyStreets::USReverseGeo::Response.new(obj)
@@ -44,6 +43,5 @@ class TestUSReverseGeoResponse < Minitest::Test
     assert_equal('7', address.city)
     assert_equal('8', address.state_abbreviation)
     assert_equal('9', address.zipcode)
-
   end
 end

@@ -36,10 +36,10 @@ module SmartyStreets
         assert_equal 'A', m.elot_sequence
         assert_equal 'B', m.elot_sort
         assert_equal 40.0, m.latitude
-        assert_equal -111.0, m.longitude
+        assert_equal(-111.0, m.longitude)
         assert_equal 'Zip9', m.precision
         assert_equal 'Mountain', m.time_zone
-        assert_equal -7, m.utc_offset
+        assert_equal(-7, m.utc_offset)
         assert_equal true, m.obeys_dst
         assert_equal false, m.is_an_ews_match
       end
@@ -51,4 +51,4 @@ module SmartyStreets
       end
     end
   end
-end 
+end

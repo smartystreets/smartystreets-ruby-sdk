@@ -14,13 +14,13 @@ class TestClientBuilder < Minitest::Test
 
   def test_chainable_configuration_methods
     result = @builder
-      .retry_at_most(10)
-      .with_max_timeout(20)
-      .with_base_url('http://example.com')
-      .with_proxy('host', 8080, 'user', 'pass')
-      .with_custom_headers({'X-Test' => 'value'})
-      .with_licenses(['test-license'])
-      .with_debug
+             .retry_at_most(10)
+             .with_max_timeout(20)
+             .with_base_url('http://example.com')
+             .with_proxy('host', 8080, 'user', 'pass')
+             .with_custom_headers({ 'X-Test' => 'value' })
+             .with_licenses(['test-license'])
+             .with_debug
     assert_equal @builder, result
   end
 
@@ -85,8 +85,8 @@ class TestClientBuilder < Minitest::Test
   end
 
   def test_with_custom_headers_sets_header
-    @builder.with_custom_headers({'X-Test' => 'value'})
-    assert_equal({'X-Test' => 'value'}, @builder.instance_variable_get(:@header))
+    @builder.with_custom_headers({ 'X-Test' => 'value' })
+    assert_equal({ 'X-Test' => 'value' }, @builder.instance_variable_get(:@header))
   end
 
   def test_with_licenses_accumulates_licenses_and_affects_sender
@@ -114,7 +114,7 @@ class TestClientBuilder < Minitest::Test
     sender = @builder.build_sender
     assert sender.is_a?(SmartyStreets::URLPrefixSender)
     # With custom headers
-    @builder.with_custom_headers({'X-Test' => 'value'})
+    @builder.with_custom_headers({ 'X-Test' => 'value' })
     sender = @builder.build_sender
     assert sender.is_a?(SmartyStreets::URLPrefixSender)
   end
@@ -212,7 +212,7 @@ class TestClientBuilder < Minitest::Test
   end
 
   def test_build_sender_with_all_options
-    @builder.with_custom_headers({'X-Test' => 'value'})
+    @builder.with_custom_headers({ 'X-Test' => 'value' })
     @builder.with_licenses(['foo'])
     @builder.with_proxy('host', 123, 'user', 'pass')
     @builder.with_debug
@@ -222,15 +222,15 @@ class TestClientBuilder < Minitest::Test
 
   def test_build_api_clients_with_and_without_url_prefix
     # Test all build_*_api_client methods with and without pre-set url_prefix
-    methods = [
-      :build_international_street_api_client,
-      :build_international_autocomplete_api_client,
-      :build_us_autocomplete_pro_api_client,
-      :build_us_extract_api_client,
-      :build_us_street_api_client,
-      :build_us_zipcode_api_client,
-      :build_us_reverse_geo_api_client,
-      :build_us_enrichment_api_client
+    methods = %i[
+      build_international_street_api_client
+      build_international_autocomplete_api_client
+      build_us_autocomplete_pro_api_client
+      build_us_extract_api_client
+      build_us_street_api_client
+      build_us_zipcode_api_client
+      build_us_reverse_geo_api_client
+      build_us_enrichment_api_client
     ]
     methods.each do |meth|
       # url_prefix nil
@@ -272,7 +272,7 @@ class TestClientBuilderMinimalCoverage < Minitest::Test
   end
 
   def test_explicit_with_custom_headers_coverage
-    @builder.with_custom_headers({'X-Test' => 'value'})
+    @builder.with_custom_headers({ 'X-Test' => 'value' })
   end
 
   def test_explicit_with_licenses_coverage
@@ -286,4 +286,4 @@ class TestClientBuilderMinimalCoverage < Minitest::Test
   def test_explicit_retry_at_most_coverage
     @builder.retry_at_most(42)
   end
-end 
+end

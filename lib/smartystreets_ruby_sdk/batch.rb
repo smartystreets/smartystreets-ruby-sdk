@@ -54,6 +54,5 @@ module SmartyStreets
     def [](index)
       @all_lookups[index]
     end
-
   end
 end

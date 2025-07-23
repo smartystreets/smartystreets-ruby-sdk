@@ -3,7 +3,6 @@ require_relative '../exceptions'
 require_relative 'result'
 require_relative '../us_street/match_type'
 
-
 module SmartyStreets
   module USExtract
     # It is recommended to instantiate this class using ClientBuilder.build_us_extract_api_client()
@@ -16,13 +15,14 @@ module SmartyStreets
       # Sends a Lookup object to the US Extract Code API and stores the result in the Lookup's result field.
       # It also returns the result directly.
       def send(lookup)
-        if lookup.nil? or lookup.text.nil? or not lookup.text.is_a? String or lookup.text.empty?
+        if lookup.nil? or lookup.text.nil? or !lookup.text.is_a? String or lookup.text.empty?
           raise SmartyError, 'Client.send() requires a Lookup with the "text" field set'
         end
 
         request = build_request(lookup)
         response = @sender.send(request)
         raise response.error if response.error
+
         result = USExtract::Result.new(@serializer.deserialize(response.payload))
 
         lookup.result = result
@@ -37,7 +37,7 @@ module SmartyStreets
         add_parameter(request, 'aggressive', lookup.aggressive.to_s)
         add_parameter(request, 'addr_line_breaks', lookup.addresses_have_line_breaks.to_s)
         add_parameter(request, 'addr_per_line', lookup.addresses_per_line.to_s)
-        if lookup.match !=  SmartyStreets::USStreet::MatchType::STRICT && lookup.match != nil
+        if lookup.match != SmartyStreets::USStreet::MatchType::STRICT && !lookup.match.nil?
           add_parameter(request, 'match', lookup.match)
         end
 
@@ -49,9 +49,9 @@ module SmartyStreets
       end
 
       def add_parameter(request, key, value)
-        if value and not value.empty?
-          request.parameters[key] = value
-        end
+        return unless value and !value.empty?
+
+        request.parameters[key] = value
       end
     end
   end

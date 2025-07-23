@@ -14,9 +14,9 @@ class TestUSReverseGeoClient < Minitest::Test
 
   def test_sending_single_fully_populated_lookup
     sender = RequestCapturingSender.new
-    serializer = FakeDeserializer.new({"results"=>[{}]})
+    serializer = FakeDeserializer.new({ 'results' => [{}] })
     client = Client.new(sender, serializer)
-    lookup = Lookup.new(44.888888888, -111.111111111, "")
+    lookup = Lookup.new(44.888888888, -111.111111111, '')
 
     client.send(lookup)
 
@@ -28,7 +28,7 @@ class TestUSReverseGeoClient < Minitest::Test
     response = Response.new('Hello, World!', 0)
 
     sender = MockSender.new(response)
-    deserializer = FakeDeserializer.new({"results"=>[{}]})
+    deserializer = FakeDeserializer.new({ 'results' => [{}] })
     client = Client.new(sender, deserializer)
 
     client.send(Lookup.new('1', '2', ''))

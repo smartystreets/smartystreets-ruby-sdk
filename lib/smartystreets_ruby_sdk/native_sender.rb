@@ -23,12 +23,10 @@ module SmartyStreets
         response = http.request(request)
 
         http.finish if http.started?
-      rescue StandardError => err
-        if response.nil?
-          return Response.new(nil, nil, nil, err)
-        else
-          return Response.new(nil, nil, response.header, err)
-        end
+      rescue StandardError => e
+        return Response.new(nil, nil, nil, e) if response.nil?
+
+        return Response.new(nil, nil, response.header, e)
       end
 
       build_smarty_response(response)
@@ -37,11 +35,11 @@ module SmartyStreets
     def self.build_request(smarty_request)
       query = create_query(smarty_request)
 
-      if smarty_request.payload.nil?
-        request = Net::HTTP::Get.new(URI.parse("#{smarty_request.url_prefix}?#{query}"))
-      else
-        request = Net::HTTP::Post.new(URI.parse("#{smarty_request.url_prefix}?#{query}"))
-      end
+      request = if smarty_request.payload.nil?
+                  Net::HTTP::Get.new(URI.parse("#{smarty_request.url_prefix}?#{query}"))
+                else
+                  Net::HTTP::Post.new(URI.parse("#{smarty_request.url_prefix}?#{query}"))
+                end
 
       request.content_type = 'application/json'
       request.body = smarty_request.payload
@@ -62,12 +60,12 @@ module SmartyStreets
     def build_http(request)
       uri = request.uri
 
-      if @proxy.nil?
-        http = Net::HTTP.new(uri.hostname, uri.port)
-      else
-        http = Net::HTTP.new(uri.hostname, uri.port, @proxy.host,
+      http = if @proxy.nil?
+               Net::HTTP.new(uri.hostname, uri.port)
+             else
+               Net::HTTP.new(uri.hostname, uri.port, @proxy.host,
                              @proxy.port, @proxy.username, @proxy.password)
-      end
+             end
 
       http.set_debug_output($stdout) if @debug
 

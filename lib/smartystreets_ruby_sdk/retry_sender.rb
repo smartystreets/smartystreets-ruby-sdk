@@ -15,15 +15,12 @@ module SmartyStreets
       response = @inner.send(request)
 
       (1..@max_retries).each do |i|
-
         break if STATUS_TO_RETRY.include?(response.status_code.to_i) == false
 
         if response.status_code.to_i == STATUS_TOO_MANY_REQUESTS
           seconds_to_backoff = 10
-          if response.header.nil? == false
-            if Integer(response.header["Retry-After"], exception: false)
-              seconds_to_backoff = response.header["Retry-After"].to_i
-            end
+          if (response.header.nil? == false) && Integer(response.header['Retry-After'], exception: false)
+            seconds_to_backoff = response.header['Retry-After'].to_i
           end
           rate_limit_backoff(seconds_to_backoff)
         else

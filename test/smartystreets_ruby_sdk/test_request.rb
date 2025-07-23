@@ -55,4 +55,4 @@ class TestRequest < Minitest::Test
     req.content_type = ''
     assert_equal '', req.content_type
   end
-end 
+end

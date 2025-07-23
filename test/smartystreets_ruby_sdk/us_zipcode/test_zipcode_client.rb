@@ -10,7 +10,6 @@ require_relative '../../mocks/mock_sender'
 require_relative '../../mocks/fake_deserializer'
 require_relative '../../mocks/mock_exception_sender'
 
-
 class TestZipcodeClient < Minitest::Test
   Batch = SmartyStreets::Batch
   Client = SmartyStreets::USZipcode::Client
@@ -29,9 +28,9 @@ class TestZipcodeClient < Minitest::Test
 
   def test_successfully_sends_populated_lookup
     expected_parameters = {
-        'city' => '1',
-        'state' => '2',
-        'zipcode' => '3'
+      'city' => '1',
+      'state' => '2',
+      'zipcode' => '3'
     }
     sender = RequestCapturingSender.new
     serializer = FakeSerializer.new(expected_parameters)
@@ -69,7 +68,7 @@ class TestZipcodeClient < Minitest::Test
   end
 
   def test_results_correctly_assigned_to_corresponding_lookup
-    raw_results = [{'input_index' => 0}, {'input_index' => 1}]
+    raw_results = [{ 'input_index' => 0 }, { 'input_index' => 1 }]
 
     expected_results = [Result.new(raw_results[0]), Result.new(raw_results[1])]
     batch = Batch.new

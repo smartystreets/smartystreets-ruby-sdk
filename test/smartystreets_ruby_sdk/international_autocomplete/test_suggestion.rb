@@ -4,7 +4,8 @@ require './lib/smartystreets_ruby_sdk/international_autocomplete/suggestion'
 
 class InternationalAutocompleteSuggestionTest < Minitest::Test
   def test_all_fields_get_filled_in_correctly
-    response_dictionary = { 'street' => '1', 'locality' => '2', 'administrative_area' => '3', 'postal_code' => '4', 'country_iso3' => '5', 'entries' => '6', 'address_text' => '7', 'address_id' => '8' }
+    response_dictionary = { 'street' => '1', 'locality' => '2', 'administrative_area' => '3', 'postal_code' => '4',
+                            'country_iso3' => '5', 'entries' => '6', 'address_text' => '7', 'address_id' => '8' }
 
     suggestion = SmartyStreets::InternationalAutocomplete::Suggestion.new(response_dictionary)
 

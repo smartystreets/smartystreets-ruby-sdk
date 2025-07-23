@@ -14,7 +14,8 @@ module SmartyStreets
       # Sends a Lookup object to the International Autocomplete API and stores the result in the Lookup's result field.
       def send(lookup)
         if !lookup || (!lookup.search && !lookup.address_id)
-          raise SmartyStreets::SmartyError, 'Send() must be passed a Lookup with country set, and search or address_id set.'
+          raise SmartyStreets::SmartyError,
+                'Send() must be passed a Lookup with country set, and search or address_id set.'
         end
 
         request = build_request(lookup)
@@ -28,13 +29,10 @@ module SmartyStreets
         lookup.result = suggestions
       end
 
-
       def build_request(lookup)
         request = Request.new
 
-        unless lookup.address_id.nil?
-          request.url_components = '/' + lookup.address_id
-        end
+        request.url_components = '/' + lookup.address_id unless lookup.address_id.nil?
 
         add_parameter(request, 'search', lookup.search)
         add_parameter(request, 'country', lookup.country)
@@ -66,4 +64,3 @@ module SmartyStreets
     end
   end
 end
-

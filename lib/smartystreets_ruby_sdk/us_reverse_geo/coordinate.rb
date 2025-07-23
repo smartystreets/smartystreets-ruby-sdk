@@ -11,15 +11,14 @@ module SmartyStreets
         @license = obj.fetch('license', nil)
       end
 
-      def get_license()
+      def get_license
         case @license
         when 1
-          return "SmartyStreets Proprietary"
+          'SmartyStreets Proprietary'
         else
-          return "SmartyStreets"
+          'SmartyStreets'
         end
       end
     end
   end
 end
-

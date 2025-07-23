@@ -13,9 +13,11 @@ module SmartyStreets
   module InternationalStreet
     class FakeSender
       attr_reader :last_request, :response
+
       def initialize(response)
         @response = response
       end
+
       def send(request)
         @last_request = request
         @response
@@ -23,11 +25,14 @@ module SmartyStreets
     end
 
     class FakeSerializer
-      def deserialize(payload); [{ 'foo' => 'bar' }]; end
+      def deserialize(_payload)
+        [{ 'foo' => 'bar' }]
+      end
     end
 
     class FakeResponse
       attr_reader :payload, :error
+
       def initialize(payload = nil, error = nil)
         @payload = payload
         @error = error
@@ -35,7 +40,9 @@ module SmartyStreets
     end
 
     class FakeLookup
-      attr_accessor :input_id, :country, :geocode, :language, :freeform, :address1, :address2, :address3, :address4, :organization, :locality, :administrative_area, :postal_code, :custom_param_hash, :result
+      attr_accessor :input_id, :country, :geocode, :language, :freeform, :address1, :address2, :address3, :address4,
+                    :organization, :locality, :administrative_area, :postal_code, :custom_param_hash, :result
+
       def initialize
         @input_id = 'id'
         @country = 'US'
@@ -53,6 +60,7 @@ module SmartyStreets
         @custom_param_hash = {}
         @result = nil
       end
+
       def ensure_enough_info; end
     end
 

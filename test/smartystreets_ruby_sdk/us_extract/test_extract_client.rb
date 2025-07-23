@@ -43,7 +43,7 @@ class TestExtractClient < Minitest::Test
     lookup.aggressive = true
     lookup.addresses_have_line_breaks = true
     lookup.addresses_per_line = 2
-    lookup.match =  SmartyStreets::USStreet::MatchType::ENHANCED
+    lookup.match = SmartyStreets::USStreet::MatchType::ENHANCED
 
     client.send(lookup)
 
@@ -61,7 +61,7 @@ class TestExtractClient < Minitest::Test
     serializer = FakeSerializer.new(nil)
     client = Client.new(sender, serializer)
     lookup = Lookup.new('1')
-    lookup.match =  SmartyStreets::USStreet::MatchType::STRICT
+    lookup.match = SmartyStreets::USStreet::MatchType::STRICT
 
     client.send(lookup)
 
@@ -75,7 +75,7 @@ class TestExtractClient < Minitest::Test
     serializer = FakeSerializer.new(nil)
     client = Client.new(sender, serializer)
     lookup = Lookup.new('1')
-    lookup.match =  SmartyStreets::USStreet::MatchType::INVALID
+    lookup.match = SmartyStreets::USStreet::MatchType::INVALID
 
     client.send(lookup)
 
@@ -106,7 +106,7 @@ class TestExtractClient < Minitest::Test
   end
 
   def test_result_correctly_assigned_to_corresponding_lookup
-    raw_result = {'meta'=> {}, 'addresses'=> [{'text'=> 'Hello, World!'}]}
+    raw_result = { 'meta' => {}, 'addresses' => [{ 'text' => 'Hello, World!' }] }
     expected_result = Result.new(raw_result)
     lookup = Lookup.new('Hello, World!')
     sender = MockSender.new(Response.new('[]', 0))

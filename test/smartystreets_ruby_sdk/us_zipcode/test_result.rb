@@ -5,32 +5,32 @@ require_relative '../../test_helper'
 class TestResult < Minitest::Test
   def test_all_fields_filled_correctly_when_valid
     obj = {
-      'input_id' => "1234",
+      'input_id' => '1234',
       'input_index' => 0,
       'city_states' => [{
-          'city' => '1',
-          'state_abbreviation' => '2',
-          'state' => '3',
-          'mailable_city' => '4'
-                        }],
+        'city' => '1',
+        'state_abbreviation' => '2',
+        'state' => '3',
+        'mailable_city' => '4'
+      }],
       'zipcodes' => [{
-          'zipcode' => '5',
-          'zipcode_type' => '6',
-          'default_city' => '7',
-          'county_fips' => '8',
-          'county_name' => '9',
-          'latitude' => 10,
-          'longitude' => 11,
-          'precision' => '12',
-          'alternate_counties' => [{
-              'county_fips' => '13',
-              'county_name' => '14',
-              'state_abbreviation' => '15',
-              'state' => '16'
-                                   }],
-          'state_abbreviation' => '17',
-          'state' => '18'
-                     }]
+        'zipcode' => '5',
+        'zipcode_type' => '6',
+        'default_city' => '7',
+        'county_fips' => '8',
+        'county_name' => '9',
+        'latitude' => 10,
+        'longitude' => 11,
+        'precision' => '12',
+        'alternate_counties' => [{
+          'county_fips' => '13',
+          'county_name' => '14',
+          'state_abbreviation' => '15',
+          'state' => '16'
+        }],
+        'state_abbreviation' => '17',
+        'state' => '18'
+      }]
     }
 
     result = SmartyStreets::USZipcode::Result.new(obj)
@@ -65,8 +65,8 @@ class TestResult < Minitest::Test
 
   def test_fields_are_filled_correctly_when_invalid
     obj = {
-        'status' => 'testing_status',
-        'reason' => 'We are testing.'
+      'status' => 'testing_status',
+      'reason' => 'We are testing.'
     }
 
     result = SmartyStreets::USZipcode::Result.new(obj)

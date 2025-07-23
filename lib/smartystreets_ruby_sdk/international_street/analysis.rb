@@ -3,7 +3,6 @@ module SmartyStreets
   module InternationalStreet
     # See "https://smartystreets.com/docs/cloud/international-street-api#analysis"
     class Analysis
-
       attr_reader :max_address_precision, :verification_status, :address_precision, :changes
 
       def initialize(obj)

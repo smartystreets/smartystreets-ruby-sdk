@@ -42,4 +42,4 @@ class TestResponse < Minitest::Test
     resp.error = ['array']
     assert_equal ['array'], resp.error
   end
-end 
+end

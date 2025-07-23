@@ -30,4 +30,3 @@ module SmartyStreets
     end
   end
 end
-

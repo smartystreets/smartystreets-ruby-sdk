@@ -11,8 +11,8 @@ class USZipcodeMultipleLookupExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    key = ENV['SMARTY_AUTH_WEB']
-    referer = ENV['SMARTY_AUTH_REFERER']
+    key = ENV.fetch('SMARTY_AUTH_WEB', nil)
+    referer = ENV.fetch('SMARTY_AUTH_REFERER', nil)
     credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
     # id = ENV['SMARTY_AUTH_ID']
@@ -37,15 +37,14 @@ class USZipcodeMultipleLookupExample
 
     batch.add(Lookup.new('cupertino', 'CA', '95014')) # You can also set these with arguments
 
-
     begin
       client.send_batch(batch)
-    rescue SmartyError => err
-      puts err
+    rescue SmartyError => e
+      puts e
       return
     end
 
-    batch.each_with_index { |lookup, i|
+    batch.each_with_index do |lookup, i|
       result = lookup.result
       puts "Lookup #{i}:\n"
 
@@ -58,26 +57,26 @@ class USZipcodeMultipleLookupExample
       cities = result.cities
       puts "#{cities.length} City and State match(es):"
 
-      cities.each { |city|
+      cities.each do |city|
         puts "City: #{city.city}"
         puts "State: #{city.state}"
         puts "Mailable City: #{city.mailable_city}"
         puts
-      }
+      end
 
       zipcodes = result.zipcodes
       puts "#{zipcodes.length} ZIP Code match(es):"
 
-      zipcodes.each { |zipcode|
+      zipcodes.each do |zipcode|
         puts "ZIP Code: #{zipcode.zipcode}"
         puts "County: #{zipcode.county_name}"
         puts "Latitude: #{zipcode.latitude}"
         puts "Longitude: #{zipcode.longitude}"
         puts
-      }
+      end
 
       puts '***********************************'
-    }
+    end
   end
 end
 

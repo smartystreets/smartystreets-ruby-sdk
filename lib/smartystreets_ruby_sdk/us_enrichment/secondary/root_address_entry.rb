@@ -3,7 +3,7 @@ module SmartyStreets
     module Secondary
       class RootAddressEntry
         attr_reader :secondary_count, :smarty_key, :primary_number, :street_predirection, :street_name, :street_suffix, :street_postdirection,
-        :city_name, :state_abbreviation, :zipcode, :plus4_code
+                    :city_name, :state_abbreviation, :zipcode, :plus4_code
 
         def initialize(obj)
           @secondary_count = obj['secondary_count']

@@ -91,9 +91,11 @@ class TestStatusCodeSender < Minitest::Test
   end
 
   def test_429_payload_parse
-    expected_exception = SmartyStreets::TooManyRequestsError.new("Big Bad")
-    expected_response = Response.new("{\"errors\": [{\"id\":\"45\", \"message\": \"Big Bad\"}]}", '429', nil, expected_exception)
-    inner = MockSender.new(Response.new("{\"errors\": [{\"id\":\"45\", \"message\": \"Big Bad\"}]}", '429', nil, expected_exception))
+    expected_exception = SmartyStreets::TooManyRequestsError.new('Big Bad')
+    expected_response = Response.new('{"errors": [{"id":"45", "message": "Big Bad"}]}', '429', nil,
+                                     expected_exception)
+    inner = MockSender.new(Response.new('{"errors": [{"id":"45", "message": "Big Bad"}]}', '429', nil,
+                                        expected_exception))
     sender = StatusCodeSender.new(inner)
 
     response = sender.send(Request.new)
@@ -104,8 +106,8 @@ class TestStatusCodeSender < Minitest::Test
 
   def test_429_payload_empty_parse
     expected_exception = SmartyStreets::TooManyRequestsError.new(SmartyStreets::TOO_MANY_REQUESTS)
-    expected_response = Response.new("{\"errors\": []}", '429', nil, expected_exception)
-    inner = MockSender.new(Response.new("{\"errors\": []}", '429', nil, expected_exception))
+    expected_response = Response.new('{"errors": []}', '429', nil, expected_exception)
+    inner = MockSender.new(Response.new('{"errors": []}', '429', nil, expected_exception))
     sender = StatusCodeSender.new(inner)
 
     response = sender.send(Request.new)
@@ -115,9 +117,13 @@ class TestStatusCodeSender < Minitest::Test
   end
 
   def test_429_payload_multiple_errors
-    expected_exception = SmartyStreets::TooManyRequestsError.new("Big Bad Big Bad")
-    expected_response = Response.new("{\"errors\": [{\"id\":\"45\", \"message\": \"Big Bad\"}, {\"id\":\"45\", \"message\": \"Big Bad\"}]}", '429', nil, expected_exception)
-    inner = MockSender.new(Response.new("{\"errors\": [{\"id\":\"45\", \"message\": \"Big Bad\"}, {\"id\":\"45\", \"message\": \"Big Bad\"}]}", '429', nil, expected_exception))
+    expected_exception = SmartyStreets::TooManyRequestsError.new('Big Bad Big Bad')
+    expected_response = Response.new(
+      '{"errors": [{"id":"45", "message": "Big Bad"}, {"id":"45", "message": "Big Bad"}]}', '429', nil, expected_exception
+    )
+    inner = MockSender.new(Response.new(
+                             '{"errors": [{"id":"45", "message": "Big Bad"}, {"id":"45", "message": "Big Bad"}]}', '429', nil, expected_exception
+                           ))
     sender = StatusCodeSender.new(inner)
 
     response = sender.send(Request.new)

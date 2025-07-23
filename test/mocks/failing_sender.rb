@@ -10,7 +10,7 @@ class FailingSender
     @error = error
   end
 
-  def send(request)
+  def send(_request)
     response = SmartyStreets::Response.new(nil, @status_codes[@current_status_code_index], @header, @error)
     @current_status_code_index += 1
 

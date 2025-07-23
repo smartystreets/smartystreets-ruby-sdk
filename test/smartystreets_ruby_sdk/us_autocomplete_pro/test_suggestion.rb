@@ -4,7 +4,8 @@ require_relative '../../test_helper'
 
 class SuggestionTest < Minitest::Test
   def test_all_fields_get_filled_in_correctly
-    response_dictionary = { 'street_line' => '1', 'secondary' => '2', 'city' => '3', 'state' => '4', 'zipcode' => '5', 'entries' => 6}
+    response_dictionary = { 'street_line' => '1', 'secondary' => '2', 'city' => '3', 'state' => '4', 'zipcode' => '5',
+                            'entries' => 6 }
 
     suggestion = SmartyStreets::USAutocompletePro::Suggestion.new(response_dictionary)
 

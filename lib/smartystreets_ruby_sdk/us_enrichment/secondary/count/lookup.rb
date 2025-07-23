@@ -4,11 +4,11 @@ module SmartyStreets
       module Count
         class Lookup
           attr_reader :smarty_key, :data_set, :data_sub_set, :etag, :custom_param_hash
-              
-          def initialize(smarty_key, etag=nil, custom_param_hash=nil)
+
+          def initialize(smarty_key, etag = nil, _custom_param_hash = nil)
             @smarty_key = smarty_key
-            @data_set = "secondary"
-            @data_sub_set = "count"
+            @data_set = 'secondary'
+            @data_sub_set = 'count'
             @etag = etag
             @custom_param_hash = {}
           end

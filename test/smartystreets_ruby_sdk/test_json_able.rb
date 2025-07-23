@@ -4,6 +4,7 @@ require_relative '../../lib/smartystreets_ruby_sdk/json_able'
 
 class DummyJson < SmartyStreets::JSONAble
   attr_accessor :foo, :bar
+
   def initialize(foo = nil, bar = nil)
     @foo = foo
     @bar = bar
@@ -40,7 +41,7 @@ class TestJSONAble < Minitest::Test
 
   def test_from_json_with_empty_string
     obj = DummyJson.new
-    assert_raises(ArgumentError) { obj.from_json!("") }
+    assert_raises(ArgumentError) { obj.from_json!('') }
   end
 
   def test_to_json_with_no_instance_variables
@@ -48,4 +49,4 @@ class TestJSONAble < Minitest::Test
     json = obj.to_json
     assert_equal '{}', json
   end
-end 
+end

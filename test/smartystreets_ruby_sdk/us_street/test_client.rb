@@ -5,9 +5,11 @@ module SmartyStreets
   module USStreet
     class FakeSender
       attr_reader :last_request, :response
+
       def initialize(response)
         @response = response
       end
+
       def send(request)
         @last_request = request
         @response
@@ -15,12 +17,18 @@ module SmartyStreets
     end
 
     class FakeSerializer
-      def serialize(obj); 'serialized'; end
-      def deserialize(payload); [{ 'input_index' => 0 }]; end
+      def serialize(_obj)
+        'serialized'
+      end
+
+      def deserialize(_payload)
+        [{ 'input_index' => 0 }]
+      end
     end
 
     class FakeResponse
       attr_reader :payload, :error
+
       def initialize(payload = nil, error = nil)
         @payload = payload
         @error = error
@@ -69,4 +77,4 @@ module SmartyStreets
       end
     end
   end
-end 
+end

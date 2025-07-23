@@ -1,5 +1,5 @@
-require_relative './address'
-require_relative './metadata'
+require_relative 'address'
+require_relative 'metadata'
 
 module SmartyStreets
   module USExtract
@@ -12,9 +12,9 @@ module SmartyStreets
         addresses = obj.fetch('addresses', [])
         @addresses = []
 
-        addresses.each {|address|
+        addresses.each do |address|
           @addresses.push(SmartyStreets::USExtract::Address.new(address))
-        }
+        end
       end
     end
   end

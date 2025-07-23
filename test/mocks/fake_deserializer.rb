@@ -6,8 +6,8 @@ class FakeDeserializer
     @input = nil
   end
 
-  def serialize(obj)
-      ''
+  def serialize(_obj)
+    ''
   end
 
   def deserialize(body)

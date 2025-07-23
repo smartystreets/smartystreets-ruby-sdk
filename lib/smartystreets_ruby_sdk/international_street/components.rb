@@ -5,7 +5,7 @@ module SmartyStreets
       attr_reader :premise, :thoroughfare_trailing_type, :sub_building, :locality, :post_box_number,
                   :thoroughfare_name, :thoroughfare_postdirection, :dependent_thoroughfare, :premise_prefix_number,
                   :thoroughfare, :dependent_thoroughfare_name, :postal_code_short, :dependent_thoroughfare_trailing_type,
-                  :administrative_area, :administrative_area_iso2,:administrative_area_short, :administrative_area_long, :post_box,
+                  :administrative_area, :administrative_area_iso2, :administrative_area_short, :administrative_area_long, :post_box,
                   :building_leading_type, :dependent_locality_name, :thoroughfare_type,
                   :dependent_thoroughfare_postdirection, :double_dependent_locality, :premise_number,
                   :dependent_thoroughfare_type, :post_box_type, :building, :sub_administrative_area, :postal_code_extra,
@@ -23,7 +23,7 @@ module SmartyStreets
         @administrative_area_short = obj.fetch('administrative_area_short', nil)
         @administrative_area_long = obj.fetch('administrative_area_long', nil)
         @sub_administrative_area = obj.fetch('sub_administrative_area', nil)
-        @dependent_locality= obj.fetch('dependent_locality', nil)
+        @dependent_locality = obj.fetch('dependent_locality', nil)
         @dependent_locality_name = obj.fetch('dependent_locality_name', nil)
         @double_dependent_locality = obj.fetch('double_dependent_locality', nil)
         @locality = obj.fetch('locality', nil)

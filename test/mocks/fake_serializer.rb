@@ -9,7 +9,7 @@ class FakeSerializer
     @output
   end
 
-  def deserialize(payload)
+  def deserialize(_payload)
     {}
   end
 end

@@ -3,7 +3,7 @@ module SmartyStreets
     module GeoReference
       class PlaceEntry
         attr_reader :accuracy, :code, :name, :type
-        
+
         def initialize(obj)
           @accuracy = obj['accuracy']
           @code = obj['code']

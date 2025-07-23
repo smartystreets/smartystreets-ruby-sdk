@@ -9,7 +9,7 @@ module SmartyStreets
     class Lookup < JSONAble
       attr_accessor :result, :state, :zipcode, :input_id, :city, :custom_param_hash
 
-      def initialize(city=nil, state=nil, zipcode=nil, input_id=nil, custom_param_hash=nil)
+      def initialize(city = nil, state = nil, zipcode = nil, input_id = nil, _custom_param_hash = nil)
         @result = nil
         @input_id = input_id
         @city = city

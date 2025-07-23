@@ -10,8 +10,8 @@ class USReverseGeoExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    key = ENV['SMARTY_AUTH_WEB']
-    referer = ENV['SMARTY_AUTH_REFERER']
+    key = ENV.fetch('SMARTY_AUTH_WEB', nil)
+    referer = ENV.fetch('SMARTY_AUTH_REFERER', nil)
     credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
     # id = ENV['SMARTY_AUTH_ID']

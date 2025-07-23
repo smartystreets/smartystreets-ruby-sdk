@@ -4,7 +4,6 @@ require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/secondary/re
 
 class TestSecondaryResponse < Minitest::Test
   def test_all_fields_filled_correctly
-
     root_address_obj = {
       'secondary_count' => 2,
       'smarty_key' => '123',
@@ -18,7 +17,7 @@ class TestSecondaryResponse < Minitest::Test
       'zipcode' => 'zipcode',
       'plus4_code' => 'plus4_code'
     }
-    
+
     alias_1 = {
       'smarty_key' => '123',
       'primary_number' => 'primary_number_1',
@@ -49,21 +48,21 @@ class TestSecondaryResponse < Minitest::Test
       'smarty_key' => '234',
       'secondary_designator' => 'secondary_designator',
       'secondary_number' => 'secondary_number_1',
-      'plus4_code' => 'plus4_code',
+      'plus4_code' => 'plus4_code'
     }
 
     secondary_2 = {
       'smarty_key' => '345',
       'secondary_designator' => 'secondary_designator',
       'secondary_number' => 'secondary_number_2',
-      'plus4_code' => 'plus4_code',
+      'plus4_code' => 'plus4_code'
     }
 
     obj = {
-        'smarty_key' => '123',
-        'root_address' => root_address_obj,
-        'aliases' => [alias_1, alias_2],
-        'secondaries' => [secondary_1, secondary_2]
+      'smarty_key' => '123',
+      'root_address' => root_address_obj,
+      'aliases' => [alias_1, alias_2],
+      'secondaries' => [secondary_1, secondary_2]
     }
 
     response = SmartyStreets::USEnrichment::Secondary::Response.new(obj)

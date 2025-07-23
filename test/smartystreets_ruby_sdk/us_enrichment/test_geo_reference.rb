@@ -4,12 +4,11 @@ require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/geo_referenc
 
 class TestGeoReferenceResponse < Minitest::Test
   def test_all_fields_filled_correctly
-
     census_block_obj = {
       'accuracy' => 'accuracy',
       'geoid' => 'geoid'
     }
-    
+
     census_county_division_obj = {
       'accuracy' => 'accuracy',
       'code' => 'code',
@@ -31,20 +30,20 @@ class TestGeoReferenceResponse < Minitest::Test
       'name' => 'name',
       'type' => 'type'
     }
-    
+
     attributes_obj = {
-        'census_block' => census_block_obj,
-        'census_county_division' => census_county_division_obj,
-        'census_tract' => census_tract_obj,
-        'core_based_stat_area' => core_based_stat_area_obj,
-        'place' => place_obj,
+      'census_block' => census_block_obj,
+      'census_county_division' => census_county_division_obj,
+      'census_tract' => census_tract_obj,
+      'core_based_stat_area' => core_based_stat_area_obj,
+      'place' => place_obj
     }
 
     obj = {
-        'smarty_key' => 'xxx',
-        'data_set' => 'geo-reference',
-        'data_sub_set' => nil,
-        'attributes' => attributes_obj
+      'smarty_key' => 'xxx',
+      'data_set' => 'geo-reference',
+      'data_sub_set' => nil,
+      'attributes' => attributes_obj
     }
 
     response = SmartyStreets::USEnrichment::GeoReference::Response.new(obj)

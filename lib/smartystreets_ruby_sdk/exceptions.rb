@@ -1,5 +1,4 @@
 module SmartyStreets
-
   class SmartyError < StandardError
   end
 
@@ -38,5 +37,4 @@ module SmartyStreets
 
   class BatchFullError < SmartyError
   end
-
 end

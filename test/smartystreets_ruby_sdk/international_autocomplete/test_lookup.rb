@@ -44,4 +44,4 @@ class InternationalAutocompleteLookupTest < Minitest::Test
     assert_equal({ 'a' => 1 }, l1.custom_param_hash)
     assert_equal({ 'b' => 2 }, l2.custom_param_hash)
   end
-end 
+end

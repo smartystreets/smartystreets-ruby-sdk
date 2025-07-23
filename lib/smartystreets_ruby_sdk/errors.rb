@@ -7,8 +7,8 @@ module SmartyStreets
   PAYMENT_REQUIRED = 'Payment Required: There is no active subscription
  for the account associated with the credentials submitted with the request.'.freeze
 
-  FORBIDDEN = 'Because the international service is currently in a limited release phase, only approved accounts' \
-            ' may access the service.'.freeze
+  FORBIDDEN = 'Because the international service is currently in a limited release phase, only approved accounts ' \
+              'may access the service.'.freeze
 
   REQUEST_ENTITY_TOO_LARGE = 'Request Entity Too Large: The request body has exceeded the maximum size.'.freeze
 
@@ -24,5 +24,5 @@ module SmartyStreets
   SERVICE_UNAVAILABLE = 'Service Unavailable. Try again later.'.freeze
 
   GATEWAY_TIMEOUT = 'The upstream data provider did not respond in a timely fashion and the request failed. ' \
-                  'A serious, yet rare occurrence indeed.'.freeze
+                    'A serious, yet rare occurrence indeed.'.freeze
 end

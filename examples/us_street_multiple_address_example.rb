@@ -12,8 +12,8 @@ class USStreetMultipleAddressExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    key = ENV['SMARTY_AUTH_WEB']
-    referer = ENV['SMARTY_AUTH_REFERER']
+    key = ENV.fetch('SMARTY_AUTH_WEB', nil)
+    referer = ENV.fetch('SMARTY_AUTH_REFERER', nil)
     credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
     # id = ENV['SMARTY_AUTH_ID']
@@ -27,18 +27,18 @@ class USStreetMultipleAddressExample
     # https://smartystreets.com/docs/cloud/us-street-api
 
     batch.add(Lookup.new)
-    batch[0].input_id = '8675309'  # Optional ID from your system
+    batch[0].input_id = '8675309' # Optional ID from your system
     batch[0].addressee = 'John Doe'
     batch[0].street = '1600 amphitheatre parkway'
     batch[0].street2 = 'second star to the right'
     batch[0].secondary = 'APT 2'
-    batch[0].urbanization = ''  # Only applies to Puerto Rico addresses
+    batch[0].urbanization = '' # Only applies to Puerto Rico addresses
     batch[0].lastline = 'Mountain view, California'
     batch[0].zipcode = '21229'
     batch[0].candidates = 3
     batch[0].match = SmartyStreets::USStreet::MatchType::INVALID # "invalid" is the most permissive match,
-                                      # this will always return at least one result even if the address is invalid.
-                                      # Refer to the documentation for additional Match Strategy options.
+    # this will always return at least one result even if the address is invalid.
+    # Refer to the documentation for additional Match Strategy options.
 
     # batch[0].add_custom_parameter('parameter', 'value')
 
@@ -53,8 +53,8 @@ class USStreetMultipleAddressExample
 
     begin
       client.send_batch(batch)
-    rescue SmartyStreets::SmartyError => err
-      puts err
+    rescue SmartyStreets::SmartyError => e
+      puts e
       return
     end
 

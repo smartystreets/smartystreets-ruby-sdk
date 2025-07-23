@@ -9,8 +9,8 @@ class USStreetSingleAddressExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    key = ENV['SMARTY_AUTH_WEB']
-    referer = ENV['SMARTY_AUTH_REFERER']
+    key = ENV.fetch('SMARTY_AUTH_WEB', nil)
+    referer = ENV.fetch('SMARTY_AUTH_REFERER', nil)
     credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
     # id = ENV['SMARTY_AUTH_ID']
@@ -25,28 +25,28 @@ class USStreetSingleAddressExample
     # https://smartystreets.com/docs/cloud/us-street-api
 
     lookup = SmartyStreets::USStreet::Lookup.new
-    lookup.input_id = '24601'  # Optional ID from your system
+    lookup.input_id = '24601' # Optional ID from your system
     lookup.addressee = 'John Doe'
     lookup.street = '1600 Amphitheatre Pkwy'
     lookup.street2 = 'closet under the stairs'
     lookup.secondary = 'APT 2'
-    lookup.urbanization = ''  # Only applies to Puerto Rico addresses
+    lookup.urbanization = '' # Only applies to Puerto Rico addresses
     lookup.city = 'Mountain View'
     lookup.state = 'CA'
     lookup.zipcode = '21229'
     lookup.candidates = 3
     lookup.county_source = SmartyStreets::USStreet::CountySource::GEOGRAPHIC
     lookup.match = SmartyStreets::USStreet::MatchType::INVALID
-                                    # "invalid" is the most permissive match,
-                                    # this will always return at least one result even if the address is invalid.
-                                    # Refer to the documentation for additional Match Strategy options.
+    # "invalid" is the most permissive match,
+    # this will always return at least one result even if the address is invalid.
+    # Refer to the documentation for additional Match Strategy options.
 
     # lookup.add_custom_parameter('parameter', 'value')
 
     begin
       client.send_lookup(lookup)
-    rescue SmartyStreets::SmartyError => err
-      puts err
+    rescue SmartyStreets::SmartyError => e
+      puts e
       return
     end
 

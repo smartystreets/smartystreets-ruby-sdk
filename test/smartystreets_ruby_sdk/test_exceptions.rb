@@ -21,6 +21,7 @@ class TestExceptions < Minitest::Test
     ]
     exception_classes.each do |klass|
       next if klass == SmartyStreets::SmartyError
+
       assert klass < SmartyStreets::SmartyError
       assert klass < StandardError
     end
@@ -30,4 +31,4 @@ class TestExceptions < Minitest::Test
     assert_raises(SmartyStreets::BadRequestError) { raise SmartyStreets::BadRequestError, 'bad' }
     assert_raises(SmartyStreets::BatchFullError) { raise SmartyStreets::BatchFullError, 'full' }
   end
-end 
+end

@@ -4,7 +4,7 @@ module SmartyStreets
       class Lookup
         attr_reader :smarty_key, :data_set, :data_sub_set, :etag, :custom_param_hash
 
-        def initialize(smarty_key, etag=nil, custom_param_hash=nil)
+        def initialize(smarty_key, etag = nil, _custom_param_hash = nil)
           @smarty_key = smarty_key
           @data_set = 'geo-reference'
           @data_sub_set = nil

@@ -2,7 +2,6 @@ module SmartyStreets
   module USAutocompletePro
     # See "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-response"
     class Suggestion
-
       attr_reader :street_line, :secondary, :city, :state, :zipcode, :entries
 
       def initialize(obj)

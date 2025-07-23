@@ -12,8 +12,8 @@ class USEnrichmentAddressExample
     # referer = ENV['SMARTY_AUTH_REFERER']
     # credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
-    id = ENV['SMARTY_AUTH_ID']
-    token = ENV['SMARTY_AUTH_TOKEN']
+    id = ENV.fetch('SMARTY_AUTH_ID', nil)
+    token = ENV.fetch('SMARTY_AUTH_TOKEN', nil)
     credentials = SmartyStreets::StaticCredentials.new(id, token)
 
     # The appropriate license values to be used for your subscriptions
@@ -22,43 +22,40 @@ class USEnrichmentAddressExample
     #
     # To try with a proxy, add this method call at the end of the chain
     #   with_proxy('localhost', 8080, 'proxyUser', 'proxyPassword')
-    client = SmartyStreets::ClientBuilder.new(credentials).
-             build_us_enrichment_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials)
+                                         .build_us_enrichment_api_client
     result = nil
 
     # Create a new lookup instance to search with address components
     lookup = SmartyStreets::USEnrichment::Lookup.new
 
-    lookup.street = "56 Union Ave"
-    lookup.city = "Somerville"
-    lookup.state = "NJ"
-    lookup.zipcode = "08876"
+    lookup.street = '56 Union Ave'
+    lookup.city = 'Somerville'
+    lookup.state = 'NJ'
+    lookup.zipcode = '08876'
     # lookup.etag = "AUBAGDQDAIGQYCYC"
 
     # lookup.add_custom_parameter('parameter', 'value')
 
     # Or, create a freeform lookup to search using a single line address
     freeform_lookup = SmartyStreets::USEnrichment::Lookup.new
-    freeform_lookup.freeform = "56 Union Ave Somerville NJ 08876"
-
-    
+    freeform_lookup.freeform = '56 Union Ave Somerville NJ 08876'
 
     begin
       # Send a lookup with a smarty key using the line below
-      result = client.send_property_principal_lookup("325023201")
+      result = client.send_property_principal_lookup('325023201')
 
       # Uncomment the following lines to perform other types of lookups:
       # result = client.send_property_principal_lookup(lookup) # Using address components
       # result = client.send_property_principal_lookup(freeform_lookup) # Using freeform address
-       
+
       # Access the other Enrichment datasets using the below functions. All of these functions can take a lookup or a smartykey
       # result = client.send_property_financial_lookup("325023201")
       # result = client.send_geo_reference_lookup("325023201")
       # result = client.send_secondary_lookup("325023201")
       # result = client.send_secondary_count_lookup("325023201")
-
-    rescue SmartyStreets::SmartyError => err
-      puts err
+    rescue SmartyStreets::SmartyError => e
+      puts e
       return
     end
 
@@ -67,7 +64,7 @@ class USEnrichmentAddressExample
       return
     end
 
-    puts "Lookup Successful! Here is the result: "
+    puts 'Lookup Successful! Here is the result: '
     puts result[0].inspect
   end
 end

@@ -1,4 +1,4 @@
-require_relative "attributes"
+require_relative 'attributes'
 
 module SmartyStreets
   module USEnrichment
@@ -6,7 +6,7 @@ module SmartyStreets
       class Response
         attr_reader :smarty_key, :data_set, :attributes, :etag
 
-        def initialize(obj, etag=nil)
+        def initialize(obj, etag = nil)
           @smarty_key = obj['smarty_key']
           @data_set = 'geo-reference'
           @attributes = Attributes.new(obj['attributes'])

@@ -6,7 +6,7 @@ require_relative '../mocks/mock_sender'
 
 class TestLicenseSender < Minitest::Test
   def test_licenses_are_added_to_query
-    licenses = %w(test1 test2 test3)
+    licenses = %w[test1 test2 test3]
     mock_response = SmartyStreets::Response.new('Testing', '123')
     inner = MockSender.new(mock_response)
     sender = SmartyStreets::LicenseSender.new(inner, licenses)
@@ -21,7 +21,7 @@ class TestLicenseSender < Minitest::Test
   end
 
   def test_license_query_not_set
-    licenses = %w()
+    licenses = %w[]
     mock_response = SmartyStreets::Response.new('Testing', '123')
     inner = MockSender.new(mock_response)
     sender = SmartyStreets::LicenseSender.new(inner, licenses)

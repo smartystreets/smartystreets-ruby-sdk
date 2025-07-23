@@ -8,14 +8,12 @@ module SmartyStreets
       class Response
         attr_reader :smarty_key, :root_address, :aliases, :secondaries, :etag
 
-        def initialize(obj, etag=nil)
+        def initialize(obj, etag = nil)
           @smarty_key = obj['smarty_key']
           @root_address = Secondary::RootAddressEntry.new(obj['root_address'])
-          if !obj['aliases'].nil?
-            @aliases = createAliasesArray(obj['aliases'])
-          end
+          @aliases = createAliasesArray(obj['aliases']) unless obj['aliases'].nil?
           @secondaries = createSecondariesArray(obj['secondaries'])
-          @etag=etag
+          @etag = etag
         end
 
         def createAliasesArray(obj)
@@ -23,7 +21,7 @@ module SmartyStreets
           for item in obj do
             aliasesArray << Secondary::AliasesEntry.new(item)
           end
-          return aliasesArray
+          aliasesArray
         end
 
         def createSecondariesArray(obj)
@@ -31,7 +29,7 @@ module SmartyStreets
           for item in obj do
             secondariesArray << Secondary::SecondariesEntry.new(item)
           end
-          return secondariesArray
+          secondariesArray
         end
       end
     end

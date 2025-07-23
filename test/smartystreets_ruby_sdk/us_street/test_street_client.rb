@@ -29,21 +29,21 @@ class TestStreetClient < Minitest::Test
   def test_send_populated_lookup
     sender = RequestCapturingSender.new
     expected_parameters = {
-        'input_id' => '1',
-        'street' => '2',
-        'street2' => '3',
-        'secondary' => '4',
-        'city' => '5',
-        'state' => '6',
-        'zipcode' => '7',
-        'lastline' => '8',
-        'addressee' => '9',
-        'urbanization' => '10',
-        'match' => SmartyStreets::USStreet::MatchType::ENHANCED,
-        'candidates' => 5,
-        'format' => SmartyStreets::USStreet::OutputFormat::PROJECT_USA,
-        'county_source' => SmartyStreets::USStreet::CountySource::GEOGRAPHIC,
-        'parameter' => 'value',
+      'input_id' => '1',
+      'street' => '2',
+      'street2' => '3',
+      'secondary' => '4',
+      'city' => '5',
+      'state' => '6',
+      'zipcode' => '7',
+      'lastline' => '8',
+      'addressee' => '9',
+      'urbanization' => '10',
+      'match' => SmartyStreets::USStreet::MatchType::ENHANCED,
+      'candidates' => 5,
+      'format' => SmartyStreets::USStreet::OutputFormat::PROJECT_USA,
+      'county_source' => SmartyStreets::USStreet::CountySource::GEOGRAPHIC,
+      'parameter' => 'value'
     }
     serializer = FakeSerializer.new(expected_parameters)
     client = Client.new(sender, serializer)
@@ -102,9 +102,9 @@ class TestStreetClient < Minitest::Test
   end
 
   def test_candidates_correctly_assigned_to_corresponding_lookup
-    candidate0 = {'input_index' => 0, 'candidate_index' => 0, 'addressee' => 'Mister 0'}
-    candidate1 = {'input_index' => 1, 'candidate_index' => 0, 'addressee' => 'Mister 1'}
-    candidate2 = {'input_index' => 1, 'candidate_index' => 1, 'addressee' => 'Mister 2'}
+    candidate0 = { 'input_index' => 0, 'candidate_index' => 0, 'addressee' => 'Mister 0' }
+    candidate1 = { 'input_index' => 1, 'candidate_index' => 0, 'addressee' => 'Mister 1' }
+    candidate2 = { 'input_index' => 1, 'candidate_index' => 1, 'addressee' => 'Mister 2' }
     raw_candidates = [candidate0, candidate1, candidate2]
 
     expected_candidates = [Candidate.new(candidate0), Candidate.new(candidate1), Candidate.new(candidate2)]
@@ -132,7 +132,7 @@ class TestStreetClient < Minitest::Test
   end
 
   def test_full_json_response_deserialization
-    body = %q{{
+    body = '{
            	"input_id": "blah",
                "input_index": 0,
                "candidate_index": 4242,
@@ -192,62 +192,62 @@ class TestStreetClient < Minitest::Test
                  "lacslink_indicator": "lacslink_indicator",
                  "suitelink_match": true
                }
-             }}
+             }'
 
     serializer = SmartyStreets::NativeSerializer.new
     object = serializer.deserialize(body)
     candidate = Candidate.new(object)
     assert_equal(0, candidate.input_index)
     assert_equal(4242, candidate.candidate_index)
-    assert_equal("John Smith", candidate.addressee)
-    assert_equal("3214 N University Ave # 409", candidate.delivery_line_1)
-    assert_equal("blah blah", candidate.delivery_line_2)
-    assert_equal("Provo UT 84604-4405", candidate.last_line)
-    assert_equal("846044405140", candidate.delivery_point_barcode)
-    assert_equal("3214", candidate.components.primary_number)
-    assert_equal("N", candidate.components.street_predirection)
-    assert_equal("University", candidate.components.street_name)
-    assert_equal("Q", candidate.components.street_postdirection)
-    assert_equal("Ave", candidate.components.street_suffix)
-    assert_equal("409", candidate.components.secondary_number)
-    assert_equal("#", candidate.components.secondary_designator)
-    assert_equal("410", candidate.components.extra_secondary_number)
-    assert_equal("Apt", candidate.components.extra_secondary_designator)
-    assert_equal("411", candidate.components.pmb_number)
-    assert_equal("Box", candidate.components.pmb_designator)
-    assert_equal("Provo", candidate.components.city_name)
-    assert_equal("Provo", candidate.components.default_city_name)
-    assert_equal("UT", candidate.components.state_abbreviation)
-    assert_equal("84604", candidate.components.zipcode)
-    assert_equal("4405", candidate.components.plus4_code)
-    assert_equal("14", candidate.components.delivery_point)
-    assert_equal("0", candidate.components.delivery_point_check_digit)
-    assert_equal("urbanization", candidate.components.urbanization)
-    assert_equal("S", candidate.metadata.record_type)
-    assert_equal("Standard", candidate.metadata.zip_type)
-    assert_equal("49049", candidate.metadata.county_fips)
-    assert_equal("Utah", candidate.metadata.county_name)
-    assert_equal("C016", candidate.metadata.carrier_route)
-    assert_equal("03", candidate.metadata.congressional_district)
-    assert_equal("hi", candidate.metadata.building_default_indicator)
-    assert_equal("Commercial", candidate.metadata.rdi)
-    assert_equal("0016", candidate.metadata.elot_sequence)
-    assert_equal("A", candidate.metadata.elot_sort)
+    assert_equal('John Smith', candidate.addressee)
+    assert_equal('3214 N University Ave # 409', candidate.delivery_line_1)
+    assert_equal('blah blah', candidate.delivery_line_2)
+    assert_equal('Provo UT 84604-4405', candidate.last_line)
+    assert_equal('846044405140', candidate.delivery_point_barcode)
+    assert_equal('3214', candidate.components.primary_number)
+    assert_equal('N', candidate.components.street_predirection)
+    assert_equal('University', candidate.components.street_name)
+    assert_equal('Q', candidate.components.street_postdirection)
+    assert_equal('Ave', candidate.components.street_suffix)
+    assert_equal('409', candidate.components.secondary_number)
+    assert_equal('#', candidate.components.secondary_designator)
+    assert_equal('410', candidate.components.extra_secondary_number)
+    assert_equal('Apt', candidate.components.extra_secondary_designator)
+    assert_equal('411', candidate.components.pmb_number)
+    assert_equal('Box', candidate.components.pmb_designator)
+    assert_equal('Provo', candidate.components.city_name)
+    assert_equal('Provo', candidate.components.default_city_name)
+    assert_equal('UT', candidate.components.state_abbreviation)
+    assert_equal('84604', candidate.components.zipcode)
+    assert_equal('4405', candidate.components.plus4_code)
+    assert_equal('14', candidate.components.delivery_point)
+    assert_equal('0', candidate.components.delivery_point_check_digit)
+    assert_equal('urbanization', candidate.components.urbanization)
+    assert_equal('S', candidate.metadata.record_type)
+    assert_equal('Standard', candidate.metadata.zip_type)
+    assert_equal('49049', candidate.metadata.county_fips)
+    assert_equal('Utah', candidate.metadata.county_name)
+    assert_equal('C016', candidate.metadata.carrier_route)
+    assert_equal('03', candidate.metadata.congressional_district)
+    assert_equal('hi', candidate.metadata.building_default_indicator)
+    assert_equal('Commercial', candidate.metadata.rdi)
+    assert_equal('0016', candidate.metadata.elot_sequence)
+    assert_equal('A', candidate.metadata.elot_sort)
     assert_equal(40.27658, candidate.metadata.latitude)
     assert_equal(-111.65759, candidate.metadata.longitude)
-    assert_equal("Zip9", candidate.metadata.precision)
-    assert_equal("Mountain", candidate.metadata.time_zone)
+    assert_equal('Zip9', candidate.metadata.precision)
+    assert_equal('Mountain', candidate.metadata.time_zone)
     assert_equal(-7, candidate.metadata.utc_offset)
     assert_equal(true, candidate.metadata.obeys_dst)
     assert_equal(true, candidate.metadata.is_an_ews_match)
-    assert_equal("S", candidate.analysis.dpv_match_code)
-    assert_equal("AACCRR", candidate.analysis.dpv_footnotes)
-    assert_equal("Y", candidate.analysis.cmra)
-    assert_equal("N", candidate.analysis.vacant)
-    assert_equal("Y", candidate.analysis.active)
-    assert_equal("footnotes", candidate.analysis.footnotes)
-    assert_equal("lacslink_code", candidate.analysis.lacs_link_code)
-    assert_equal("lacslink_indicator", candidate.analysis.lacs_link_indicator)
+    assert_equal('S', candidate.analysis.dpv_match_code)
+    assert_equal('AACCRR', candidate.analysis.dpv_footnotes)
+    assert_equal('Y', candidate.analysis.cmra)
+    assert_equal('N', candidate.analysis.vacant)
+    assert_equal('Y', candidate.analysis.active)
+    assert_equal('footnotes', candidate.analysis.footnotes)
+    assert_equal('lacslink_code', candidate.analysis.lacs_link_code)
+    assert_equal('lacslink_indicator', candidate.analysis.lacs_link_indicator)
     assert_equal(true, candidate.analysis.is_suite_link_match)
   end
 end

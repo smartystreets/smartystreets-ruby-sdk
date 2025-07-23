@@ -3,7 +3,7 @@ module SmartyStreets
     module Secondary
       class AliasesEntry
         attr_reader :smarty_key, :primary_number, :street_predirection, :street_name, :street_suffix, :street_postdirection, :city_name,
-        :state_abbreviation, :zipcode, :plus4_code
+                    :state_abbreviation, :zipcode, :plus4_code
 
         def initialize(obj)
           @smarty_key = obj['smarty_key']

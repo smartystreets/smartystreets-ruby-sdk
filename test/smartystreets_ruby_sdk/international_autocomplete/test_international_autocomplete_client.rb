@@ -32,7 +32,7 @@ class TestInternationalAutocompleteClient < Minitest::Test
     lookup.max_results = 7
     lookup.locality = '3'
     lookup.postal_code = '4'
-    lookup.address_id = "5"
+    lookup.address_id = '5'
 
     client.send(lookup)
 
@@ -42,7 +42,6 @@ class TestInternationalAutocompleteClient < Minitest::Test
     assert_equal('3', sender.request.parameters['include_only_locality'])
     assert_equal('4', sender.request.parameters['include_only_postal_code'])
     assert_equal('/5', sender.request.url_components)
-
   end
 
   def test_deserialize_called_with_response_body
@@ -59,7 +58,7 @@ class TestInternationalAutocompleteClient < Minitest::Test
 
   def test_result_correctly_assigned_to_corresponding_lookup
     lookup = Lookup.new('1')
-    expected_result = { 'candidates' => [{ 'street' => '2' }]}
+    expected_result = { 'candidates' => [{ 'street' => '2' }] }
 
     sender = MockSender.new(Response.new('{[]}', 0))
     deserializer = FakeDeserializer.new(expected_result)
@@ -123,7 +122,7 @@ class TestInternationalAutocompleteClient < Minitest::Test
     hashes = [{ 'street' => 'A' }, { 'street' => 'B' }]
     suggestions = client.convert_suggestions(hashes)
     assert_equal 2, suggestions.size
-    assert suggestions.all? { |s| s.is_a?(SmartyStreets::InternationalAutocomplete::Suggestion) }
+    assert(suggestions.all? { |s| s.is_a?(SmartyStreets::InternationalAutocomplete::Suggestion) })
     assert_equal 'A', suggestions[0].street
     assert_equal 'B', suggestions[1].street
   end
@@ -170,7 +169,7 @@ class TestInternationalAutocompleteClient < Minitest::Test
 
   def test_send_with_both_search_and_address_id
     sender = RequestCapturingSender.new
-    serializer = FakeSerializer.new({'candidates' => []})
+    serializer = FakeSerializer.new({ 'candidates' => [] })
     client = Client.new(sender, serializer)
     lookup = Lookup.new('search')
     lookup.address_id = 'id123'
@@ -181,7 +180,7 @@ class TestInternationalAutocompleteClient < Minitest::Test
 
   def test_send_with_only_address_id
     sender = RequestCapturingSender.new
-    serializer = FakeSerializer.new({'candidates' => []})
+    serializer = FakeSerializer.new({ 'candidates' => [] })
     client = Client.new(sender, serializer)
     lookup = Lookup.new(nil)
     lookup.address_id = 'idonly'
@@ -192,7 +191,7 @@ class TestInternationalAutocompleteClient < Minitest::Test
 
   def test_send_with_only_search
     sender = RequestCapturingSender.new
-    serializer = FakeSerializer.new({'candidates' => []})
+    serializer = FakeSerializer.new({ 'candidates' => [] })
     client = Client.new(sender, serializer)
     lookup = Lookup.new('searchonly')
     client.send(lookup)

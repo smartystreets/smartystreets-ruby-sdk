@@ -5,10 +5,10 @@ module SmartyStreets
     # In addition to holding all of the input data for this lookup, this class also will contain the result
     # of the lookup after it comes back from the API.
     class Lookup < JSONAble
-
       attr_accessor :result, :search, :address_id, :country, :max_results, :locality, :postal_code, :custom_param_hash
 
-      def initialize(search = nil, address_id = nil, country = nil, max_results = nil, locality = nil, postal_code = nil, custom_param_hash = nil)
+      def initialize(search = nil, address_id = nil, country = nil, max_results = nil, locality = nil,
+                     postal_code = nil, _custom_param_hash = nil)
         @result = []
         @search = search
         @address_id = address_id

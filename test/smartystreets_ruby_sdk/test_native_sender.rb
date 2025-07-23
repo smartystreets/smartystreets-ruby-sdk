@@ -12,7 +12,6 @@ class TestNativeSender < Minitest::Test
   SmartyError = SmartyStreets::SmartyError
   Request = SmartyStreets::Request
 
-
   Net::HTTP.class_eval do
     class MockResponse
       attr_reader :body, :code, :header
@@ -130,11 +129,12 @@ class TestNativeSender < Minitest::Test
   def test_request_has_all_added_custom_headers
     smarty_request = Request.new
     smarty_request.url_prefix = 'http://localhost'
-    smarty_request.header = {'User-Agent' => ['Some plugin', 'Some other plugin'], 'X-Something' => ['X value']}
+    smarty_request.header = { 'User-Agent' => ['Some plugin', 'Some other plugin'], 'X-Something' => ['X value'] }
 
     native_request = NativeSender.build_request(smarty_request)
 
-    assert_equal("smartystreets (sdk:ruby@#{SmartyStreets::VERSION}), Some plugin, Some other plugin", native_request['User-Agent'])
+    assert_equal("smartystreets (sdk:ruby@#{SmartyStreets::VERSION}), Some plugin, Some other plugin",
+                 native_request['User-Agent'])
     assert_equal('X value', native_request['X-Something'])
   end
 
@@ -155,7 +155,7 @@ class TestNativeSender < Minitest::Test
 
   def test_set_custom_headers
     req = Net::HTTP::Get.new('https://example.com')
-    SmartyStreets::NativeSender.set_custom_headers({ 'X-Test' => ['a', 'b'] }, req)
+    SmartyStreets::NativeSender.set_custom_headers({ 'X-Test' => %w[a b] }, req)
     assert req['X-Test']
   end
 
@@ -169,13 +169,15 @@ class TestNativeSender < Minitest::Test
   def test_error_handling
     sender = SmartyStreets::NativeSender.new(0.01)
     # This should fail fast and return a Response with error
-    response = sender.send(OpenStruct.new(url_prefix: 'https://localhost:9999', parameters: {}, payload: nil, header: {}, referer: nil))
+    response = sender.send(OpenStruct.new(url_prefix: 'https://localhost:9999', parameters: {}, payload: nil,
+                                          header: {}, referer: nil))
     assert response.is_a?(SmartyStreets::Response)
     code = response.status_code
     not_ok = code.nil? || code.to_s != '200'
     if !response.error && code.to_s == '200'
-      skip "Environment returned 200 with no error; skipping unreliable network error test."
+      skip 'Environment returned 200 with no error; skipping unreliable network error test.'
     end
-    assert(response.error || not_ok, "Expected error or non-200 status code, got error: #{response.error.inspect}, status_code: #{code.inspect}")
+    assert(response.error || not_ok,
+           "Expected error or non-200 status code, got error: #{response.error.inspect}, status_code: #{code.inspect}")
   end
 end

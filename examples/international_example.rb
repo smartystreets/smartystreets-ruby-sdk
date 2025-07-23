@@ -10,8 +10,8 @@ class InternationalExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    key = ENV['SMARTY_AUTH_WEB']
-    referer = ENV['SMARTY_AUTH_REFERER']
+    key = ENV.fetch('SMARTY_AUTH_WEB', nil)
+    referer = ENV.fetch('SMARTY_AUTH_REFERER', nil)
     credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
     # id = ENV['SMARTY_AUTH_ID']
@@ -23,7 +23,7 @@ class InternationalExample
     # Documentation for input fields can be found at:
     # https://smartystreets.com/docs/cloud/international-street-api
 
-    lookup = Lookup.new()
+    lookup = Lookup.new
     lookup.inputId = 'ID-8675309' # Optional ID from your system
     lookup.geocode = true # Must be expressly set to get latitude and longitude.
     lookup.organization = 'John Doe'
