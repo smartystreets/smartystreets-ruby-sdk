@@ -9,22 +9,27 @@ module SmartyStreets
     def initialize
       @named_lookups = {}
       @all_lookups = []
+      @lookup_to_input_id = {}
     end
 
     def add(lookup)
+      raise ArgumentError, 'lookup cannot be nil' if lookup.nil?
       return false if full?
 
       @all_lookups.push(lookup)
 
-      return true if lookup.input_id.nil?
+      input_id = lookup.input_id
+      @lookup_to_input_id[lookup] = input_id
+      return true if input_id.nil?
 
-      @named_lookups[lookup.input_id] = lookup
+      @named_lookups[input_id] = lookup
       true
     end
 
     def clear
       @named_lookups.clear
       @all_lookups.clear
+      @lookup_to_input_id.clear
     end
 
     def full?
@@ -40,11 +45,22 @@ module SmartyStreets
     end
 
     def get_by_input_id(input_id)
-      @named_lookups[input_id]
+      if input_id.nil?
+        # Return the most recently added lookup with input_id == nil
+        @all_lookups.reverse_each do |lookup|
+          return lookup if lookup.input_id.nil?
+        end
+        return nil
+      end
+      lookup = @named_lookups[input_id]
+      return nil unless lookup
+      # Only return if the lookup's current input_id matches the key
+      return lookup if lookup.input_id == input_id
+      nil
     end
 
     def get_by_index(index)
-      @all_lookups[index]
+      @all_lookups[index] if index >= 0 && index < @all_lookups.length
     end
 
     def each(&block)
@@ -53,6 +69,17 @@ module SmartyStreets
 
     def [](index)
       @all_lookups[index]
+    end
+
+    # Remove or update named_lookups if input_id is mutated after add
+    def self.update_named_lookups(batch)
+      batch.instance_variable_get(:@all_lookups).each do |lookup|
+        original_id = batch.instance_variable_get(:@lookup_to_input_id)[lookup]
+        current_id = lookup.input_id
+        if original_id != current_id
+          batch.instance_variable_get(:@named_lookups).delete(original_id)
+        end
+      end
     end
   end
 end
