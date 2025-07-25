@@ -122,68 +122,59 @@ module SmartyStreets
 
     # <editor-fold desc="Build methods">
 
-    def build_international_street_api_client
-      ensure_url_prefix_not_null(INTERNATIONAL_STREET_API_URL)
-      InternationalStreet::Client.new(build_sender, @serializer)
+    def build_international_street_api_client(base_url: nil)
+      url = base_url || INTERNATIONAL_STREET_API_URL
+      InternationalStreet::Client.new(build_sender(url), @serializer)
     end
 
-    def build_international_autocomplete_api_client
-      ensure_url_prefix_not_null(INTERNATIONAL_AUTOCOMPLETE_API_URL)
-      InternationalAutocomplete::Client.new(build_sender, @serializer)
+    def build_international_autocomplete_api_client(base_url: nil)
+      url = base_url || INTERNATIONAL_AUTOCOMPLETE_API_URL
+      InternationalAutocomplete::Client.new(build_sender(url), @serializer)
     end
 
-    def build_us_autocomplete_pro_api_client
-      ensure_url_prefix_not_null(US_AUTOCOMPLETE_PRO_API_URL)
-      USAutocompletePro::Client.new(build_sender, @serializer)
+    def build_us_autocomplete_pro_api_client(base_url: nil)
+      url = base_url || US_AUTOCOMPLETE_PRO_API_URL
+      USAutocompletePro::Client.new(build_sender(url), @serializer)
     end
 
-    def build_us_extract_api_client
-      ensure_url_prefix_not_null(US_EXTRACT_API_URL)
-      USExtract::Client.new(build_sender, @serializer)
+    def build_us_extract_api_client(base_url: nil)
+      url = base_url || US_EXTRACT_API_URL
+      USExtract::Client.new(build_sender(url), @serializer)
     end
 
-    def build_us_street_api_client
-      ensure_url_prefix_not_null(US_STREET_API_URL)
-      USStreet::Client.new(build_sender, @serializer)
+    def build_us_street_api_client(base_url: nil)
+      url = base_url || US_STREET_API_URL
+      USStreet::Client.new(build_sender(url), @serializer)
     end
 
-    def build_us_zipcode_api_client
-      ensure_url_prefix_not_null(US_ZIP_CODE_API_URL)
-      USZipcode::Client.new(build_sender, @serializer)
+    def build_us_zipcode_api_client(base_url: nil)
+      url = base_url || US_ZIP_CODE_API_URL
+      USZipcode::Client.new(build_sender(url), @serializer)
     end
 
-    def build_us_reverse_geo_api_client
-      ensure_url_prefix_not_null(US_REVERSE_GEO_API_URL)
-      USReverseGeo::Client.new(build_sender, @serializer)
+    def build_us_reverse_geo_api_client(base_url: nil)
+      url = base_url || US_REVERSE_GEO_API_URL
+      USReverseGeo::Client.new(build_sender(url), @serializer)
     end
 
-    def build_us_enrichment_api_client
-      ensure_url_prefix_not_null(US_ENRICHMENT_API_URL)
-      USEnrichment::Client.new(build_sender, @serializer)
+    def build_us_enrichment_api_client(base_url: nil)
+      url = base_url || US_ENRICHMENT_API_URL
+      USEnrichment::Client.new(build_sender(url), @serializer)
     end
 
-    # </editor-fold>
-
-    def build_sender
+    # Accepts a url_prefix for this sender instance
+    def build_sender(url_prefix)
       return @http_sender unless @http_sender.nil?
 
       sender = NativeSender.new(@max_timeout, @proxy, @debug)
-
       sender = StatusCodeSender.new(sender)
-
       sender = CustomHeaderSender.new(sender, @header) unless @header.nil?
-
       sender = SigningSender.new(@signer, sender) unless @signer.nil?
-
       sender = RetrySender.new(@max_retries, sender, SmartyStreets::Sleeper.new,SmartyStreets::Logger.new) if @max_retries > 0
-
       sender = LicenseSender.new(sender, @licenses)
-
-      URLPrefixSender.new(@url_prefix, sender)
+      URLPrefixSender.new(url_prefix, sender)
     end
 
-    def ensure_url_prefix_not_null(url)
-      @url_prefix = url if @url_prefix.nil?
-    end
+    # </editor-fold>
   end
 end
