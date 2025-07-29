@@ -16,7 +16,15 @@ module SmartyStreets
       begin
         http = build_http(request)
         http.use_ssl = true
-        http.ssl_version = :TLSv1_2
+        
+        # Try TLS 1.3 first, fallback to TLS 1.2 if not supported
+        begin
+          http.ssl_version = :TLSv1_3
+        rescue NotImplementedError
+          # Fallback to TLS 1.2 for older Ruby versions or systems
+          http.ssl_version = :TLSv1_2
+        end
+        
         http.open_timeout = @max_timeout
         http.read_timeout = @max_timeout
 
@@ -36,11 +44,15 @@ module SmartyStreets
 
     def self.build_request(smarty_request)
       query = create_query(smarty_request)
+      url = "#{smarty_request.url_prefix}?#{query}"
+      
+      # Validate URL to prevent potential injection issues
+      validated_uri = validate_url(url)
 
       if smarty_request.payload.nil?
-        request = Net::HTTP::Get.new(URI.parse("#{smarty_request.url_prefix}?#{query}"))
+        request = Net::HTTP::Get.new(validated_uri)
       else
-        request = Net::HTTP::Post.new(URI.parse("#{smarty_request.url_prefix}?#{query}"))
+        request = Net::HTTP::Post.new(validated_uri)
       end
 
       request.content_type = 'application/json'
@@ -49,6 +61,17 @@ module SmartyStreets
       request['Referer'] = smarty_request.referer unless smarty_request.referer.nil?
       set_custom_headers(smarty_request.header, request)
       request
+    end
+
+    def self.validate_url(url)
+      uri = URI.parse(url)
+      # Only allow HTTP and HTTPS schemes
+      unless ['http', 'https'].include?(uri.scheme)
+        raise ArgumentError, "Invalid URL scheme: #{uri.scheme}. Only HTTP and HTTPS are allowed."
+      end
+      uri
+    rescue URI::InvalidURIError => e
+      raise ArgumentError, "Invalid URL format: #{e.message}"
     end
 
     def build_smarty_response(native_response)

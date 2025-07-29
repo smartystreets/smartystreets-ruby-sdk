@@ -11,8 +11,14 @@ module SmartyStreets
     end
 
     def from_json!(string)
-      JSON.load(string).each do |var, val|
-        instance_variable_set var, val
+      parsed = JSON.parse(string)
+      parsed.each do |var, val|
+        # Only allow setting instance variables that already exist on this object
+        # This prevents arbitrary code execution while maintaining functionality
+        var_name = var.to_s.start_with?('@') ? var : "@#{var}"
+        if instance_variables.include?(var_name.to_sym)
+          instance_variable_set var_name, val
+        end
       end
     end
   end

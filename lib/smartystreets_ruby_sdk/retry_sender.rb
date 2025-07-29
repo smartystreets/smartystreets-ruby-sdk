@@ -21,8 +21,13 @@ module SmartyStreets
         if response.status_code.to_i == STATUS_TOO_MANY_REQUESTS
           seconds_to_backoff = 10
           if response.header.nil? == false
-            if Integer(response.header["Retry-After"], exception: false)
-              seconds_to_backoff = response.header["Retry-After"].to_i
+            # Use proper exception handling instead of deprecated pattern
+            begin
+              retry_after = Integer(response.header["Retry-After"])
+              seconds_to_backoff = retry_after
+            rescue ArgumentError, TypeError
+              # Keep default value if parsing fails
+              seconds_to_backoff = 10
             end
           end
           rate_limit_backoff(seconds_to_backoff)
