@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/property/principal/response'
 
-class TestPropertyFinancialResponse < Minitest::Test
+class TestPropertyPrincipalResponse < Minitest::Test
   def test_all_fields_filled_correctly
 
     attributes_obj = {
@@ -368,16 +368,16 @@ class TestPropertyFinancialResponse < Minitest::Test
 
     obj = {
         'smarty_key' => 'xxx',
-        'data_set' => 'property',
-        'data_sub_set' => 'principal',
+        'data_set_name' => 'property',
+        'data_subset_name' => 'principal',
         'attributes' => attributes_obj
     }
 
     response = SmartyStreets::USEnrichment::Property::Principal::Response.new(obj)
 
     assert_equal('xxx', response.smarty_key)
-    assert_equal('property', response.data_set)
-    assert_equal('principal', response.data_sub_set)
+    assert_equal('property', response.data_set_name)
+    assert_equal('principal', response.data_subset_name)
 
     attributes = response.attributes
 

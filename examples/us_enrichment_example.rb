@@ -54,6 +54,7 @@ class USEnrichmentAddressExample
       # Access the other Enrichment datasets using the below functions. All of these functions can take a lookup or a smartykey
       # result = client.send_property_financial_lookup("325023201")
       # result = client.send_geo_reference_lookup("325023201")
+      # result = client.send_risk_lookup("325023201")
       # result = client.send_secondary_lookup("325023201")
       # result = client.send_secondary_count_lookup("325023201")
 
