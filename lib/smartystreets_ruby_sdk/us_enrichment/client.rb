@@ -1,15 +1,9 @@
 require_relative "property/financial/response"
 require_relative "property/principal/response"
-require_relative "property/financial/lookup"
-require_relative "property/principal/lookup"
 require_relative "geo_reference/response"
-require_relative "geo_reference/lookup"
 require_relative "risk/response"
-require_relative "risk/lookup"
 require_relative "secondary/response"
-require_relative "secondary/lookup"
 require_relative "secondary/count/response"
-require_relative "secondary/count/lookup"
 require_relative "lookup"
 require_relative '../request'
 
@@ -23,7 +17,7 @@ module SmartyStreets
 
             def send_property_financial_lookup(lookup)
                 if (lookup.instance_of? String)
-                    __send(USEnrichment::Property::Financial::Lookup.new(lookup))
+                    __send(USEnrichment::Lookup.new(lookup,'property','financial'))
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = 'property'
                     lookup.data_sub_set = 'financial'
@@ -33,7 +27,7 @@ module SmartyStreets
 
             def send_property_principal_lookup(lookup)
                 if (lookup.instance_of? String)
-                    __send(USEnrichment::Property::Principal::Lookup.new(lookup))
+                    __send(USEnrichment::Lookup.new(lookup,'property','principal'))
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = 'property'
                     lookup.data_sub_set = 'principal'
@@ -43,7 +37,7 @@ module SmartyStreets
 
             def send_geo_reference_lookup(lookup)
                 if (lookup.instance_of? String)
-                    __send(USEnrichment::GeoReference::Lookup.new(lookup))
+                    __send(USEnrichment::Lookup.new(lookup,'geo-reference'))
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = 'geo-reference'
                     lookup.data_sub_set = nil
@@ -53,7 +47,7 @@ module SmartyStreets
 
             def send_risk_lookup(lookup)
                 if (lookup.instance_of? String)
-                    __send(USEnrichment::Risk::Lookup.new(lookup))
+                    __send(USEnrichment::Lookup.new(lookup,'risk'))
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = 'risk'
                     lookup.data_sub_set = nil
@@ -63,7 +57,7 @@ module SmartyStreets
 
             def send_secondary_lookup(lookup)
                 if (lookup.instance_of? String)
-                    __send(USEnrichment::Secondary::Lookup.new(lookup))
+                    __send(USEnrichment::Lookup.new(lookup,'secondary'))
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = 'secondary'
                     lookup.data_sub_set = nil
@@ -73,7 +67,7 @@ module SmartyStreets
 
             def send_secondary_count_lookup(lookup)
                 if (lookup.instance_of? String)
-                    __send(USEnrichment::Secondary::Count::Lookup.new(lookup))
+                    __send(USEnrichment::Lookup.new(lookup,'secondary','count'))
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = 'secondary'
                     lookup.data_sub_set = 'count'
@@ -99,6 +93,11 @@ module SmartyStreets
                 if (!lookup.etag.nil?)
                     smarty_request.header["ETAG"] = lookup.etag
                 end
+
+                if (!lookup.features.nil?)
+                    add_parameter(smarty_request, 'features', lookup.features)
+                end
+
                 if (lookup.smarty_key.nil?)
                     if (lookup.data_sub_set.nil?)
                         smarty_request.url_components = '/search/' + lookup.data_set
@@ -120,7 +119,6 @@ module SmartyStreets
                 for key in lookup.custom_param_hash.keys do
                     add_parameter(smarty_request, key, lookup.custom_param_hash[key])
                 end
-                
 
                 response = @sender.send(smarty_request)
                 results = @serializer.deserialize(response.payload)

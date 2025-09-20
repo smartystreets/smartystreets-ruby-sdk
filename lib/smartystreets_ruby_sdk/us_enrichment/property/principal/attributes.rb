@@ -1,3 +1,5 @@
+require_relative 'history_entry'
+
 module SmartyStreets
     module USEnrichment
         module Property
@@ -14,7 +16,7 @@ module SmartyStreets
                     :deed_owner_first_name3, :deed_owner_first_name4, :deed_owner_full_name, :deed_owner_full_name2, :deed_owner_full_name3, :deed_owner_full_name4, :deed_owner_last_name, :deed_owner_last_name2, 
                     :deed_owner_last_name3, :deed_owner_last_name4, :deed_owner_middle_name, :deed_owner_middle_name2, :deed_owner_middle_name3, :deed_owner_middle_name4, :deed_owner_suffix, :deed_owner_suffix2, 
                     :deed_owner_suffix3, :deed_owner_suffix4, :deed_sale_date, :deed_sale_price, :deed_transaction_id, :depth_linear_footage, :disabled_tax_exemption, :document_type_description, :driveway_sqft, :driveway_type, :effective_year_built, 
-                    :elevation_feet, :elevator, :equestrian_arena, :escalator, :exercise_room, :exterior_walls, :family_room, :fence, :fence_area, :fips_code, :fire_resistance_code, :fire_sprinklers_flag, :fireplace, 
+                    :elevation_feet, :elevator, :equestrian_arena, :escalator, :exercise_room, :exterior_walls, :family_room, :fence, :fence_area, :financial_history, :fips_code, :fire_resistance_code, :fire_sprinklers_flag, :fireplace,
                     :fireplace_number, :first_name, :first_name_2, :first_name_3, :first_name_4, :flooring, :foundation, :game_room, :garage, :garage_sqft, :gazebo, :gazebo_sqft, :golf_course, :grainery, :grainery_sqft, 
                     :great_room, :greenhouse, :greenhouse_sqft, :gross_sqft, :guesthouse, :guesthouse_sqft, :handicap_accessibility, :heat, :heat_fuel_type, :hobby_room, :homeowner_tax_exemption, :instrument_date, 
                     :intercom_system, :interest_rate_type_2, :interior_structure, :kennel, :kennel_sqft, :land_use_code, :land_use_group, :land_use_standard, :last_name, :last_name_2, :last_name_3, :last_name_4, 
@@ -156,6 +158,7 @@ module SmartyStreets
                         @family_room = obj['family_room']
                         @fence = obj['fence']
                         @fence_area = obj['fence_area']
+                        @financial_history = createFinancialHistory(obj['financial_history'])
                         @fips_code = obj['fips_code']
                         @fire_resistance_code = obj['fire_resistance_code']
                         @fire_sprinklers_flag = obj['fire_sprinklers_flag']
@@ -400,6 +403,17 @@ module SmartyStreets
                         @wine_cellar = obj['wine_cellar']
                         @year_built = obj['year_built']
                         @zoning = obj['zoning']
+                    end
+
+                    def createFinancialHistory(historyArray)
+                        entryArray = []
+                        if historyArray.nil?
+                            return []
+                        end
+                        for entry in historyArray do
+                            entryArray << Principal::HistoryEntry.new(entry)
+                        end
+                        return entryArray
                     end
                 end
             end
