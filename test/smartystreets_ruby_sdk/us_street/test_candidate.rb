@@ -3,73 +3,91 @@ require './lib/smartystreets_ruby_sdk/us_street/candidate'
 require './lib/smartystreets_ruby_sdk/us_street/components'
 require './lib/smartystreets_ruby_sdk/us_street/metadata'
 require './lib/smartystreets_ruby_sdk/us_street/analysis'
+require './lib/smartystreets_ruby_sdk/us_street/component_analysis'
 
 class TestCandidate < Minitest::Test
   def test_all_fields_filled_correctly
+
     obj = {
-        'input_id' => "1234",
-        'input_index' => 0,
-        'candidate_index' => 1,
-        'addressee' => '2',
-        'delivery_line_1' => '3',
-        'delivery_line_2' => '4',
-        'last_line' => '5',
-        'delivery_point_barcode' => '6',
-        'smarty_key' => '112',
+      'input_id' => "1234",
+      'input_index' => 0,
+      'candidate_index' => 1,
+      'addressee' => '2',
+      'delivery_line_1' => '3',
+      'delivery_line_2' => '4',
+      'last_line' => '5',
+      'delivery_point_barcode' => '6',
+      'smarty_key' => '112',
+      'components' => {
+        'urbanization' => '7',
+        'primary_number' => '8',
+        'street_name' => '9',
+        'street_predirection' => '10',
+        'street_postdirection' => '11',
+        'street_suffix' => '12',
+        'secondary_number' => '13',
+        'secondary_designator' => '14',
+        'extra_secondary_number' => '15',
+        'extra_secondary_designator' => '16',
+        'pmb_designator' => '17',
+        'pmb_number' => '18',
+        'city_name' => '19',
+        'default_city_name' => '20',
+        'state_abbreviation' => '21',
+        'zipcode' => '22',
+        'plus4_code' => '23',
+        'delivery_point' => '24',
+        'delivery_point_check_digit' => '25'
+      },
+      'metadata' => {
+        'record_type' => '26',
+        'zip_type' => '27',
+        'county_fips' => '28',
+        'county_name' => '29',
+        'carrier_route' => '30',
+        'congressional_district' => '31',
+        'building_default_indicator' => '32',
+        'rdi' => '33',
+        'elot_sequence' => '34',
+        'elot_sort' => '35',
+        'latitude' => 36.0,
+        'longitude' => 37.0,
+        'precision' => '38',
+        'time_zone' => '39',
+        'utc_offset' => 40.0,
+        'dst' => '41',
+        'ews_match' => '42'
+      },
+      'analysis' => {
+        'dpv_match_code' => '43',
+        'dpv_footnotes' => '44',
+        'dpv_cmra' => '45',
+        'dpv_vacant' => '46',
+        'active' => '47',
+        'ews_match' => '48',
+        'footnotes' => '49',
+        'lacslink_code' => '50',
+        'lacslink_indicator' => '51',
+        'suitelink_match' => '52',
+        'dpv_no_stat' => '53',
+        'enhanced_match' => '54',
         'components' => {
-            'urbanization' => '7',
-            'primary_number' => '8',
-            'street_name' => '9',
-            'street_predirection' => '10',
-            'street_postdirection' => '11',
-            'street_suffix' => '12',
-            'secondary_number' => '13',
-            'secondary_designator' => '14',
-            'extra_secondary_number' => '15',
-            'extra_secondary_designator' => '16',
-            'pmb_designator' => '17',
-            'pmb_number' => '18',
-            'city_name' => '19',
-            'default_city_name' => '20',
-            'state_abbreviation' => '21',
-            'zipcode' => '22',
-            'plus4_code' => '23',
-            'delivery_point' => '24',
-            'delivery_point_check_digit' => '25'
-        },
-        'metadata' => {
-            'record_type' => '26',
-            'zip_type' => '27',
-            'county_fips' => '28',
-            'county_name' => '29',
-            'carrier_route' => '30',
-            'congressional_district' => '31',
-            'building_default_indicator' => '32',
-            'rdi' => '33',
-            'elot_sequence' => '34',
-            'elot_sort' => '35',
-            'latitude' => 36.0,
-            'longitude' => 37.0,
-            'precision' => '38',
-            'time_zone' => '39',
-            'utc_offset' => 40.0,
-            'dst' => '41',
-            'ews_match' => '42'
-        },
-        'analysis' => {
-            'dpv_match_code' => '43',
-            'dpv_footnotes' => '44',
-            'dpv_cmra' => '45',
-            'dpv_vacant' => '46',
-            'active' => '47',
-            'ews_match' => '48',
-            'footnotes' => '49',
-            'lacslink_code' => '50',
-            'lacslink_indicator' => '51',
-            'suitelink_match' => '52',
-            'dpv_no_stat' => '53',
-            'enhanced_match' => '54'
+          'primary_number' => { 'status' => 'confirmed', 'change' => ['added'] },
+          'street_predirection' => { 'status' => 'unconfirmed', 'change' => ['spelling'] },
+          'street_name' => { 'status' => 'confirmed', 'change' => ['replaced'] },
+          'street_postdirection' => { 'status' => 'confirmed', 'change' => [] },
+          'street_suffix' => { 'status' => 'confirmed', 'change' => ['spelling'] },
+          'secondary_number' => { 'status' => 'unconfirmed', 'change' => ['added'] },
+          'secondary_designator' => { 'status' => 'confirmed', 'change' => ['replaced'] },
+          'extra_secondary_number' => { 'status' => 'confirmed', 'change' => ['spelling'] },
+          'extra_secondary_designator' => { 'status' => 'confirmed', 'change' => ['added'] },
+          'city_name' => { 'status' => 'unconfirmed', 'change' => ['replaced'] },
+          'state_abbreviation' => { 'status' => 'confirmed', 'change' => [] },
+          'zipcode' => { 'status' => 'confirmed', 'change' => ['spelling'] },
+          'plus4_code' => { 'status' => 'confirmed', 'change' => ['added'] },
+          'urbanization' => { 'status' => 'unconfirmed', 'change' => [] }
         }
+      }
     }
 
     candidate = SmartyStreets::USStreet::Candidate.new(obj)
@@ -133,5 +151,49 @@ class TestCandidate < Minitest::Test
     assert_equal('52', candidate.analysis.is_suite_link_match)
     assert_equal('53', candidate.analysis.no_stat)
     assert_equal('54', candidate.analysis.enhanced_match)
+
+    component_analysis = candidate.analysis.components
+
+    assert_equal('confirmed', component_analysis.primary_number.status)
+    assert_equal(['added'], component_analysis.primary_number.change)
+
+    assert_equal('unconfirmed', component_analysis.street_predirection.status)
+    assert_equal(['spelling'], component_analysis.street_predirection.change)
+
+    assert_equal('confirmed', component_analysis.street_name.status)
+    assert_equal(['replaced'], component_analysis.street_name.change)
+
+    assert_equal('confirmed', component_analysis.street_postdirection.status)
+    assert_equal([], component_analysis.street_postdirection.change)
+
+    assert_equal('confirmed', component_analysis.street_suffix.status)
+    assert_equal(['spelling'], component_analysis.street_suffix.change)
+
+    assert_equal('unconfirmed', component_analysis.secondary_number.status)
+    assert_equal(['added'], component_analysis.secondary_number.change)
+
+    assert_equal('confirmed', component_analysis.secondary_designator.status)
+    assert_equal(['replaced'], component_analysis.secondary_designator.change)
+
+    assert_equal('confirmed', component_analysis.extra_secondary_number.status)
+    assert_equal(['spelling'], component_analysis.extra_secondary_number.change)
+
+    assert_equal('confirmed', component_analysis.extra_secondary_designator.status)
+    assert_equal(['added'], component_analysis.extra_secondary_designator.change)
+
+    assert_equal('unconfirmed', component_analysis.city_name.status)
+    assert_equal(['replaced'], component_analysis.city_name.change)
+
+    assert_equal('confirmed', component_analysis.state_abbreviation.status)
+    assert_equal([], component_analysis.state_abbreviation.change)
+
+    assert_equal('confirmed', component_analysis.zipcode.status)
+    assert_equal(['spelling'], component_analysis.zipcode.change)
+
+    assert_equal('confirmed', component_analysis.plus4_code.status)
+    assert_equal(['added'], component_analysis.plus4_code.change)
+
+    assert_equal('unconfirmed', component_analysis.urbanization.status)
+    assert_equal([], component_analysis.urbanization.change)
   end
 end
