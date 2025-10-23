@@ -10,11 +10,11 @@ module SmartyStreets
 
       attr_accessor :result, :search, :max_results, :city_filter, :state_filter, :zip_filter,
                     :exclude_states, :prefer_cities, :prefer_states, :prefer_zip_codes, :prefer_ratio,
-                    :prefer_geolocation, :selected, :source
+                    :prefer_geolocation, :selected, :source, :custom_param_hash
 
       def initialize(search=nil, max_results=nil, city_filter=nil, state_filter=nil, zip_filter=nil,
                      exclude_states=nil, prefer_cities=nil, prefer_states=nil, prefer_zips=nil, prefer_ratio=nil,
-                     prefer_geolocation=nil, selected=nil, source=nil)
+                     prefer_geolocation=nil, selected=nil, source=nil, custom_param_hash=nil)
         @result = []
         @search = search
         @max_results = max_results
@@ -29,6 +29,11 @@ module SmartyStreets
         @prefer_geolocation = prefer_geolocation
         @selected = selected
         @source = source
+        @custom_param_hash = {}
+      end
+
+      def add_custom_parameter(parameter, value)
+        @custom_param_hash[parameter] = value
       end
 
       def add_city_filter(city)

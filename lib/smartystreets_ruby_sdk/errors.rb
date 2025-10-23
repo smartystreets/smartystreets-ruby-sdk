@@ -1,4 +1,6 @@
 module SmartyStreets
+  NOT_MODIFIED = 'Not Modified: This data has not been modified since the last request. Please remove the etag header to fetch this data'.freeze
+
   BAD_CREDENTIALS = 'Unauthorized: The credentials were provided incorrectly or did not match any existing,
  active credentials.'.freeze
 

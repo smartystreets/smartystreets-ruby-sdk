@@ -29,6 +29,8 @@ class USZipcodeMultipleLookupExample
     batch[0].input_id = '01189998819991197253' # Optional ID from your system
     batch[0].zipcode = '12345' # A Lookup may have a ZIP Code, city and state, or city, state, and ZIP Code
 
+    # batch[0].add_custom_parameter('parameter', 'value')
+
     batch.add(Lookup.new)
     batch[1].city = 'Phoenix'
     batch[1].state = 'Arizona'

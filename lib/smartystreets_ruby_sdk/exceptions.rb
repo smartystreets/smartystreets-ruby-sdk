@@ -3,6 +3,9 @@ module SmartyStreets
   class SmartyError < StandardError
   end
 
+  class NotModifiedInfo < SmartyError
+  end
+
   class BadCredentialsError < SmartyError
   end
 

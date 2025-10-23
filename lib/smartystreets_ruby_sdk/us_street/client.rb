@@ -62,6 +62,12 @@ module SmartyStreets
           converted_lookup['match'] = lookup.match
           converted_lookup['candidates'] = lookup.candidates
           converted_lookup['format'] = lookup.format
+          converted_lookup['county_source'] = lookup.county_source
+
+          for key in lookup.custom_param_hash.keys do
+            converted_lookup[key] = lookup.custom_param_hash[key]
+          end
+
           converted_obj.push(converted_lookup)
         end
         converted_obj

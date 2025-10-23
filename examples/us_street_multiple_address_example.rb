@@ -20,11 +20,7 @@ class USStreetMultipleAddressExample
     # token = ENV['SMARTY_AUTH_TOKEN']
     # credentials = SmartyStreets::StaticCredentials.new(id, token)
 
-    # The appropriate license values to be used for your subscriptions
-    # can be found on the Subscriptions page of the account dashboard.
-    # https://www.smartystreets.com/docs/cloud/licensing
-    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['us-core-cloud'])
-                 .build_us_street_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials).build_us_street_api_client
     batch = SmartyStreets::Batch.new
 
     # Documentation for input fields can be found at:
@@ -43,6 +39,8 @@ class USStreetMultipleAddressExample
     batch[0].match = SmartyStreets::USStreet::MatchType::INVALID # "invalid" is the most permissive match,
                                       # this will always return at least one result even if the address is invalid.
                                       # Refer to the documentation for additional Match Strategy options.
+
+    # batch[0].add_custom_parameter('parameter', 'value')
 
     batch.add(Lookup.new('1 Rosedale, Baltimore, Maryland')) # Freeform addresses work too.
     batch[1].candidates = 10 # Allows up to ten possible matches to be returned (default is 1).

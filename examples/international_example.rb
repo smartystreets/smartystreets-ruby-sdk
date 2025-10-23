@@ -18,11 +18,7 @@ class InternationalExample
     # token = ENV['SMARTY_AUTH_TOKEN']
     # credentials = SmartyStreets::StaticCredentials.new(id, token)
 
-    # The appropriate license values to be used for your subscriptions
-    # can be found on the Subscriptions page of the account dashboard.
-    # https://www.smartystreets.com/docs/cloud/licensing
-    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['international-global-plus-cloud'])
-                 .build_international_street_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials).build_international_street_api_client
 
     # Documentation for input fields can be found at:
     # https://smartystreets.com/docs/cloud/international-street-api
@@ -37,6 +33,8 @@ class InternationalExample
     lookup.administrative_area = 'SP'
     lookup.country = 'Brazil'
     lookup.postal_code = '02516-050'
+
+    # lookup.add_custom_parameter('parameter', 'value')
 
     candidates = client.send_lookup(lookup) # The candidates are also stored in the lookup's 'result' field.
 

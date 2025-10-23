@@ -29,10 +29,15 @@ class USEnrichmentAddressExample
     # Create a new lookup instance to search with address components
     lookup = SmartyStreets::USEnrichment::Lookup.new
 
+    lookup.smarty_key = "87844267"
     lookup.street = "56 Union Ave"
     lookup.city = "Somerville"
     lookup.state = "NJ"
     lookup.zipcode = "08876"
+    lookup.features = "financial"
+    # lookup.etag = "AUBAGDQDAIGQYCYC"
+
+    # lookup.add_custom_parameter('parameter', 'value')
 
     # Or, create a freeform lookup to search using a single line address
     freeform_lookup = SmartyStreets::USEnrichment::Lookup.new
@@ -42,15 +47,16 @@ class USEnrichmentAddressExample
 
     begin
       # Send a lookup with a smarty key using the line below
-      result = client.send_property_principal_lookup("325023201")
+      # result = client.send_property_principal_lookup("325023201")
 
       # Uncomment the following lines to perform other types of lookups:
-      # result = client.send_property_principal_lookup(lookup) # Using address components
+      result = client.send_property_principal_lookup(lookup) # Using address components
       # result = client.send_property_principal_lookup(freeform_lookup) # Using freeform address
        
       # Access the other Enrichment datasets using the below functions. All of these functions can take a lookup or a smartykey
       # result = client.send_property_financial_lookup("325023201")
       # result = client.send_geo_reference_lookup("325023201")
+      # result = client.send_risk_lookup("325023201")
       # result = client.send_secondary_lookup("325023201")
       # result = client.send_secondary_count_lookup("325023201")
 

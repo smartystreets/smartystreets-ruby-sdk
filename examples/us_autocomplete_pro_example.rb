@@ -23,11 +23,7 @@ class USAutocompleteProExample
     #
     # credentials = SmartyStreets::StaticCredentials.new(auth_id, auth_token)
 
-    # The appropriate license values to be used for your subscriptions
-    # can be found on the Subscriptions page of the account dashboard.
-    # https://www.smartystreets.com/docs/cloud/licensing
-    client = SmartyStreets::ClientBuilder.new(credentials).with_licenses(['us-autocomplete-pro-cloud'])
-                 .build_us_autocomplete_pro_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials).build_us_autocomplete_pro_api_client
 
     # Documentation for input fields can be found at:
     # https://smartystreets.com/docs/cloud/us-autocomplete-api
@@ -38,6 +34,8 @@ class USAutocompleteProExample
     lookup.max_results = 5
     lookup.prefer_ratio = 3
     lookup.source = "all"
+
+    # lookup.add_custom_parameter('parameter', 'value')
 
     suggestions = client.send(lookup) # The client will also return the suggestions directly
 
