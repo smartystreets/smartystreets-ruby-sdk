@@ -41,15 +41,16 @@ class TestGeoReferenceResponse < Minitest::Test
 
     obj = {
         'smarty_key' => 'xxx',
-        'data_set' => 'geo-reference',
-        'data_sub_set' => nil,
+        'data_set_name' => 'geo-reference',
+        'data_set_version' => 'census-2024',
         'attributes' => attributes_obj
     }
 
     response = SmartyStreets::USEnrichment::GeoReference::Response.new(obj)
 
     assert_equal('xxx', response.smarty_key)
-    assert_equal('geo-reference', response.data_set)
+    assert_equal('geo-reference', response.data_set_name)
+    assert_equal('census-2024', response.data_set_version)
 
     attributes = response.attributes
 

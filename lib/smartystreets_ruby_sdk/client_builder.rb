@@ -9,6 +9,7 @@ require_relative 'sleeper'
 require_relative 'logger'
 require_relative 'proxy'
 require_relative 'custom_header_sender'
+require_relative 'custom_query_sender'
 require_relative 'us_street/client'
 require_relative 'us_zipcode/client'
 require_relative 'us_extract/client'
@@ -45,6 +46,7 @@ module SmartyStreets
       @header = nil
       @licenses = %w()
       @debug = nil
+      @queries = {}
     end
 
     # Sets the maximum number of times to retry sending the request to the API. (Default is 5)
@@ -111,6 +113,31 @@ module SmartyStreets
     # Returns self to accommodate method chaining.
     def with_licenses(licenses)
       @licenses.concat licenses
+      self
+    end
+
+    # Allows the caller to specify key and value pair that is added to the request query.
+    #
+    # Returns self to accommodate method chaining.
+    def with_custom_query(key, value)
+      @queries[key] = value
+      self
+    end
+
+    # Allows the caller to specify key and value pair and appends the value to the current
+    # value associated with the key, separated by a comma.
+    #
+    # Returns self to accommodate method chaining.
+    def with_custom_comma_separated_query(key, value)
+      @queries[key] = [@queries[key], value].compact.join(',')
+      self
+    end
+    
+    # Adds to the request query to use the component analysis feature.
+    #
+    # Returns self to accommodate method chaining.
+    def with_feature_component_analysis()
+      self.with_custom_comma_separated_query("features", "component-analysis")
       self
     end
 
@@ -185,6 +212,8 @@ module SmartyStreets
       sender = RetrySender.new(@max_retries, sender, SmartyStreets::Sleeper.new,SmartyStreets::Logger.new) if @max_retries > 0
 
       sender = LicenseSender.new(sender, @licenses)
+
+      sender = CustomQuerySender.new(sender, @queries)
 
       URLPrefixSender.new(@url_prefix, sender)
     end

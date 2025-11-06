@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/property/principal/response'
 
-class TestPropertyFinancialResponse < Minitest::Test
+class TestPropertyPrincipalResponse < Minitest::Test
   def test_all_fields_filled_correctly
 
     attributes_obj = {
@@ -120,6 +120,52 @@ class TestPropertyFinancialResponse < Minitest::Test
         'family_room' => 'family_room',
         'fence' => 'fence',
         'fence_area' => 'fence_area',
+        'financial_history' => [
+            {
+                'code_title_company' => 'code_title_company',
+                'instrument_date' => 'instrument_date',
+                'interest_rate_type_2' => 'interest_rate_type_2',
+                'lender_address' => 'lender_address',
+                'lender_address_2' => 'lender_address_2',
+                'lender_city' => 'lender_city',
+                'lender_city_2' => 'lender_city_2',
+                'lender_code_2' => 'lender_code_2',
+                'lender_first_name' => 'lender_first_name',
+                'lender_first_name_2' => 'lender_first_name_2',
+                'lender_last_name' => 'lender_last_name',
+                'lender_last_name_2' => 'lender_last_name_2',
+                'lender_name' => 'lender_name',
+                'lender_name_2' => 'lender_name_2',
+                'lender_seller_carry_back' => 'lender_seller_carry_back',
+                'lender_seller_carry_back_2' => 'lender_seller_carry_back_2',
+                'lender_state' => 'lender_state',
+                'lender_state_2' => 'lender_state_2',
+                'lender_zip' => 'lender_zip',
+                'lender_zip_2' => 'lender_zip_2',
+                'lender_zip_extended' => 'lender_zip_extended',
+                'lender_zip_extended_2' => 'lender_zip_extended_2',
+                'mortgage_amount' => 'mortgage_amount',
+                'mortgage_amount_2' => 'mortgage_amount_2',
+                'mortgage_due_date' => 'mortgage_due_date',
+                'mortgage_due_date_2' => 'mortgage_due_date_2',
+                'mortgage_interest_rate' => 'mortgage_interest_rate',
+                'mortgage_interest_rate_type' => 'mortgage_interest_rate_type',
+                'mortgage_lender_code' => 'mortgage_lender_code',
+                'mortgage_rate_2' => 'mortgage_rate_2',
+                'mortgage_recording_date' => 'mortgage_recording_date',
+                'mortgage_recording_date_2' => 'mortgage_recording_date_2',
+                'mortgage_term' => 'mortgage_term',
+                'mortgage_term_2' => 'mortgage_term_2',
+                'mortgage_term_type' => 'mortgage_term_type',
+                'mortgage_term_type_2' => 'mortgage_term_type_2',
+                'mortgage_type' => 'mortgage_type',
+                'mortgage_type_2' => 'mortgage_type_2',
+                'multi_parcel_flag' => 'multi_parcel_flag',
+                'name_title_company' => 'name_title_company',
+                'recording_date' => 'recording_date',
+                'transfer_amount' => 'transfer_amount'
+            }
+        ],
         'fips_code' => 'fips_code',
         'fire_resistance_code' => 'fire_resistance_code',
         'fire_sprinklers_flag' => 'fire_sprinklers_flag',
@@ -368,16 +414,16 @@ class TestPropertyFinancialResponse < Minitest::Test
 
     obj = {
         'smarty_key' => 'xxx',
-        'data_set' => 'property',
-        'data_sub_set' => 'principal',
+        'data_set_name' => 'property',
+        'data_subset_name' => 'principal',
         'attributes' => attributes_obj
     }
 
     response = SmartyStreets::USEnrichment::Property::Principal::Response.new(obj)
 
     assert_equal('xxx', response.smarty_key)
-    assert_equal('property', response.data_set)
-    assert_equal('principal', response.data_sub_set)
+    assert_equal('property', response.data_set_name)
+    assert_equal('principal', response.data_subset_name)
 
     attributes = response.attributes
 
@@ -496,6 +542,51 @@ class TestPropertyFinancialResponse < Minitest::Test
     assert_equal('family_room', attributes.family_room)
     assert_equal('fence', attributes.fence)
     assert_equal('fence_area', attributes.fence_area)
+
+    financial_history = attributes.financial_history[0]
+    assert_equal('code_title_company', financial_history.code_title_company)
+    assert_equal('instrument_date', financial_history.instrument_date)
+    assert_equal('interest_rate_type_2', financial_history.interest_rate_type_2)
+    assert_equal('lender_address', financial_history.lender_address)
+    assert_equal('lender_address_2', financial_history.lender_address_2)
+    assert_equal('lender_city', financial_history.lender_city)
+    assert_equal('lender_city_2', financial_history.lender_city_2)
+    assert_equal('lender_code_2', financial_history.lender_code_2)
+    assert_equal('lender_first_name', financial_history.lender_first_name)
+    assert_equal('lender_first_name_2', financial_history.lender_first_name_2)
+    assert_equal('lender_last_name', financial_history.lender_last_name)
+    assert_equal('lender_last_name_2', financial_history.lender_last_name_2)
+    assert_equal('lender_name', financial_history.lender_name)
+    assert_equal('lender_name_2', financial_history.lender_name_2)
+    assert_equal('lender_seller_carry_back', financial_history.lender_seller_carry_back)
+    assert_equal('lender_seller_carry_back_2', financial_history.lender_seller_carry_back_2)
+    assert_equal('lender_state', financial_history.lender_state)
+    assert_equal('lender_state_2', financial_history.lender_state_2)
+    assert_equal('lender_zip', financial_history.lender_zip)
+    assert_equal('lender_zip_2', financial_history.lender_zip_2)
+    assert_equal('lender_zip_extended', financial_history.lender_zip_extended)
+    assert_equal('lender_zip_extended_2', financial_history.lender_zip_extended_2)
+    assert_equal('mortgage_amount', financial_history.mortgage_amount)
+    assert_equal('mortgage_amount_2', financial_history.mortgage_amount_2)
+    assert_equal('mortgage_due_date', financial_history.mortgage_due_date)
+    assert_equal('mortgage_due_date_2', financial_history.mortgage_due_date_2)
+    assert_equal('mortgage_interest_rate', financial_history.mortgage_interest_rate)
+    assert_equal('mortgage_interest_rate_type', financial_history.mortgage_interest_rate_type)
+    assert_equal('mortgage_lender_code', financial_history.mortgage_lender_code)
+    assert_equal('mortgage_rate_2', financial_history.mortgage_rate_2)
+    assert_equal('mortgage_recording_date', financial_history.mortgage_recording_date)
+    assert_equal('mortgage_recording_date_2', financial_history.mortgage_recording_date_2)
+    assert_equal('mortgage_term', financial_history.mortgage_term)
+    assert_equal('mortgage_term_2', financial_history.mortgage_term_2)
+    assert_equal('mortgage_term_type', financial_history.mortgage_term_type)
+    assert_equal('mortgage_term_type_2', financial_history.mortgage_term_type_2)
+    assert_equal('mortgage_type', financial_history.mortgage_type)
+    assert_equal('mortgage_type_2', financial_history.mortgage_type_2)
+    assert_equal('multi_parcel_flag', financial_history.multi_parcel_flag)
+    assert_equal('name_title_company', financial_history.name_title_company)
+    assert_equal('recording_date', financial_history.recording_date)
+    assert_equal('transfer_amount', financial_history.transfer_amount)
+
     assert_equal('fips_code', attributes.fips_code)
     assert_equal('fire_resistance_code', attributes.fire_resistance_code)
     assert_equal('fire_sprinklers_flag', attributes.fire_sprinklers_flag)
