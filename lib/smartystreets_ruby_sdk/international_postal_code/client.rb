@@ -24,6 +24,7 @@ module SmartyStreets
         candidate_hashes = @serializer.deserialize(response.payload) || []
         candidates = convert_candidates(candidate_hashes)
         lookup.results = candidates
+        candidates
       end
 
       def build_request(lookup)

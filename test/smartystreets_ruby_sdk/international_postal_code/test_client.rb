@@ -2,6 +2,8 @@ require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/international_postal_code/client'
 require './lib/smartystreets_ruby_sdk/international_postal_code/lookup'
 require './test/mocks/request_capturing_sender'
+require './test/mocks/mock_sender'
+require './test/mocks/fake_serializer'
 require './test/mocks/fake_deserializer'
 require './lib/smartystreets_ruby_sdk/response'
 
@@ -12,7 +14,7 @@ class TestInternationalPostalCodeClient < Minitest::Test
 
   def test_sending_fully_populated_lookup
     sender = RequestCapturingSender.new
-    serializer = FakeSerializer.new([])
+    serializer = FakeSerializer.new({})
     client = Client.new(sender, serializer)
 
     lookup = Lookup.new
@@ -48,7 +50,7 @@ class TestInternationalPostalCodeClient < Minitest::Test
 
   def test_rejects_nil_lookup
     sender = RequestCapturingSender.new
-    serializer = FakeSerializer.new([])
+    serializer = FakeSerializer.new({})
     client = Client.new(sender, serializer)
 
     assert_raises(SmartyStreets::SmartyError) do

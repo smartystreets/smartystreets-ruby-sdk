@@ -12,11 +12,11 @@ class InternationalPostalCodeExample
     # referer = ENV['SMARTY_AUTH_REFERER']
     # credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
-    id = ENV['SMARTY_AUTH_ID']
-    token = ENV['SMARTY_AUTH_TOKEN']
+    id = ENV['SMARTY_AUTH_ID_DEV']
+    token = ENV['SMARTY_AUTH_TOKEN_DEV']
     credentials = SmartyStreets::StaticCredentials.new(id, token)
 
-    client = SmartyStreets::ClientBuilder.new(credentials).build_international_postal_code_api_client
+    client = SmartyStreets::ClientBuilder.new(credentials).with_base_url("https://international-postal-code.api.rivendell.smartyops.net/lookup").build_international_postal_code_api_client
 
     # Documentation for input fields can be found at:
     # https://smartystreets.com/docs/cloud/international-postal-code-api
