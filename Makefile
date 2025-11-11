@@ -27,6 +27,9 @@ publish: package
 international_autocomplete_api:
 	cd examples && ruby international_autocomplete_example.rb
 
+international_postal_code_api:
+	cd examples && ruby international_postal_code_example.rb
+
 international_street_api:
 	cd examples && ruby international_example.rb
 
@@ -48,6 +51,6 @@ us_street_api:
 us_zipcode_api:
 	cd examples && ruby us_zipcode_single_lookup_example.rb && ruby us_zipcode_multiple_lookup_example.rb
 
-examples: international_autocomplete_api international_street_api us_autocomplete_pro_api us_enrichment_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api
+examples: international_autocomplete_api international_postal_code_api international_street_api us_autocomplete_pro_api us_enrichment_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api
 
-.PHONY: clean test dependencies package publish international_autocomplete_api international_street_api us_autocomplete_pro_api us_enrichment_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api examples
+.PHONY: clean test dependencies package publish international_autocomplete_api international_postal_code_api international_street_api us_autocomplete_pro_api us_enrichment_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api examples
