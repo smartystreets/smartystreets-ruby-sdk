@@ -27,7 +27,7 @@ class TestInternationalCandidate < Minitest::Test
                 "\"delivery_installation_qualifier_name\":\"115\",\"route\":\"116\",\"route_number\":\"117\"," \
                 "\"route_type\":\"118\"},"\
                 "\"metadata\":{\"latitude\":52.0,\"longitude\":53.0,"\
-                "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\",\"address_format\":\"56\",\"occupant_use\":\"56.1\"},"\
+                "\"geocode_precision\":\"54\",\"geocode_classification\":\"multiple-point-average\",\"max_geocode_precision\":\"55\",\"address_format\":\"56\",\"occupant_use\":\"56.1\"},"\
                 "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\","\
                 "\"max_address_precision\":\"59\",\"changes\":{\"organization\":\"60\","\
                 "\"address1\":\"61\",\"address2\":\"62\",\"address3\":\"63\",\"address4\":\"64\",\"address5\":\"65\","\
@@ -126,6 +126,7 @@ class TestInternationalCandidate < Minitest::Test
     assert_equal(52, metadata.latitude, 0.001)
     assert_equal(53, metadata.longitude, 0.001)
     assert_equal('54', metadata.geocode_precision)
+    assert_equal('multiple-point-average', metadata.geocode_classification)
     assert_equal('55', metadata.max_geocode_precision)
     assert_equal('56', metadata.address_format)
     assert_equal('56.1', metadata.occupant_use)
