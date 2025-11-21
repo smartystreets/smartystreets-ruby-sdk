@@ -52,9 +52,8 @@ class USEnrichmentAddressExample
       # Uncomment the following lines to perform other types of lookups:
       result = client.send_property_principal_lookup(lookup) # Using address components
       # result = client.send_property_principal_lookup(freeform_lookup) # Using freeform address
-       
+
       # Access the other Enrichment datasets using the below functions. All of these functions can take a lookup or a smartykey
-      # result = client.send_property_financial_lookup("325023201")
       # result = client.send_geo_reference_lookup("325023201")
       # result = client.send_risk_lookup("325023201")
       # result = client.send_secondary_lookup("325023201")

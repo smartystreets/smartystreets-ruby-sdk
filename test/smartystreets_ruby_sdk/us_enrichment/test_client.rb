@@ -10,49 +10,6 @@ require_relative '../../../lib/smartystreets_ruby_sdk/us_enrichment/lookup'
 
 class TestStreetClient < Minitest::Test
 
-  def test_financial_url_formatted_correctly
-    sender = RequestCapturingSender.new
-    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
-
-    lookup = SmartyStreets::USEnrichment::Lookup.new
-    freeform_lookup = SmartyStreets::USEnrichment::Lookup.new
-
-    lookup.street = "street"
-    lookup.city = "city"
-    lookup.state = "state"
-    lookup.zipcode = "zipcode"
-    freeform_lookup.freeform = "street city state zipcode"
-
-    client.send_property_financial_lookup("123")
-    assert_equal("/123/property/financial", sender.request.url_components)
-
-    client.send_property_financial_lookup(lookup)
-    assert_equal("/search/property/financial", sender.request.url_components)
-    assert_equal("street", sender.request.parameters["street"])
-    assert_equal("city", sender.request.parameters["city"])
-    assert_equal("state", sender.request.parameters["state"])
-    assert_equal("zipcode", sender.request.parameters["zipcode"])
-
-    client.send_property_financial_lookup(freeform_lookup)
-    assert_equal("/search/property/financial", sender.request.url_components)
-    assert_equal("street city state zipcode", sender.request.parameters["freeform"])
-  end
-
-  def test_financial_etag_present
-    sender = RequestCapturingSender.new
-    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
-
-    lookup = SmartyStreets::USEnrichment::Lookup.new
-    lookup.street = "street"
-    lookup.city = "city"
-    lookup.state = "state"
-    lookup.zipcode = "zipcode"
-    lookup.etag = "etag"
-
-    client.send_property_financial_lookup(lookup)
-    assert_equal("etag", sender.request.header["ETAG"])
-  end
-
   def test_principal_url_formatted_correctly
     sender = RequestCapturingSender.new
     client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
@@ -210,7 +167,7 @@ class TestStreetClient < Minitest::Test
     assert_equal("street city state zipcode", sender.request.parameters["freeform"])
   end
 
-  def test_financial_etag_present
+  def test_secondary_count_etag_present
     sender = RequestCapturingSender.new
     client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
 
