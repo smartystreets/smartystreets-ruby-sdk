@@ -1,4 +1,3 @@
-require_relative "property/financial/response"
 require_relative "property/principal/response"
 require_relative "geo_reference/response"
 require_relative "risk/response"
@@ -13,16 +12,6 @@ module SmartyStreets
             def initialize(sender, serializer)
                 @sender = sender
                 @serializer = serializer
-            end
-
-            def send_property_financial_lookup(lookup)
-                if (lookup.instance_of? String)
-                    __send(USEnrichment::Lookup.new(lookup,'property','financial'))
-                elsif (lookup.instance_of? USEnrichment::Lookup)
-                    lookup.data_set = 'property'
-                    lookup.data_sub_set = 'financial'
-                    __send(lookup)
-                end
             end
 
             def send_property_principal_lookup(lookup)
@@ -129,9 +118,6 @@ module SmartyStreets
                 output = []
                 results.each do |raw_result|
                     result = nil
-                    if lookup.data_sub_set == "financial"
-                        result = USEnrichment::Property::Financial::Response.new(raw_result, response.header['etag'])
-                    end
                     if lookup.data_sub_set == "principal"
                         result = USEnrichment::Property::Principal::Response.new(raw_result, response.header['etag'])
                     end
