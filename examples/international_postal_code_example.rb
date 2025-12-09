@@ -28,6 +28,8 @@ class InternationalPostalCodeExample
     lookup.country = 'Brazil'
     lookup.postal_code = '02516'
 
+    # lookup.add_custom_parameter('parameter', 'value')
+
     results = client.send_lookup(lookup)
 
     puts 'Results:'

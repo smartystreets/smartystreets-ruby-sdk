@@ -36,6 +36,10 @@ module SmartyStreets
         add_parameter(request, 'administrative_area', lookup.administrative_area)
         add_parameter(request, 'postal_code', lookup.postal_code)
 
+        for key in lookup.custom_param_hash.keys do
+          add_parameter(request, key, lookup.custom_param_hash[key])
+        end
+
         request
       end
 

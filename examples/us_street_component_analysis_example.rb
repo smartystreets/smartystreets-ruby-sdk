@@ -28,6 +28,8 @@ class USStreetComponentAnalysisExample
     lookup.zipcode = "21229"
     lookup.match = SmartyStreets::USStreet::MatchType::ENHANCED # Enhanced matching is required to return component analysis results.
 
+    # lookup.add_custom_parameter('parameter', 'value')
+
     begin
       client.send_lookup(lookup)
     rescue SmartyStreets::SmartyError => err
