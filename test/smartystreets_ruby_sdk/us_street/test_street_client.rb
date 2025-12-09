@@ -38,7 +38,7 @@ class TestStreetClient < Minitest::Test
         'addressee' => '9',
         'urbanization' => '10',
         'match' => SmartyStreets::USStreet::MatchType::ENHANCED,
-        'candidates' => 5,
+        'candidates' => 1,
         'format' => SmartyStreets::USStreet::OutputFormat::PROJECT_USA,
         'county_source' => SmartyStreets::USStreet::CountySource::GEOGRAPHIC,
         'parameter' => 'value',
