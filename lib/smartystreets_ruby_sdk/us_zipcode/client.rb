@@ -21,6 +21,13 @@ module SmartyStreets
       # Sends a Batch object containing no more than 100 Lookup objects to the US ZIP Code API and stores the
       # results in the result field of the Lookup object.
       def send_batch(batch)
+        send_batch_with_auth(batch, nil, nil)
+      end
+
+      # Sends a Batch object with per-request credentials to the US ZIP Code API and stores the results in the result field of the Lookup object.
+      # If auth_id and auth_token are both non-empty, they will be used for this request instead of the client-level credentials.
+      # This is useful for multi-tenant scenarios where different requests require different credentials.
+      def send_batch_with_auth(batch, auth_id, auth_token)
         smarty_request = Request.new
 
         return if batch.empty?
@@ -31,6 +38,11 @@ module SmartyStreets
           smarty_request.payload = @serializer.serialize(converted_lookups)
         else
           smarty_request.parameters = converted_lookups[0]
+        end
+
+        if !auth_id.nil? && !auth_id.empty? && !auth_token.nil? && !auth_token.empty?
+          smarty_request.auth_id = auth_id
+          smarty_request.auth_token = auth_token
         end
 
         response = @sender.send(smarty_request)

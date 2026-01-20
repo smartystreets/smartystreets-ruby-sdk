@@ -13,9 +13,21 @@ module SmartyStreets
 
       # Sends a Lookup object to the International Postal Code API and stores the result in the Lookup's results field.
       def send_lookup(lookup)
+        send_lookup_with_auth(lookup, nil, nil)
+      end
+
+      # Sends a Lookup object with per-request credentials to the International Postal Code API and stores the result in the Lookup's results field.
+      # If auth_id and auth_token are both non-empty, they will be used for this request instead of the client-level credentials.
+      # This is useful for multi-tenant scenarios where different requests require different credentials.
+      def send_lookup_with_auth(lookup, auth_id, auth_token)
         raise SmartyStreets::SmartyError, 'Send() must be passed a Lookup.' if lookup.nil?
 
         request = build_request(lookup)
+
+        if !auth_id.nil? && !auth_id.empty? && !auth_token.nil? && !auth_token.empty?
+          request.auth_id = auth_id
+          request.auth_token = auth_token
+        end
 
         response = @sender.send(request)
 

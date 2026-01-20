@@ -15,66 +15,112 @@ module SmartyStreets
             end
 
             def send_property_principal_lookup(lookup)
+                send_property_principal_lookup_with_auth(lookup, nil, nil)
+            end
+
+            # Sends a property principal lookup with per-request credentials.
+            # If auth_id and auth_token are both non-empty, they will be used for this request instead of the client-level credentials.
+            # This is useful for multi-tenant scenarios where different requests require different credentials.
+            def send_property_principal_lookup_with_auth(lookup, auth_id, auth_token)
                 if (lookup.instance_of? String)
-                    __send(USEnrichment::Lookup.new(lookup,'property','principal'))
+                    __send_with_auth(USEnrichment::Lookup.new(lookup,'property','principal'), auth_id, auth_token)
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = 'property'
                     lookup.data_sub_set = 'principal'
-                    __send(lookup)
+                    __send_with_auth(lookup, auth_id, auth_token)
                 end
             end
 
             def send_geo_reference_lookup(lookup)
+                send_geo_reference_lookup_with_auth(lookup, nil, nil)
+            end
+
+            # Sends a geo reference lookup with per-request credentials.
+            # If auth_id and auth_token are both non-empty, they will be used for this request instead of the client-level credentials.
+            # This is useful for multi-tenant scenarios where different requests require different credentials.
+            def send_geo_reference_lookup_with_auth(lookup, auth_id, auth_token)
                 if (lookup.instance_of? String)
-                    __send(USEnrichment::Lookup.new(lookup,'geo-reference'))
+                    __send_with_auth(USEnrichment::Lookup.new(lookup,'geo-reference'), auth_id, auth_token)
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = 'geo-reference'
                     lookup.data_sub_set = nil
-                    __send(lookup)
+                    __send_with_auth(lookup, auth_id, auth_token)
                 end
             end
 
             def send_risk_lookup(lookup)
+                send_risk_lookup_with_auth(lookup, nil, nil)
+            end
+
+            # Sends a risk lookup with per-request credentials.
+            # If auth_id and auth_token are both non-empty, they will be used for this request instead of the client-level credentials.
+            # This is useful for multi-tenant scenarios where different requests require different credentials.
+            def send_risk_lookup_with_auth(lookup, auth_id, auth_token)
                 if (lookup.instance_of? String)
-                    __send(USEnrichment::Lookup.new(lookup,'risk'))
+                    __send_with_auth(USEnrichment::Lookup.new(lookup,'risk'), auth_id, auth_token)
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = 'risk'
                     lookup.data_sub_set = nil
-                    __send(lookup)
+                    __send_with_auth(lookup, auth_id, auth_token)
                 end
             end
 
             def send_secondary_lookup(lookup)
+                send_secondary_lookup_with_auth(lookup, nil, nil)
+            end
+
+            # Sends a secondary lookup with per-request credentials.
+            # If auth_id and auth_token are both non-empty, they will be used for this request instead of the client-level credentials.
+            # This is useful for multi-tenant scenarios where different requests require different credentials.
+            def send_secondary_lookup_with_auth(lookup, auth_id, auth_token)
                 if (lookup.instance_of? String)
-                    __send(USEnrichment::Lookup.new(lookup,'secondary'))
+                    __send_with_auth(USEnrichment::Lookup.new(lookup,'secondary'), auth_id, auth_token)
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = 'secondary'
                     lookup.data_sub_set = nil
-                    __send(lookup)
+                    __send_with_auth(lookup, auth_id, auth_token)
                 end
             end
 
             def send_secondary_count_lookup(lookup)
+                send_secondary_count_lookup_with_auth(lookup, nil, nil)
+            end
+
+            # Sends a secondary count lookup with per-request credentials.
+            # If auth_id and auth_token are both non-empty, they will be used for this request instead of the client-level credentials.
+            # This is useful for multi-tenant scenarios where different requests require different credentials.
+            def send_secondary_count_lookup_with_auth(lookup, auth_id, auth_token)
                 if (lookup.instance_of? String)
-                    __send(USEnrichment::Lookup.new(lookup,'secondary','count'))
+                    __send_with_auth(USEnrichment::Lookup.new(lookup,'secondary','count'), auth_id, auth_token)
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = 'secondary'
                     lookup.data_sub_set = 'count'
-                    __send(lookup)
+                    __send_with_auth(lookup, auth_id, auth_token)
                 end
             end
 
             def send_generic_lookup(lookup, data_set, data_sub_set = nil)
+                send_generic_lookup_with_auth(lookup, data_set, data_sub_set, nil, nil)
+            end
+
+            # Sends a generic lookup with per-request credentials.
+            # If auth_id and auth_token are both non-empty, they will be used for this request instead of the client-level credentials.
+            # This is useful for multi-tenant scenarios where different requests require different credentials.
+            def send_generic_lookup_with_auth(lookup, data_set, data_sub_set, auth_id, auth_token)
                 if (lookup.instance_of? String)
-                    __send(USEnrichment::Lookup.new(lookup, data_set, data_sub_set))
+                    __send_with_auth(USEnrichment::Lookup.new(lookup, data_set, data_sub_set), auth_id, auth_token)
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = data_set
                     lookup.data_sub_set = data_sub_set
-                    __send(lookup)
+                    __send_with_auth(lookup, auth_id, auth_token)
                 end
             end
 
             def __send(lookup)
+                __send_with_auth(lookup, nil, nil)
+            end
+
+            def __send_with_auth(lookup, auth_id, auth_token)
                 smarty_request = Request.new
 
                 return if lookup.nil?
@@ -109,12 +155,17 @@ module SmartyStreets
                     add_parameter(smarty_request, key, lookup.custom_param_hash[key])
                 end
 
+                if !auth_id.nil? && !auth_id.empty? && !auth_token.nil? && !auth_token.empty?
+                    smarty_request.auth_id = auth_id
+                    smarty_request.auth_token = auth_token
+                end
+
                 response = @sender.send(smarty_request)
                 results = @serializer.deserialize(response.payload)
-                
+
                 results = [] if results.nil?
                 raise response.error if response.error
-                
+
                 output = []
                 results.each do |raw_result|
                     result = nil

@@ -1,3 +1,4 @@
+require '../lib/smartystreets_ruby_sdk/basic_auth_credentials'
 require '../lib/smartystreets_ruby_sdk/shared_credentials'
 require '../lib/smartystreets_ruby_sdk/static_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
@@ -11,13 +12,13 @@ class InternationalAutocompleteExample
     # key = 'Your SmartyStreets Auth Key here'
     # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    key = ENV['SMARTY_AUTH_WEB']
-    referer = ENV['SMARTY_AUTH_REFERER']
-    credentials = SmartyStreets::SharedCredentials.new(key, referer)
+    # key = ENV['SMARTY_AUTH_WEB']
+    # referer = ENV['SMARTY_AUTH_REFERER']
+    # credentials = SmartyStreets::SharedCredentials.new(key, referer)
 
-    # id = ENV['SMARTY_AUTH_ID']
-    # token = ENV['SMARTY_AUTH_TOKEN']
-    # credentials = SmartyStreets::StaticCredentials.new(id, token)
+    id = ENV['SMARTY_AUTH_ID']
+    token = ENV['SMARTY_AUTH_TOKEN']
+    credentials = SmartyStreets::BasicAuthCredentials.new(id, token)
 
     client = SmartyStreets::ClientBuilder.new(credentials).build_international_autocomplete_api_client
 

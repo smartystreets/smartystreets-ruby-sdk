@@ -26,8 +26,20 @@ module SmartyStreets
 
       # Sends a Lookup object to the International Street API and stores the result in the Lookup's result field.
       def send_lookup(lookup)
+        send_lookup_with_auth(lookup, nil, nil)
+      end
+
+      # Sends a Lookup object with per-request credentials to the International Street API and stores the result in the Lookup's result field.
+      # If auth_id and auth_token are both non-empty, they will be used for this request instead of the client-level credentials.
+      # This is useful for multi-tenant scenarios where different requests require different credentials.
+      def send_lookup_with_auth(lookup, auth_id, auth_token)
         lookup.ensure_enough_info
         request = build_request(lookup)
+
+        if !auth_id.nil? && !auth_id.empty? && !auth_token.nil? && !auth_token.empty?
+          request.auth_id = auth_id
+          request.auth_token = auth_token
+        end
 
         response = @sender.send(request)
 

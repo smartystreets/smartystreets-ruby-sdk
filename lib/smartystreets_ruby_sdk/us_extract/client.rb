@@ -16,11 +16,24 @@ module SmartyStreets
       # Sends a Lookup object to the US Extract Code API and stores the result in the Lookup's result field.
       # It also returns the result directly.
       def send(lookup)
+        send_with_auth(lookup, nil, nil)
+      end
+
+      # Sends a Lookup object with per-request credentials to the US Extract API and stores the result in the Lookup's result field.
+      # If auth_id and auth_token are both non-empty, they will be used for this request instead of the client-level credentials.
+      # This is useful for multi-tenant scenarios where different requests require different credentials.
+      def send_with_auth(lookup, auth_id, auth_token)
         if lookup.nil? or lookup.text.nil? or not lookup.text.is_a? String or lookup.text.empty?
           raise SmartyError, 'Client.send() requires a Lookup with the "text" field set'
         end
 
         request = build_request(lookup)
+
+        if !auth_id.nil? && !auth_id.empty? && !auth_token.nil? && !auth_token.empty?
+          request.auth_id = auth_id
+          request.auth_token = auth_token
+        end
+
         response = @sender.send(request)
         raise response.error if response.error
         result = USExtract::Result.new(@serializer.deserialize(response.payload))
