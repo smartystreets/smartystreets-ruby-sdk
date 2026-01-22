@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit",
+      "Write",
+      "Bash(rm:./*)",
+      "Bash(git *)",
+      "Bash(make *)",
+      "Bash(gem *)",
+      "Bash(rake *)",
+      "Bash(ruby *)"
+    ]
+  }
+}
