@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/static_credentials'
 require './lib/smartystreets_ruby_sdk/shared_credentials'
+require './lib/smartystreets_ruby_sdk/basic_auth_credentials'
 require './lib/smartystreets_ruby_sdk/signing_sender'
 require_relative '../../lib/smartystreets_ruby_sdk/request'
 require_relative '../../lib/smartystreets_ruby_sdk/response'
@@ -9,6 +10,7 @@ class TestSigningSender < Minitest::Test
   SharedCredentials = SmartyStreets::SharedCredentials
   SigningSender = SmartyStreets::SigningSender
   StaticCredentials = SmartyStreets::StaticCredentials
+  BasicAuthCredentials = SmartyStreets::BasicAuthCredentials
 
   def setup
     @inner = MockSender.new(SmartyStreets::Response.new('Test payload', '200'))
@@ -33,5 +35,14 @@ class TestSigningSender < Minitest::Test
 
     assert_equal('testID', @request.parameters['key'])
     assert_equal('https://test.host.com', @request.referer)
+  end
+
+  def test_successful_signing_with_basic_auth_credentials
+    @credentials = BasicAuthCredentials.new('testID', 'testToken')
+    @sender = SigningSender.new(@credentials, @inner)
+
+    @sender.send(@request)
+
+    assert_equal(['testID', 'testToken'], @request.basic_auth)
   end
 end
