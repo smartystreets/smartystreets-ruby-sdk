@@ -6,6 +6,7 @@ require './test/mocks/fake_deserializer'
 require './test/mocks/mock_sender'
 require './test/mocks/mock_exception_sender'
 require './lib/smartystreets_ruby_sdk/us_street/client'
+require './lib/smartystreets_ruby_sdk/us_street/lookup'
 require './lib/smartystreets_ruby_sdk/us_street/candidate'
 require './lib/smartystreets_ruby_sdk/us_street/match_type'
 require './lib/smartystreets_ruby_sdk/response'
@@ -247,5 +248,74 @@ class TestStreetClient < Minitest::Test
     assert_equal("lacslink_code", candidate.analysis.lacs_link_code)
     assert_equal("lacslink_indicator", candidate.analysis.lacs_link_indicator)
     assert_equal(true, candidate.analysis.is_suite_link_match)
+  end
+
+  def test_default_match_strategy_is_enhanced
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new
+    lookup.street = '123 Main St'
+
+    client.send_lookup(lookup)
+
+    assert_equal(SmartyStreets::USStreet::MatchType::ENHANCED, sender.request.parameters['match'])
+    assert_equal(5, sender.request.parameters['candidates'])
+  end
+
+  def test_explicit_match_strict
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new
+    lookup.street = '123 Main St'
+    lookup.match = SmartyStreets::USStreet::MatchType::STRICT
+
+    client.send_lookup(lookup)
+
+    assert_nil(sender.request.parameters['match'])
+    assert_nil(sender.request.parameters['candidates'])
+  end
+
+  def test_explicit_match_strict_with_candidates
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new
+    lookup.street = '123 Main St'
+    lookup.match = SmartyStreets::USStreet::MatchType::STRICT
+    lookup.candidates = 3
+
+    client.send_lookup(lookup)
+
+    assert_nil(sender.request.parameters['match'])
+    assert_equal(3, sender.request.parameters['candidates'])
+  end
+
+  def test_explicit_candidates_overrides_default
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new
+    lookup.street = '123 Main St'
+    lookup.candidates = 2
+
+    client.send_lookup(lookup)
+
+    assert_equal(SmartyStreets::USStreet::MatchType::ENHANCED, sender.request.parameters['match'])
+    assert_equal(2, sender.request.parameters['candidates'])
+  end
+
+  def test_match_invalid_sends_match_parameter
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new
+    lookup.street = '123 Main St'
+    lookup.match = SmartyStreets::USStreet::MatchType::INVALID
+
+    client.send_lookup(lookup)
+
+    assert_equal(SmartyStreets::USStreet::MatchType::INVALID, sender.request.parameters['match'])
   end
 end

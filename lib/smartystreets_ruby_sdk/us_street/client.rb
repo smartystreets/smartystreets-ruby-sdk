@@ -47,7 +47,16 @@ module SmartyStreets
         converted_obj = []
         obj.each do |lookup|
           converted_lookup = {}
-          lookup.candidates = 5 if lookup.match == "enhanced" && lookup.candidates == 0
+          match_strategy = lookup.match
+          match_strategy = MatchType::ENHANCED if match_strategy.nil? || match_strategy.empty?
+
+          if lookup.candidates > 0
+            converted_lookup['candidates'] = lookup.candidates
+          elsif match_strategy == MatchType::ENHANCED
+            converted_lookup['candidates'] = 5
+          end
+
+          converted_lookup['match'] = match_strategy if match_strategy != MatchType::STRICT
 
           converted_lookup['input_id'] = lookup.input_id
           converted_lookup['street'] = lookup.street
@@ -59,8 +68,6 @@ module SmartyStreets
           converted_lookup['lastline'] = lookup.lastline
           converted_lookup['addressee'] = lookup.addressee
           converted_lookup['urbanization'] = lookup.urbanization
-          converted_lookup['match'] = lookup.match
-          converted_lookup['candidates'] = lookup.candidates
           converted_lookup['format'] = lookup.format
           converted_lookup['county_source'] = lookup.county_source
 
