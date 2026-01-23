@@ -1,5 +1,6 @@
 require '../lib/smartystreets_ruby_sdk/static_credentials'
 require '../lib/smartystreets_ruby_sdk/shared_credentials'
+require '../lib/smartystreets_ruby_sdk/basic_auth_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/us_street/lookup'
 require '../lib/smartystreets_ruby_sdk/us_street/match_type'
@@ -14,7 +15,7 @@ class USStreetComponentAnalysisExample
     # For server-to-server requests, use this code:
     id = ENV['SMARTY_AUTH_ID']
     token = ENV['SMARTY_AUTH_TOKEN']
-    credentials = SmartyStreets::StaticCredentials.new(id, token)
+    credentials = SmartyStreets::BasicAuthCredentials.new(id, token)
 
     client = SmartyStreets::ClientBuilder.new(credentials)
       .with_feature_component_analysis() #  To add component analysis feature you need to specify when you create the client.

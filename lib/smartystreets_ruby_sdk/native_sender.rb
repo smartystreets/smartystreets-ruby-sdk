@@ -47,6 +47,7 @@ module SmartyStreets
       request.body = smarty_request.payload
       request['User-Agent'] = "smartystreets (sdk:ruby@#{SmartyStreets::VERSION})"
       request['Referer'] = smarty_request.referer unless smarty_request.referer.nil?
+      request.basic_auth(smarty_request.basic_auth[0], smarty_request.basic_auth[1]) unless smarty_request.basic_auth.nil?
       set_custom_headers(smarty_request.header, request)
       request
     end

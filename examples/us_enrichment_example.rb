@@ -1,5 +1,6 @@
 require '../lib/smartystreets_ruby_sdk/static_credentials'
 require '../lib/smartystreets_ruby_sdk/shared_credentials'
+require '../lib/smartystreets_ruby_sdk/basic_auth_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/us_enrichment/lookup'
 
@@ -14,7 +15,7 @@ class USEnrichmentAddressExample
 
     id = ENV['SMARTY_AUTH_ID']
     token = ENV['SMARTY_AUTH_TOKEN']
-    credentials = SmartyStreets::StaticCredentials.new(id, token)
+    credentials = SmartyStreets::BasicAuthCredentials.new(id, token)
 
     # The appropriate license values to be used for your subscriptions
     # can be found on the Subscriptions page of the account dashboard.
