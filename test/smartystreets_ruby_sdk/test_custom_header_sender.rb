@@ -21,4 +21,20 @@ class TestCustomHeaderSender < Minitest::Test
     assert_equal(%w(1 2), request.header['A'])
     assert_equal(['1'], request.header['B'])
   end
+
+  def test_appended_headers_are_set_on_the_request
+    headers = { 'User-Agent' => %w(base-value custom-value) }
+    append_headers = { 'User-Agent' => ' ' }
+    mock_response = SmartyStreets::Response.new('Testing', '123')
+    inner = MockSender.new(mock_response)
+    sender = SmartyStreets::CustomHeaderSender.new(inner, headers, append_headers)
+    request = SmartyStreets::Request.new
+
+    response = sender.send(request)
+
+    assert_equal('Testing', response.payload)
+    assert_equal('123', response.status_code)
+    assert_equal(headers, request.header)
+    assert_equal(append_headers, request.append_headers)
+  end
 end

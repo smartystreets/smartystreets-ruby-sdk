@@ -44,6 +44,7 @@ module SmartyStreets
       @url_prefix = nil
       @proxy = nil
       @header = nil
+      @append_headers = {}
       @licenses = %w()
       @debug = nil
       @queries = {}
@@ -105,6 +106,17 @@ module SmartyStreets
     # Returns self to accommodate method chaining.
     def with_custom_headers(header)
       @header = header
+      self
+    end
+
+    # Appends the provided value to the existing header value using the specified separator,
+    # rather than adding a separate header value. This is useful for single-value headers like User-Agent.
+    #
+    # Returns self to accommodate method chaining.
+    def with_appended_header(key, value, separator)
+      @header = {} if @header.nil?
+      @append_headers[key] = separator
+      @header[key] = (@header[key] || []).concat([value])
       self
     end
 
@@ -205,7 +217,7 @@ module SmartyStreets
 
       sender = StatusCodeSender.new(sender)
 
-      sender = CustomHeaderSender.new(sender, @header) unless @header.nil?
+      sender = CustomHeaderSender.new(sender, @header, @append_headers) unless @header.nil?
 
       sender = SigningSender.new(@signer, sender) unless @signer.nil?
 
