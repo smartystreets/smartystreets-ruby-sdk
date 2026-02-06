@@ -80,7 +80,6 @@ module SmartyStreets
     end
 
     def self.set_custom_headers(smarty_header, request, append_headers = {})
-      append_headers ||= {}
       smarty_header.each do |key, values|
         if append_headers.key?(key)
           separator = append_headers[key]

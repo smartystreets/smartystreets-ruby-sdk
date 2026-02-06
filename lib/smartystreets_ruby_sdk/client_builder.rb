@@ -106,6 +106,7 @@ module SmartyStreets
     # Returns self to accommodate method chaining.
     def with_custom_headers(header)
       @header = header
+      @append_headers = {}
       self
     end
 
