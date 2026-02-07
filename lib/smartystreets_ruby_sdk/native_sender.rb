@@ -48,7 +48,7 @@ module SmartyStreets
       request['User-Agent'] = "smartystreets (sdk:ruby@#{SmartyStreets::VERSION})"
       request['Referer'] = smarty_request.referer unless smarty_request.referer.nil?
       request.basic_auth(smarty_request.basic_auth[0], smarty_request.basic_auth[1]) unless smarty_request.basic_auth.nil?
-      set_custom_headers(smarty_request.header, request)
+      set_custom_headers(smarty_request.header, request, smarty_request.append_headers)
       request
     end
 
@@ -79,9 +79,13 @@ module SmartyStreets
       URI.encode_www_form(smarty_request.parameters)
     end
 
-    def self.set_custom_headers(smarty_header, request)
+    def self.set_custom_headers(smarty_header, request, append_headers = {})
       smarty_header.each do |key, values|
-        if values.respond_to? :each
+        if append_headers.key?(key)
+          separator = append_headers[key]
+          joined = values.respond_to?(:join) ? values.join(separator) : values.to_s
+          request[key] = [request[key], joined].compact.join(separator)
+        elsif values.respond_to?(:each)
           values.each do |value|
             request.add_field(key, value)
           end

@@ -135,4 +135,15 @@ class TestNativeSender < Minitest::Test
     assert_equal("smartystreets (sdk:ruby@#{SmartyStreets::VERSION}), Some plugin, Some other plugin", native_request['User-Agent'])
     assert_equal('X value', native_request['X-Something'])
   end
+
+  def test_appended_headers_are_joined_with_separator
+    smarty_request = Request.new
+    smarty_request.url_prefix = 'http://localhost'
+    smarty_request.header = { 'User-Agent' => ['base-value', 'custom-value'] }
+    smarty_request.append_headers = { 'User-Agent' => ' ' }
+
+    native_request = NativeSender.build_request(smarty_request)
+
+    assert_equal("smartystreets (sdk:ruby@#{SmartyStreets::VERSION}) base-value custom-value", native_request['User-Agent'])
+  end
 end
