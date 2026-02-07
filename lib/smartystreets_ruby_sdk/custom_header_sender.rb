@@ -7,7 +7,7 @@ module SmartyStreets
     end
 
     def send(request)
-      request.header = @header.dup
+      request.header = @header.transform_values(&:dup)
       request.append_headers = @append_headers.dup
       @inner.send(request)
     end
