@@ -56,7 +56,10 @@ class TestCandidate < Minitest::Test
         'time_zone' => '39',
         'utc_offset' => 40.0,
         'dst' => '41',
-        'ews_match' => '42'
+        'iana_time_zone' => '42',
+        'iana_utc_offset' => 43.0,
+        'iana_dst' => true,
+        'ews_match' => '44'
       },
       'analysis' => {
         'dpv_match_code' => '43',
@@ -138,7 +141,10 @@ class TestCandidate < Minitest::Test
     assert_equal('39', candidate.metadata.time_zone)
     assert_equal(40.0, candidate.metadata.utc_offset)
     assert_equal('41', candidate.metadata.obeys_dst)
-    assert_equal('42', candidate.metadata.is_an_ews_match)
+    assert_equal('42', candidate.metadata.iana_time_zone)
+    assert_equal(43.0, candidate.metadata.iana_utc_offset)
+    assert_equal(true, candidate.metadata.iana_dst)
+    assert_equal('44', candidate.metadata.is_an_ews_match)
 
     assert_equal('43', candidate.analysis.dpv_match_code)
     assert_equal('44', candidate.analysis.dpv_footnotes)
