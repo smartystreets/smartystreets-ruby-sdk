@@ -26,16 +26,16 @@ class TestClientBuilder < Minitest::Test
     assert_equal(client.instance_variable_get(:@queries)["features"], "component-analysis")
   end
 
-  def test_with_feature_iana_timezone
+  def test_with_feature_iana_time_zone
     client = SmartyStreets::ClientBuilder.new(SmartyStreets::SharedCredentials.new("key", "referer"))
-      .with_feature_iana_timezone()
+      .with_feature_iana_time_zone()
     assert_equal(client.instance_variable_get(:@queries)["features"], "iana-timezone")
   end
 
-  def test_with_feature_iana_timezone_and_component_analysis_should_append
+  def test_with_feature_iana_time_zone_and_component_analysis_should_append
     client = SmartyStreets::ClientBuilder.new(SmartyStreets::SharedCredentials.new("key", "referer"))
       .with_feature_component_analysis()
-      .with_feature_iana_timezone()
+      .with_feature_iana_time_zone()
     assert_equal(client.instance_variable_get(:@queries)["features"], "component-analysis,iana-timezone")
   end
 end
