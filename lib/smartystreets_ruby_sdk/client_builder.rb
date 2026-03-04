@@ -154,9 +154,7 @@ module SmartyStreets
       self
     end
 
-    # Adds to the request query to use the IANA timezone feature.
-    #
-    # Returns self to accommodate method chaining.
+    # with_feature_iana_time_zone turns on the IANA timezone feature for the request.
     def with_feature_iana_time_zone()
       self.with_custom_comma_separated_query("features", "iana-timezone")
       self
