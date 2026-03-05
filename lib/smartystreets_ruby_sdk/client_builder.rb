@@ -154,6 +154,12 @@ module SmartyStreets
       self
     end
 
+    # with_feature_iana_time_zone turns on the IANA timezone feature for the request.
+    def with_feature_iana_time_zone()
+      self.with_custom_comma_separated_query("features", "iana-timezone")
+      self
+    end
+
     # Enables debug mode, which will print information about the HTTP request and response to $stdout.
     #
     # Returns self to accommodate method chaining.
