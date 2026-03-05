@@ -44,8 +44,6 @@ class USEnrichmentAddressExample
     freeform_lookup = SmartyStreets::USEnrichment::Lookup.new
     freeform_lookup.freeform = "56 Union Ave Somerville NJ 08876"
 
-    
-
     begin
       # Send a lookup with a smarty key using the line below
       # result = client.send_property_principal_lookup("325023201")
@@ -70,8 +68,67 @@ class USEnrichmentAddressExample
       return
     end
 
-    puts "Lookup Successful! Here is the result: "
-    puts result[0].inspect
+    puts "Lookup Successful! Here is the result:"
+    puts
+
+    response = result[0]
+    attrs = response.attributes
+
+    puts "Smarty Key: #{response.smarty_key}"
+    puts "Data Set: #{response.data_set_name}/#{response.data_subset_name}"
+    puts "ETag: #{response.etag}"
+    puts
+
+    puts "Property Address:"
+    puts "\tFull Address: #{attrs.property_address_full}"
+    puts "\tCity: #{attrs.property_address_city}"
+    puts "\tState: #{attrs.property_address_state}"
+    puts "\tZIP: #{attrs.property_address_zipcode}"
+    puts
+
+    puts "Owner:"
+    puts "\tName: #{attrs.owner_full_name}"
+    puts "\tOccupancy: #{attrs.owner_occupancy_status}"
+    puts
+
+    puts "Property Details:"
+    puts "\tLand Use: #{attrs.land_use_standard}"
+    puts "\tYear Built: #{attrs.year_built}"
+    puts "\tBuilding Sqft: #{attrs.building_sqft}"
+    puts "\tLot Sqft: #{attrs.lot_sqft}"
+    puts "\tAcres: #{attrs.acres}"
+    puts "\tBathrooms: #{attrs.bathrooms_total}"
+    puts "\tBedrooms: #{attrs.bedrooms}"
+    puts "\tStories: #{attrs.stories_number}"
+    puts "\tFireplace: #{attrs.fireplace}"
+    puts "\tGarage: #{attrs.garage}"
+    puts
+
+    puts "Assessment:"
+    puts "\tAssessed Value: #{attrs.assessed_value}"
+    puts "\tTotal Market Value: #{attrs.total_market_value}"
+    puts "\tTax Year: #{attrs.tax_assess_year}"
+    puts "\tTax Billed: #{attrs.tax_billed_amount}"
+    puts
+
+    puts "Location:"
+    puts "\tCounty: #{attrs.situs_county}"
+    puts "\tLatitude: #{attrs.latitude}"
+    puts "\tLongitude: #{attrs.longitude}"
+    puts "\tElevation (ft): #{attrs.elevation_feet}"
+    puts
+
+    unless attrs.financial_history.nil? || attrs.financial_history.empty?
+      puts "Financial History (#{attrs.financial_history.length} entries):"
+      attrs.financial_history.each_with_index do |entry, i|
+        puts "\tEntry #{i + 1}:"
+        puts "\t\tDocument Type: #{entry.document_type_description}"
+        puts "\t\tLender: #{entry.lender_name}"
+        puts "\t\tMortgage Amount: #{entry.mortgage_amount}"
+        puts "\t\tMortgage Type: #{entry.mortgage_type}"
+        puts "\t\tRecording Date: #{entry.mortgage_recording_date}"
+      end
+    end
   end
 end
 

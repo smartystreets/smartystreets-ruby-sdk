@@ -38,10 +38,13 @@ client = SmartyStreets::ClientBuilder.new(credentials)
     .build_us_street_api_client
 ```
 
-**Chain of Responsibility**: HTTP requests flow through a middleware chain of "Sender" objects. Each sender wraps an inner sender:
+**Chain of Responsibility**: HTTP requests flow through a middleware chain of "Sender" objects. Each sender wraps an inner sender (outermost to innermost):
 ```
-URLPrefixSender → LicenseSender → RetrySender → SigningSender → StatusCodeSender → NativeSender
+URLPrefixSender → CustomQuerySender → LicenseSender → RetrySender → SigningSender → CustomHeaderSender → StatusCodeSender → NativeSender
 ```
+`CustomHeaderSender` is only included when custom headers are configured; `RetrySender` only when max_retries > 0.
+
+**Authentication**: Three credential types — `StaticCredentials` (auth-id/auth-token), `SharedCredentials` (website key/hostname), and `BasicAuthCredentials` (basic auth header). Credentials are passed to `ClientBuilder` and injected into the sender chain via `SigningSender`.
 
 ### Key Components
 
