@@ -13,6 +13,7 @@ module SmartyStreets
       # Sends a Lookup object to the International Street API and stores the result in the Lookup's result field.
       # Deprecated, please use send_lookup instead.
       def send(lookup)
+        raise ArgumentError, 'lookup cannot be nil' if lookup.nil?
         lookup.ensure_enough_info
         request = build_request(lookup)
 
@@ -26,6 +27,7 @@ module SmartyStreets
 
       # Sends a Lookup object to the International Street API and stores the result in the Lookup's result field.
       def send_lookup(lookup)
+        raise ArgumentError, 'lookup cannot be nil' if lookup.nil?
         lookup.ensure_enough_info
         request = build_request(lookup)
 

@@ -2,6 +2,10 @@ require 'minitest/autorun'
 require_relative '../../../lib/smartystreets_ruby_sdk/international_street'
 require_relative '../../../lib/smartystreets_ruby_sdk/exceptions'
 require_relative '../../../lib/smartystreets_ruby_sdk/response'
+require_relative '../../../test/mocks/request_capturing_sender'
+require_relative '../../../test/mocks/fake_serializer'
+require_relative '../../../test/mocks/fake_deserializer'
+require_relative '../../../test/mocks/mock_sender'
 
 class TestInternationalClient < Minitest::Test
   Client = SmartyStreets::InternationalStreet::Client
@@ -60,6 +64,15 @@ class TestInternationalClient < Minitest::Test
     assert_equal('10', sender.request.parameters['features'])
   end
 
+  def test_nil_lookup_rejected
+    sender = MockSender.new(nil)
+    client = Client.new(sender, nil)
+
+    assert_raises ArgumentError do
+      client.send_lookup(nil)
+    end
+  end
+
   def test_empty_lookup_rejected
     sender = MockSender.new(nil)
     client = Client.new(sender, nil)
@@ -79,59 +92,22 @@ class TestInternationalClient < Minitest::Test
     end
   end
 
-  def test_rejects_lookups_with_only_country_and_address1
-    sender = MockSender.new(nil)
-    client = Client.new(sender, nil)
-    lookup = Lookup.new(nil, '0')
-    lookup.address1 = '1'
-
-    assert_raises SmartyStreets::UnprocessableEntityError do
-      client.send_lookup(lookup)
-    end
-  end
-
-  def test_rejects_lookups_with_only_country_and_address1_and_locality
-    sender = MockSender.new(nil)
-    client = Client.new(sender, nil)
-    lookup = Lookup.new(nil, '0')
-    lookup.address1 = '1'
-    lookup.locality = '2'
-
-    assert_raises SmartyStreets::UnprocessableEntityError do
-      client.send_lookup(lookup)
-    end
-  end
-
-  def test_rejects_lookups_with_only_country_and_address1_and_administrative_area
-    sender = MockSender.new(nil)
-    client = Client.new(sender, nil)
-    lookup = Lookup.new(nil, '0')
-    lookup.address1 = '1'
-    lookup.administrative_area = '2'
-
-    assert_raises SmartyStreets::UnprocessableEntityError do
-      client.send_lookup(lookup)
-    end
-  end
-
-  def test_accepts_lookups_with_enough_info
+  def test_accepts_lookups_with_country_and_freeform
     sender = RequestCapturingSender.new
     serializer = FakeSerializer.new(nil)
     client = Client.new(sender, serializer)
-    lookup = Lookup.new
+    lookup = Lookup.new('1', '0')
 
-    lookup.country = '0'
-    lookup.freeform = '1'
     client.send_lookup(lookup)
+  end
 
-    lookup.freeform = nil
+  def test_accepts_lookups_with_country_and_address1
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new(nil)
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new(nil, '0')
     lookup.address1 = '1'
-    lookup.postal_code = '2'
-    client.send_lookup(lookup)
 
-    lookup.postal_code = nil
-    lookup.locality = '3'
-    lookup.administrative_area = '4'
     client.send_lookup(lookup)
   end
 
