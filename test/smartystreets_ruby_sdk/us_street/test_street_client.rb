@@ -273,7 +273,7 @@ class TestStreetClient < Minitest::Test
 
     client.send_lookup(lookup)
 
-    assert_nil(sender.request.parameters['match'])
+    assert_equal(SmartyStreets::USStreet::MatchType::STRICT, sender.request.parameters['match'])
     assert_nil(sender.request.parameters['candidates'])
   end
 
@@ -288,7 +288,7 @@ class TestStreetClient < Minitest::Test
 
     client.send_lookup(lookup)
 
-    assert_nil(sender.request.parameters['match'])
+    assert_equal(SmartyStreets::USStreet::MatchType::STRICT, sender.request.parameters['match'])
     assert_equal(3, sender.request.parameters['candidates'])
   end
 
@@ -317,5 +317,81 @@ class TestStreetClient < Minitest::Test
     client.send_lookup(lookup)
 
     assert_equal(SmartyStreets::USStreet::MatchType::INVALID, sender.request.parameters['match'])
+  end
+
+  def test_batch_includes_default_match_and_candidates
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new('[]')
+    client = Client.new(sender, serializer)
+    batch = Batch.new
+    batch.add(Lookup.new('123 Main St'))
+    batch.add(Lookup.new('456 Elm St'))
+
+    client.send_batch(batch)
+
+    serializer.input.each do |converted|
+      assert_equal(SmartyStreets::USStreet::MatchType::ENHANCED, converted['match'])
+      assert_equal(5, converted['candidates'])
+    end
+  end
+
+  def test_batch_custom_parameters_are_top_level_keys
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new('[]')
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('123 Main St')
+    lookup.add_custom_parameter('my_param', 'my_value')
+    batch = Batch.new
+    batch.add(lookup)
+    batch.add(Lookup.new('456 Elm St'))
+
+    client.send_batch(batch)
+
+    assert_equal('my_value', serializer.input[0]['my_param'])
+  end
+
+  def test_single_and_batch_produce_same_keys_and_values
+    lookup = Lookup.new
+    lookup.input_id = 'test-id'
+    lookup.street = '123 Main St'
+    lookup.street2 = 'Apt 1'
+    lookup.secondary = 'Suite B'
+    lookup.city = 'Denver'
+    lookup.state = 'CO'
+    lookup.zipcode = '80014'
+    lookup.lastline = 'Denver CO 80014'
+    lookup.addressee = 'John Doe'
+    lookup.urbanization = 'urb'
+    lookup.match = SmartyStreets::USStreet::MatchType::ENHANCED
+    lookup.candidates = 3
+    lookup.format = SmartyStreets::USStreet::OutputFormat::PROJECT_USA
+    lookup.county_source = SmartyStreets::USStreet::CountySource::GEOGRAPHIC
+    lookup.add_custom_parameter('x-custom', 'abc')
+
+    # Single lookup path (GET — populates request.parameters)
+    single_sender = RequestCapturingSender.new
+    single_serializer = FakeSerializer.new({})
+    single_client = Client.new(single_sender, single_serializer)
+    single_client.send_lookup(lookup)
+    single_params = single_sender.request.parameters
+
+    # Batch lookup path (POST — populates serializer.input)
+    batch_sender = RequestCapturingSender.new
+    batch_serializer = FakeSerializer.new('[]')
+    batch_client = Client.new(batch_sender, batch_serializer)
+    batch = Batch.new
+    # Reset result from prior send
+    lookup.result = []
+    batch.add(lookup)
+    batch.add(Lookup.new('filler'))
+    batch_client.send_batch(batch)
+    batch_params = batch_serializer.input[0]
+
+    assert_equal(single_params.keys.sort, batch_params.keys.sort,
+      'Single and batch paths should produce the same keys')
+    single_params.each do |key, value|
+      assert_equal(value, batch_params[key],
+        "Mismatch for key '#{key}': single=#{value.inspect}, batch=#{batch_params[key].inspect}")
+    end
   end
 end

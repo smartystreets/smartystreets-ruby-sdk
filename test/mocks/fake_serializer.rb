@@ -1,4 +1,6 @@
 class FakeSerializer
+  attr_reader :input
+
   def initialize(output)
     @output = output
     @input = nil

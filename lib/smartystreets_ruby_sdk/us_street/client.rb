@@ -56,7 +56,7 @@ module SmartyStreets
             converted_lookup['candidates'] = 5
           end
 
-          converted_lookup['match'] = match_strategy if match_strategy != MatchType::STRICT
+          converted_lookup['match'] = match_strategy
 
           converted_lookup['input_id'] = lookup.input_id
           converted_lookup['street'] = lookup.street
