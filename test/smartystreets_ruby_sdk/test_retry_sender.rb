@@ -102,19 +102,21 @@ class TestRetrySender < Minitest::Test
   end
 
   def test_retries_on_timeout_error
-    timeout_error = Net::OpenTimeout.new
-    responses = [
-      SmartyStreets::Response.new(nil, nil, nil, timeout_error),
-      SmartyStreets::Response.new('[]', '200')
-    ]
-    inner = SequenceSender.new(responses)
-    sleeper = FakeSleeper.new
+    [Net::OpenTimeout, Net::ReadTimeout, Timeout::Error, Errno::ETIMEDOUT].each do |error_class|
+      timeout_error = error_class.new
+      responses = [
+        SmartyStreets::Response.new(nil, nil, nil, timeout_error),
+        SmartyStreets::Response.new('[]', '200')
+      ]
+      inner = SequenceSender.new(responses)
+      sleeper = FakeSleeper.new
 
-    response = send_with_retry(3, inner, sleeper)
+      response = send_with_retry(3, inner, sleeper)
 
-    assert_equal(2, inner.current_index)
-    assert_equal([1], sleeper.sleep_durations)
-    assert_equal('200', response.status_code)
+      assert_equal(2, inner.current_index)
+      assert_equal([1], sleeper.sleep_durations)
+      assert_equal('200', response.status_code)
+    end
   end
 
 end
