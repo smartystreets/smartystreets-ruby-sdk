@@ -71,18 +71,8 @@ module SmartyStreets
       end
 
       def ensure_enough_info
-        raise UnprocessableEntityError, 'Country field is required.' if missing_country
-
-        return true if has_freeform
-
-        raise UnprocessableEntityError, 'Either freeform or address1 is required.' if missing_address1
-
-        return true if has_postal_code
-
-        if missing_locality_or_administrative_area
-          raise UnprocessableEntityError, 'Insufficient information:'\
-              'One or more required fields were not set on the lookup.'
-        end
+        raise UnprocessableEntityError, 'Country field is required.' if field_is_missing(@country)
+        raise UnprocessableEntityError, 'Either freeform or address1 is required.' if field_is_missing(@freeform) && field_is_missing(@address1)
       end
     end
   end
