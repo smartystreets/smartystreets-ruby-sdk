@@ -1,8 +1,12 @@
+require 'net/http'
+require 'timeout'
+
 module SmartyStreets
   class RetrySender
     MAX_BACKOFF_DURATION = 10
     STATUS_TOO_MANY_REQUESTS = 429
     STATUS_TO_RETRY = [408, 429, 500, 502, 503, 504]
+    TIMEOUT_ERRORS = [Net::OpenTimeout, Net::ReadTimeout, Timeout::Error, Errno::ETIMEDOUT]
 
     def initialize(max_retries, inner, sleeper, logger)
       @max_retries = max_retries
@@ -15,6 +19,12 @@ module SmartyStreets
       response = @inner.send(request)
 
       (1..@max_retries).each do |i|
+
+        if timeout_error?(response.error)
+          backoff(i)
+          response = @inner.send(request)
+          next
+        end
 
         break if STATUS_TO_RETRY.include?(response.status_code.to_i) == false
 
@@ -33,6 +43,12 @@ module SmartyStreets
       end
 
       response
+    end
+
+    def timeout_error?(error)
+      return false if error.nil?
+
+      TIMEOUT_ERRORS.any? { |klass| error.is_a?(klass) }
     end
 
     def backoff(attempt)
