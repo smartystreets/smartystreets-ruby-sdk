@@ -21,25 +21,24 @@ module SmartyStreets
       (1..@max_retries).each do |i|
 
         if timeout_error?(response.error)
-          backoff(i)
+          timeout_backoff(i, response.error)
           response = @inner.send(request)
-          next
-        end
-
-        break if STATUS_TO_RETRY.include?(response.status_code.to_i) == false
-
-        if response.status_code.to_i == STATUS_TOO_MANY_REQUESTS
-          seconds_to_backoff = 10
-          if response.header.nil? == false
-            if Integer(response.header["Retry-After"], exception: false)
-              seconds_to_backoff = response.header["Retry-After"].to_i
-            end
-          end
-          rate_limit_backoff(seconds_to_backoff)
+        elsif !STATUS_TO_RETRY.include?(response.status_code.to_i)
+          break
         else
-          backoff(i)
+          if response.status_code.to_i == STATUS_TOO_MANY_REQUESTS
+            seconds_to_backoff = 10
+            unless response.header.nil?
+              if Integer(response.header["Retry-After"], exception: false)
+                seconds_to_backoff = response.header["Retry-After"].to_i
+              end
+            end
+            rate_limit_backoff(seconds_to_backoff)
+          else
+            backoff(i)
+          end
+          response = @inner.send(request)
         end
-        response = @inner.send(request)
       end
 
       response
@@ -51,10 +50,14 @@ module SmartyStreets
       TIMEOUT_ERRORS.any? { |klass| error.is_a?(klass) }
     end
 
-    def backoff(attempt)
+    def timeout_backoff(attempt, error)
+      backoff(attempt, "Timeout error (#{error.class}).")
+    end
+
+    def backoff(attempt, message = 'There was an error processing the request.')
       backoff_duration = [attempt, MAX_BACKOFF_DURATION].min
 
-      @logger.log("There was an error processing the request. Retrying in #{backoff_duration} seconds...")
+      @logger.log("#{message} Retrying in #{backoff_duration} seconds...")
       @sleeper.sleep(backoff_duration)
     end
 

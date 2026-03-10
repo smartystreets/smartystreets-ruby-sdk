@@ -119,6 +119,63 @@ class TestRetrySender < Minitest::Test
     end
   end
 
+  def test_timeout_retries_exhausted
+    timeout_error = Net::ReadTimeout.new
+    responses = Array.new(4) { SmartyStreets::Response.new(nil, nil, nil, timeout_error) }
+    inner = SequenceSender.new(responses)
+    sleeper = FakeSleeper.new
+
+    response = send_with_retry(3, inner, sleeper)
+
+    assert_equal(4, inner.current_index)
+    assert_equal([1, 2, 3], sleeper.sleep_durations)
+    assert_instance_of(Net::ReadTimeout, response.error)
+    assert_nil(response.status_code)
+  end
+
+  def test_status_error_then_timeout_retries_both
+    timeout_error = Net::ReadTimeout.new
+    responses = [
+      SmartyStreets::Response.new(nil, '500'),
+      SmartyStreets::Response.new(nil, nil, nil, timeout_error),
+      SmartyStreets::Response.new('[]', '200')
+    ]
+    inner = SequenceSender.new(responses)
+    sleeper = FakeSleeper.new
+
+    response = send_with_retry(3, inner, sleeper)
+
+    assert_equal(3, inner.current_index)
+    assert_equal([1, 2], sleeper.sleep_durations)
+    assert_equal('200', response.status_code)
+  end
+
+  def test_rate_limit_with_header_missing_retry_after
+    inner = FailingSender.new(%w(429 200), {'Content-Type' => 'application/json'})
+    sleeper = FakeSleeper.new
+
+    send_with_retry(5, inner, sleeper)
+
+    assert_equal([10], sleeper.sleep_durations)
+  end
+
+  def test_timeout_then_status_error_retries_both
+    timeout_error = Net::OpenTimeout.new
+    responses = [
+      SmartyStreets::Response.new(nil, nil, nil, timeout_error),
+      SmartyStreets::Response.new(nil, '500'),
+      SmartyStreets::Response.new('[]', '200')
+    ]
+    inner = SequenceSender.new(responses)
+    sleeper = FakeSleeper.new
+
+    response = send_with_retry(3, inner, sleeper)
+
+    assert_equal(3, inner.current_index)
+    assert_equal([1, 2], sleeper.sleep_durations)
+    assert_equal('200', response.status_code)
+  end
+
 end
 
 def send_with_retry(retries, inner, sleeper)
