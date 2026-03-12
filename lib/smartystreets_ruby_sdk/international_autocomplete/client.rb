@@ -39,6 +39,8 @@ module SmartyStreets
         add_parameter(request, 'search', lookup.search)
         add_parameter(request, 'country', lookup.country)
         add_parameter(request, 'max_results', lookup.max_results.to_s)
+        add_parameter(request, 'max_group_results', lookup.max_group_results.to_s)
+        add_parameter(request, 'geolocation', 'on') if lookup.geolocation
         add_parameter(request, 'include_only_locality', lookup.locality)
         add_parameter(request, 'include_only_postal_code', lookup.postal_code)
 

@@ -28,13 +28,15 @@ class InternationalAutocompleteExample
     lookup = Lookup.new('Louis')
     lookup.country = "FRA"
     lookup.locality = "Paris"
+    lookup.max_group_results = 5
+    lookup.geolocation = true
 
     # lookup.add_custom_parameter('parameter', 'value')
 
     suggestions = client.send(lookup) # The client will also return the suggestions directly
 
     puts
-    puts '*** Result with some filters ***'
+    puts '*** Result with some filters (max_group_results=5, geolocation=on) ***'
     puts
 
     suggestions.each do |suggestion|
