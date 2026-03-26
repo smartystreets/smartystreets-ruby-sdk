@@ -39,6 +39,7 @@ module SmartyStreets
       @signer = signer
       @serializer = NativeSerializer.new
       @http_sender = nil
+      @wrapped_http_sender = nil
       @max_retries = 5
       @max_timeout = 10
       @url_prefix = nil
@@ -71,6 +72,14 @@ module SmartyStreets
     # Returns self to accommodate method chaining.
     def with_sender(sender)
       @http_sender = sender
+      self
+    end
+
+    # Replaces the innermost NativeSender while keeping the rest of the sender chain intact.
+    #
+    # Returns self to accommodate method chaining.
+    def with_wrapped_sender(sender)
+      @wrapped_http_sender = sender
       self
     end
 
@@ -220,7 +229,7 @@ module SmartyStreets
     def build_sender
       return @http_sender unless @http_sender.nil?
 
-      sender = NativeSender.new(@max_timeout, @proxy, @debug)
+      sender = @wrapped_http_sender || NativeSender.new(@max_timeout, @proxy, @debug)
 
       sender = StatusCodeSender.new(sender)
 
