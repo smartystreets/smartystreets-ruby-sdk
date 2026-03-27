@@ -2,6 +2,10 @@ require 'minitest/autorun'
 require_relative '../../lib/smartystreets_ruby_sdk/client_builder'
 require_relative '../../lib/smartystreets_ruby_sdk/response'
 require_relative '../../lib/smartystreets_ruby_sdk/request'
+require_relative '../../lib/smartystreets_ruby_sdk/static_credentials'
+require_relative '../../lib/smartystreets_ruby_sdk/shared_credentials'
+require_relative '../../lib/smartystreets_ruby_sdk/us_street/lookup'
+require_relative '../mocks/request_capturing_sender'
 
 class TestClientBuilder < Minitest::Test
   def test_with_custom_query
@@ -37,5 +41,37 @@ class TestClientBuilder < Minitest::Test
       .with_feature_component_analysis()
       .with_feature_iana_time_zone()
     assert_equal(client.instance_variable_get(:@queries)["features"], "component-analysis,iana-timezone")
+  end
+
+  def test_with_sender_throws_when_combined_with_max_timeout
+    credentials = SmartyStreets::StaticCredentials.new("test-id", "test-token")
+    builder = SmartyStreets::ClientBuilder.new(credentials)
+      .with_sender(RequestCapturingSender.new)
+      .with_max_timeout(5)
+    assert_raises(ArgumentError) { builder.build_us_street_api_client }
+  end
+
+  def test_with_sender_throws_when_combined_with_proxy
+    credentials = SmartyStreets::StaticCredentials.new("test-id", "test-token")
+    builder = SmartyStreets::ClientBuilder.new(credentials)
+      .with_sender(RequestCapturingSender.new)
+      .with_proxy("localhost", 8080, nil, nil)
+    assert_raises(ArgumentError) { builder.build_us_street_api_client }
+  end
+
+  def test_with_sender_wraps_with_middleware_chain
+    capturing_sender = RequestCapturingSender.new
+    credentials = SmartyStreets::StaticCredentials.new("test-id", "test-token")
+    client = SmartyStreets::ClientBuilder.new(credentials)
+      .with_sender(capturing_sender)
+      .build_us_street_api_client
+
+    lookup = SmartyStreets::USStreet::Lookup.new
+    lookup.street = "1 Rosedale"
+    client.send_lookup(lookup)
+
+    assert_includes(capturing_sender.request.url_prefix, "us-street.api.smarty.com")
+    assert_equal("test-id", capturing_sender.request.parameters["auth-id"])
+    assert_equal("test-token", capturing_sender.request.parameters["auth-token"])
   end
 end

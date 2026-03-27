@@ -66,7 +66,7 @@ module SmartyStreets
       self
     end
 
-    # Default is a series of nested senders. (See build_sender()
+    # Sets the innermost HTTP transport sender while keeping the full middleware chain intact.
     #
     # Returns self to accommodate method chaining.
     def with_sender(sender)
@@ -218,9 +218,14 @@ module SmartyStreets
     # </editor-fold>
 
     def build_sender
-      return @http_sender unless @http_sender.nil?
-
-      sender = NativeSender.new(@max_timeout, @proxy, @debug)
+      if @http_sender
+        conflicts = []
+        conflicts << 'with_max_timeout' if @max_timeout != 10
+        conflicts << 'with_proxy' if @proxy
+        conflicts << 'with_debug' if @debug
+        raise ArgumentError, "with_sender cannot be combined with: #{conflicts.join(', ')}. These options only apply to the built-in HTTP transport." unless conflicts.empty?
+      end
+      sender = @http_sender || NativeSender.new(@max_timeout, @proxy, @debug)
 
       sender = StatusCodeSender.new(sender)
 
