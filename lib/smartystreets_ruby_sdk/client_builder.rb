@@ -218,6 +218,13 @@ module SmartyStreets
     # </editor-fold>
 
     def build_sender
+      if @http_sender
+        conflicts = []
+        conflicts << 'with_max_timeout' if @max_timeout != 10
+        conflicts << 'with_proxy' if @proxy
+        conflicts << 'with_debug' if @debug
+        raise ArgumentError, "with_sender cannot be combined with: #{conflicts.join(', ')}. These options only apply to the built-in HTTP transport." unless conflicts.empty?
+      end
       sender = @http_sender || NativeSender.new(@max_timeout, @proxy, @debug)
 
       sender = StatusCodeSender.new(sender)

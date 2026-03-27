@@ -43,6 +43,22 @@ class TestClientBuilder < Minitest::Test
     assert_equal(client.instance_variable_get(:@queries)["features"], "component-analysis,iana-timezone")
   end
 
+  def test_with_sender_throws_when_combined_with_max_timeout
+    credentials = SmartyStreets::StaticCredentials.new("test-id", "test-token")
+    builder = SmartyStreets::ClientBuilder.new(credentials)
+      .with_sender(RequestCapturingSender.new)
+      .with_max_timeout(5)
+    assert_raises(ArgumentError) { builder.build_us_street_api_client }
+  end
+
+  def test_with_sender_throws_when_combined_with_proxy
+    credentials = SmartyStreets::StaticCredentials.new("test-id", "test-token")
+    builder = SmartyStreets::ClientBuilder.new(credentials)
+      .with_sender(RequestCapturingSender.new)
+      .with_proxy("localhost", 8080, nil, nil)
+    assert_raises(ArgumentError) { builder.build_us_street_api_client }
+  end
+
   def test_with_sender_wraps_with_middleware_chain
     capturing_sender = RequestCapturingSender.new
     credentials = SmartyStreets::StaticCredentials.new("test-id", "test-token")
