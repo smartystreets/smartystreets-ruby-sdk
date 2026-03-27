@@ -43,11 +43,11 @@ class TestClientBuilder < Minitest::Test
     assert_equal(client.instance_variable_get(:@queries)["features"], "component-analysis,iana-timezone")
   end
 
-  def test_with_wrapped_sender_wraps_with_middleware_chain
+  def test_with_sender_wraps_with_middleware_chain
     capturing_sender = RequestCapturingSender.new
     credentials = SmartyStreets::StaticCredentials.new("test-id", "test-token")
     client = SmartyStreets::ClientBuilder.new(credentials)
-      .with_wrapped_sender(capturing_sender)
+      .with_sender(capturing_sender)
       .build_us_street_api_client
 
     lookup = SmartyStreets::USStreet::Lookup.new
