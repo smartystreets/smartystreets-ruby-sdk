@@ -18,6 +18,7 @@ class TestCandidate < Minitest::Test
       'last_line' => '5',
       'delivery_point_barcode' => '6',
       'smarty_key' => '112',
+      'smarty_key_ext' => '113',
       'components' => {
         'urbanization' => '7',
         'primary_number' => '8',
@@ -104,6 +105,7 @@ class TestCandidate < Minitest::Test
     assert_equal('5', candidate.last_line)
     assert_equal('6', candidate.delivery_point_barcode)
     assert_equal('112', candidate.smarty_key)
+    assert_equal('113', candidate.smarty_key_ext)
 
     assert_equal('7', candidate.components.urbanization)
     assert_equal('8', candidate.components.primary_number)
