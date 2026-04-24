@@ -47,10 +47,10 @@ class TestStreetClient < Minitest::Test
     lookup.city = "city"
     lookup.state = "state"
     lookup.zipcode = "zipcode"
-    lookup.etag = "etag"
+    lookup.request_etag = "etag"
 
     client.send_property_principal_lookup(lookup)
-    assert_equal("etag", sender.request.header["ETAG"])
+    assert_equal("etag", sender.request.header["Etag"])
   end
 
   def test_geo_reference_url_formatted_correctly
@@ -90,10 +90,10 @@ class TestStreetClient < Minitest::Test
     lookup.city = "city"
     lookup.state = "state"
     lookup.zipcode = "zipcode"
-    lookup.etag = "etag"
+    lookup.request_etag = "etag"
 
     client.send_geo_reference_lookup(lookup)
-    assert_equal("etag", sender.request.header["ETAG"])
+    assert_equal("etag", sender.request.header["Etag"])
   end
     
   def test_secondary_url_formatted_correctly
@@ -133,10 +133,10 @@ class TestStreetClient < Minitest::Test
     lookup.city = "city"
     lookup.state = "state"
     lookup.zipcode = "zipcode"
-    lookup.etag = "etag"
+    lookup.request_etag = "etag"
 
     client.send_secondary_lookup(lookup)
-    assert_equal("etag", sender.request.header["ETAG"])
+    assert_equal("etag", sender.request.header["Etag"])
   end
 
   def test_secondary_count_url_formatted_correctly
@@ -176,9 +176,9 @@ class TestStreetClient < Minitest::Test
     lookup.city = "city"
     lookup.state = "state"
     lookup.zipcode = "zipcode"
-    lookup.etag = "etag"
+    lookup.request_etag = "etag"
 
     client.send_secondary_count_lookup(lookup)
-    assert_equal("etag", sender.request.header["ETAG"])
+    assert_equal("etag", sender.request.header["Etag"])
   end
 end

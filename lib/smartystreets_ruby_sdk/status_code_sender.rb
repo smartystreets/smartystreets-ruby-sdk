@@ -18,6 +18,8 @@ module SmartyStreets
       response
     end
 
+    private
+
     def parse_rate_limit_response(response)
       error_message = ""
       if !response.payload.nil?
@@ -35,8 +37,8 @@ module SmartyStreets
 
     def assign_exception(response)
       response.error = case response.status_code
-                         when '304'          
-                           NotModifiedInfo.new(NOT_MODIFIED)
+                         when '304'
+                           NotModifiedInfo.new(NOT_MODIFIED, response.find_header('etag'))
                          when '401'
                            BadCredentialsError.new(BAD_CREDENTIALS)
                          when '402'

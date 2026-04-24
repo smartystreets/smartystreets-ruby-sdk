@@ -1,0 +1,241 @@
+module SmartyStreets
+  module USEnrichment
+    module Business
+      module Detail
+        class Attributes
+          attr_reader :accounting_expense_range, :accounting_expense_total, :advertising_expense_range, :advertising_expense_total, :business_insurance_expense_range, :business_insurance_expense_total
+          attr_reader :business_status, :business_type, :carrier_route, :census_block, :census_tract, :city_name
+          attr_reader :company_name, :company_name_secondary, :contact_first_name, :contact_full_name, :contact_gender, :contact_last_name
+          attr_reader :contact_middle_name, :contact_prefix, :contact_professional_title, :contact_suffix, :core_based_stat_area_code, :core_based_stat_area_name
+          attr_reader :corporate_employee_count_range, :corporate_employee_count_total, :county_fips, :county_name, :credit_capacity, :credit_capacity_range
+          attr_reader :credit_score, :credit_score_description, :date_of_last_update, :delivery_line_1, :delivery_point, :delivery_point_check_digit
+          attr_reader :domestic_foreign_owner_indicator, :ein, :email, :email_available_indicator, :executive_department, :executive_level
+          attr_reader :executive_verification_type, :fax, :female_owned_indicator, :foreign_parent_city_name, :foreign_parent_company_name, :foreign_parent_country
+          attr_reader :fortune_1000_branches, :fortune_1000_indicator, :fortune_1000_rank, :holding_city_name, :holding_company_name, :holding_id
+          attr_reader :holding_state_abbreviation, :home_based_business_indicator, :hq_city_name, :hq_company_name, :hq_id, :hq_number_of_companies
+          attr_reader :hq_state_abbreviation, :latitude, :legal_expense_range, :legal_expense_total, :linkage_company_name, :linkage_indicator
+          attr_reader :linkage_level, :linkage_type, :location_employee_count, :location_employee_count_range, :location_sales_range, :location_sales_total
+          attr_reader :longitude, :mail_score_code, :mail_score_description, :mailing_carrier_route, :mailing_city_name, :mailing_delivery_line_1
+          attr_reader :mailing_delivery_point, :mailing_delivery_point_check_digit, :mailing_plus4_code, :mailing_state_abbreviation, :mailing_zipcode, :manufacturing_indicator
+          attr_reader :minority_owned_indicator, :minority_type, :naics_01_code, :naics_01_description, :naics_02_code, :naics_02_description
+          attr_reader :naics_03_code, :naics_03_description, :naics_04_code, :naics_04_description, :naics_05_code, :naics_05_description
+          attr_reader :naics_06_code, :naics_06_description, :new_business_indicator, :non_profit_indicator, :num_of_pcs_range, :num_of_pcs_total
+          attr_reader :number_of_years_in_business, :number_of_years_in_business_range, :office_equipment_expense_range, :office_equipment_expense_total, :operating_hours_friday, :operating_hours_monday
+          attr_reader :operating_hours_saturday, :operating_hours_sunday, :operating_hours_thursday, :operating_hours_tuesday, :operating_hours_wednesday, :phone
+          attr_reader :phone_area_code, :phone_secondary, :phone_toll_free, :plus4_code, :population_range, :precision
+          attr_reader :primary_executive_indicator, :primary_number, :primary_sic_2digit_code, :primary_sic_2digit_description, :primary_sic_4digit_code, :primary_sic_4digit_description
+          attr_reader :primary_sic_code, :primary_sic_description, :public_indicator, :rdi, :rent_expense_range, :rent_expense_total
+          attr_reader :secondary_01_sic_7digit_code, :secondary_01_sic_7digit_description, :secondary_02_sic_7digit_code, :secondary_02_sic_7digit_description, :secondary_03_sic_7digit_code, :secondary_03_sic_7digit_description
+          attr_reader :secondary_04_sic_7digit_code, :secondary_04_sic_7digit_description, :secondary_05_sic_7digit_code, :secondary_05_sic_7digit_description, :secondary_designator, :secondary_number
+          attr_reader :sectional_center_facility, :small_business_indicator, :source_title, :square_footage, :square_footage_range, :standardized_title
+          attr_reader :standardized_title_rank, :state_abbreviation, :stock_exchange, :street_name, :street_postdirection, :street_predirection
+          attr_reader :street_suffix, :sub_hq_city_name, :sub_hq_company_name, :sub_hq_id, :sub_hq_number_of_companies, :sub_hq_state_abbreviation
+          attr_reader :technology_expense_range, :technology_expense_total, :telecom_expense_range, :telecom_expense_total, :ticker_symbol, :time_zone
+          attr_reader :url, :url_facebook, :url_instagram, :url_linkedin, :url_twitter, :url_yelp
+          attr_reader :url_youtube, :utilities_expense_range, :utilities_expense_total, :webmail_indicator, :year_current, :year_current_employee_count
+          attr_reader :year_established, :year_four_prior, :year_four_prior_employee_count, :year_four_prior_employee_growth, :year_one_prior, :year_one_prior_employee_count
+          attr_reader :year_one_prior_employee_growth, :year_three_prior, :year_three_prior_employee_count, :year_three_prior_employee_growth, :year_two_prior, :year_two_prior_employee_count
+          attr_reader :year_two_prior_employee_growth, :zipcode
+
+          def initialize(obj)
+            return if obj.nil?
+            @accounting_expense_range = obj['accounting_expense_range']
+            @accounting_expense_total = obj['accounting_expense_total']
+            @advertising_expense_range = obj['advertising_expense_range']
+            @advertising_expense_total = obj['advertising_expense_total']
+            @business_insurance_expense_range = obj['business_insurance_expense_range']
+            @business_insurance_expense_total = obj['business_insurance_expense_total']
+            @business_status = obj['business_status']
+            @business_type = obj['business_type']
+            @carrier_route = obj['carrier_route']
+            @census_block = obj['census_block']
+            @census_tract = obj['census_tract']
+            @city_name = obj['city_name']
+            @company_name = obj['company_name']
+            @company_name_secondary = obj['company_name_secondary']
+            @contact_first_name = obj['contact_first_name']
+            @contact_full_name = obj['contact_full_name']
+            @contact_gender = obj['contact_gender']
+            @contact_last_name = obj['contact_last_name']
+            @contact_middle_name = obj['contact_middle_name']
+            @contact_prefix = obj['contact_prefix']
+            @contact_professional_title = obj['contact_professional_title']
+            @contact_suffix = obj['contact_suffix']
+            @core_based_stat_area_code = obj['core_based_stat_area_code']
+            @core_based_stat_area_name = obj['core_based_stat_area_name']
+            @corporate_employee_count_range = obj['corporate_employee_count_range']
+            @corporate_employee_count_total = obj['corporate_employee_count_total']
+            @county_fips = obj['county_fips']
+            @county_name = obj['county_name']
+            @credit_capacity = obj['credit_capacity']
+            @credit_capacity_range = obj['credit_capacity_range']
+            @credit_score = obj['credit_score']
+            @credit_score_description = obj['credit_score_description']
+            @date_of_last_update = obj['date_of_last_update']
+            @delivery_line_1 = obj['delivery_line_1']
+            @delivery_point = obj['delivery_point']
+            @delivery_point_check_digit = obj['delivery_point_check_digit']
+            @domestic_foreign_owner_indicator = obj['domestic_foreign_owner_indicator']
+            @ein = obj['ein']
+            @email = obj['email']
+            @email_available_indicator = obj['email_available_indicator']
+            @executive_department = obj['executive_department']
+            @executive_level = obj['executive_level']
+            @executive_verification_type = obj['executive_verification_type']
+            @fax = obj['fax']
+            @female_owned_indicator = obj['female_owned_indicator']
+            @foreign_parent_city_name = obj['foreign_parent_city_name']
+            @foreign_parent_company_name = obj['foreign_parent_company_name']
+            @foreign_parent_country = obj['foreign_parent_country']
+            @fortune_1000_branches = obj['fortune_1000_branches']
+            @fortune_1000_indicator = obj['fortune_1000_indicator']
+            @fortune_1000_rank = obj['fortune_1000_rank']
+            @holding_city_name = obj['holding_city_name']
+            @holding_company_name = obj['holding_company_name']
+            @holding_id = obj['holding_id']
+            @holding_state_abbreviation = obj['holding_state_abbreviation']
+            @home_based_business_indicator = obj['home_based_business_indicator']
+            @hq_city_name = obj['hq_city_name']
+            @hq_company_name = obj['hq_company_name']
+            @hq_id = obj['hq_id']
+            @hq_number_of_companies = obj['hq_number_of_companies']
+            @hq_state_abbreviation = obj['hq_state_abbreviation']
+            @latitude = obj['latitude']
+            @legal_expense_range = obj['legal_expense_range']
+            @legal_expense_total = obj['legal_expense_total']
+            @linkage_company_name = obj['linkage_company_name']
+            @linkage_indicator = obj['linkage_indicator']
+            @linkage_level = obj['linkage_level']
+            @linkage_type = obj['linkage_type']
+            @location_employee_count = obj['location_employee_count']
+            @location_employee_count_range = obj['location_employee_count_range']
+            @location_sales_range = obj['location_sales_range']
+            @location_sales_total = obj['location_sales_total']
+            @longitude = obj['longitude']
+            @mail_score_code = obj['mail_score_code']
+            @mail_score_description = obj['mail_score_description']
+            @mailing_carrier_route = obj['mailing_carrier_route']
+            @mailing_city_name = obj['mailing_city_name']
+            @mailing_delivery_line_1 = obj['mailing_delivery_line_1']
+            @mailing_delivery_point = obj['mailing_delivery_point']
+            @mailing_delivery_point_check_digit = obj['mailing_delivery_point_check_digit']
+            @mailing_plus4_code = obj['mailing_plus4_code']
+            @mailing_state_abbreviation = obj['mailing_state_abbreviation']
+            @mailing_zipcode = obj['mailing_zipcode']
+            @manufacturing_indicator = obj['manufacturing_indicator']
+            @minority_owned_indicator = obj['minority_owned_indicator']
+            @minority_type = obj['minority_type']
+            @naics_01_code = obj['naics_01_code']
+            @naics_01_description = obj['naics_01_description']
+            @naics_02_code = obj['naics_02_code']
+            @naics_02_description = obj['naics_02_description']
+            @naics_03_code = obj['naics_03_code']
+            @naics_03_description = obj['naics_03_description']
+            @naics_04_code = obj['naics_04_code']
+            @naics_04_description = obj['naics_04_description']
+            @naics_05_code = obj['naics_05_code']
+            @naics_05_description = obj['naics_05_description']
+            @naics_06_code = obj['naics_06_code']
+            @naics_06_description = obj['naics_06_description']
+            @new_business_indicator = obj['new_business_indicator']
+            @non_profit_indicator = obj['non_profit_indicator']
+            @num_of_pcs_range = obj['num_of_pcs_range']
+            @num_of_pcs_total = obj['num_of_pcs_total']
+            @number_of_years_in_business = obj['number_of_years_in_business']
+            @number_of_years_in_business_range = obj['number_of_years_in_business_range']
+            @office_equipment_expense_range = obj['office_equipment_expense_range']
+            @office_equipment_expense_total = obj['office_equipment_expense_total']
+            @operating_hours_friday = obj['operating_hours_friday']
+            @operating_hours_monday = obj['operating_hours_monday']
+            @operating_hours_saturday = obj['operating_hours_saturday']
+            @operating_hours_sunday = obj['operating_hours_sunday']
+            @operating_hours_thursday = obj['operating_hours_thursday']
+            @operating_hours_tuesday = obj['operating_hours_tuesday']
+            @operating_hours_wednesday = obj['operating_hours_wednesday']
+            @phone = obj['phone']
+            @phone_area_code = obj['phone_area_code']
+            @phone_secondary = obj['phone_secondary']
+            @phone_toll_free = obj['phone_toll_free']
+            @plus4_code = obj['plus4_code']
+            @population_range = obj['population_range']
+            @precision = obj['precision']
+            @primary_executive_indicator = obj['primary_executive_indicator']
+            @primary_number = obj['primary_number']
+            @primary_sic_2digit_code = obj['primary_sic_2digit_code']
+            @primary_sic_2digit_description = obj['primary_sic_2digit_description']
+            @primary_sic_4digit_code = obj['primary_sic_4digit_code']
+            @primary_sic_4digit_description = obj['primary_sic_4digit_description']
+            @primary_sic_code = obj['primary_sic_code']
+            @primary_sic_description = obj['primary_sic_description']
+            @public_indicator = obj['public_indicator']
+            @rdi = obj['rdi']
+            @rent_expense_range = obj['rent_expense_range']
+            @rent_expense_total = obj['rent_expense_total']
+            @secondary_01_sic_7digit_code = obj['secondary_01_sic_7digit_code']
+            @secondary_01_sic_7digit_description = obj['secondary_01_sic_7digit_description']
+            @secondary_02_sic_7digit_code = obj['secondary_02_sic_7digit_code']
+            @secondary_02_sic_7digit_description = obj['secondary_02_sic_7digit_description']
+            @secondary_03_sic_7digit_code = obj['secondary_03_sic_7digit_code']
+            @secondary_03_sic_7digit_description = obj['secondary_03_sic_7digit_description']
+            @secondary_04_sic_7digit_code = obj['secondary_04_sic_7digit_code']
+            @secondary_04_sic_7digit_description = obj['secondary_04_sic_7digit_description']
+            @secondary_05_sic_7digit_code = obj['secondary_05_sic_7digit_code']
+            @secondary_05_sic_7digit_description = obj['secondary_05_sic_7digit_description']
+            @secondary_designator = obj['secondary_designator']
+            @secondary_number = obj['secondary_number']
+            @sectional_center_facility = obj['sectional_center_facility']
+            @small_business_indicator = obj['small_business_indicator']
+            @source_title = obj['source_title']
+            @square_footage = obj['square_footage']
+            @square_footage_range = obj['square_footage_range']
+            @standardized_title = obj['standardized_title']
+            @standardized_title_rank = obj['standardized_title_rank']
+            @state_abbreviation = obj['state_abbreviation']
+            @stock_exchange = obj['stock_exchange']
+            @street_name = obj['street_name']
+            @street_postdirection = obj['street_postdirection']
+            @street_predirection = obj['street_predirection']
+            @street_suffix = obj['street_suffix']
+            @sub_hq_city_name = obj['sub_hq_city_name']
+            @sub_hq_company_name = obj['sub_hq_company_name']
+            @sub_hq_id = obj['sub_hq_id']
+            @sub_hq_number_of_companies = obj['sub_hq_number_of_companies']
+            @sub_hq_state_abbreviation = obj['sub_hq_state_abbreviation']
+            @technology_expense_range = obj['technology_expense_range']
+            @technology_expense_total = obj['technology_expense_total']
+            @telecom_expense_range = obj['telecom_expense_range']
+            @telecom_expense_total = obj['telecom_expense_total']
+            @ticker_symbol = obj['ticker_symbol']
+            @time_zone = obj['time_zone']
+            @url = obj['url']
+            @url_facebook = obj['url_facebook']
+            @url_instagram = obj['url_instagram']
+            @url_linkedin = obj['url_linkedin']
+            @url_twitter = obj['url_twitter']
+            @url_yelp = obj['url_yelp']
+            @url_youtube = obj['url_youtube']
+            @utilities_expense_range = obj['utilities_expense_range']
+            @utilities_expense_total = obj['utilities_expense_total']
+            @webmail_indicator = obj['webmail_indicator']
+            @year_current = obj['year_current']
+            @year_current_employee_count = obj['year_current_employee_count']
+            @year_established = obj['year_established']
+            @year_four_prior = obj['year_four_prior']
+            @year_four_prior_employee_count = obj['year_four_prior_employee_count']
+            @year_four_prior_employee_growth = obj['year_four_prior_employee_growth']
+            @year_one_prior = obj['year_one_prior']
+            @year_one_prior_employee_count = obj['year_one_prior_employee_count']
+            @year_one_prior_employee_growth = obj['year_one_prior_employee_growth']
+            @year_three_prior = obj['year_three_prior']
+            @year_three_prior_employee_count = obj['year_three_prior_employee_count']
+            @year_three_prior_employee_growth = obj['year_three_prior_employee_growth']
+            @year_two_prior = obj['year_two_prior']
+            @year_two_prior_employee_count = obj['year_two_prior_employee_count']
+            @year_two_prior_employee_growth = obj['year_two_prior_employee_growth']
+            @zipcode = obj['zipcode']
+          end
+        end
+      end
+    end
+  end
+end

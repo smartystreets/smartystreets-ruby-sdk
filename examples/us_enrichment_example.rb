@@ -5,14 +5,11 @@ require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/us_enrichment/lookup'
 
 class USEnrichmentAddressExample
-  def run
-    # key = 'Your SmartyStreets Auth Key here'
-    # referer = 'Your host name here'
-    # We recommend storing your secret keys in environment variables instead---it's safer!
-    # key = ENV['SMARTY_AUTH_WEB']
-    # referer = ENV['SMARTY_AUTH_REFERER']
-    # credentials = SmartyStreets::SharedCredentials.new(key, referer)
+  # SmartyKey used for the non-property datasets. The property example uses a
+  # separate key because its address happens to have rich financial history.
+  SHARED_SMARTY_KEY = '325023201'
 
+  def run
     id = ENV['SMARTY_AUTH_ID']
     token = ENV['SMARTY_AUTH_TOKEN']
     credentials = SmartyStreets::BasicAuthCredentials.new(id, token)
@@ -23,114 +20,167 @@ class USEnrichmentAddressExample
     #
     # To try with a proxy, add this method call at the end of the chain
     #   with_proxy('localhost', 8080, 'proxyUser', 'proxyPassword')
-    client = SmartyStreets::ClientBuilder.new(credentials).
-             build_us_enrichment_api_client
-    result = nil
+    @client = SmartyStreets::ClientBuilder.new(credentials).
+      build_us_enrichment_api_client
 
-    # Create a new lookup instance to search with address components
+    property_principal_example
+    geo_reference_example
+    risk_example
+    secondary_example
+    secondary_count_example
+  end
+
+  # ---------- property / principal ----------
+  def property_principal_example
+    banner 'property / principal'
+
     lookup = SmartyStreets::USEnrichment::Lookup.new
-
-    lookup.smarty_key = "87844267"
-    lookup.street = "56 Union Ave"
-    lookup.city = "Somerville"
-    lookup.state = "NJ"
-    lookup.zipcode = "08876"
-    lookup.features = "financial"
-    # lookup.etag = "AUBAGDQDAIGQYCYC"
-
+    lookup.smarty_key = '87844267'
+    lookup.street = '56 Union Ave'
+    lookup.city = 'Somerville'
+    lookup.state = 'NJ'
+    lookup.zipcode = '08876'
+    lookup.features = 'financial'
+    # lookup.request_etag = 'AUBAGDQDAIGQYCYC'
     # lookup.add_custom_parameter('parameter', 'value')
 
-    # Or, create a freeform lookup to search using a single line address
-    freeform_lookup = SmartyStreets::USEnrichment::Lookup.new
-    freeform_lookup.freeform = "56 Union Ave Somerville NJ 08876"
+    results = invoke { @client.send_property_principal_lookup(lookup) }
+    return if results.nil? || results.empty?
 
-    begin
-      # Send a lookup with a smarty key using the line below
-      # result = client.send_property_principal_lookup("325023201")
-
-      # Uncomment the following lines to perform other types of lookups:
-      result = client.send_property_principal_lookup(lookup) # Using address components
-      # result = client.send_property_principal_lookup(freeform_lookup) # Using freeform address
-
-      # Access the other Enrichment datasets using the below functions. All of these functions can take a lookup or a smartykey
-      # result = client.send_geo_reference_lookup("325023201")
-      # result = client.send_risk_lookup("325023201")
-      # result = client.send_secondary_lookup("325023201")
-      # result = client.send_secondary_count_lookup("325023201")
-
-    rescue SmartyStreets::SmartyError => err
-      puts err
-      return
-    end
-
-    if result.empty?
-      puts 'No results. This means the smartykey is not valid.'
-      return
-    end
-
-    puts "Lookup Successful! Here is the result:"
-    puts
-
-    response = result[0]
+    response = results[0]
     attrs = response.attributes
-
     puts "Smarty Key: #{response.smarty_key}"
     puts "Data Set: #{response.data_set_name}/#{response.data_subset_name}"
-    puts "ETag: #{response.etag}"
+    puts "ETag: #{lookup.response_etag}"
     puts
-
-    puts "Property Address:"
-    puts "\tFull Address: #{attrs.property_address_full}"
-    puts "\tCity: #{attrs.property_address_city}"
-    puts "\tState: #{attrs.property_address_state}"
-    puts "\tZIP: #{attrs.property_address_zipcode}"
-    puts
-
-    puts "Owner:"
-    puts "\tName: #{attrs.owner_full_name}"
-    puts "\tOccupancy: #{attrs.owner_occupancy_status}"
-    puts
-
-    puts "Property Details:"
-    puts "\tLand Use: #{attrs.land_use_standard}"
-    puts "\tYear Built: #{attrs.year_built}"
-    puts "\tBuilding Sqft: #{attrs.building_sqft}"
-    puts "\tLot Sqft: #{attrs.lot_sqft}"
-    puts "\tAcres: #{attrs.acres}"
-    puts "\tBathrooms: #{attrs.bathrooms_total}"
-    puts "\tBedrooms: #{attrs.bedrooms}"
-    puts "\tStories: #{attrs.stories_number}"
-    puts "\tFireplace: #{attrs.fireplace}"
-    puts "\tGarage: #{attrs.garage}"
-    puts
-
-    puts "Assessment:"
-    puts "\tAssessed Value: #{attrs.assessed_value}"
-    puts "\tTotal Market Value: #{attrs.total_market_value}"
-    puts "\tTax Year: #{attrs.tax_assess_year}"
-    puts "\tTax Billed: #{attrs.tax_billed_amount}"
-    puts
-
-    puts "Location:"
-    puts "\tCounty: #{attrs.situs_county}"
-    puts "\tLatitude: #{attrs.latitude}"
-    puts "\tLongitude: #{attrs.longitude}"
-    puts "\tElevation (ft): #{attrs.elevation_feet}"
-    puts
-
+    puts 'Property Address:'
+    puts "  Full Address: #{attrs.property_address_full}"
+    puts "  City: #{attrs.property_address_city}, #{attrs.property_address_state} #{attrs.property_address_zipcode}"
+    puts "Owner: #{attrs.owner_full_name}"
+    puts "Year Built: #{attrs.year_built}  Building Sqft: #{attrs.building_sqft}"
+    puts "Assessed Value: #{attrs.assessed_value}  Total Market Value: #{attrs.total_market_value}"
     unless attrs.financial_history.nil? || attrs.financial_history.empty?
-      puts "Financial History (#{attrs.financial_history.length} entries):"
-      attrs.financial_history.each_with_index do |entry, i|
-        puts "\tEntry #{i + 1}:"
-        puts "\t\tDocument Type: #{entry.document_type_description}"
-        puts "\t\tLender: #{entry.lender_name}"
-        puts "\t\tMortgage Amount: #{entry.mortgage_amount}"
-        puts "\t\tMortgage Type: #{entry.mortgage_type}"
-        puts "\t\tRecording Date: #{entry.mortgage_recording_date}"
-      end
+      puts "Financial History entries: #{attrs.financial_history.length}"
     end
+  end
+
+  # ---------- geo-reference ----------
+  def geo_reference_example
+    banner 'geo-reference'
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new(SHARED_SMARTY_KEY)
+    results = invoke { @client.send_geo_reference_lookup(lookup) }
+    return if results.nil? || results.empty?
+
+    response = results[0]
+    attrs = response.attributes
+    puts "Smarty Key: #{response.smarty_key}"
+    puts "Data Set: #{response.data_set_name} (version: #{response.data_set_version})"
+    puts "Matched Address: #{response.matched_address}"
+    puts "ETag: #{lookup.response_etag}"
+    puts
+    print_object('Census Block', attrs.census_block)
+    print_object('Census County Division', attrs.census_county_division)
+    print_object('Census Tract', attrs.census_tract)
+    print_object('Core Based Stat Area', attrs.core_based_stat_area)
+    print_object('Place', attrs.place)
+  end
+
+  # ---------- risk ----------
+  def risk_example
+    banner 'risk'
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new(SHARED_SMARTY_KEY)
+    results = invoke { @client.send_risk_lookup(lookup) }
+    return if results.nil? || results.empty?
+
+    response = results[0]
+    attrs = response.attributes
+    puts "Smarty Key: #{response.smarty_key}"
+    puts "Data Set: #{response.data_set_name}"
+    puts "Matched Address: #{response.matched_address}"
+    puts "ETag: #{lookup.response_etag}"
+    puts
+    puts "Overall Risk:   rating=#{attrs.RISK_RATNG}  score=#{attrs.RISK_SCORE}  spctl=#{attrs.RISK_SPCTL}  value=#{attrs.RISK_VALUE}"
+    puts "Resilience:     rating=#{attrs.RESL_RATNG}  score=#{attrs.RESL_SCORE}  value=#{attrs.RESL_VALUE}"
+    puts "Expected Loss:  rating=#{attrs.EAL_RATNG}   score=#{attrs.EAL_SCORE}   value=#{attrs.EAL_VALT}"
+    puts "Geography:      county=#{attrs.COUNTY}  state=#{attrs.STATE} (#{attrs.STATEABBRV})  tract=#{attrs.TRACT}"
+  end
+
+  # ---------- secondary ----------
+  def secondary_example
+    banner 'secondary'
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new(SHARED_SMARTY_KEY)
+    results = invoke { @client.send_secondary_lookup(lookup) }
+    return if results.nil? || results.empty?
+
+    response = results[0]
+    puts "Smarty Key: #{response.smarty_key}"
+    puts "Matched Address: #{response.matched_address}"
+    puts "ETag: #{lookup.response_etag}"
+    puts
+    print_object('Root Address', response.root_address)
+
+    unless response.aliases.nil? || response.aliases.empty?
+      puts "\nAliases (#{response.aliases.length}):"
+      response.aliases.each_with_index { |a, i| puts "  [#{i}] #{one_liner(a)}" }
+    end
+
+    unless response.secondaries.nil? || response.secondaries.empty?
+      puts "\nSecondaries (#{response.secondaries.length}):"
+      response.secondaries.first(5).each_with_index { |s, i| puts "  [#{i}] #{one_liner(s)}" }
+      puts "  ...#{response.secondaries.length - 5} more" if response.secondaries.length > 5
+    end
+  end
+
+  # ---------- secondary / count ----------
+  def secondary_count_example
+    banner 'secondary / count'
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new(SHARED_SMARTY_KEY)
+    results = invoke { @client.send_secondary_count_lookup(lookup) }
+    return if results.nil? || results.empty?
+
+    response = results[0]
+    puts "Smarty Key: #{response.smarty_key}"
+    puts "Matched Address: #{response.matched_address}"
+    puts "Count: #{response.count}"
+    puts "ETag: #{lookup.response_etag}"
+  end
+
+  # ---------- helpers ----------
+  def banner(title)
+    puts
+    puts "=== #{title} ==="
+  end
+
+  def invoke
+    yield
+  rescue SmartyStreets::SmartyError => err
+    puts "  Lookup failed: #{err.class}: #{err.message}"
+    nil
+  end
+
+  def print_object(label, obj)
+    puts "#{label}:"
+    if obj.nil?
+      puts '  (none)'
+      return
+    end
+    obj.instance_variables.each do |var|
+      value = obj.instance_variable_get(var)
+      next if value.nil?
+      puts "  #{var.to_s.delete('@')}: #{value}"
+    end
+  end
+
+  def one_liner(obj)
+    obj.instance_variables.filter_map do |var|
+      value = obj.instance_variable_get(var)
+      "#{var.to_s.delete('@')}=#{value}" unless value.nil?
+    end.join(' ')
   end
 end
 
-example = USEnrichmentAddressExample.new
-example.run
+USEnrichmentAddressExample.new.run

@@ -4,6 +4,12 @@ module SmartyStreets
   end
 
   class NotModifiedInfo < SmartyError
+    attr_reader :response_etag
+
+    def initialize(message = nil, response_etag = nil)
+      super(message)
+      @response_etag = response_etag
+    end
   end
 
   class BadCredentialsError < SmartyError
