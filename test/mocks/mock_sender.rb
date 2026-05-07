@@ -1,4 +1,6 @@
 class MockSender
+  attr_reader :request
+
   def initialize(response)
     @response = response
     @request = nil
