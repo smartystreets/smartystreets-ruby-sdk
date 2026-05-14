@@ -1,6 +1,5 @@
 require_relative "property/principal/response"
 require_relative "geo_reference/response"
-require_relative "risk/response"
 require_relative "secondary/response"
 require_relative "secondary/count/response"
 require_relative "business/summary/response"
@@ -33,16 +32,6 @@ module SmartyStreets
                     __send(USEnrichment::Lookup.new(lookup,'geo-reference'))
                 elsif (lookup.instance_of? USEnrichment::Lookup)
                     lookup.data_set = 'geo-reference'
-                    lookup.data_sub_set = nil
-                    __send(lookup)
-                end
-            end
-
-            def send_risk_lookup(lookup)
-                if (lookup.instance_of? String)
-                    __send(USEnrichment::Lookup.new(lookup,'risk'))
-                elsif (lookup.instance_of? USEnrichment::Lookup)
-                    lookup.data_set = 'risk'
                     lookup.data_sub_set = nil
                     __send(lookup)
                 end
@@ -171,9 +160,6 @@ module SmartyStreets
                     end
                     if lookup.data_set == "geo-reference"
                       result = USEnrichment::GeoReference::Response.new(raw_result)
-                    end
-                    if lookup.data_set == "risk"
-                      result = USEnrichment::Risk::Response.new(raw_result)
                     end
                     if lookup.data_set == "secondary"
                       if lookup.data_sub_set == "count"

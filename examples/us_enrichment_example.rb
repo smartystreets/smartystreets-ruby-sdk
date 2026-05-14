@@ -25,7 +25,6 @@ class USEnrichmentAddressExample
 
     property_principal_example
     geo_reference_example
-    risk_example
     secondary_example
     secondary_count_example
   end
@@ -84,27 +83,6 @@ class USEnrichmentAddressExample
     print_object('Census Tract', attrs.census_tract)
     print_object('Core Based Stat Area', attrs.core_based_stat_area)
     print_object('Place', attrs.place)
-  end
-
-  # ---------- risk ----------
-  def risk_example
-    banner 'risk'
-
-    lookup = SmartyStreets::USEnrichment::Lookup.new(SHARED_SMARTY_KEY)
-    results = invoke { @client.send_risk_lookup(lookup) }
-    return if results.nil? || results.empty?
-
-    response = results[0]
-    attrs = response.attributes
-    puts "Smarty Key: #{response.smarty_key}"
-    puts "Data Set: #{response.data_set_name}"
-    puts "Matched Address: #{response.matched_address}"
-    puts "ETag: #{lookup.response_etag}"
-    puts
-    puts "Overall Risk:   rating=#{attrs.RISK_RATNG}  score=#{attrs.RISK_SCORE}  spctl=#{attrs.RISK_SPCTL}  value=#{attrs.RISK_VALUE}"
-    puts "Resilience:     rating=#{attrs.RESL_RATNG}  score=#{attrs.RESL_SCORE}  value=#{attrs.RESL_VALUE}"
-    puts "Expected Loss:  rating=#{attrs.EAL_RATNG}   score=#{attrs.EAL_SCORE}   value=#{attrs.EAL_VALT}"
-    puts "Geography:      county=#{attrs.COUNTY}  state=#{attrs.STATE} (#{attrs.STATEABBRV})  tract=#{attrs.TRACT}"
   end
 
   # ---------- secondary ----------
