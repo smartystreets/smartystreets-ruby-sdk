@@ -1,3 +1,4 @@
+require 'json'
 require_relative 'exceptions'
 require_relative 'errors'
 
@@ -35,20 +36,36 @@ module SmartyStreets
       TooManyRequestsError.new(error_message)
     end
 
+    def fromMessage(response, fallback)
+      return fallback if response.payload.nil?
+
+      error_message = ""
+      response_json = JSON.parse(response.payload)
+      errors = response_json["errors"]
+      if !errors.nil?
+        errors.each do |error|
+          error_message += (" " + error["message"])
+        end
+        error_message.strip!
+      end
+
+      error_message == "" ? fallback : error_message
+    end
+
     def assign_exception(response)
       response.error = case response.status_code
                          when '304'
                            NotModifiedInfo.new(NOT_MODIFIED, response.find_header('etag'))
                          when '401'
-                           BadCredentialsError.new(BAD_CREDENTIALS)
+                           BadCredentialsError.new(fromMessage(response, BAD_CREDENTIALS))
                          when '402'
-                           PaymentRequiredError.new(PAYMENT_REQUIRED)
+                           PaymentRequiredError.new(fromMessage(response, PAYMENT_REQUIRED))
                          when '413'
-                           RequestEntityTooLargeError.new(REQUEST_ENTITY_TOO_LARGE)
+                           RequestEntityTooLargeError.new(fromMessage(response, REQUEST_ENTITY_TOO_LARGE))
                          when '400'
-                           BadRequestError.new(BAD_REQUEST)
+                           BadRequestError.new(fromMessage(response, BAD_REQUEST))
                          when '422'
-                           UnprocessableEntityError.new(UNPROCESSABLE_ENTITY)
+                           UnprocessableEntityError.new(fromMessage(response, UNPROCESSABLE_ENTITY))
                          when '429'
                            TooManyRequestsError.new(TOO_MANY_REQUESTS)
                          when '500'

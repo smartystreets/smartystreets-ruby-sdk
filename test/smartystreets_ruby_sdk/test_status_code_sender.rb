@@ -19,63 +19,113 @@ class TestStatusCodeSender < Minitest::Test
   end
 
   def test_bad_credentials_error_given_for_401
-    expected_exception = SmartyStreets::BadCredentialsError.new(SmartyStreets::BAD_CREDENTIALS)
-    expected_response = Response.new(nil, '401', nil, expected_exception)
-    inner = MockSender.new(Response.new(nil, '401', nil, expected_exception))
+    expected_exception = SmartyStreets::BadCredentialsError.new("These credentials are no good")
+    inner = MockSender.new(Response.new("{\"errors\": [{\"id\":\"1\", \"message\": \"These credentials are no good\"}]}", '401', nil, nil))
     sender = StatusCodeSender.new(inner)
 
     response = sender.send(Request.new)
 
-    assert_equal(expected_response.error, response.error)
-    assert_equal(response.error, expected_exception)
+    assert_equal(expected_exception, response.error)
+    assert_equal("These credentials are no good", response.error.message)
+  end
+
+  def test_bad_credentials_error_fallback_for_401
+    expected_exception = SmartyStreets::BadCredentialsError.new(SmartyStreets::BAD_CREDENTIALS)
+    inner = MockSender.new(Response.new(nil, '401', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal(SmartyStreets::BAD_CREDENTIALS, response.error.message)
   end
 
   def test_payment_required_error_given_for_402
-    expected_exception = SmartyStreets::PaymentRequiredError.new(SmartyStreets::PAYMENT_REQUIRED)
-    expected_response = Response.new(nil, '402', nil, expected_exception)
-    inner = MockSender.new(Response.new(nil, '402', nil, expected_exception))
+    expected_exception = SmartyStreets::PaymentRequiredError.new("Pay up please")
+    inner = MockSender.new(Response.new("{\"errors\": [{\"id\":\"2\", \"message\": \"Pay up please\"}]}", '402', nil, nil))
     sender = StatusCodeSender.new(inner)
 
     response = sender.send(Request.new)
 
-    assert_equal(expected_response.error, response.error)
-    assert_equal(response.error, expected_exception)
+    assert_equal(expected_exception, response.error)
+    assert_equal("Pay up please", response.error.message)
+  end
+
+  def test_payment_required_error_fallback_for_402
+    expected_exception = SmartyStreets::PaymentRequiredError.new(SmartyStreets::PAYMENT_REQUIRED)
+    inner = MockSender.new(Response.new(nil, '402', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal(SmartyStreets::PAYMENT_REQUIRED, response.error.message)
   end
 
   def test_request_entity_too_large_error_given_for_413
-    expected_exception = SmartyStreets::RequestEntityTooLargeError.new(SmartyStreets::REQUEST_ENTITY_TOO_LARGE)
-    expected_response = Response.new(nil, '413', nil, expected_exception)
-    inner = MockSender.new(Response.new(nil, '413', nil, expected_exception))
+    expected_exception = SmartyStreets::RequestEntityTooLargeError.new("That is way too big")
+    inner = MockSender.new(Response.new("{\"errors\": [{\"id\":\"3\", \"message\": \"That is way too big\"}]}", '413', nil, nil))
     sender = StatusCodeSender.new(inner)
 
     response = sender.send(Request.new)
 
-    assert_equal(expected_response.error, response.error)
-    assert_equal(response.error, expected_exception)
+    assert_equal(expected_exception, response.error)
+    assert_equal("That is way too big", response.error.message)
+  end
+
+  def test_request_entity_too_large_error_fallback_for_413
+    expected_exception = SmartyStreets::RequestEntityTooLargeError.new(SmartyStreets::REQUEST_ENTITY_TOO_LARGE)
+    inner = MockSender.new(Response.new(nil, '413', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal(SmartyStreets::REQUEST_ENTITY_TOO_LARGE, response.error.message)
   end
 
   def test_bad_request_error_given_for_400
+    expected_exception = SmartyStreets::BadRequestError.new("Your request was malformed")
+    inner = MockSender.new(Response.new("{\"errors\": [{\"id\":\"4\", \"message\": \"Your request was malformed\"}]}", '400', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal("Your request was malformed", response.error.message)
+  end
+
+  def test_bad_request_error_fallback_for_400
     expected_exception = SmartyStreets::BadRequestError.new(SmartyStreets::BAD_REQUEST)
-    expected_response = Response.new(nil, '400', nil, expected_exception)
     inner = MockSender.new(Response.new(nil, '400', nil, nil))
     sender = StatusCodeSender.new(inner)
 
     response = sender.send(Request.new)
 
-    assert_equal(expected_response.error, response.error)
-    assert_equal(response.error, expected_exception)
+    assert_equal(expected_exception, response.error)
+    assert_equal(SmartyStreets::BAD_REQUEST, response.error.message)
   end
 
   def test_unprocessable_entity_error_given_for_422
-    expected_exception = SmartyStreets::UnprocessableEntityError.new(SmartyStreets::UNPROCESSABLE_ENTITY)
-    expected_response = Response.new(nil, '422', nil, expected_exception)
-    inner = MockSender.new(Response.new(nil, '422', nil))
+    expected_exception = SmartyStreets::UnprocessableEntityError.new("Missing some fields")
+    inner = MockSender.new(Response.new("{\"errors\": [{\"id\":\"5\", \"message\": \"Missing some fields\"}]}", '422', nil, nil))
     sender = StatusCodeSender.new(inner)
 
     response = sender.send(Request.new)
 
-    assert_equal(expected_response.error, response.error)
-    assert_equal(response.error, expected_exception)
+    assert_equal(expected_exception, response.error)
+    assert_equal("Missing some fields", response.error.message)
+  end
+
+  def test_unprocessable_entity_error_fallback_for_422
+    expected_exception = SmartyStreets::UnprocessableEntityError.new(SmartyStreets::UNPROCESSABLE_ENTITY)
+    inner = MockSender.new(Response.new(nil, '422', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal(SmartyStreets::UNPROCESSABLE_ENTITY, response.error.message)
   end
 
   def test_too_many_requests_error_given_for_429
