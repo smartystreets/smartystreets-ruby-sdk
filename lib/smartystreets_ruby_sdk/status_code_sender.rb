@@ -36,20 +36,14 @@ module SmartyStreets
       TooManyRequestsError.new(error_message)
     end
 
-    def fromMessage(response, fallback)
+    def from_message(response, fallback)
       return fallback if response.payload.nil?
 
-      error_message = ""
-      response_json = JSON.parse(response.payload)
-      errors = response_json["errors"]
-      if !errors.nil?
-        errors.each do |error|
-          error_message += (" " + error["message"])
-        end
-        error_message.strip!
-      end
+      errors = JSON.parse(response.payload)["errors"]
+      return fallback if errors.nil? || errors.empty?
 
-      error_message == "" ? fallback : error_message
+      message = errors.map { |error| error["message"] }.join(" ")
+      message.empty? ? fallback : message
     end
 
     def assign_exception(response)
@@ -57,15 +51,15 @@ module SmartyStreets
                          when '304'
                            NotModifiedInfo.new(NOT_MODIFIED, response.find_header('etag'))
                          when '401'
-                           BadCredentialsError.new(fromMessage(response, BAD_CREDENTIALS))
+                           BadCredentialsError.new(from_message(response, BAD_CREDENTIALS))
                          when '402'
-                           PaymentRequiredError.new(fromMessage(response, PAYMENT_REQUIRED))
+                           PaymentRequiredError.new(from_message(response, PAYMENT_REQUIRED))
                          when '413'
-                           RequestEntityTooLargeError.new(fromMessage(response, REQUEST_ENTITY_TOO_LARGE))
+                           RequestEntityTooLargeError.new(from_message(response, REQUEST_ENTITY_TOO_LARGE))
                          when '400'
-                           BadRequestError.new(fromMessage(response, BAD_REQUEST))
+                           BadRequestError.new(from_message(response, BAD_REQUEST))
                          when '422'
-                           UnprocessableEntityError.new(fromMessage(response, UNPROCESSABLE_ENTITY))
+                           UnprocessableEntityError.new(from_message(response, UNPROCESSABLE_ENTITY))
                          when '429'
                            TooManyRequestsError.new(TOO_MANY_REQUESTS)
                          when '500'
