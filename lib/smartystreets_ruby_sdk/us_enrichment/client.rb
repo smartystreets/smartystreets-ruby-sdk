@@ -131,6 +131,7 @@ module SmartyStreets
                         smarty_request.url_components = '/search/' + lookup.data_set + '/' + lookup.data_sub_set
                     end
                     add_parameter(smarty_request, 'freeform', lookup.freeform)
+                    add_parameter(smarty_request, 'business_name', lookup.business_name)
                     add_parameter(smarty_request, 'street', lookup.street)
                     add_parameter(smarty_request, 'city', lookup.city)
                     add_parameter(smarty_request, 'state', lookup.state)
