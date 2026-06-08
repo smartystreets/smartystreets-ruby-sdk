@@ -5,11 +5,12 @@ module SmartyStreets
       attr_reader :premise, :thoroughfare_trailing_type, :sub_building, :locality, :post_box_number,
                   :thoroughfare_name, :thoroughfare_postdirection, :dependent_thoroughfare, :premise_prefix_number,
                   :thoroughfare, :dependent_thoroughfare_name, :postal_code_short, :dependent_thoroughfare_trailing_type,
-                  :administrative_area, :administrative_area_iso2,:administrative_area_short, :administrative_area_long, :post_box,
+                  :administrative_area, :administrative_area_iso2, :attention, :post_box,
                   :building_leading_type, :dependent_locality_name, :thoroughfare_type,
                   :dependent_thoroughfare_postdirection, :double_dependent_locality, :premise_number,
                   :dependent_thoroughfare_type, :post_box_type, :building, :sub_administrative_area, :postal_code_extra,
                   :sub_building_name, :postal_code, :dependent_locality, :premise_type, :sub_building_number,
+                  :short_address_code, :sub_building_leading_type, :sub_building_block, :sub_building_door, :sub_building_staircase,
                   :super_administrative_area, :premise_extra, :dependent_thoroughfare_predirection,
                   :building_trailing_type, :thoroughfare_predirection, :building_name, :level_type, :level_number,
                   :country_iso_3, :sub_building_type, :additional_content, :delivery_installation, :delivery_installation_type,
@@ -20,8 +21,7 @@ module SmartyStreets
         @super_administrative_area = obj.fetch('super_administrative_area', nil)
         @administrative_area = obj.fetch('administrative_area', nil)
         @administrative_area_iso2 = obj.fetch('administrative_area_iso2', nil)
-        @administrative_area_short = obj.fetch('administrative_area_short', nil)
-        @administrative_area_long = obj.fetch('administrative_area_long', nil)
+        @attention = obj.fetch('attention', nil)
         @sub_administrative_area = obj.fetch('sub_administrative_area', nil)
         @dependent_locality= obj.fetch('dependent_locality', nil)
         @dependent_locality_name = obj.fetch('dependent_locality_name', nil)
@@ -35,6 +35,11 @@ module SmartyStreets
         @premise_number = obj.fetch('premise_number', nil)
         @premise_prefix_number = obj.fetch('premise_prefix_number', nil)
         @premise_type = obj.fetch('premise_type', nil)
+        @short_address_code = obj.fetch('short_address_code', nil)
+        @sub_building_leading_type = obj.fetch('sub_building_leading_type', nil)
+        @sub_building_block = obj.fetch('sub_building_block', nil)
+        @sub_building_door = obj.fetch('sub_building_door', nil)
+        @sub_building_staircase = obj.fetch('sub_building_staircase', nil)
         @thoroughfare = obj.fetch('thoroughfare', nil)
         @thoroughfare_predirection = obj.fetch('thoroughfare_predirection', nil)
         @thoroughfare_postdirection = obj.fetch('thoroughfare_postdirection', nil)
