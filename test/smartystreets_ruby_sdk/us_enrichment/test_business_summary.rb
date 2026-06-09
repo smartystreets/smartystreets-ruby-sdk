@@ -72,6 +72,18 @@ class TestBusinessSummary < Minitest::Test
     assert_nil(sender.request.parameters["business_name"])
   end
 
+  def test_business_summary_lookup_with_business_name_only
+    sender = RequestCapturingSender.new
+    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new
+    lookup.business_name = "Style Studio"
+
+    client.send_business_lookup(lookup)
+    assert_equal("/search/business", sender.request.url_components)
+    assert_equal("Style Studio", sender.request.parameters["business_name"])
+  end
+
   def test_business_summary_response_wraps_businesses
     obj = {
       'smarty_key' => 'key-1',

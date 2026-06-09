@@ -12,10 +12,11 @@ class USEnrichmentBusinessNameSearchExample
 
     client = SmartyStreets::ClientBuilder.new(credentials).build_us_enrichment_api_client
 
+    business_name = "delta air"
+
     lookup = SmartyStreets::USEnrichment::Lookup.new
-    lookup.freeform = "1600 Amphitheatre Pkwy, Mountain View, CA"
-    lookup.business_name = "Google"
-    lookup.city = "Mountain View"
+    lookup.business_name = business_name
+    lookup.city = "atlanta"
 
     begin
       summary_results = client.send_business_lookup(lookup)
@@ -31,11 +32,11 @@ class USEnrichmentBusinessNameSearchExample
 
     summary = summary_results[0]
     if summary.businesses.nil? || summary.businesses.empty?
-      puts "No matching businesses found"
+      puts "No businesses found for this business name search"
       return
     end
 
-    puts "Matching businesses:"
+    puts "Summary results for BusinessName: #{business_name}"
     summary.businesses.each do |biz|
       puts "  - #{biz.company_name} (ID: #{biz.business_id})"
     end
