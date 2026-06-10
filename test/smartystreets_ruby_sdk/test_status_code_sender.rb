@@ -176,6 +176,50 @@ class TestStatusCodeSender < Minitest::Test
     assert_equal(response.error, expected_exception)
   end
 
+  def test_forbidden_error_given_for_403
+    expected_exception = SmartyStreets::ForbiddenError.new("No access for you")
+    inner = MockSender.new(Response.new("{\"errors\": [{\"id\":\"6\", \"message\": \"No access for you\"}]}", '403', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal("No access for you", response.error.message)
+  end
+
+  def test_forbidden_error_fallback_for_403
+    expected_exception = SmartyStreets::ForbiddenError.new(SmartyStreets::FORBIDDEN)
+    inner = MockSender.new(Response.new(nil, '403', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal(SmartyStreets::FORBIDDEN, response.error.message)
+  end
+
+  def test_request_timeout_error_given_for_408
+    expected_exception = SmartyStreets::RequestTimeoutError.new("Way too slow")
+    inner = MockSender.new(Response.new("{\"errors\": [{\"id\":\"7\", \"message\": \"Way too slow\"}]}", '408', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal("Way too slow", response.error.message)
+  end
+
+  def test_request_timeout_error_fallback_for_408
+    expected_exception = SmartyStreets::RequestTimeoutError.new(SmartyStreets::REQUEST_TIMEOUT)
+    inner = MockSender.new(Response.new(nil, '408', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal(SmartyStreets::REQUEST_TIMEOUT, response.error.message)
+  end
+
   def test_internal_server_error_given_for_500
     expected_exception = SmartyStreets::InternalServerError.new(SmartyStreets::INTERNAL_SERVER_ERROR)
     expected_response = Response.new(nil, '500', nil, expected_exception)
@@ -186,6 +230,85 @@ class TestStatusCodeSender < Minitest::Test
 
     assert_equal(expected_response.error, response.error)
     assert_equal(response.error, expected_exception)
+  end
+
+  def test_internal_server_error_uses_api_message_for_500
+    expected_exception = SmartyStreets::InternalServerError.new("Something broke on our end")
+    inner = MockSender.new(Response.new("{\"errors\": [{\"id\":\"8\", \"message\": \"Something broke on our end\"}]}", '500', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal("Something broke on our end", response.error.message)
+  end
+
+  def test_bad_gateway_error_given_for_502
+    expected_exception = SmartyStreets::BadGatewayError.new(SmartyStreets::BAD_GATEWAY)
+    inner = MockSender.new(Response.new(nil, '502', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal(SmartyStreets::BAD_GATEWAY, response.error.message)
+  end
+
+  def test_gateway_timeout_error_given_for_504
+    expected_exception = SmartyStreets::GatewayTimeoutError.new(SmartyStreets::GATEWAY_TIMEOUT)
+    inner = MockSender.new(Response.new(nil, '504', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal(SmartyStreets::GATEWAY_TIMEOUT, response.error.message)
+  end
+
+  def test_unexpected_status_code_falls_back_to_standard_message
+    expected_exception = SmartyStreets::SmartyError.new('The server returned an unexpected HTTP status code: 418')
+    inner = MockSender.new(Response.new(nil, '418', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal('The server returned an unexpected HTTP status code: 418', response.error.message)
+  end
+
+  def test_unexpected_status_code_uses_api_message
+    expected_exception = SmartyStreets::SmartyError.new("API teapot message")
+    inner = MockSender.new(Response.new("{\"errors\": [{\"id\":\"9\", \"message\": \"API teapot message\"}]}", '418', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal("API teapot message", response.error.message)
+  end
+
+  def test_malformed_payload_falls_back
+    expected_exception = SmartyStreets::BadCredentialsError.new(SmartyStreets::BAD_CREDENTIALS)
+    inner = MockSender.new(Response.new("not json", '401', nil, nil))
+    sender = StatusCodeSender.new(inner)
+
+    response = sender.send(Request.new)
+
+    assert_equal(expected_exception, response.error)
+    assert_equal(SmartyStreets::BAD_CREDENTIALS, response.error.message)
+  end
+
+  def test_standard_messages_match_shared_wording
+    assert_equal('Not Modified: The requested record has not been modified since the previous request with the Etag value.',
+                 SmartyStreets::NOT_MODIFIED)
+    assert_equal('Bad Request (Malformed Payload): A GET request lacked a required field or the request body of a POST request contained malformed JSON.',
+                 SmartyStreets::BAD_REQUEST)
+    assert_equal('Forbidden: The request contained valid data and was understood by the server, but the server is refusing action.',
+                 SmartyStreets::FORBIDDEN)
+    assert_equal('Request timeout error.', SmartyStreets::REQUEST_TIMEOUT)
+    assert_equal('Too Many Requests: The rate limit for your account has been exceeded.',
+                 SmartyStreets::TOO_MANY_REQUESTS)
+    assert_equal('Bad Gateway error.', SmartyStreets::BAD_GATEWAY)
   end
 
   def test_service_unavailable_error_given_for_503

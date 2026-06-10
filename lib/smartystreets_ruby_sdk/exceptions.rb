@@ -18,6 +18,12 @@ module SmartyStreets
   class ForbiddenError < SmartyError
   end
 
+  class RequestTimeoutError < SmartyError
+  end
+
+  class BadGatewayError < SmartyError
+  end
+
   class PaymentRequiredError < SmartyError
   end
 
