@@ -1,12 +1,7 @@
-name: Ruby Tests
+name: Ruby Tests (reusable)
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - '**'
+  workflow_call:
 
 jobs:
   test:

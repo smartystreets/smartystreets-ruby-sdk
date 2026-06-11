@@ -7,27 +7,11 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby-version: ['3.3', '3.4', '4.0']
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby-version }}
-          bundler-cache: false
-      - name: Install dependencies
-        run: make dependencies
-      - name: Test
-        run: make test
+    uses: ./.github/workflows/test.yml
 
   publish:
     needs: test
     runs-on: ubuntu-latest
-    env:
-      GEM_HOST_API_KEY: ${{ secrets.GEM_HOST_API_KEY }}
-
     steps:
       - uses: actions/checkout@v4
         with:
@@ -40,6 +24,6 @@ jobs:
 
       - name: Publish
         run: |
-          VERSION=${GITHUB_REF#refs/*/} API_KEY=${{ secrets.GEM_HOST_API_KEY }} make publish
+          VERSION=${GITHUB_REF#refs/*/} make publish
         env:
           API_KEY: "${{ secrets.GEM_HOST_API_KEY }}"
