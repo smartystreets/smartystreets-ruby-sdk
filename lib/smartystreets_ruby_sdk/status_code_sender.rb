@@ -26,17 +26,20 @@ module SmartyStreets
     end
 
     def from_message(response, fallback)
-      return fallback if response.payload.nil?
-
-      begin
-        errors = JSON.parse(response.payload)["errors"]
-      rescue JSON::ParserError, TypeError
-        return fallback
+      body = response.payload.nil? ? '' : response.payload.to_s.strip
+      unless body.empty?
+        begin
+          errors = JSON.parse(response.payload)["errors"]
+        rescue JSON::ParserError, TypeError
+          errors = nil
+        end
+        unless errors.nil? || errors.empty?
+          message = errors.map { |error| error["message"] }.join(" ")
+          return message unless message.empty?
+        end
       end
-      return fallback if errors.nil? || errors.empty?
 
-      message = errors.map { |error| error["message"] }.join(" ")
-      message.empty? ? fallback : message
+      "#{fallback} Body: #{body}".strip
     end
 
     def assign_exception(response)
