@@ -58,7 +58,7 @@ URLPrefixSender → CustomQuerySender → LicenseSender → RetrySender → Sign
 
 ### Supported APIs
 
-- US Street, US ZipCode, US Autocomplete Pro, US Extract, US Reverse Geo, US Enrichment
+- US Street, US ZipCode, US Autocomplete, US Autocomplete Pro, US Extract, US Reverse Geo, US Enrichment
 - International Street, International Autocomplete, International Postal Code
 
 ### Test Structure
