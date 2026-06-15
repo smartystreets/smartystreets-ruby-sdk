@@ -44,10 +44,8 @@ module SmartyStreets
 
     def assign_exception(response)
       response.error = case response.status_code.to_s
-                         when '200'
+                         when '200', '304'
                            nil
-                         when '304'
-                           NotModifiedInfo.new(NOT_MODIFIED, response.find_header('etag'))
                          when '401'
                            BadCredentialsError.new(from_message(response, BAD_CREDENTIALS))
                          when '402'

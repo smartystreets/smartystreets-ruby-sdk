@@ -343,33 +343,14 @@ class TestStatusCodeSender < Minitest::Test
     assert_equal(response.error, expected_exception)
   end
 
-  def test_not_modified_info_carries_response_etag
+  def test_not_modified_is_not_an_error
     inner = MockSender.new(Response.new(nil, '304', {'etag' => 'server-refreshed-etag'}, nil))
     sender = StatusCodeSender.new(inner)
 
     response = sender.send(Request.new)
 
-    assert_instance_of(SmartyStreets::NotModifiedInfo, response.error)
-    assert_equal('server-refreshed-etag', response.error.response_etag)
-  end
-
-  def test_not_modified_info_response_etag_is_case_insensitive
-    inner = MockSender.new(Response.new(nil, '304', {'ETag' => 'server-refreshed-etag'}, nil))
-    sender = StatusCodeSender.new(inner)
-
-    response = sender.send(Request.new)
-
-    assert_instance_of(SmartyStreets::NotModifiedInfo, response.error)
-    assert_equal('server-refreshed-etag', response.error.response_etag)
-  end
-
-  def test_not_modified_info_response_etag_nil_when_header_absent
-    inner = MockSender.new(Response.new(nil, '304', nil, nil))
-    sender = StatusCodeSender.new(inner)
-
-    response = sender.send(Request.new)
-
-    assert_instance_of(SmartyStreets::NotModifiedInfo, response.error)
-    assert_nil(response.error.response_etag)
+    assert_nil(response.error)
+    assert_equal('304', response.status_code)
+    assert_equal('server-refreshed-etag', response.find_header('etag'))
   end
 end
