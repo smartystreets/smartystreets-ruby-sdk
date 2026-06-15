@@ -3,7 +3,7 @@ name: Ruby Gem Publish
 on:
   push:
     tags:
-      - '*'
+      - '**'
 
 jobs:
   test:
