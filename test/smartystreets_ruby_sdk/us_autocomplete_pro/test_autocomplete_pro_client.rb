@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/us_autocomplete_pro/client'
 require './lib/smartystreets_ruby_sdk/us_autocomplete_pro/lookup'
+require './lib/smartystreets_ruby_sdk/us_autocomplete_pro/source_type'
 require './lib/smartystreets_ruby_sdk/response'
 
 class TestAutocompleteProClient < Minitest::Test
@@ -36,7 +37,7 @@ class TestAutocompleteProClient < Minitest::Test
     lookup.add_preferred_zip('9')
     lookup.prefer_ratio = 10
     lookup.prefer_geolocation = SmartyStreets::USAutocompletePro::GeolocationType::CITY
-    lookup.source = "all"
+    lookup.source = SmartyStreets::USAutocompletePro::SourceType::ALL
 
     client.send(lookup)
 
@@ -89,6 +90,28 @@ class TestAutocompleteProClient < Minitest::Test
     end
   end
 
+  def test_source_omitted_when_not_set
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+
+    client.send(Lookup.new('1'))
+
+    assert_nil(sender.request.parameters['source'])
+  end
+
+  def test_source_postal_sent_as_postal
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1')
+    lookup.source = SmartyStreets::USAutocompletePro::SourceType::POSTAL
+
+    client.send(lookup)
+
+    assert_equal('postal', sender.request.parameters['source'])
+  end
+
   def test_sets_geolocation_as_city_if_no_city_and_zip_filters
     sender = RequestCapturingSender.new
     serializer = FakeSerializer.new({})
@@ -96,7 +119,7 @@ class TestAutocompleteProClient < Minitest::Test
 
     lookup = Lookup.new('1')
     lookup.max_results = 2
-    lookup.source = "all"
+    lookup.source = SmartyStreets::USAutocompletePro::SourceType::ALL
     lookup.prefer_geolocation = SmartyStreets::USAutocompletePro::GeolocationType::CITY
 
     client.send(lookup)
