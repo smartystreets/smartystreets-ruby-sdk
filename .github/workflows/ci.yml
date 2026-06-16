@@ -2,6 +2,8 @@ name: Ruby Tests
 
 on:
   push:
+    branches:
+      - '**'
 
 jobs:
   test:
