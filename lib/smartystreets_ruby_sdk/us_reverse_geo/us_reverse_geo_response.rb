@@ -8,7 +8,7 @@ module SmartyStreets
       def initialize(obj)
         @results = []
 
-        obj['results'].each do |result|
+        obj.fetch('results', []).each do |result|
           @results.push(Result.new(result))
         end
       end
