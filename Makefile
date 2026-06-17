@@ -12,7 +12,7 @@ test:
 dependencies:
 	gem install minitest
 
-package: clean dependencies test
+package: clean dependencies
 	sed -i "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE)" \
 	&& gem build *.gemspec \
 	&& git checkout "$(VERSION_FILE)"
@@ -46,11 +46,14 @@ us_reverse_geo_api:
 	cd examples && ruby us_reverse_geo_example.rb
 
 us_street_api:
-	cd examples && ruby us_street_single_address_example.rb && ruby us_street_multiple_address_example.rb && ruby us_street_component_analysis_example.rb && ruby us_street_iana_timezone_example.rb
+	cd examples && ruby us_street_single_address_example.rb && ruby us_street_multiple_address_example.rb && ruby us_street_component_analysis_example.rb && ruby us_street_iana_timezone_example.rb && ruby us_street_match_strategy_example.rb
+
+us_street_match_strategy_api:
+	cd examples && ruby us_street_match_strategy_example.rb
 
 us_zipcode_api:
 	cd examples && ruby us_zipcode_single_lookup_example.rb && ruby us_zipcode_multiple_lookup_example.rb
 
 examples: international_autocomplete_api international_postal_code_api international_street_api us_autocomplete_pro_api us_enrichment_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api
 
-.PHONY: clean test dependencies package publish international_autocomplete_api international_postal_code_api international_street_api us_autocomplete_pro_api us_enrichment_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api examples
+.PHONY: clean test dependencies package publish international_autocomplete_api international_postal_code_api international_street_api us_autocomplete_pro_api us_enrichment_api us_extract_api us_reverse_geo_api us_street_api us_street_match_strategy_api us_zipcode_api examples

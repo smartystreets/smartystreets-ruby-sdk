@@ -4,6 +4,8 @@
 
 The official client libraries for accessing SmartyStreets APIs from Ruby
 
+Compatible with Ruby 3.3 and later.
+
 You may have noticed this page is curiously sparse. Don't panic, there's [documentation](https://smartystreets.com/docs/sdk/ruby) and [examples](examples).
 
 [Apache 2.0 License](LICENSE.txt)
