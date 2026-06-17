@@ -114,8 +114,8 @@ module SmartyStreets
             private
 
             def __send(lookup)
-                if lookup.nil? || (blank?(lookup.smarty_key) && blank?(lookup.street) && blank?(lookup.freeform))
-                    raise SmartyError.new("Lookup requires one of 'smartykey', 'street', or 'freeform' to be set")
+                if lookup.nil? || (blank?(lookup.smarty_key) && blank?(lookup.street) && blank?(lookup.freeform) && blank?(lookup.business_name))
+                    raise SmartyError.new("Lookup requires one of 'smarty_key', 'street', 'freeform', or 'business_name' to be set")
                 end
 
                 smarty_request = Request.new
@@ -135,6 +135,7 @@ module SmartyStreets
                     add_parameter(smarty_request, 'city', lookup.city)
                     add_parameter(smarty_request, 'state', lookup.state)
                     add_parameter(smarty_request, 'zipcode', lookup.zipcode)
+                    add_parameter(smarty_request, 'business_name', lookup.business_name)
                 else
                     if (lookup.data_sub_set.nil?)
                         smarty_request.url_components = '/' + lookup.smarty_key + '/' + lookup.data_set

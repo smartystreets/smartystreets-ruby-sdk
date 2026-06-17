@@ -37,7 +37,7 @@ us_autocomplete_pro_api:
 	cd examples && ruby us_autocomplete_pro_example.rb
 
 us_enrichment_api:
-	cd examples && ruby us_enrichment_example.rb && ruby us_enrichment_business_example.rb && ruby us_enrichment_etag_example.rb
+	cd examples && ruby us_enrichment_example.rb && ruby us_enrichment_business_example.rb && ruby us_enrichment_etag_example.rb && ruby us_enrichment_business_name_search_example.rb
 
 us_extract_api:
 	cd examples && ruby us_extract_example.rb

@@ -154,7 +154,7 @@ class USEnrichmentAddressExample
   end
 
   def one_liner(obj)
-    obj.instance_variables.filter_map do |var|
+    obj.instance_variables.filter do |var|
       value = obj.instance_variable_get(var)
       "#{var.to_s.delete('@')}=#{value}" unless value.nil?
     end.join(' ')
