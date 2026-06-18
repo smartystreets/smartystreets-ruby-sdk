@@ -3,9 +3,11 @@ require '../lib/smartystreets_ruby_sdk/shared_credentials'
 require '../lib/smartystreets_ruby_sdk/basic_auth_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/us_reverse_geo/lookup'
+require '../lib/smartystreets_ruby_sdk/us_reverse_geo/source_type'
 
 class USReverseGeoExample
   Lookup = SmartyStreets::USReverseGeo::Lookup
+  SourceType = SmartyStreets::USReverseGeo::SourceType
 
   def run
     # key = 'Your SmartyStreets Auth Key here'
@@ -25,6 +27,7 @@ class USReverseGeoExample
     # https://smartystreets.com/docs/cloud/us-reverse-geo-api#http-request-input-fields
 
     lookup = Lookup.new(40.111111, -111.111111)
+    lookup.source = SourceType::ALL
 
     # lookup.add_custom_parameter('parameter', 'value')
 
