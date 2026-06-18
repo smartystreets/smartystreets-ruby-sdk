@@ -3,12 +3,14 @@ require '../lib/smartystreets_ruby_sdk/static_credentials'
 require '../lib/smartystreets_ruby_sdk/basic_auth_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/us_autocomplete/lookup'
+require '../lib/smartystreets_ruby_sdk/us_autocomplete/source_type'
 
 # This example is for US Autocomplete (V2). It has the same name as a previous product
 # which has been deprecated since 2022, which we refer to as US Autocomplete Basic.
 # If you are still using US Autocomplete Basic, this SDK will not work.
 class USAutocompleteExample
   Lookup = SmartyStreets::USAutocomplete::Lookup
+  SourceType = SmartyStreets::USAutocomplete::SourceType
 
   def run
     # key = 'Your SmartyStreets Auth Key here'
@@ -32,7 +34,7 @@ class USAutocompleteExample
     lookup.add_city_filter('Orem,UT')
     lookup.max_results = 5
     lookup.prefer_ratio = 3
-    lookup.source = "all"
+    lookup.source = SourceType::ALL
 
     # lookup.add_custom_parameter('parameter', 'value')
 

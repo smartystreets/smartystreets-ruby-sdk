@@ -1,11 +1,13 @@
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/us_autocomplete/client'
 require './lib/smartystreets_ruby_sdk/us_autocomplete/lookup'
+require './lib/smartystreets_ruby_sdk/us_autocomplete/source_type'
 require './lib/smartystreets_ruby_sdk/response'
 
 class TestAutocompleteClient < Minitest::Test
   Client = SmartyStreets::USAutocomplete::Client
   Lookup = SmartyStreets::USAutocomplete::Lookup
+  SourceType = SmartyStreets::USAutocomplete::SourceType
   Response = SmartyStreets::Response
 
   def test_sending_search_only_lookup
@@ -36,7 +38,7 @@ class TestAutocompleteClient < Minitest::Test
     lookup.add_preferred_zip('9')
     lookup.prefer_ratio = 10
     lookup.prefer_geolocation = SmartyStreets::USAutocomplete::GeolocationType::CITY
-    lookup.source = "all"
+    lookup.source = SourceType::ALL
     lookup.selected = 'selectedAddress'
     lookup.exclude = 'excludedAddress'
 
@@ -114,7 +116,7 @@ class TestAutocompleteClient < Minitest::Test
 
     lookup = Lookup.new('1')
     lookup.max_results = 2
-    lookup.source = "all"
+    lookup.source = SourceType::ALL
     lookup.prefer_geolocation = SmartyStreets::USAutocomplete::GeolocationType::CITY
 
     client.send(lookup)
@@ -123,5 +125,39 @@ class TestAutocompleteClient < Minitest::Test
     assert_equal('2', sender.request.parameters['max_results'])
     assert_equal('city', sender.request.parameters['prefer_geolocation'])
     assert_equal('all', sender.request.parameters['source'])
+  end
+
+  def test_source_omitted_when_not_set
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+
+    client.send(Lookup.new('1'))
+
+    assert_nil(sender.request.parameters['source'])
+  end
+
+  def test_source_all_sent_as_all
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1')
+    lookup.source = SourceType::ALL
+
+    client.send(lookup)
+
+    assert_equal('all', sender.request.parameters['source'])
+  end
+
+  def test_source_postal_sent_as_postal
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1')
+    lookup.source = SourceType::POSTAL
+
+    client.send(lookup)
+
+    assert_equal('postal', sender.request.parameters['source'])
   end
 end
