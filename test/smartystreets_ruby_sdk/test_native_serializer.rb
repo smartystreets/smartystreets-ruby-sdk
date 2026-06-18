@@ -40,4 +40,11 @@ class TestNativeSerializer < Minitest::Test
     assert_equal('invalid_zipcode', results[2]['status'])
     assert_equal('Invalid ZIP Code.', results[2]['reason'])
   end
+
+  def test_deserialize_empty_payload_does_not_raise
+    serializer = SmartyStreets::NativeSerializer.new
+
+    assert_equal({}, serializer.deserialize(''))
+    assert_equal({}, serializer.deserialize(nil))
+  end
 end

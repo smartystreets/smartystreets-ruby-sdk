@@ -7,6 +7,7 @@ module SmartyStreets
     end
 
     def deserialize(payload)
+      return {} if payload.nil? || payload.empty?
       JSON.load(payload)
     end
   end

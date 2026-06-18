@@ -93,3 +93,21 @@ class TestEnrichmentEtag < Minitest::Test
     end
   end
 end
+
+class TestEnrichmentNotModified < Minitest::Test
+  def test_304_is_success_with_refreshed_etag_and_untouched_result
+    response = SmartyStreets::Response.new(nil, '304', {'etag' => 'refreshed-etag'}, nil)
+    sender = SmartyStreets::StatusCodeSender.new(MockSender.new(response))
+    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
+
+    lookup = SmartyStreets::USEnrichment::BusinessDetailLookup.new("ABC")
+    lookup.request_etag = 'old-etag'
+    lookup.result = 'prior'
+
+    result = client.send_business_detail_lookup(lookup)
+
+    assert_equal('refreshed-etag', lookup.response_etag)
+    assert_equal('prior', lookup.result)
+    assert_equal('prior', result)
+  end
+end

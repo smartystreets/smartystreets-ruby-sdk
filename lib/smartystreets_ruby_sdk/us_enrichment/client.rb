@@ -84,6 +84,7 @@ module SmartyStreets
 
                 response = @sender.send(smarty_request)
                 capture_response_etag(response, lookup)
+                return lookup.result if response.status_code.to_s == '304'
                 results = @serializer.deserialize(response.payload)
 
                 results = [] if results.nil?
@@ -148,6 +149,7 @@ module SmartyStreets
 
                 response = @sender.send(smarty_request)
                 capture_response_etag(response, lookup)
+                return [] if response.status_code.to_s == '304'
                 results = @serializer.deserialize(response.payload)
 
                 results = [] if results.nil?
