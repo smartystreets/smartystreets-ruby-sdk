@@ -1,7 +1,8 @@
-require_relative '../us_autocomplete_pro/source_type'
-
 module SmartyStreets
   module USReverseGeo
-    SourceType = USAutocompletePro::SourceType
+    module SourceType
+      ALL = 'all'.freeze
+      POSTAL = 'postal'.freeze
+    end
   end
 end
