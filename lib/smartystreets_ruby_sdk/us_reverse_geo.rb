@@ -1,4 +1,5 @@
 require_relative './us_reverse_geo/address'
+require_relative './us_reverse_geo/source_type'
 require_relative './us_reverse_geo/client'
 require_relative './us_reverse_geo/coordinate'
 require_relative './us_reverse_geo/lookup'

@@ -28,9 +28,9 @@ module SmartyStreets
     end
 
     class Lookup < LookupBase
-      attr_accessor :smarty_key, :data_set, :data_sub_set, :freeform, :street, :city, :state, :zipcode
+      attr_accessor :smarty_key, :data_set, :data_sub_set, :freeform, :street, :city, :state, :zipcode, :business_name
 
-      def initialize(smarty_key=nil, data_set=nil, data_sub_set=nil, freeform=nil, street=nil, city=nil, state=nil, zipcode=nil, request_etag=nil, features=nil)
+      def initialize(smarty_key=nil, data_set=nil, data_sub_set=nil, freeform=nil, street=nil, city=nil, state=nil, zipcode=nil, request_etag=nil, features=nil, business_name=nil)
         super()
         @smarty_key = smarty_key
         @data_set = data_set
@@ -42,6 +42,7 @@ module SmartyStreets
         @zipcode = zipcode
         @request_etag = request_etag
         @features = features
+        @business_name = business_name
       end
     end
 

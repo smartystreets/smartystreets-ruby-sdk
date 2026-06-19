@@ -44,6 +44,46 @@ class TestBusinessSummary < Minitest::Test
     assert_equal("street city state zipcode", sender.request.parameters["freeform"])
   end
 
+  def test_business_summary_lookup_with_business_name_search
+    sender = RequestCapturingSender.new
+    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new
+    lookup.freeform = "1600 Amphitheatre Pkwy, Mountain View, CA"
+    lookup.business_name = "Google"
+    lookup.city = "Mountain View"
+
+    client.send_business_lookup(lookup)
+    assert_equal("/search/business", sender.request.url_components)
+    assert_equal("1600 Amphitheatre Pkwy, Mountain View, CA", sender.request.parameters["freeform"])
+    assert_equal("Google", sender.request.parameters["business_name"])
+    assert_equal("Mountain View", sender.request.parameters["city"])
+  end
+
+  def test_business_summary_lookup_without_business_name_omits_param
+    sender = RequestCapturingSender.new
+    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new
+    lookup.freeform = "1600 Amphitheatre Pkwy, Mountain View, CA"
+
+    client.send_business_lookup(lookup)
+    assert_equal("/search/business", sender.request.url_components)
+    assert_nil(sender.request.parameters["business_name"])
+  end
+
+  def test_business_summary_lookup_with_business_name_only
+    sender = RequestCapturingSender.new
+    client = SmartyStreets::USEnrichment::Client.new(sender, FakeDeserializer.new(nil))
+
+    lookup = SmartyStreets::USEnrichment::Lookup.new
+    lookup.business_name = "Style Studio"
+
+    client.send_business_lookup(lookup)
+    assert_equal("/search/business", sender.request.url_components)
+    assert_equal("Style Studio", sender.request.parameters["business_name"])
+  end
+
   def test_business_summary_response_wraps_businesses
     obj = {
       'smarty_key' => 'key-1',

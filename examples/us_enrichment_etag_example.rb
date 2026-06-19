@@ -40,10 +40,12 @@ class USEnrichmentEtagExample
     second = SmartyStreets::USEnrichment::Lookup.new(smarty_key, 'business')
     second.request_etag = captured_etag
     begin
-      @client.send_business_lookup(second)
-      puts "  Call 2 (matching Etag): 200 - server did NOT honor the conditional. Etag=#{display(second.response_etag)}"
-    rescue SmartyStreets::NotModifiedInfo => ex
-      puts "  Call 2 (matching Etag): 304 NotModifiedInfo - caller treats this as cache-valid. Refreshed Etag=#{display(ex.response_etag)}"
+      results = @client.send_business_lookup(second)
+      if results.empty?
+        puts "  Call 2 (matching Etag): 304 not modified - cache is still valid. Refreshed Etag=#{display(second.response_etag)}"
+      else
+        puts "  Call 2 (matching Etag): 200 - server did NOT honor the conditional. Etag=#{display(second.response_etag)}"
+      end
     rescue SmartyStreets::SmartyError => err
       puts "  Call 2 unexpected failure: #{err.class}: #{err.message}"
       return nil
@@ -52,10 +54,12 @@ class USEnrichmentEtagExample
     third = SmartyStreets::USEnrichment::Lookup.new(smarty_key, 'business')
     third.request_etag = captured_etag + "X"
     begin
-      @client.send_business_lookup(third)
-      puts "  Call 3 (mutated Etag): 200 as expected. Etag=#{display(third.response_etag)}"
-    rescue SmartyStreets::NotModifiedInfo
-      puts "  Call 3 (mutated Etag): 304 - UNEXPECTED. Server treated a different Etag as matching."
+      results = @client.send_business_lookup(third)
+      if results.empty?
+        puts "  Call 3 (mutated Etag): 304 - UNEXPECTED. Server treated a different Etag as matching."
+      else
+        puts "  Call 3 (mutated Etag): 200 as expected. Etag=#{display(third.response_etag)}"
+      end
     rescue SmartyStreets::SmartyError => err
       puts "  Call 3 unexpected failure: #{err.class}: #{err.message}"
     end
@@ -86,9 +90,11 @@ class USEnrichmentEtagExample
     second.request_etag = captured_etag
     begin
       @client.send_business_detail_lookup(second)
-      puts "  Call 2 (matching Etag): 200 - server did NOT honor the conditional. Etag=#{display(second.response_etag)}"
-    rescue SmartyStreets::NotModifiedInfo => ex
-      puts "  Call 2 (matching Etag): 304 NotModifiedInfo - caller treats this as cache-valid. Refreshed Etag=#{display(ex.response_etag)}"
+      if second.result.nil?
+        puts "  Call 2 (matching Etag): 304 not modified - cache is still valid. Refreshed Etag=#{display(second.response_etag)}"
+      else
+        puts "  Call 2 (matching Etag): 200 - server did NOT honor the conditional. Etag=#{display(second.response_etag)}"
+      end
     rescue SmartyStreets::SmartyError => err
       puts "  Call 2 unexpected failure: #{err.class}: #{err.message}"
       return
@@ -98,9 +104,11 @@ class USEnrichmentEtagExample
     third.request_etag = captured_etag + "X"
     begin
       @client.send_business_detail_lookup(third)
-      puts "  Call 3 (mutated Etag): 200 as expected. Etag=#{display(third.response_etag)}"
-    rescue SmartyStreets::NotModifiedInfo
-      puts "  Call 3 (mutated Etag): 304 - UNEXPECTED. Server treated a different Etag as matching."
+      if third.result.nil?
+        puts "  Call 3 (mutated Etag): 304 - UNEXPECTED. Server treated a different Etag as matching."
+      else
+        puts "  Call 3 (mutated Etag): 200 as expected. Etag=#{display(third.response_etag)}"
+      end
     rescue SmartyStreets::SmartyError => err
       puts "  Call 3 unexpected failure: #{err.class}: #{err.message}"
     end

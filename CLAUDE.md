@@ -25,7 +25,7 @@ make examples
 
 ## Architecture
 
-This is the official SmartyStreets Ruby SDK for address verification APIs. It uses pure Ruby with Net::HTTP (no external runtime dependencies).
+This is the official SmartyStreets Ruby SDK for address verification APIs. It uses pure Ruby with Net::HTTP (no external runtime dependencies). Compatible with Ruby 3.3 and later.
 
 ### Core Design Patterns
 

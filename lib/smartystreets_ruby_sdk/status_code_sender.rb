@@ -22,38 +22,38 @@ module SmartyStreets
     private
 
     def parse_rate_limit_response(response)
-      error_message = ""
-      if !response.payload.nil?
-        response_json = JSON.parse(response.payload)
-        response_json["errors"].each do |error|
-          error_message += (" " + error["message"])
-        end
-        error_message.strip!
-      end
-      if error_message == ""
-        error_message = TOO_MANY_REQUESTS
-      end
-      TooManyRequestsError.new(error_message)
+      TooManyRequestsError.new(from_message(response, TOO_MANY_REQUESTS))
     end
 
     def from_message(response, fallback)
-      return fallback if response.payload.nil?
+      body = response.payload.nil? ? '' : response.payload.to_s.strip
+      unless body.empty?
+        begin
+          errors = JSON.parse(response.payload)["errors"]
+        rescue JSON::ParserError, TypeError
+          errors = nil
+        end
+        unless errors.nil? || errors.empty?
+          message = errors.map { |error| error["message"] }.join(" ")
+          return message unless message.empty?
+        end
+      end
 
-      errors = JSON.parse(response.payload)["errors"]
-      return fallback if errors.nil? || errors.empty?
-
-      message = errors.map { |error| error["message"] }.join(" ")
-      message.empty? ? fallback : message
+      "#{fallback} Body: #{body}".strip
     end
 
     def assign_exception(response)
-      response.error = case response.status_code
-                         when '304'
-                           NotModifiedInfo.new(NOT_MODIFIED, response.find_header('etag'))
+      response.error = case response.status_code.to_s
+                         when '200', '304'
+                           nil
                          when '401'
                            BadCredentialsError.new(from_message(response, BAD_CREDENTIALS))
                          when '402'
                            PaymentRequiredError.new(from_message(response, PAYMENT_REQUIRED))
+                         when '403'
+                           ForbiddenError.new(from_message(response, FORBIDDEN))
+                         when '408'
+                           RequestTimeoutError.new(from_message(response, REQUEST_TIMEOUT))
                          when '413'
                            RequestEntityTooLargeError.new(from_message(response, REQUEST_ENTITY_TOO_LARGE))
                          when '400'
@@ -61,13 +61,17 @@ module SmartyStreets
                          when '422'
                            UnprocessableEntityError.new(from_message(response, UNPROCESSABLE_ENTITY))
                          when '429'
-                           TooManyRequestsError.new(TOO_MANY_REQUESTS)
+                           TooManyRequestsError.new(from_message(response, TOO_MANY_REQUESTS))
                          when '500'
-                           InternalServerError.new(INTERNAL_SERVER_ERROR)
+                           InternalServerError.new(from_message(response, INTERNAL_SERVER_ERROR))
+                         when '502'
+                           BadGatewayError.new(from_message(response, BAD_GATEWAY))
                          when '503'
-                           ServiceUnavailableError.new(SERVICE_UNAVAILABLE)
+                           ServiceUnavailableError.new(from_message(response, SERVICE_UNAVAILABLE))
+                         when '504'
+                           GatewayTimeoutError.new(from_message(response, GATEWAY_TIMEOUT))
                          else
-                           nil
+                           SmartyError.new(from_message(response, "The server returned an unexpected HTTP status code: #{response.status_code}"))
                        end
     end
   end

@@ -3,9 +3,11 @@ require '../lib/smartystreets_ruby_sdk/static_credentials'
 require '../lib/smartystreets_ruby_sdk/basic_auth_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/us_autocomplete_pro/lookup'
+require '../lib/smartystreets_ruby_sdk/us_autocomplete_pro/source_type'
 
 class USAutocompleteProExample
   Lookup = SmartyStreets::USAutocompletePro::Lookup
+  SourceType = SmartyStreets::USAutocompletePro::SourceType
 
   def run
     # key = 'Your SmartyStreets Auth Key here'
@@ -29,7 +31,7 @@ class USAutocompleteProExample
     lookup.add_city_filter('Orem,UT')
     lookup.max_results = 5
     lookup.prefer_ratio = 3
-    lookup.source = "all"
+    lookup.source = SourceType::ALL
 
     # lookup.add_custom_parameter('parameter', 'value')
 

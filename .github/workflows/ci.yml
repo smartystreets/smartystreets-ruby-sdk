@@ -1,0 +1,10 @@
+name: Ruby Tests
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
