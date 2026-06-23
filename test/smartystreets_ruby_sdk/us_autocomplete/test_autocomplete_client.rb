@@ -40,7 +40,7 @@ class TestAutocompleteClient < Minitest::Test
     lookup.prefer_geolocation = SmartyStreets::USAutocomplete::GeolocationType::CITY
     lookup.source = SourceType::ALL
     lookup.selected = 'selectedAddress'
-    lookup.exclude = 'excludedAddress'
+    lookup.add_exclude('excludedAddress')
 
     client.send(lookup)
 
@@ -66,11 +66,11 @@ class TestAutocompleteClient < Minitest::Test
     client = Client.new(sender, serializer)
 
     lookup = Lookup.new('1')
-    lookup.exclude = 'excludedAddress'
+    lookup.exclude = ['excludedAddress', 'excludedAddress2']
 
     client.send(lookup)
 
-    assert_equal('excludedAddress', sender.request.parameters['exclude'])
+    assert_equal('excludedAddress,excludedAddress2', sender.request.parameters['exclude'])
   end
 
   def test_deserialize_called_with_response_body

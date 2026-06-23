@@ -50,7 +50,7 @@ module SmartyStreets
           add_parameter(request, 'prefer_geolocation', lookup.prefer_geolocation)
         end
         add_parameter(request, 'selected', lookup.selected)
-        add_parameter(request, 'exclude', lookup.exclude)
+        add_parameter(request, 'exclude', build_filter_string(lookup.exclude, ','))
 
         for key in lookup.custom_param_hash.keys do
           add_parameter(request, key, lookup.custom_param_hash[key])
@@ -59,8 +59,8 @@ module SmartyStreets
         request
       end
 
-      def build_filter_string(filter_list)
-        filter_list ? filter_list.join(';') : nil
+      def build_filter_string(filter_list, separator=';')
+        filter_list ? filter_list.join(separator) : nil
       end
 
       def convert_suggestions(suggestion_hashes)

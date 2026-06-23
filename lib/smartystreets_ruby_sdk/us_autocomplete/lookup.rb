@@ -28,7 +28,7 @@ module SmartyStreets
         @prefer_ratio = prefer_ratio
         @prefer_geolocation = prefer_geolocation
         @selected = selected
-        @exclude = exclude
+        @exclude = exclude ? exclude : []
         @source = source
         @custom_param_hash = {}
       end
@@ -63,6 +63,10 @@ module SmartyStreets
 
       def add_preferred_zip(zip)
         @prefer_zip_codes.push(zip)
+      end
+
+      def add_exclude(exclude_type)
+        @exclude.push(exclude_type)
       end
     end
   end
