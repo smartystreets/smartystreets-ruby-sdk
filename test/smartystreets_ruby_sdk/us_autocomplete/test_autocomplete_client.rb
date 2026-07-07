@@ -87,7 +87,7 @@ class TestAutocompleteClient < Minitest::Test
 
   def test_result_correctly_assigned_to_corresponding_lookup
     lookup = Lookup.new('1')
-    expected_result = { 'suggestions' => [{ 'street_line' => '2', 'entry_id' => '3' }] }
+    expected_result = { 'suggestions' => [{ 'urbanization' => 'urb', 'street_line' => '2', 'entry_id' => '3' }] }
 
     sender = MockSender.new(Response.new('{[]}', 0))
     deserializer = FakeDeserializer.new(expected_result)
@@ -95,6 +95,7 @@ class TestAutocompleteClient < Minitest::Test
 
     client.send(lookup)
 
+    assert_equal('urb', lookup.result[0].urbanization)
     assert_equal('2', lookup.result[0].street_line)
     assert_equal('3', lookup.result[0].entry_id)
   end
