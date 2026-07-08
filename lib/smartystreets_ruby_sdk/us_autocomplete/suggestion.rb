@@ -3,11 +3,12 @@ module SmartyStreets
     # See "https://www.smarty.com/docs/apis/us-autocomplete-v2/reference#http-response-status"
     class Suggestion
 
-      attr_reader :smarty_key, :entry_id, :street_line, :secondary, :city, :state, :zipcode, :entries, :source
+      attr_reader :smarty_key, :entry_id, :urbanization, :street_line, :secondary, :city, :state, :zipcode, :entries, :source
 
       def initialize(obj)
         @smarty_key = obj.fetch('smarty_key', nil)
         @entry_id = obj.fetch('entry_id', nil)
+        @urbanization = obj.fetch('urbanization', nil)
         @street_line = obj.fetch('street_line', nil)
         @secondary = obj.fetch('secondary', nil)
         @city = obj.fetch('city', nil)
