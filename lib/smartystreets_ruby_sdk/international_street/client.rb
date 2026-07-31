@@ -1,5 +1,6 @@
 require_relative '../request'
 require_relative 'candidate'
+require_relative 'language_mode'
 
 module SmartyStreets
   module InternationalStreet
@@ -45,7 +46,7 @@ module SmartyStreets
         add_parameter(request, 'input_id', lookup.input_id)
         add_parameter(request, 'country', lookup.country)
         add_parameter(request, 'geocode', lookup.geocode.to_s)
-        add_parameter(request, 'language', lookup.language)
+        add_parameter(request, 'language', normalized_language(lookup.language))
         add_parameter(request, 'freeform', lookup.freeform)
         add_parameter(request, 'address1', lookup.address1)
         add_parameter(request, 'address2', lookup.address2)
@@ -66,6 +67,12 @@ module SmartyStreets
 
       def add_parameter(request, key, value)
         request.parameters[key] = value unless value.nil? or value.empty?
+      end
+
+      def normalized_language(language)
+        return nil if language.nil?
+
+        LanguageMode.from_value(language).value
       end
 
       def convert_candidates(raw_candidates)

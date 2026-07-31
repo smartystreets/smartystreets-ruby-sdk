@@ -51,7 +51,7 @@ class TestInternationalClient < Minitest::Test
     assert_equal('1234', sender.request.parameters['input_id'])
     assert_equal('0', sender.request.parameters['country'])
     assert_equal('true', sender.request.parameters['geocode'])
-    assert_equal(LanguageMode::NATIVE, sender.request.parameters['language'])
+    assert_equal(LanguageMode::NATIVE.value, sender.request.parameters['language'])
     assert_equal('1', sender.request.parameters['freeform'])
     assert_equal('2', sender.request.parameters['address1'])
     assert_equal('3', sender.request.parameters['address2'])
@@ -62,6 +62,41 @@ class TestInternationalClient < Minitest::Test
     assert_equal('8', sender.request.parameters['administrative_area'])
     assert_equal('9', sender.request.parameters['postal_code'])
     assert_equal('10', sender.request.parameters['features'])
+  end
+
+  def test_sending_lookup_with_mixed_case_language_value
+    sender = RequestCapturingSender.new
+    serializer = FakeDeserializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1', '0')
+    lookup.language = 'Latin'
+
+    client.send_lookup(lookup)
+
+    assert_equal('latin', sender.request.parameters['language'])
+  end
+
+  def test_mixed_case_language_not_mutated
+    sender = RequestCapturingSender.new
+    serializer = FakeDeserializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1', '0')
+    lookup.language = 'Latin'
+
+    client.send_lookup(lookup)
+
+    assert_equal('Latin', lookup.language)
+  end
+
+  def test_rejects_invalid_mixed_case_language_value
+    sender = MockSender.new(nil)
+    client = Client.new(sender, nil)
+    lookup = Lookup.new('1', '0')
+    lookup.language = 'Klingon'
+
+    assert_raises SmartyStreets::UnprocessableEntityError do
+      client.send_lookup(lookup)
+    end
   end
 
   def test_nil_lookup_rejected

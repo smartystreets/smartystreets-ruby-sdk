@@ -1,3 +1,5 @@
+require_relative 'language_mode'
+
 module SmartyStreets
   module InternationalStreet
     # In addition to holding all of the input data for this lookup, this class also will contain the
@@ -73,6 +75,7 @@ module SmartyStreets
       def ensure_enough_info
         raise UnprocessableEntityError, 'Country field is required.' if field_is_missing(@country)
         raise UnprocessableEntityError, 'Either freeform or address1 is required.' if field_is_missing(@freeform) && field_is_missing(@address1)
+        LanguageMode.from_value(@language) unless @language.nil?
       end
     end
   end
