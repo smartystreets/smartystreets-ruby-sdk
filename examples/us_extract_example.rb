@@ -1,5 +1,4 @@
 require '../lib/smartystreets_ruby_sdk/static_credentials'
-require '../lib/smartystreets_ruby_sdk/shared_credentials'
 require '../lib/smartystreets_ruby_sdk/basic_auth_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/us_extract/lookup'
@@ -10,12 +9,10 @@ class USExtractExample
   Lookup = SmartyStreets::USExtract::Lookup
 
   def run
-    # key = 'Your SmartyStreets Auth Key here'
-    # referer = 'Your host name here'
     # We recommend storing your secret keys in environment variables instead---it's safer!
-    # key = ENV['SMARTY_AUTH_WEB']
-    # referer = ENV['SMARTY_AUTH_REFERER']
-    # credentials = SmartyStreets::SharedCredentials.new(key, referer)
+    #
+    # The US Extract API is POST-only and embedded keys are restricted to GET, so this
+    # API requires secret keys: https://www.smarty.com/docs/cloud/authentication
 
     id = ENV['SMARTY_AUTH_ID']
     token = ENV['SMARTY_AUTH_TOKEN']
