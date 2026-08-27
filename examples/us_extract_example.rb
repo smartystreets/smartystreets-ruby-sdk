@@ -9,7 +9,7 @@ class USExtractExample
   Lookup = SmartyStreets::USExtract::Lookup
 
   def run
-    # We recommend storing your secret keys in environment variables instead---it's safer!
+    # We recommend storing your secret keys in environment variables.
     #
     # The US Extract API is POST-only and embedded keys are restricted to GET, so this
     # API requires secret keys: https://www.smarty.com/docs/cloud/authentication

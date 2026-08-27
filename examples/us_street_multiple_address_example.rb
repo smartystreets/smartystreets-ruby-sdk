@@ -9,7 +9,7 @@ class USStreetMultipleAddressExample
   Lookup = SmartyStreets::USStreet::Lookup
 
   def run
-    # We recommend storing your secret keys in environment variables instead---it's safer!
+    # We recommend storing your secret keys in environment variables.
     #
     # Batch requests are sent via HTTP POST. Embedded keys are restricted to GET, so
     # batches require secret keys: https://www.smarty.com/docs/cloud/authentication
