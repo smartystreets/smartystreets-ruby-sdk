@@ -1,5 +1,4 @@
 require '../lib/smartystreets_ruby_sdk/static_credentials'
-require '../lib/smartystreets_ruby_sdk/shared_credentials'
 require '../lib/smartystreets_ruby_sdk/basic_auth_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/batch'
@@ -10,12 +9,10 @@ class USStreetMultipleAddressExample
   Lookup = SmartyStreets::USStreet::Lookup
 
   def run
-    # key = 'Your SmartyStreets Auth Key here'
-    # referer = 'Your host name here'
-    # We recommend storing your secret keys in environment variables instead---it's safer!
-    # key = ENV['SMARTY_AUTH_WEB']
-    # referer = ENV['SMARTY_AUTH_REFERER']
-    # credentials = SmartyStreets::SharedCredentials.new(key, referer)
+    # We recommend storing your secret keys in environment variables.
+    #
+    # Batch requests are sent via HTTP POST. Embedded keys are restricted to GET, so
+    # batches require secret keys: https://www.smarty.com/docs/cloud/authentication
 
     id = ENV['SMARTY_AUTH_ID']
     token = ENV['SMARTY_AUTH_TOKEN']

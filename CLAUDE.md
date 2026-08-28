@@ -44,7 +44,7 @@ URLPrefixSender → CustomQuerySender → LicenseSender → RetrySender → Sign
 ```
 `CustomHeaderSender` is only included when custom headers are configured; `RetrySender` only when max_retries > 0.
 
-**Authentication**: Three credential types — `StaticCredentials` (auth-id/auth-token), `SharedCredentials` (website key/hostname), and `BasicAuthCredentials` (basic auth header). Credentials are passed to `ClientBuilder` and injected into the sender chain via `SigningSender`.
+**Authentication**: Three credential types — `StaticCredentials` (auth-id/auth-token), `SharedCredentials` (website key/hostname), and `BasicAuthCredentials` (basic auth header). Credentials are passed to `ClientBuilder` and injected into the sender chain via `SigningSender`. Embedded/website keys are GET-only, so they are not valid for batch (POST) requests or the US Extract API (POST-only): https://www.smarty.com/docs/cloud/authentication
 
 ### Key Components
 

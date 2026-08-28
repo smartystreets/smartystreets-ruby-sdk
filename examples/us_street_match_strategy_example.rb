@@ -1,5 +1,4 @@
 require '../lib/smartystreets_ruby_sdk/static_credentials'
-require '../lib/smartystreets_ruby_sdk/shared_credentials'
 require '../lib/smartystreets_ruby_sdk/basic_auth_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/batch'
@@ -11,7 +10,11 @@ class USStreetLookupsWithMatchStrategyExample
   MatchType = SmartyStreets::USStreet::MatchType
 
   def run
-    # We recommend storing your secret keys in environment variables instead---it's safer!
+    # We recommend storing your secret keys in environment variables.
+    #
+    # Batch requests are sent via HTTP POST. Embedded keys are restricted to GET, so
+    # batches require secret keys: https://www.smarty.com/docs/cloud/authentication
+
     id = ENV['SMARTY_AUTH_ID']
     token = ENV['SMARTY_AUTH_TOKEN']
     credentials = SmartyStreets::BasicAuthCredentials.new(id, token)
