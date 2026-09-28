@@ -1,6 +1,7 @@
 require_relative '../request'
 require_relative '../exceptions'
 require_relative 'suggestion'
+require_relative 'language_mode'
 
 module SmartyStreets
   module InternationalAutocomplete
@@ -43,6 +44,7 @@ module SmartyStreets
         add_parameter(request, 'geolocation', 'on') if lookup.geolocation
         add_parameter(request, 'include_only_locality', lookup.locality)
         add_parameter(request, 'include_only_postal_code', lookup.postal_code)
+        add_parameter(request, 'language', normalized_language(lookup.language))
 
         for key in lookup.custom_param_hash.keys do
           add_parameter(request, key, lookup.custom_param_hash[key])
@@ -64,6 +66,12 @@ module SmartyStreets
 
       def add_parameter(request, key, value)
         request.parameters[key] = value unless value.nil? or value.empty?
+      end
+
+      def normalized_language(language)
+        return nil if language.nil?
+
+        LanguageMode.from_value(language).value
       end
     end
   end

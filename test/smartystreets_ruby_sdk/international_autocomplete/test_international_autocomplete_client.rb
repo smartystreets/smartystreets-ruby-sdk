@@ -1,11 +1,13 @@
 require 'minitest/autorun'
 require './lib/smartystreets_ruby_sdk/international_autocomplete/client'
 require './lib/smartystreets_ruby_sdk/international_autocomplete/lookup'
+require './lib/smartystreets_ruby_sdk/international_autocomplete/language_mode'
 require './lib/smartystreets_ruby_sdk/response'
 
 class TestInternationalAutocompleteClient < Minitest::Test
   Client = SmartyStreets::InternationalAutocomplete::Client
   Lookup = SmartyStreets::InternationalAutocomplete::Lookup
+  LanguageMode = SmartyStreets::InternationalAutocomplete::LanguageMode
   Response = SmartyStreets::Response
 
   def test_sending_prefix_only_lookup
@@ -30,6 +32,7 @@ class TestInternationalAutocompleteClient < Minitest::Test
     lookup.locality = '3'
     lookup.postal_code = '4'
     lookup.address_id = "5"
+    lookup.language = LanguageMode::NATIVE
 
     client.send(lookup)
 
@@ -41,6 +44,7 @@ class TestInternationalAutocompleteClient < Minitest::Test
     assert_equal('3', sender.request.parameters['include_only_locality'])
     assert_equal('4', sender.request.parameters['include_only_postal_code'])
     assert_equal('/5', sender.request.url_components)
+    assert_equal(LanguageMode::NATIVE.value, sender.request.parameters['language'])
 
   end
 
@@ -117,6 +121,56 @@ class TestInternationalAutocompleteClient < Minitest::Test
     client.send(lookup)
 
     assert_nil(sender.request.parameters['geolocation'])
+  end
+
+  def test_language_not_included_when_unset
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1')
+    lookup.country = '2'
+
+    client.send(lookup)
+
+    assert_nil(sender.request.parameters['language'])
+  end
+
+  def test_sending_lookup_with_mixed_case_language_value
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1')
+    lookup.country = '2'
+    lookup.language = 'Latin'
+
+    client.send(lookup)
+
+    assert_equal('latin', sender.request.parameters['language'])
+  end
+
+  def test_mixed_case_language_not_mutated
+    sender = RequestCapturingSender.new
+    serializer = FakeSerializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1')
+    lookup.country = '2'
+    lookup.language = 'Latin'
+
+    client.send(lookup)
+
+    assert_equal('Latin', lookup.language)
+  end
+
+  def test_rejects_invalid_mixed_case_language_value
+    sender = MockSender.new(nil)
+    client = Client.new(sender, nil)
+    lookup = Lookup.new('1')
+    lookup.country = '2'
+    lookup.language = 'Klingon'
+
+    assert_raises SmartyStreets::UnprocessableEntityError do
+      client.send(lookup)
+    end
   end
 
   def test_rejects_blank_lookup

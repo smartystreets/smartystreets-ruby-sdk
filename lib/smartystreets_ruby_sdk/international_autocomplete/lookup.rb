@@ -4,9 +4,13 @@ module SmartyStreets
   module InternationalAutocomplete
     # In addition to holding all of the input data for this lookup, this class also will contain the result
     # of the lookup after it comes back from the API.
+    #
+    # @language:: When not set, the output language will match the default for the country.
+    #     When set to language_mode.NATIVE, the results will always be in the language of the output country.
+    #     When set to language_mode.LATIN, the results will always be provided using a Latin character set.
     class Lookup < JSONAble
 
-      attr_accessor :result, :search, :address_id, :country, :max_results, :max_group_results, :geolocation, :locality, :postal_code, :custom_param_hash
+      attr_accessor :result, :search, :address_id, :country, :max_results, :max_group_results, :geolocation, :locality, :postal_code, :language, :custom_param_hash
 
       def initialize(search = nil, address_id = nil, country = nil, max_results = nil, max_group_results = 100, geolocation = false, locality = nil, postal_code = nil, custom_param_hash = nil)
         @result = []
@@ -18,6 +22,7 @@ module SmartyStreets
         @geolocation = geolocation
         @locality = locality
         @postal_code = postal_code
+        @language = nil
         @custom_param_hash = {}
       end
 
