@@ -4,9 +4,11 @@ require '../lib/smartystreets_ruby_sdk/basic_auth_credentials'
 require '../lib/smartystreets_ruby_sdk/client_builder'
 require '../lib/smartystreets_ruby_sdk/international_autocomplete/lookup'
 require '../lib/smartystreets_ruby_sdk/international_autocomplete/client'
+require '../lib/smartystreets_ruby_sdk/international_autocomplete/language_mode'
 
 class InternationalAutocompleteExample
   Lookup = SmartyStreets::InternationalAutocomplete::Lookup
+  LanguageMode = SmartyStreets::InternationalAutocomplete::LanguageMode
 
   def run
     # key = 'Your SmartyStreets Auth Key here'
@@ -30,6 +32,7 @@ class InternationalAutocompleteExample
     lookup.locality = "Paris"
     lookup.max_group_results = 5
     lookup.geolocation = true
+    lookup.language = LanguageMode::NATIVE
 
     # lookup.add_custom_parameter('parameter', 'value')
 
