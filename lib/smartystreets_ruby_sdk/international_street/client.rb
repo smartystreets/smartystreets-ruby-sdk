@@ -57,6 +57,7 @@ module SmartyStreets
         add_parameter(request, 'administrative_area', lookup.administrative_area)
         add_parameter(request, 'postal_code', lookup.postal_code)
         add_parameter(request, 'features', lookup.features)
+        add_parameter(request, 'max_results', lookup.max_results.to_s) if lookup.max_results.to_i > 0
 
         for key in lookup.custom_param_hash.keys do
           add_parameter(request, key, lookup.custom_param_hash[key])

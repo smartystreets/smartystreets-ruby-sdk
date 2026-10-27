@@ -45,6 +45,7 @@ class TestInternationalClient < Minitest::Test
     lookup.administrative_area = '8'
     lookup.postal_code = '9'
     lookup.features = '10'
+    lookup.max_results = 3
 
     client.send_lookup(lookup)
 
@@ -62,6 +63,42 @@ class TestInternationalClient < Minitest::Test
     assert_equal('8', sender.request.parameters['administrative_area'])
     assert_equal('9', sender.request.parameters['postal_code'])
     assert_equal('10', sender.request.parameters['features'])
+    assert_equal('3', sender.request.parameters['max_results'])
+  end
+
+  def test_max_results_omitted_when_unset
+    sender = RequestCapturingSender.new
+    serializer = FakeDeserializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1', '2')
+
+    client.send_lookup(lookup)
+
+    assert_nil(sender.request.parameters['max_results'])
+  end
+
+  def test_max_results_omitted_when_zero
+    sender = RequestCapturingSender.new
+    serializer = FakeDeserializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1', '2')
+    lookup.max_results = 0
+
+    client.send_lookup(lookup)
+
+    assert_nil(sender.request.parameters['max_results'])
+  end
+
+  def test_sending_max_results
+    sender = RequestCapturingSender.new
+    serializer = FakeDeserializer.new({})
+    client = Client.new(sender, serializer)
+    lookup = Lookup.new('1', '2')
+    lookup.max_results = 5
+
+    client.send_lookup(lookup)
+
+    assert_equal('5', sender.request.parameters['max_results'])
   end
 
   def test_sending_lookup_with_mixed_case_language_value

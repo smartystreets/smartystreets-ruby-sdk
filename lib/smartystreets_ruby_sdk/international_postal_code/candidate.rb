@@ -13,7 +13,8 @@ module SmartyStreets
                   :dependent_locality_name,
                   :double_dependent_locality,
                   :postal_code,
-                  :postal_code_extra
+                  :postal_code_extra,
+                  :thoroughfare
 
       def initialize(obj)
         @input_id = obj['input_id']
@@ -27,6 +28,7 @@ module SmartyStreets
         @double_dependent_locality = obj['double_dependent_locality']
         @postal_code = obj['postal_code']
         @postal_code_extra = obj['postal_code_extra']
+        @thoroughfare = obj['thoroughfare']
       end
     end
   end

@@ -1,6 +1,7 @@
 require_relative '../request'
 require_relative '../exceptions'
 require_relative 'candidate'
+require_relative 'language_mode'
 
 module SmartyStreets
   module InternationalPostalCode
@@ -35,6 +36,8 @@ module SmartyStreets
         add_parameter(request, 'locality', lookup.locality)
         add_parameter(request, 'administrative_area', lookup.administrative_area)
         add_parameter(request, 'postal_code', lookup.postal_code)
+        add_parameter(request, 'language', normalized_language(lookup.language))
+        add_parameter(request, 'max_results', lookup.max_results.to_s) if lookup.max_results.to_i > 0
 
         request
       end
@@ -52,6 +55,12 @@ module SmartyStreets
 
       def add_parameter(request, key, value)
         request.parameters[key] = value unless value.nil? or value.empty?
+      end
+
+      def normalized_language(language)
+        return nil if language.nil?
+
+        LanguageMode.from_value(language).value
       end
     end
   end

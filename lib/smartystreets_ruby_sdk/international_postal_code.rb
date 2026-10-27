@@ -1,5 +1,6 @@
 require 'smartystreets_ruby_sdk/international_postal_code/lookup'
 require 'smartystreets_ruby_sdk/international_postal_code/candidate'
 require 'smartystreets_ruby_sdk/international_postal_code/client'
+require 'smartystreets_ruby_sdk/international_postal_code/language_mode'
 
 

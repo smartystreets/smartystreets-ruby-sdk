@@ -34,6 +34,7 @@ class InternationalExample
     lookup.administrative_area = 'SP'
     lookup.country = 'Brazil'
     lookup.postal_code = '02516-050'
+    # lookup.max_results = 5 # Optional: maximum number of candidates to return
 
     # lookup.add_custom_parameter('parameter', 'value')
 
