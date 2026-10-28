@@ -2,6 +2,7 @@ require_relative '../request'
 require_relative '../exceptions'
 require_relative 'candidate'
 require_relative 'language_mode'
+require_relative '../max_results'
 
 module SmartyStreets
   module InternationalPostalCode
@@ -37,7 +38,7 @@ module SmartyStreets
         add_parameter(request, 'administrative_area', lookup.administrative_area)
         add_parameter(request, 'postal_code', lookup.postal_code)
         add_parameter(request, 'language', normalized_language(lookup.language))
-        add_parameter(request, 'max_results', lookup.max_results.to_s) if lookup.max_results.to_i > 0
+        add_parameter(request, 'max_results', MaxResults.normalize(lookup.max_results))
 
         request
       end
