@@ -11,6 +11,8 @@ class TestInternationalPostalCodeLookup < Minitest::Test
     assert_nil lookup.locality
     assert_nil lookup.administrative_area
     assert_nil lookup.postal_code
+    assert_nil lookup.language
+    assert_nil lookup.max_results
     assert_equal [], lookup.results
   end
 end

@@ -3,6 +3,10 @@ require './lib/smartystreets_ruby_sdk/us_autocomplete/client'
 require './lib/smartystreets_ruby_sdk/us_autocomplete/lookup'
 require './lib/smartystreets_ruby_sdk/us_autocomplete/source_type'
 require './lib/smartystreets_ruby_sdk/response'
+require './test/mocks/request_capturing_sender'
+require './test/mocks/fake_serializer'
+require './test/mocks/fake_deserializer'
+require './test/mocks/mock_sender'
 
 class TestAutocompleteClient < Minitest::Test
   Client = SmartyStreets::USAutocomplete::Client

@@ -28,6 +28,8 @@ class InternationalPostalCodeExample
     lookup.administrative_area = 'SP'
     lookup.country = 'Brazil'
     lookup.postal_code = '02516'
+    # lookup.language = SmartyStreets::InternationalPostalCode::LanguageMode::LATIN # Optional: 'native' or 'latin'
+    # lookup.max_results = 10 # Optional: maximum number of candidates to return
 
     results = client.send_lookup(lookup)
 
@@ -44,6 +46,7 @@ class InternationalPostalCodeExample
       display(candidate.administrative_area)
       display(candidate.super_administrative_area)
       display(candidate.postal_code)
+      display(candidate.thoroughfare)
       puts
     end
   end

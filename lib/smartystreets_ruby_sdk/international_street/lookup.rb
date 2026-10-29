@@ -14,11 +14,12 @@ module SmartyStreets
     # @language:: When not set, the output language will match the language of the input values.
     #     When set to language_mode.NATIVE, the results will always be in the language of the output country.
     #     When set to language_mode.LATIN, the results will always be provided using a Latin character set.
+    # @max_results:: Optional. The maximum number of candidates to return. Omitted from the request when unset or 0.
     class Lookup
 
       attr_accessor :input_id, :freeform, :locality, :postal_code, :address3, :address2, :inputId, :address1,
                     :geocode, :administrative_area, :country, :organization, :language, :address4, :result,
-                    :features, :custom_param_hash
+                    :features, :max_results, :custom_param_hash
 
       def initialize(freeform=nil, country=nil)
         @result = []
@@ -37,6 +38,7 @@ module SmartyStreets
         @administrative_area = nil
         @postal_code = nil
         @features = nil
+        @max_results = nil
         @custom_param_hash = {}
       end
 
